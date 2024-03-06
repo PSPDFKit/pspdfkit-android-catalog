@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ *   Copyright © 2014-2024 PSPDFKit GmbH. All rights reserved.
+  ~
+  ~   The PSPDFKit Sample applications are licensed with a modified BSD license.
+  ~   Please see License for details. This notice may not be removed from this file.
+  -->
+
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:drawable="@drawable/ic_logo"
+        android:right="10dp"/>
+</layer-list>

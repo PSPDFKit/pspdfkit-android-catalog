@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~   Copyright © 2017-2024 PSPDFKit GmbH. All rights reserved.
+  ~
+  ~   The PSPDFKit Sample applications are licensed with a modified BSD license.
+  ~   Please see License for details. This notice may not be removed from this file.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/dialog_download_title"
+        android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/downloadDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="4dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:textColor="?android:textColorSecondary"
+        tools:text="Downloading to \'new.pdf\'"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/downloadPercent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:textColor="?android:textColorSecondary"
+            android:textStyle="bold"
+            android:visibility="invisible"
+            tools:text="27%"
+            tools:visibility="visible"/>
+
+        <TextView
+            android:id="@+id/downloadSize"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:textColor="?android:textColorSecondary"
+            android:visibility="invisible"
+            tools:text="8,6/31 MB"
+            tools:visibility="visible"/>
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"/>
+
+
+</LinearLayout>

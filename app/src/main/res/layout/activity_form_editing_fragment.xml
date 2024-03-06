@@ -1,0 +1,32 @@
+<!--
+  ~   Copyright © 2018-2024 PSPDFKit GmbH. All rights reserved.
+  ~
+  ~   The PSPDFKit Sample applications are licensed with a modified BSD license.
+  ~   Please see License for details. This notice may not be removed from this file.
+  -->
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".examples.java.activities.ToolbarsInFragmentActivity"
+             tools:ignore="UnusedAttribute">
+
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <com.pspdfkit.ui.forms.FormEditingBar
+        android:id="@+id/formEditingBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom" />
+
+    <com.pspdfkit.ui.inspector.PropertyInspectorCoordinatorLayout
+        android:id="@+id/inspectorCoordinatorLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="16dp"/>
+
+</FrameLayout>

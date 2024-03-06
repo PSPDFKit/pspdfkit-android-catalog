@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~   Copyright © 2019-2024 PSPDFKit GmbH. All rights reserved.
+  ~
+  ~   The PSPDFKit Sample applications are licensed with a modified BSD license.
+  ~   Please see License for details. This notice may not be removed from this file.
+  -->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:hint="@string/instant_username"
+        android:inputType="text"
+        android:nextFocusDown="@id/password"
+        android:singleLine="true" />
+
+    <EditText
+        android:id="@+id/password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/instant_password"
+        android:inputType="textPassword" />
+</LinearLayout>

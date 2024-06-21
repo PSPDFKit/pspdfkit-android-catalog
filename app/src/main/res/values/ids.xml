@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~   Copyright © 2017-2024 PSPDFKit GmbH. All rights reserved.
+  ~
+  ~   The PSPDFKit Sample applications are licensed with a modified BSD license.
+  ~   Please see License for details. This notice may not be removed from this file.
+  -->
+
+<resources>
+    <item name="pspdf_menu_custom" type="id"/>
+
+    <item name="filter_view" type="id" />
+
+    <item name="instant_collaborate" type="id"/>
+    <item name="open_in_browser" type="id"/>
+    <item name="share_document_link" type="id"/>
+    <item name="share_document_code" type="id"/>
+
+    <item name="toggle_annotation_overlay" type="id" />
+    <item name="fire_low_memory_notification" type="id"/>
+    <item name="toggle_overlay_rendering_strategy" type="id" />
+
+    <!-- Custom menu items. -->
+    <item name="custom_action1" type="id"/>
+    <item name="custom_action2" type="id"/>
+    <item name="custom_action3" type="id"/>
+    <item name="custom_action_show" type="id"/>
+    <item name="custom_action_hide" type="id"/>
+
+    <!-- Custom annotation creation toolbar menu items. -->
+    <item name="line_group" type="id"/>
+    <item name="line_red" type="id"/>
+    <item name="line_yellow" type="id"/>
+    <item name="line_blue" type="id"/>
+
+</resources>

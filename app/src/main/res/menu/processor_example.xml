@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~   Copyright © 2017-2024 PSPDFKit GmbH. All rights reserved.
+  ~
+  ~   The PSPDFKit Sample applications are licensed with a modified BSD license.
+  ~   Please see License for details. This notice may not be removed from this file.
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/item_extract_range"
+        android:title="Extract range"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/item_flatten_annotations"
+        android:title="Flatten annotations"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/item_remove_link_annotations"
+        android:title="Remove link annotations"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/item_rotate_pages"
+        android:title="Rotate pages by 90°"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/item_new_page"
+        android:title="Add new pages"
+        app:showAsAction="never"/>
+
+</menu>

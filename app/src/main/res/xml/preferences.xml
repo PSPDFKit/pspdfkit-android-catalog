@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~   Copyright © 2017-2024 PSPDFKit GmbH. All rights reserved.
+  ~
+  ~   The PSPDFKit Sample applications are licensed with a modified BSD license.
+  ~   Please see License for details. This notice may not be removed from this file.
+  -->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/setting_category_layout">
+
+        <ListPreference
+            android:defaultValue="@string/page_scroll_direction_horizontal"
+            android:entries="@array/page_scroll_directions"
+            android:entryValues="@array/page_scroll_directions"
+            android:key="page_scroll_direction"
+            android:summary="%s"
+            android:title="@string/setting_scroll_direction"
+            />
+
+        <ListPreference
+            android:defaultValue="@string/page_layout_auto"
+            android:entries="@array/page_layouts"
+            android:entryValues="@array/page_layouts"
+            android:key="page_layout_mode"
+            android:summary="%s"
+            android:title="@string/setting_page_layout"
+            />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="scroll_continuously"
+            android:title="@string/setting_scroll_continuously"/>
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="fit_page_to_width"
+            android:title="@string/setting_fit_page_to_width"/>
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="restore_last_viewed_page"
+            android:title="@string/setting_restore_last_viewed_page"/>
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="show_page_number_overlay"
+            android:title="@string/setting_show_page_number_overlay"/>
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="show_page_labels"
+            android:title="@string/setting_show_page_labels"/>
+
+        <ListPreference
+            android:defaultValue="@string/user_interface_view_mode_automatic"
+            android:entries="@array/user_interface_view_modes"
+            android:entryValues="@array/user_interface_view_modes"
+            android:key="user_interface_view_mode"
+            android:summary="%s"
+            android:title="@string/user_interface_view_mode"/>
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="hide_ui_when_creating_annotations"
+            android:title="@string/hide_ui_when_creating_annotations"/>
+
+        <ListPreference
+            android:defaultValue="@string/theme_mode_default"
+            android:entries="@array/theme_mode"
+            android:entryValues="@array/theme_mode"
+            android:key="theme_mode"
+            android:summary="%s"
+            android:title="@string/setting_theme_mode"
+            />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/setting_double_page_mode">
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="first_page_as_single"
+            android:title="@string/setting_first_page_single"/>
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="show_gap_between_pages"
+            android:title="@string/setting_show_gap_between_pages"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/setting_category_search">
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="show_search_action"
+            android:title="@string/setting_show_search_action"/>
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="inline_search"
+            android:title="@string/setting_inline_search"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/setting_category_thumbnails_outline">
+
+        <ListPreference
+            android:defaultValue="@string/thumbnail_bar_mode_floating"
+            android:entries="@array/thumbnail_bar_modes"
+            android:entryValues="@array/thumbnail_bar_modes"
+            android:key="thumbnail_bar_mode"
+            android:summary="%s"
+            android:title="@string/thumbnail_bar_mode"
+            />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="show_thumbnail_grid_action"
+            android:title="@string/setting_show_thumbnail_grid_action"/>
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="show_outline_action"
+            android:title="@string/setting_actions_show_outline_action"/>
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="show_annotation_list_action"
+            android:title="@string/setting_actions_show_annotationlist_action"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/setting_category_annotations">
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="enable_annotation_editing"
+            android:title="@string/setting_enable_annotation_editing"/>
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="enable_annotation_rotation"
+            android:title="@string/setting_enable_annotation_rotation"/>
+
+        <ListPreference
+            android:defaultValue="@string/annotation_reply_enabled"
+            android:entries="@array/annotation_reply_modes"
+            android:entryValues="@array/annotation_reply_modes"
+            android:key="annotation_reply_featues"
+            android:summary="%s"
+            android:title="@string/annotation_reply_mode"
+            />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/setting_category_forms">
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="enable_form_editing"
+            android:title="@string/setting_enable_form_editing"/>
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/setting_category_actions">
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="show_share_action"
+            android:title="@string/setting_show_share_action"/>
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="show_print_action"
+            android:title="@string/setting_show_print_action"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/setting_category_customization">
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="invert_colors"
+            android:title="@string/setting_invert_colors"/>
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="grayscale"
+            android:title="@string/setting_grayscale"/>
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="enable_text_selection"
+            android:title="@string/setting_enable_text_selection"/>
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="enable_volume_buttons_navigation"
+            android:title="@string/setting_enable_volume_buttons_navigation"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/setting_category_activity">
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="immersive_mode"
+            android:title="@string/setting_activity_immersive_mode"/>
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="@string/setting_category_other">
+
+        <androidx.preference.EditTextPreference
+            android:defaultValue="0"
+            android:dialogMessage="@string/setting_start_page_dialog"
+            android:inputType="number"
+            android:key="start_page"
+            android:title="@string/setting_start_page"/>
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:key="multi_threaded_rendering"
+            android:title="@string/setting_multi_threaded_rendering"/>
+
+        <Preference
+            android:key="clear_cache"
+            android:title="@string/setting_clear_cache"/>
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:key="leak_canary_enabled"
+            android:title="@string/setting_leak_canary_enabled" />
+
+        <Preference
+            android:key="clear_app_data"
+            android:summary="@string/setting_clear_app_data_summary"
+            android:title="@string/setting_clear_app_data"
+            />
+
+    </PreferenceCategory>
+
+
+</PreferenceScreen>

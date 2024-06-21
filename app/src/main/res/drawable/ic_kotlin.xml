@@ -1,0 +1,11 @@
+<!--
+  ~   Copyright © 2020-2024 PSPDFKit GmbH. All rights reserved.
+  ~
+  ~   The PSPDFKit Sample applications are licensed with a modified BSD license.
+  ~   Please see License for details. This notice may not be removed from this file.
+  -->
+
+<vector android:height="24dp" android:viewportHeight="24"
+    android:viewportWidth="24" android:width="24dp" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="#FFFFFFFF" android:pathData="M1.3,24l11.3,-11.5L24,24zM0,0h12L0,12.5zM13.4,0L0,14v10l12,-12L24,0z"/>
+</vector>

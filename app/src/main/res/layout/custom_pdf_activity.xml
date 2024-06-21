@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~   Copyright © 2014-2024 PSPDFKit GmbH. All rights reserved.
+  ~
+  ~   The PSPDFKit Sample applications are licensed with a modified BSD license.
+  ~   Please see License for details. This notice may not be removed from this file.
+  -->
+
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawerLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="UnusedAttribute">
+
+    <FrameLayout
+        android:id="@+id/pspdf__activity_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:ignore="UnusedAttribute">
+
+        <FrameLayout
+            android:id="@+id/pspdf__activity_fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layoutDirection="ltr"/>
+
+        <com.pspdfkit.ui.toolbar.ToolbarCoordinatorLayout
+            android:id="@+id/pspdf__toolbar_coordinator"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include layout="@layout/pspdf__toolbar_main"/>
+
+        </com.pspdfkit.ui.toolbar.ToolbarCoordinatorLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:layout_gravity="bottom"
+            android:background="?colorPrimary">
+
+            <Button
+                android:id="@+id/nextPageButton"
+                style="@style/Widget.AppCompat.ActionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="end"
+                android:layout_margin="8dp"
+                android:text="Next"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button"
+                android:textColor="?android:colorForegroundInverse"/>
+
+            <Button
+                android:id="@+id/previousPageButton"
+                style="@style/Widget.AppCompat.ActionButton"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:layout_margin="8dp"
+                android:text="Previous"
+                android:textAppearance="@style/TextAppearance.AppCompat.Button"
+                android:textColor="?android:colorForegroundInverse"/>
+
+        </FrameLayout>
+
+        <com.pspdfkit.ui.inspector.PropertyInspectorCoordinatorLayout
+            android:id="@+id/pspdf__inspector_coordinator"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <TextView
+            android:id="@+id/pspdf__activity_page_overlay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|center_horizontal"
+            android:layout_marginBottom="72dp"
+            android:alpha="0"
+            android:background="@drawable/pspdf__rounded_rect"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:fontFamily="sans-serif-light"
+            android:layoutDirection="ltr"
+            android:paddingBottom="8dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:paddingTop="8dp"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            tools:ignore="UnusedAttribute"/>
+
+        <com.pspdfkit.ui.redaction.RedactionView
+            android:id="@+id/pspdf__redaction_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="72dp"/>
+
+        <com.pspdfkit.ui.PdfOutlineView
+            android:id="@+id/pspdf__activity_outline_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"/>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/thumbnailGridDrawer"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="end">
+
+        <com.pspdfkit.ui.PdfThumbnailGrid
+            android:id="@+id/pspdf__activity_thumbnail_grid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:clipToPadding="false"
+            android:layoutDirection="ltr"/>
+    </FrameLayout>
+
+
+</androidx.drawerlayout.widget.DrawerLayout>

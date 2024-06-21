@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~   Copyright © 2017-2024 PSPDFKit GmbH. All rights reserved.
+  ~
+  ~   The PSPDFKit Sample applications are licensed with a modified BSD license.
+  ~   Please see License for details. This notice may not be removed from this file.
+  -->
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/toggle_night_mode"
+        android:title="@string/runtime_configuration_change_toggle_night_mode"
+        app:showAsAction="never|withText"/>
+
+    <item
+        android:id="@+id/toggle_scroll_mode"
+        android:title="@string/runtime_configuration_change_toggle_scroll_mode"
+        app:showAsAction="never|withText"/>
+
+    <item
+        android:id="@+id/toggle_scroll_direction"
+        android:title="@string/runtime_configuration_change_toggle_scroll_direction"
+        app:showAsAction="never|withText"/>
+</menu>

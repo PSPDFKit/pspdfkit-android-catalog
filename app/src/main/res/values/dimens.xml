@@ -1,0 +1,33 @@
+<!--
+  ~   Copyright © 2017-2024 PSPDFKit GmbH. All rights reserved.
+  ~
+  ~   The PSPDFKit Sample applications are licensed with a modified BSD license.
+  ~   Please see License for details. This notice may not be removed from this file.
+  -->
+
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <dimen name="drawer_max_width">280dp</dimen>
+    <dimen name="drawer_margin">56dp</dimen>
+    <dimen name="custom_search_ui_previewimage_width">72dp</dimen>
+
+    <!-- Drawable padding for the ScreenReaderExample -->
+    <dimen name="screenreaderexample_drawable_padding">4dp</dimen>
+
+    <dimen name="custom_scrollbar_handle_size">48dp</dimen>
+
+    <dimen name="kiosk_grid_column_width">116dp</dimen>
+    <dimen name="kiosk_previewimage_width">100dp</dimen>
+    <dimen name="kiosk_previewimage_height">143dp</dimen>
+
+    <dimen name="thumbnail_bar_height">54dp</dimen>
+    <dimen name="thumbnail_bar_width">54dp</dimen>
+
+    <dimen name="pspdf__thumbnailGridFilterPickerViewPadding">4dp</dimen>
+    <dimen name="pspdf__thumbnailGridFilterPickerViewSelectionPadding">8dp</dimen>
+    <dimen name="pspdf__thumbnailGridFilterPickerViewSelectionSpacing">4dp</dimen>
+    <dimen name="pspdf__thumbnailGridFilterPickerViewElevation">4dp</dimen>
+</resources>

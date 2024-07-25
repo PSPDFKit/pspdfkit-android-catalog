@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~   Copyright © 2017-2024 PSPDFKit GmbH. All rights reserved.
+  ~
+  ~   The PSPDFKit Sample applications are licensed with a modified BSD license.
+  ~   Please see License for details. This notice may not be removed from this file.
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/reset_all_flags"
+        android:title="Reset All Flags"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/toggle_hidden_flag"
+        android:title="Enable Hidden Flag"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/toggle_read_only_flag"
+        android:title="Enable Read-Only Flag"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/toggle_print_flag"
+        android:title="Enable Print Flag (Enabled)"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/toggle_no_view_flag"
+        android:title="Enable No-View Flag"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/toggle_locked_flag"
+        android:title="Enable Locked Flag"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/toggle_locked_contents_flag"
+        android:title="Enable Locked-Contents Flag"
+        app:showAsAction="never"/>
+
+    <item
+        android:id="@+id/toggle_no_zoom_flag"
+        android:title="Enable No-Zoom Flag"
+        app:showAsAction="never"/>
+
+</menu>

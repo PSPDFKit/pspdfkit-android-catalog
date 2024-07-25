@@ -1,0 +1,2634 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<issues format="6" by="lint 8.2.1" type="baseline" client="gradle" dependencies="false" name="AGP (8.2.1)" variant="all" version="8.2.1">
+
+    <issue
+        id="CheckResult"
+        message="The result of `subscribe` is not used"
+        errorLine1="        getDocument()"
+        errorLine2="        ^">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/AnnotationFlagsActivity.java"
+            line="210"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="CheckResult"
+        message="The result of `subscribe` is not used"
+        errorLine1="        DocumentSharingProviderProcessor.prepareFileForSharing(this, new ContentResolverDataProvider(imageUri), null)"
+        errorLine2="        ^">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/CopyToClipboardActivity.java"
+            line="89"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="CheckResult"
+        message="The result of `subscribe` is not used"
+        errorLine1="        Observable.defer((Supplier&lt;ObservableSource&lt;String>>) () -> {"
+        errorLine2="        ^">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/CustomSearchUiActivity.java"
+            line="354"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="CheckResult"
+        message="The result of `subscribe` is not used"
+        errorLine1="        document.getFormProvider().getFormElementsAsync().subscribe((formElements, throwable) -> {"
+        errorLine2="        ^">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="44"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="CheckResult"
+        message="The result of `subscribe` is not used"
+        errorLine1="        PdfProcessor.processDocumentAsync(task, outputFile)"
+        errorLine2="        ^">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/FormsJavaScriptExample.java"
+            line="68"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="CheckResult"
+        message="The result of `subscribe` is not used"
+        errorLine1="            findUnitByUid(spokenUnits, utteranceId)"
+        errorLine2="            ^">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/screenreader/ScreenReader.java"
+            line="129"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="Range"
+        message="Value must be ≥ 0 but `getPageIndex` can be -1"
+        errorLine1="                        this, getDocument(), getPageIndex())"
+        errorLine2="                                             ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/DocumentSharingExampleActivity.java"
+            line="42"
+            column="46"/>
+    </issue>
+
+    <issue
+        id="Range"
+        message="Value must be ≥ 0 but `getPageIndex` can be -1"
+        errorLine1="                    screenReader.readSentencesOnPage(getDocument(), getPageIndex());"
+        errorLine2="                                                                    ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/ScreenReaderExampleActivity.java"
+            line="37"
+            column="69"/>
+    </issue>
+
+    <issue
+        id="Range"
+        message="Value must be ≥ 0 but `getPageIndex` can be -1"
+        errorLine1="            screenReader.readSentencesOnPage(document, getPageIndex());"
+        errorLine2="                                                       ~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/ScreenReaderExampleActivity.java"
+            line="81"
+            column="56"/>
+    </issue>
+
+    <issue
+        id="UnusedAttribute"
+        message="Attribute `android:foreground` has no effect on API levels lower than 23 (current min is 21)"
+        errorLine1="    android:foreground=&quot;?selectableItemBackgroundBorderless&quot;"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/item_add_button.xml"
+            line="16"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="IntentFilterUniqueDataAttributes"
+        message="Consider splitting data tag into multiple tags with individual attributes to avoid confusion"
+        errorLine1="                &lt;data"
+        errorLine2="                ^">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="103"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="IntentFilterUniqueDataAttributes"
+        message="Consider splitting data tag into multiple tags with individual attributes to avoid confusion"
+        errorLine1="                &lt;data"
+        errorLine2="                ^">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="108"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="IntentFilterUniqueDataAttributes"
+        message="Consider splitting data tag into multiple tags with individual attributes to avoid confusion"
+        errorLine1="                &lt;data"
+        errorLine2="                ^">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="113"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="IntentFilterUniqueDataAttributes"
+        message="Consider splitting data tag into multiple tags with individual attributes to avoid confusion"
+        errorLine1="                &lt;data"
+        errorLine2="                ^">
+        <location
+            file="src/main/AndroidManifest.xml"
+            line="118"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                .setAdditionalAction("
+        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="68"
+            column="34"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                        AnnotationTriggerEvent.FORM_CHANGED,"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="71"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                        new JavaScriptAction(&quot;AFNumber_Keystroke(2, 0, 0, 0, &apos;&apos;, true);&quot;))"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="74"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                .setAdditionalAction("
+        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="75"
+            column="34"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                        AnnotationTriggerEvent.FIELD_FORMAT,"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="78"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                        new JavaScriptAction(&quot;AFNumber_Format(2, 0, 0, 0, &apos;&apos;, true);&quot;))"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="81"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                .setAdditionalAction("
+        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="90"
+            column="34"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                        AnnotationTriggerEvent.FORM_CHANGED,"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="91"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                        new JavaScriptAction(&quot;AFNumber_Keystroke(0, 1, 0, 0, &apos;&apos;, true);&quot;))"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="94"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                .setAdditionalAction("
+        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="95"
+            column="34"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                        AnnotationTriggerEvent.FIELD_FORMAT,"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="96"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                        new JavaScriptAction(&quot;AFNumber_Format(0, 1, 0, 0, &apos;&apos;, true);&quot;))"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="97"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                .setAdditionalAction("
+        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="106"
+            column="34"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                        AnnotationTriggerEvent.FORM_CALCULATE,"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="109"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                        new JavaScriptAction("
+        errorLine2="                                        ^">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="114"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                .setAdditionalAction("
+        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="116"
+            column="34"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                        AnnotationTriggerEvent.FIELD_FORMAT,"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="117"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                        new JavaScriptAction(&quot;AFNumber_Format(2, 1, 0, 0, &apos;&apos;, true);&quot;))"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="120"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setReadOnly can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                .setReadOnly(true)"
+        errorLine2="                                 ~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="122"
+            column="34"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                .setAdditionalAction("
+        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="152"
+            column="34"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                        AnnotationTriggerEvent.FORM_CALCULATE,"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="155"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                        new JavaScriptAction(&quot;&quot;"
+        errorLine2="                                        ^">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="158"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setReadOnly can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                .setReadOnly(true)"
+        errorLine2="                                 ~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="164"
+            column="34"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                .setAdditionalAction("
+        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="183"
+            column="34"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                        AnnotationTriggerEvent.FORM_CHANGED,"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="186"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                        new JavaScriptAction(&quot;AFNumber_Keystroke(2, 0, 0, 0, &apos;&apos;, true);&quot;))"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="189"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                .setAdditionalAction("
+        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="190"
+            column="34"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                        AnnotationTriggerEvent.FIELD_FORMAT,"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="193"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                        new JavaScriptAction(&quot;AFNumber_Format(2, 0, 0, 0, &apos;&apos;, true);&quot;))"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="195"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                .setAdditionalAction("
+        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="204"
+            column="34"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                        AnnotationTriggerEvent.FORM_CHANGED,"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="205"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                        new JavaScriptAction(&quot;AFNumber_Keystroke(2, 3, 0, 0, &apos;€&apos;, true);&quot;))"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="206"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                .setAdditionalAction("
+        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="207"
+            column="34"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                        AnnotationTriggerEvent.FIELD_FORMAT,"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="208"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                        new JavaScriptAction(&quot;AFNumber_Format(2, 3, 0, 0, &apos;€&apos;, true);&quot;))"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="209"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                .setAdditionalAction("
+        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="218"
+            column="34"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                        AnnotationTriggerEvent.FORM_CHANGED,"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="219"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                        new JavaScriptAction(&quot;AFDate_KeystrokeEx(&apos;mm/dd/yyyy&apos;);&quot;))"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="220"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                .setAdditionalAction("
+        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="221"
+            column="34"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                        AnnotationTriggerEvent.FIELD_FORMAT,"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="222"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                        new JavaScriptAction(&quot;AFDate_FormatEx(&apos;mm/dd/yyyy&apos;);&quot;))"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="223"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                .setAdditionalAction("
+        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="232"
+            column="34"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                        AnnotationTriggerEvent.FORM_CHANGED,"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="233"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                        new JavaScriptAction(&quot;AFTime_Keystroke(&apos;HH:MM::ss&apos;);&quot;))"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="234"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                .setAdditionalAction("
+        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="235"
+            column="34"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                        AnnotationTriggerEvent.FIELD_FORMAT,"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="236"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                                        new JavaScriptAction(&quot;AFTime_Format(&apos;HH:MM::ss&apos;);&quot;))"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="237"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                .setAdditionalAction("
+        errorLine2="                 ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="269"
+            column="18"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                        AnnotationTriggerEvent.MOUSE_UP,"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="272"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="RestrictedApi"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        errorLine1="                        new JavaScriptAction(&quot;&quot;"
+        errorLine2="                        ^">
+        <location
+            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
+            line="274"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="PrivateResource"
+        message="The resource `@drawable/pspdf__ic_align` is marked as private in android:pspdfkit:unspecified"
+        errorLine1="        app:icon=&quot;@drawable/pspdf__ic_align&quot; />"
+        errorLine2="                  ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_document_comparison.xml"
+            line="23"
+            column="19"/>
+    </issue>
+
+    <issue
+        id="PrivateResource"
+        message="The resource `@color/pspdf__color_white` is marked as private in android:pspdfkit:unspecified"
+        errorLine1="            android:textColor=&quot;@color/pspdf__color_white&quot;"
+        errorLine2="                               ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/custom_annotation_inspector.xml"
+            line="27"
+            column="32"/>
+    </issue>
+
+    <issue
+        id="PrivateResource"
+        message="The resource `@color/pspdf__color_black` is marked as private in android:pspdfkit:unspecified"
+        errorLine1="        &lt;item name=&quot;colorOnSecondary&quot;>@color/pspdf__color_black&lt;/item>"
+        errorLine2="                                      ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dark_theme.xml"
+            line="15"
+            column="39"/>
+    </issue>
+
+    <issue
+        id="PrivateResource"
+        message="The resource `@color/pspdf__color_black` is marked as private in android:pspdfkit:unspecified"
+        errorLine1="        &lt;item name=&quot;pspdf__backgroundColor&quot;>@color/pspdf__color_black&lt;/item>"
+        errorLine2="                                            ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dark_theme.xml"
+            line="63"
+            column="45"/>
+    </issue>
+
+    <issue
+        id="PrivateResource"
+        message="The resource `@color/pspdf__gray_70` is marked as private in android:pspdfkit:unspecified"
+        errorLine1="        &lt;item name=&quot;pspdf__borderColor&quot;>@color/pspdf__gray_70&lt;/item>"
+        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dark_theme.xml"
+            line="64"
+            column="41"/>
+    </issue>
+
+    <issue
+        id="PrivateResource"
+        message="The resource `@color/pspdf__gray_80` is marked as private in android:pspdfkit:unspecified"
+        errorLine1="        &lt;item name=&quot;pspdf__fontButtonsTintColor&quot;>@color/pspdf__gray_80&lt;/item>"
+        errorLine2="                                                 ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dark_theme.xml"
+            line="65"
+            column="50"/>
+    </issue>
+
+    <issue
+        id="PrivateResource"
+        message="The resource `@color/pspdf__gray_80` is marked as private in android:pspdfkit:unspecified"
+        errorLine1="        &lt;item name=&quot;pspdf__fontSmallButtonsTintColor&quot;>@color/pspdf__gray_80&lt;/item>"
+        errorLine2="                                                      ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dark_theme.xml"
+            line="66"
+            column="55"/>
+    </issue>
+
+    <issue
+        id="PrivateResource"
+        message="The resource `@color/pspdf__gray_70` is marked as private in android:pspdfkit:unspecified"
+        errorLine1="        &lt;item name=&quot;pspdf__fontButtonsTintColorChecked&quot;>@color/pspdf__gray_70&lt;/item>"
+        errorLine2="                                                        ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dark_theme.xml"
+            line="67"
+            column="57"/>
+    </issue>
+
+    <issue
+        id="PrivateResource"
+        message="The resource `@color/pspdf__gray_20` is marked as private in android:pspdfkit:unspecified"
+        errorLine1="        &lt;item name=&quot;pspdf__textColor&quot;>@color/pspdf__gray_20&lt;/item>"
+        errorLine2="                                      ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dark_theme.xml"
+            line="68"
+            column="39"/>
+    </issue>
+
+    <issue
+        id="PrivateResource"
+        message="The resource `@color/pspdf__gray_20` is marked as private in android:pspdfkit:unspecified"
+        errorLine1="        &lt;item name=&quot;pspdf__iconBorderColor&quot;>@color/pspdf__gray_20&lt;/item>"
+        errorLine2="                                            ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dark_theme.xml"
+            line="69"
+            column="45"/>
+    </issue>
+
+    <issue
+        id="PrivateResource"
+        message="The resource `@color/pspdf__gray_20` is marked as private in android:pspdfkit:unspecified"
+        errorLine1="        &lt;item name=&quot;pspdf__iconsColor&quot;>@color/pspdf__gray_20&lt;/item>"
+        errorLine2="                                       ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dark_theme.xml"
+            line="70"
+            column="40"/>
+    </issue>
+
+    <issue
+        id="PrivateResource"
+        message="The resource `@color/pspdf__color_signature_yellow` is marked as private in android:pspdfkit:unspecified"
+        errorLine1="        &lt;item name=&quot;pspdf__itemRippleBackgroundColor&quot;>@color/pspdf__color_signature_yellow&lt;/item>"
+        errorLine2="                                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dark_theme.xml"
+            line="175"
+            column="55"/>
+    </issue>
+
+    <issue
+        id="PrivateResource"
+        message="The resource `@color/pspdf__gray_20` is marked as private in android:pspdfkit:unspecified"
+        errorLine1="        &lt;item name=&quot;pspdf__titleTextColor&quot;>@color/pspdf__gray_20&lt;/item>"
+        errorLine2="                                           ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dark_theme.xml"
+            line="260"
+            column="44"/>
+    </issue>
+
+    <issue
+        id="PrivateResource"
+        message="The resource `@color/pspdf__gray_20` is marked as private in android:pspdfkit:unspecified"
+        errorLine1="        &lt;item name=&quot;pspdf__titleIconsColor&quot;>@color/pspdf__gray_20&lt;/item>"
+        errorLine2="                                            ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dark_theme.xml"
+            line="261"
+            column="45"/>
+    </issue>
+
+    <issue
+        id="PrivateResource"
+        message="The resource `@color/pspdf__blue_darkmode` is marked as private in android:pspdfkit:unspecified"
+        errorLine1="        &lt;item name=&quot;colorPrimary&quot;>@color/pspdf__blue_darkmode&lt;/item>"
+        errorLine2="                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dark_theme.xml"
+            line="265"
+            column="35"/>
+    </issue>
+
+    <issue
+        id="PrivateResource"
+        message="The resource `@color/pspdf__blue_darkmode` is marked as private in android:pspdfkit:unspecified"
+        errorLine1="        &lt;item name=&quot;colorAccent&quot;>@color/pspdf__blue_darkmode&lt;/item>"
+        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dark_theme.xml"
+            line="266"
+            column="34"/>
+    </issue>
+
+    <issue
+        id="PrivateResource"
+        message="The resource `@color/pspdf__color_black` is marked as private in android:pspdfkit:unspecified"
+        errorLine1="        &lt;item name=&quot;android:colorBackground&quot;>@color/pspdf__color_black&lt;/item>"
+        errorLine2="                                             ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dark_theme.xml"
+            line="267"
+            column="46"/>
+    </issue>
+
+    <issue
+        id="PrivateResource"
+        message="The resource `@color/pspdf__gray_70` is marked as private in android:pspdfkit:unspecified"
+        errorLine1="        &lt;item name=&quot;pspdf__settings_unselected_color&quot;>@color/pspdf__gray_70&lt;/item>"
+        errorLine2="                                                      ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dark_theme.xml"
+            line="268"
+            column="55"/>
+    </issue>
+
+    <issue
+        id="PrivateResource"
+        message="The resource `@color/pspdf__color_black` is marked as private in android:pspdfkit:unspecified"
+        errorLine1="    &lt;item android:color=&quot;@color/pspdf__color_black&quot; android:state_activated=&quot;true&quot; android:state_enabled=&quot;false&quot; />"
+        errorLine2="                         ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/color/pspdf__dark_catalog_theme_settings_tint.xml"
+            line="9"
+            column="26"/>
+    </issue>
+
+    <issue
+        id="PrivateResource"
+        message="The resource `@color/pspdf__gray_70` is marked as private in android:pspdfkit:unspecified"
+        errorLine1="    &lt;item android:color=&quot;@color/pspdf__gray_70&quot; android:state_activated=&quot;false&quot; android:state_enabled=&quot;false&quot; />"
+        errorLine2="                         ~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/color/pspdf__dark_catalog_theme_settings_tint.xml"
+            line="10"
+            column="26"/>
+    </issue>
+
+    <issue
+        id="PrivateResource"
+        message="The resource `@color/pspdf__color_black` is marked as private in android:pspdfkit:unspecified"
+        errorLine1="    &lt;item android:color=&quot;@color/pspdf__color_black&quot; android:state_activated=&quot;true&quot; />"
+        errorLine2="                         ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/color/pspdf__dark_catalog_theme_settings_tint.xml"
+            line="11"
+            column="26"/>
+    </issue>
+
+    <issue
+        id="PrivateResource"
+        message="The resource `@color/pspdf__color_white` is marked as private in android:pspdfkit:unspecified"
+        errorLine1="        &lt;item name=&quot;colorOnSecondary&quot;>@color/pspdf__color_white&lt;/item>"
+        errorLine2="                                      ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/styles.xml"
+            line="35"
+            column="39"/>
+    </issue>
+
+    <issue
+        id="PrivateResource"
+        message="The resource `@color/pspdf__color_white` is marked as private in android:pspdfkit:unspecified"
+        errorLine1="        &lt;item name=&quot;pspdf__textColor&quot;>@color/pspdf__color_white&lt;/item>"
+        errorLine2="                                      ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/styles.xml"
+            line="85"
+            column="39"/>
+    </issue>
+
+    <issue
+        id="UseCompoundDrawables"
+        message="This tag and its children can be replaced by one `&lt;TextView/>` and a compound drawable"
+        errorLine1="&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2=" ~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/item_kiosk_item.xml"
+            line="9"
+            column="2"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (1774 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector."
+        errorLine1="        android:pathData=&quot;M13.9846,12.6191L13.3522,10.7217L13.3522,10.7217L13.9846,12.6191ZM13.7078,12.7114L13.0754,10.814L13.0754,10.814L13.7078,12.7114ZM11.6041,10.2386L13.5015,10.871L11.6041,10.2386ZM12.5352,13.8093L11.121,15.2236L12.5352,16.6378L13.9494,15.2236L12.5352,13.8093ZM10.4139,11.688L8.9996,10.2738L7.5854,11.688L8.9996,13.1022L10.4139,11.688ZM18.5456,4.2634L19.9598,5.6776L22.7882,2.8492L21.374,1.435L18.5456,4.2634ZM13.3522,10.7217L13.0754,10.814L14.3403,14.6087L14.6171,14.5165L13.3522,10.7217ZM13.4092,11.1478L13.5015,10.871L9.7067,9.6061L9.6145,9.8829L13.4092,11.1478ZM12.0982,11.4179L11.121,12.3951L13.9494,15.2236L14.9266,14.2464L12.0982,11.4179ZM13.9494,12.3951L11.8281,10.2738L8.9996,13.1022L11.121,15.2236L13.9494,12.3951ZM11.8281,13.1022L12.8053,12.125L9.9768,9.2966L8.9996,10.2738L11.8281,13.1022ZM19.9598,4.2634L13.7431,10.4801L16.5715,13.3086L22.7882,7.0918L19.9598,4.2634ZM13.7431,10.4801L19.9598,4.2634L17.1314,1.435L10.9146,7.6517L13.7431,10.4801ZM9.6145,9.8829C9.6881,9.662 9.8122,9.4613 9.9768,9.2966L12.8053,12.125C13.0797,11.8506 13.2865,11.516 13.4092,11.1478L9.6145,9.8829ZM13.0754,10.814C12.7072,10.9367 12.3726,11.1435 12.0982,11.4179L14.9266,14.2464C14.7619,14.411 14.5612,14.5351 14.3403,14.6087L13.0754,10.814ZM14.6171,14.5165C15.3535,14.271 16.0226,13.8574 16.5715,13.3086L13.7431,10.4801C13.6333,10.5899 13.4995,10.6726 13.3522,10.7217L14.6171,14.5165ZM13.5015,10.871C13.5506,10.7237 13.6333,10.5899 13.7431,10.4801L10.9146,7.6517C10.3658,8.2006 9.9522,8.8697 9.7067,9.6061L13.5015,10.871ZM19.9598,5.6776C19.5693,5.2871 19.5693,4.6539 19.9598,4.2634L22.7882,7.0918C23.9598,5.9203 23.9598,4.0208 22.7882,2.8492L19.9598,5.6776ZM21.374,1.435C20.2024,0.2634 18.3029,0.2634 17.1314,1.435L19.9598,4.2634C19.5693,4.6539 18.9361,4.6539 18.5456,4.2634L21.374,1.435Z&quot;"
+        errorLine2="                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/drawable/ic_annotations.xml"
+            line="17"
+            column="27"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (2452 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector."
+        errorLine1="      android:pathData=&quot;M16.3867,12C16.4849,11.999 16.5802,12.0335 16.655,12.0972C16.7297,12.1609 16.7789,12.2495 16.7934,12.3467L17.0467,14.0467C17.3996,14.1408 17.7383,14.2821 18.0534,14.4667L19.4334,13.4467C19.5121,13.3878 19.6095,13.3593 19.7076,13.3667C19.8056,13.374 19.8977,13.4167 19.9667,13.4867L20.5134,14.0334C20.5834,14.1024 20.6261,14.1945 20.6334,14.2925C20.6408,14.3906 20.6124,14.488 20.5534,14.5667L19.5334,15.9467C19.718,16.2618 19.8593,16.6005 19.9534,16.9534L21.6534,17.2067C21.7506,17.2212 21.8392,17.2704 21.9029,17.3451C21.9666,17.4199 22.0012,17.5152 22.0001,17.6134V18.3867C22.0012,18.4849 21.9666,18.5802 21.9029,18.655C21.8392,18.7297 21.7506,18.7789 21.6534,18.7934L19.9534,19.0467C19.8593,19.3996 19.718,19.7383 19.5334,20.0534L20.5534,21.4334C20.6124,21.5121 20.6408,21.6095 20.6334,21.7076C20.6261,21.8056 20.5834,21.8977 20.5134,21.9667L19.9667,22.5134C19.8977,22.5834 19.8056,22.6261 19.7076,22.6334C19.6095,22.6408 19.5121,22.6124 19.4334,22.5534L18.0534,21.5334C17.7383,21.718 17.3996,21.8593 17.0467,21.9534L16.7934,23.6534C16.7789,23.7506 16.7297,23.8392 16.655,23.9029C16.5802,23.9666 16.4849,24.0012 16.3867,24.0001H15.6134C15.5152,24.0012 15.4199,23.9666 15.3451,23.9029C15.2704,23.8392 15.2212,23.7506 15.2067,23.6534L14.9534,21.9534C14.6005,21.8593 14.2618,21.718 13.9467,21.5334L12.5667,22.5534C12.488,22.6124 12.3906,22.6408 12.2925,22.6334C12.1945,22.6261 12.1024,22.5834 12.0334,22.5134L11.4867,22.0001C11.4167,21.931 11.374,21.839 11.3667,21.7409C11.3593,21.6429 11.3878,21.5455 11.4467,21.4667L12.4667,20.0534C12.2821,19.7383 12.1408,19.3996 12.0467,19.0467L10.3467,18.7934C10.2495,18.7789 10.1609,18.7297 10.0972,18.655C10.0335,18.5802 9.999,18.4849 10,18.3867V17.6134C9.999,17.5152 10.0335,17.4199 10.0972,17.3451C10.1609,17.2704 10.2495,17.2212 10.3467,17.2067L12.0467,16.9534C12.1408,16.6005 12.2821,16.2618 12.4667,15.9467L11.4467,14.5667C11.3781,14.4857 11.3439,14.3811 11.3514,14.2752C11.3588,14.1693 11.4074,14.0706 11.4867,14L12,13.4867C12.0691,13.4167 12.1611,13.374 12.2592,13.3667C12.3573,13.3593 12.4547,13.3878 12.5334,13.4467L13.9467,14.4667C14.2618,14.2821 14.6005,14.1408 14.9534,14.0467L15.2067,12.3467C15.2212,12.2495 15.2704,12.1609 15.3451,12.0972C15.4199,12.0335 15.5152,11.999 15.6134,12H16.3867ZM16.0001,20.0001C17.1047,20.0001 18.0001,19.1047 18.0001,18.0001C18.0001,16.8956 17.1047,16.0001 16.0001,16.0001C14.8956,16.0001 14.0001,16.8956 14.0001,18.0001C14.0001,19.1047 14.8956,20.0001 16.0001,20.0001Z&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/drawable/ic_document_processing.xml"
+            line="13"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (2252 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector."
+        errorLine1="      android:pathData=&quot;M15.8822,4.8221C14.6763,4.3189 13.3701,3.9967 12,3.9967C8.6301,3.9967 5.6468,5.9458 3.5915,7.7441C2.5467,8.6583 1.7006,9.5698 1.1157,10.2522C0.8227,10.5941 0.5936,10.8803 0.4363,11.0831C0.3577,11.1845 0.2968,11.2653 0.2549,11.3218C0.2339,11.35 0.2176,11.3723 0.2061,11.388L0.1925,11.4067L0.1885,11.4124L0.1866,11.4149C-0.0617,11.7626 -0.0621,12.2302 0.1863,12.5779L1,11.9967C0.1863,12.5779 0.1869,12.5789 0.1871,12.5792L0.1885,12.581L0.1925,12.5867L0.2061,12.6054C0.2176,12.6212 0.2339,12.6434 0.2549,12.6716C0.2968,12.7282 0.3577,12.8089 0.4363,12.9103C0.5936,13.1131 0.8227,13.3993 1.1157,13.7412C1.7006,14.4236 2.5467,15.3351 3.5915,16.2493C3.741,16.3801 3.8953,16.5116 4.0544,16.6432L5.476,15.2224C5.282,15.0651 5.0927,14.9053 4.9085,14.7441C3.9533,13.9083 3.1743,13.0698 2.6342,12.4397C2.4942,12.2762 2.3706,12.1273 2.2646,11.9967C2.3706,11.8661 2.4942,11.7172 2.6342,11.5537C3.1743,10.9236 3.9533,10.0851 4.9085,9.2493C6.8532,7.5476 9.3698,5.9967 12,5.9967C12.7895,5.9967 13.5687,6.1364 14.3254,6.3781L15.8822,4.8221ZM18.5208,8.7685L19.9416,7.3469C20.1021,7.4796 20.2578,7.6122 20.4085,7.7441C21.4533,8.6583 22.2993,9.5698 22.8842,10.2522C23.1773,10.5941 23.4064,10.8803 23.5637,11.0831C23.6423,11.1845 23.7031,11.2653 23.7451,11.3218C23.7661,11.35 23.7824,11.3723 23.7939,11.388L23.8075,11.4067L23.8115,11.4124L23.8129,11.4142C23.8131,11.4145 23.8137,11.4155 23,11.9967L23.8133,12.5785L23.8115,12.581L23.8075,12.5867L23.7939,12.6054C23.7824,12.6212 23.7661,12.6434 23.7451,12.6716C23.7031,12.7282 23.6423,12.8089 23.5637,12.9103C23.4064,13.1131 23.1773,13.3993 22.8842,13.7412C22.2993,14.4236 21.4533,15.3351 20.4085,16.2493C18.3532,18.0477 15.3698,19.9967 12,19.9967C10.6315,19.9967 9.3268,19.6753 8.1221,19.1731L9.6779,17.6164C10.4335,17.8574 11.2116,17.9967 12,17.9967C14.6301,17.9967 17.1468,16.4458 19.0915,14.7441C20.0467,13.9083 20.8256,13.0698 21.3657,12.4397C21.5058,12.2762 21.6294,12.1273 21.7354,11.9967C21.6294,11.8661 21.5058,11.7172 21.3657,11.5537C20.8256,10.9236 20.0467,10.0851 19.0915,9.2493C18.9063,9.0872 18.716,8.9266 18.5208,8.7685ZM23.8133,12.5785C23.8135,12.5782 23.8137,12.5779 23,11.9967L23.8137,11.4155C24.0621,11.7632 24.0617,12.2308 23.8133,12.5785ZM1,11.9967L0.1866,11.4149C0.1864,11.4152 0.1863,11.4155 1,11.9967Z&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/drawable/ic_hide.xml"
+            line="7"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (2296 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector."
+        errorLine1="      android:pathData=&quot;M5.5618,19.19C4.8398,19.19 4.1685,19.0443 3.5478,18.753C2.9272,18.449 2.4205,18.031 2.0278,17.499C1.8758,17.271 1.7998,17.0493 1.7998,16.834C1.7998,16.53 1.9202,16.2703 2.1608,16.055C2.4015,15.827 2.6485,15.713 2.9018,15.713C3.2312,15.713 3.5858,15.903 3.9658,16.283C4.2065,16.511 4.4535,16.6757 4.7068,16.777C4.9602,16.8657 5.2452,16.91 5.5618,16.91C5.9292,16.91 6.2775,16.815 6.6068,16.625C6.9488,16.435 7.2212,16.1817 7.4238,15.865C7.6265,15.5357 7.7278,15.1937 7.7278,14.839V6.859C7.7278,6.5297 7.8482,6.2573 8.0888,6.042C8.3295,5.814 8.6082,5.7 8.9248,5.7C9.2795,5.7 9.5645,5.8077 9.7798,6.023C9.9952,6.2383 10.1028,6.517 10.1028,6.859V14.839C10.1028,15.599 9.9002,16.3147 9.4948,16.986C9.0895,17.6573 8.5385,18.1957 7.8418,18.601C7.1452,18.9937 6.3852,19.19 5.5618,19.19ZM17.3232,19.19C16.4112,19.19 15.6006,19.076 14.8912,18.848C14.1819,18.62 13.5169,18.2337 12.8962,17.689C12.5542,17.385 12.3832,17.0493 12.3832,16.682C12.3832,16.3907 12.4909,16.1373 12.7062,15.922C12.9216,15.694 13.1812,15.58 13.4852,15.58C13.7259,15.58 13.9412,15.656 14.1312,15.808C14.6379,16.226 15.1319,16.53 15.6132,16.72C16.0946,16.91 16.6646,17.005 17.3232,17.005C18.0326,17.005 18.6406,16.8467 19.1472,16.53C19.6666,16.2133 19.9262,15.8207 19.9262,15.352C19.9262,14.782 19.6729,14.3387 19.1662,14.022C18.6596,13.6927 17.8552,13.4457 16.7532,13.281C13.9792,12.8757 12.5922,11.5837 12.5922,9.405C12.5922,8.607 12.8012,7.9167 13.2192,7.334C13.6372,6.7387 14.2072,6.289 14.9292,5.985C15.6512,5.6683 16.4556,5.51 17.3422,5.51C18.1402,5.51 18.8876,5.6303 19.5842,5.871C20.2936,6.1117 20.8826,6.4283 21.3512,6.821C21.7186,7.1123 21.9022,7.448 21.9022,7.828C21.9022,8.1193 21.7946,8.379 21.5792,8.607C21.3639,8.8223 21.1106,8.93 20.8192,8.93C20.6292,8.93 20.4582,8.873 20.3062,8.759C19.9769,8.493 19.5146,8.2523 18.9192,8.037C18.3366,7.809 17.8109,7.695 17.3422,7.695C16.5442,7.695 15.9236,7.847 15.4802,8.151C15.0496,8.4423 14.8342,8.8287 14.8342,9.31C14.8342,9.8547 15.0559,10.2663 15.4992,10.545C15.9552,10.8237 16.6646,11.0517 17.6272,11.229C18.7166,11.419 19.5842,11.666 20.2302,11.97C20.8889,12.2613 21.3829,12.6667 21.7122,13.186C22.0416,13.6927 22.2062,14.3703 22.2062,15.219C22.2062,16.017 21.9782,16.72 21.5222,17.328C21.0789,17.9233 20.4836,18.3857 19.7362,18.715C18.9889,19.0317 18.1846,19.19 17.3232,19.19Z&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/drawable/ic_javascript.xml"
+            line="7"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="VectorPath"
+        message="Very long vector path (6486 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector."
+        errorLine1="      android:pathData=&quot;M10.339,2.804L9.604,2.657L10.339,2.804ZM13.661,2.804L12.925,2.951V2.951L13.661,2.804ZM17.328,4.323L16.912,3.699L17.328,4.323ZM18.59,4.448L19.12,3.918V3.918L18.59,4.448ZM19.552,5.41L19.022,5.94V5.94L19.552,5.41ZM19.677,6.672L20.301,7.088L20.301,7.088L19.677,6.672ZM21.196,10.339L21.343,9.604L21.196,10.339ZM19.677,17.328L20.301,16.912L20.301,16.912L19.677,17.328ZM19.552,18.59L19.022,18.06H19.022L19.552,18.59ZM18.59,19.552L18.06,19.022V19.022L18.59,19.552ZM17.328,19.677L16.912,20.301L16.912,20.301L17.328,19.677ZM13.661,21.196L12.925,21.049L13.661,21.196ZM10.339,21.196L11.075,21.049L10.339,21.196ZM6.672,19.677L7.088,20.301L7.088,20.301L6.672,19.677ZM5.41,19.552L5.94,19.022H5.94L5.41,19.552ZM4.448,18.59L4.978,18.06H4.978L4.448,18.59ZM4.323,17.328L3.699,16.912H3.699L4.323,17.328ZM2.804,13.661L2.951,12.925L2.804,13.661ZM2.804,10.339L2.657,9.604L2.804,10.339ZM4.323,6.672L4.947,6.256L4.323,6.672ZM4.448,5.41L4.978,5.94H4.978L4.448,5.41ZM5.41,4.448L4.88,3.918L4.88,3.918L5.41,4.448ZM6.672,4.323L7.088,3.699V3.699L6.672,4.323ZM9.938,4.808L9.203,4.661L9.938,4.808ZM8.373,18.543L7.957,17.919L8.373,18.543ZM19.192,9.938L19.045,10.674L19.192,9.938ZM9.938,19.192L10.674,19.045L9.938,19.192ZM4.808,9.938L4.661,9.203L4.808,9.938ZM18.543,15.627L17.919,16.044L18.543,15.627ZM19.192,14.062L19.339,14.797L19.192,14.062ZM15.627,18.543L15.211,19.167L15.627,18.543ZM11.32,1.25C10.486,1.25 9.767,1.839 9.604,2.657L11.075,2.951C11.098,2.834 11.201,2.75 11.32,2.75V1.25ZM12.68,1.25H11.32V2.75H12.68V1.25ZM14.396,2.657C14.233,1.839 13.514,1.25 12.68,1.25V2.75C12.799,2.75 12.902,2.834 12.925,2.951L14.396,2.657ZM14.797,4.661L14.396,2.657L12.925,2.951L13.326,4.955L14.797,4.661ZM16.912,3.699L15.211,4.833L16.043,6.081L17.744,4.947L16.912,3.699ZM19.12,3.918C18.531,3.328 17.606,3.236 16.912,3.699L17.744,4.947C17.844,4.881 17.976,4.894 18.06,4.978L19.12,3.918ZM20.082,4.88L19.12,3.918L18.06,4.978L19.022,5.94L20.082,4.88ZM20.301,7.088C20.764,6.394 20.672,5.469 20.082,4.88L19.022,5.94C19.106,6.024 19.119,6.157 19.053,6.256L20.301,7.088ZM19.167,8.789L20.301,7.088L19.053,6.256L17.919,7.957L19.167,8.789ZM21.343,9.604L19.339,9.203L19.045,10.674L21.049,11.075L21.343,9.604ZM22.75,11.32C22.75,10.486 22.161,9.767 21.343,9.604L21.049,11.075C21.166,11.098 21.25,11.201 21.25,11.32H22.75ZM22.75,12.68V11.32H21.25V12.68H22.75ZM21.343,14.396C22.161,14.233 22.75,13.514 22.75,12.68H21.25C21.25,12.799 21.166,12.902 21.049,12.925L21.343,14.396ZM19.339,14.797L21.343,14.396L21.049,12.925L19.045,13.326L19.339,14.797ZM17.919,16.044L19.053,17.744L20.301,16.912L19.167,15.211L17.919,16.044ZM19.053,17.744C19.119,17.844 19.106,17.976 19.022,18.06L20.082,19.12C20.672,18.531 20.764,17.606 20.301,16.912L19.053,17.744ZM19.022,18.06L18.06,19.022L19.12,20.082L20.082,19.12L19.022,18.06ZM18.06,19.022C17.976,19.106 17.844,19.119 17.744,19.053L16.912,20.301C17.606,20.764 18.531,20.672 19.12,20.082L18.06,19.022ZM17.744,19.053L16.043,17.919L15.211,19.167L16.912,20.301L17.744,19.053ZM14.396,21.343L14.797,19.339L13.326,19.045L12.925,21.049L14.396,21.343ZM12.68,22.75C13.514,22.75 14.233,22.161 14.396,21.343L12.925,21.049C12.902,21.166 12.799,21.25 12.68,21.25V22.75ZM11.32,22.75H12.68V21.25H11.32V22.75ZM9.604,21.343C9.767,22.161 10.486,22.75 11.32,22.75V21.25C11.201,21.25 11.098,21.166 11.075,21.049L9.604,21.343ZM9.203,19.339L9.604,21.343L11.075,21.049L10.674,19.045L9.203,19.339ZM7.088,20.301L8.789,19.167L7.957,17.919L6.256,19.053L7.088,20.301ZM4.88,20.082C5.469,20.672 6.394,20.764 7.088,20.301L6.256,19.053C6.157,19.119 6.024,19.106 5.94,19.022L4.88,20.082ZM3.918,19.12L4.88,20.082L5.94,19.022L4.978,18.06L3.918,19.12ZM3.699,16.912C3.236,17.606 3.328,18.531 3.918,19.12L4.978,18.06C4.894,17.976 4.881,17.844 4.947,17.744L3.699,16.912ZM4.833,15.211L3.699,16.912L4.947,17.744L6.081,16.043L4.833,15.211ZM2.657,14.396L4.661,14.797L4.956,13.326L2.951,12.925L2.657,14.396ZM1.25,12.68C1.25,13.514 1.839,14.233 2.657,14.396L2.951,12.925C2.834,12.902 2.75,12.799 2.75,12.68H1.25ZM1.25,11.32V12.68H2.75V11.32H1.25ZM2.657,9.604C1.839,9.767 1.25,10.486 1.25,11.32H2.75C2.75,11.201 2.834,11.098 2.951,11.075L2.657,9.604ZM4.661,9.203L2.657,9.604L2.951,11.075L4.956,10.674L4.661,9.203ZM6.081,7.957L4.947,6.256L3.699,7.088L4.833,8.789L6.081,7.957ZM4.947,6.256C4.881,6.157 4.894,6.024 4.978,5.94L3.918,4.88C3.328,5.469 3.236,6.394 3.699,7.088L4.947,6.256ZM4.978,5.94L5.94,4.978L4.88,3.918L3.918,4.88L4.978,5.94ZM5.94,4.978C6.024,4.894 6.157,4.881 6.256,4.947L7.088,3.699C6.394,3.236 5.469,3.328 4.88,3.918L5.94,4.978ZM6.256,4.947L7.957,6.081L8.789,4.833L7.088,3.699L6.256,4.947ZM9.604,2.657L9.203,4.661L10.674,4.955L11.075,2.951L9.604,2.657ZM9.607,6.224C10.116,6.013 10.552,5.563 10.674,4.955L9.203,4.661C9.192,4.714 9.144,4.793 9.032,4.839L9.607,6.224ZM6.225,9.607C6.437,9.093 6.423,8.47 6.081,7.957L4.833,8.789C4.864,8.836 4.884,8.923 4.839,9.032L6.225,9.607ZM6.225,14.394C6.013,13.884 5.563,13.448 4.956,13.326L4.661,14.797C4.714,14.808 4.793,14.856 4.839,14.968L6.225,14.394ZM9.607,17.775C9.093,17.563 8.47,17.577 7.957,17.919L8.789,19.167C8.836,19.136 8.923,19.116 9.032,19.161L9.607,17.775ZM17.776,9.607C17.987,10.116 18.437,10.552 19.045,10.674L19.339,9.203C19.286,9.192 19.208,9.144 19.161,9.032L17.776,9.607ZM6.081,16.043C6.423,15.53 6.437,14.907 6.225,14.394L4.839,14.968C4.884,15.077 4.864,15.164 4.833,15.211L6.081,16.043ZM7.957,6.081C8.47,6.423 9.093,6.437 9.607,6.224L9.032,4.839C8.923,4.884 8.836,4.864 8.789,4.833L7.957,6.081ZM14.394,17.775C13.884,17.987 13.448,18.437 13.326,19.045L14.797,19.339C14.808,19.286 14.857,19.207 14.968,19.161L14.394,17.775ZM14.394,6.224C14.907,6.437 15.53,6.423 16.043,6.081L15.211,4.833C15.164,4.864 15.077,4.884 14.968,4.839L14.394,6.224ZM10.674,19.045C10.552,18.437 10.116,17.987 9.607,17.775L9.032,19.161C9.144,19.207 9.192,19.286 9.203,19.339L10.674,19.045ZM4.956,10.674C5.563,10.552 6.013,10.116 6.225,9.607L4.839,9.032C4.793,9.144 4.714,9.192 4.661,9.203L4.956,10.674ZM17.776,14.394C17.563,14.907 17.577,15.53 17.919,16.044L19.167,15.211C19.136,15.164 19.116,15.077 19.161,14.968L17.776,14.394ZM19.045,13.326C18.437,13.448 17.987,13.884 17.776,14.394L19.161,14.968C19.208,14.856 19.286,14.808 19.339,14.797L19.045,13.326ZM16.043,17.919C15.53,17.577 14.907,17.563 14.394,17.775L14.968,19.161C15.077,19.116 15.164,19.136 15.211,19.167L16.043,17.919ZM17.919,7.957C17.577,8.47 17.563,9.093 17.776,9.607L19.161,9.032C19.116,8.923 19.136,8.836 19.167,8.789L17.919,7.957ZM13.326,4.955C13.448,5.563 13.884,6.013 14.394,6.224L14.968,4.839C14.857,4.793 14.808,4.714 14.797,4.661L13.326,4.955Z&quot;"
+        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/drawable/ic_topbar_settings.xml"
+            line="7"
+            column="25"/>
+    </issue>
+
+    <issue
+        id="MergeRootFrame"
+        message="This `&lt;FrameLayout>` can be replaced with a `&lt;merge>` tag"
+        errorLine1="&lt;FrameLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/layout/activity_annotation_toolbar_fragment.xml"
+            line="8"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="MergeRootFrame"
+        message="This `&lt;FrameLayout>` can be replaced with a `&lt;merge>` tag"
+        errorLine1="&lt;FrameLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/layout/activity_custom_fragment.xml"
+            line="8"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="MergeRootFrame"
+        message="This `&lt;FrameLayout>` can be replaced with a `&lt;merge>` tag"
+        errorLine1="&lt;FrameLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/layout/activity_custom_fragment_runtime_configuration.xml"
+            line="9"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="MergeRootFrame"
+        message="This `&lt;FrameLayout>` can be replaced with a `&lt;merge>` tag"
+        errorLine1="&lt;FrameLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/layout/activity_custom_ink_signature.xml"
+            line="8"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="MergeRootFrame"
+        message="This `&lt;FrameLayout>` can be replaced with a `&lt;merge>` tag"
+        errorLine1="&lt;FrameLayout"
+        errorLine2="^">
+        <location
+            file="src/main/res/layout/activity_custom_search_ui.xml"
+            line="9"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="MergeRootFrame"
+        message="This `&lt;FrameLayout>` can be replaced with a `&lt;merge>` tag"
+        errorLine1="&lt;FrameLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/layout/activity_form_editing_fragment.xml"
+            line="8"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="DisableBaselineAlignment"
+        message="Set `android:baselineAligned=&quot;false&quot;` on this element for better performance"
+        errorLine1="&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2=" ~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_persistent_sidebar.xml"
+            line="8"
+            column="2"/>
+    </issue>
+
+    <issue
+        id="DisableBaselineAlignment"
+        message="Set `android:baselineAligned=&quot;false&quot;` on this element for better performance"
+        errorLine1="    &lt;LinearLayout"
+        errorLine2="     ~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/item_annotation.xml"
+            line="14"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `?colorPrimaryDark` with a theme that also paints a background (inferred theme is `@style/PSPDFCatalog.Theme.Light`)"
+        errorLine1="    android:background=&quot;?colorPrimaryDark&quot;"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_custom_inline_search_container.xml"
+            line="13"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `?colorPrimaryDark` with a theme that also paints a background (inferred theme is `@style/PSPDFCatalog.Theme.Light`)"
+        errorLine1="                android:background=&quot;?colorPrimaryDark&quot;"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_custom_search_ui_navigationbar.xml"
+            line="13"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="Overdraw"
+        message="Possible overdraw: Root element paints background `?android:windowBackground` with a theme that also paints a background (inferred theme is `@style/PSPDFCatalog.Theme.Light`)"
+        errorLine1="    android:background=&quot;?android:windowBackground&quot;>"
+        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/item_section.xml"
+            line="11"
+            column="5"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.layout.activity_custom_search_ui_navigationbar` appears to be unused"
+        errorLine1="&lt;RelativeLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/layout/activity_custom_search_ui_navigationbar.xml"
+            line="9"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.menu.activity_main` appears to be unused"
+        errorLine1="&lt;menu xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/menu/activity_main.xml"
+            line="8"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.layout.activity_main_catalog` appears to be unused"
+        errorLine1="&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/layout/activity_main_catalog.xml"
+            line="8"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.menu.activity_settings` appears to be unused"
+        errorLine1="&lt;menu xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/menu/activity_settings.xml"
+            line="9"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.bg_splash_logo` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi/bg_splash_logo.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.gray_darker` appears to be unused"
+        errorLine1="    &lt;color name=&quot;gray_darker&quot;>#3D434E&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="14"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.black_translucent` appears to be unused"
+        errorLine1="    &lt;color name=&quot;black_translucent&quot;>#64000000&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="33"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.dark_theme_orange` appears to be unused"
+        errorLine1="    &lt;color name=&quot;dark_theme_orange&quot;>#FFFCBF20&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="44"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.dark_annotation_menu_background` appears to be unused"
+        errorLine1="    &lt;color name=&quot;dark_annotation_menu_background&quot;>#142132&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="46"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.dialog_text_color` appears to be unused"
+        errorLine1="    &lt;color name=&quot;dialog_text_color&quot;>#FF212121&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="68"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.java_blue` appears to be unused"
+        errorLine1="    &lt;color name=&quot;java_blue&quot;>#DD007396&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="71"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.color.java_orange` appears to be unused"
+        errorLine1="    &lt;color name=&quot;java_orange&quot;>#DDED8B00&lt;/color>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/colors.xml"
+            line="72"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.activity_horizontal_margin` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;activity_horizontal_margin&quot;>16dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="10"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.activity_vertical_margin` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;activity_vertical_margin&quot;>16dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="11"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.custom_scrollbar_handle_size` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;custom_scrollbar_handle_size&quot;>48dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="20"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.thumbnail_bar_height` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;thumbnail_bar_height&quot;>54dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="26"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.dimen.thumbnail_bar_width` appears to be unused"
+        errorLine1="    &lt;dimen name=&quot;thumbnail_bar_width&quot;>54dp&lt;/dimen>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="27"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_java` appears to be unused"
+        errorLine1="&lt;vector android:height=&quot;24dp&quot; android:viewportHeight=&quot;502.632&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_java.xml"
+            line="8"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_kotlin` appears to be unused"
+        errorLine1="&lt;vector android:height=&quot;24dp&quot; android:viewportHeight=&quot;24&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/drawable/ic_kotlin.xml"
+            line="8"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_magnify` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi/ic_magnify.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_view_module` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi/ic_view_module.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.drawable.ic_view_quilt` appears to be unused">
+        <location
+            file="src/main/res/drawable-hdpi/ic_view_quilt.png"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.layout.item_section` appears to be unused"
+        errorLine1="&lt;FrameLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/layout/item_section.xml"
+            line="7"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.xml.preferences` appears to be unused"
+        errorLine1="&lt;PreferenceScreen xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location
+            file="src/main/res/xml/preferences.xml"
+            line="9"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.action_settings` appears to be unused"
+        errorLine1="    &lt;string name=&quot;action_settings&quot;>Settings&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="11"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_category_activity` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_category_activity&quot;>Activity&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="13"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_category_layout` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_category_layout&quot;>Layout&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="14"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_double_page_mode` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_double_page_mode&quot;>Double Page&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="15"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_category_search` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_category_search&quot;>Search&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="16"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_category_thumbnails_outline` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_category_thumbnails_outline&quot;>Thumbnails / Outline&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="17"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_category_annotations` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_category_annotations&quot;>Annotations&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="18"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_category_forms` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_category_forms&quot;>Forms&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="19"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_category_actions` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_category_actions&quot;>Actions&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="20"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_category_customization` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_category_customization&quot;>Customization&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="21"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_category_other` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_category_other&quot;>Other&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="22"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_activity_immersive_mode` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_activity_immersive_mode&quot;>Immersive mode&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="24"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_actions_show_outline_action` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_actions_show_outline_action&quot;>Enable document outline&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="25"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_actions_show_annotationlist_action` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_actions_show_annotationlist_action&quot;>Enable annotation list&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="26"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_show_thumbnail_grid_action` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_show_thumbnail_grid_action&quot;>Show thumbnail grid&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="27"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.thumbnail_bar_mode` appears to be unused"
+        errorLine1="    &lt;string name=&quot;thumbnail_bar_mode&quot;>Thumbnail bar mode&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="29"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_fit_page_to_width` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_fit_page_to_width&quot;>Fit page to width&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="41"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_restore_last_viewed_page` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_restore_last_viewed_page&quot;>Restore last viewed page&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="42"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_inline_search` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_inline_search&quot;>Inline search&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="43"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_scroll_direction` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_scroll_direction&quot;>Scroll direction&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="44"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_theme_mode` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_theme_mode&quot;>Viewer theme mode&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="45"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_page_layout` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_page_layout&quot;>Page layout&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="46"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_scroll_continuously` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_scroll_continuously&quot;>Scroll continuously&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="47"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_enable_annotation_editing` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_enable_annotation_editing&quot;>Enable annotation editing&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="48"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_enable_annotation_rotation` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_enable_annotation_rotation&quot;>Enable annotation rotation&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="49"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.annotation_reply_mode` appears to be unused"
+        errorLine1="    &lt;string name=&quot;annotation_reply_mode&quot;>Annotation Replies&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="50"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_enable_form_editing` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_enable_form_editing&quot;>Enable form editing&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="59"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_show_share_action` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_show_share_action&quot;>Show share action&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="60"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_show_print_action` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_show_print_action&quot;>Show print action&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="61"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_invert_colors` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_invert_colors&quot;>Invert page colors&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="62"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_grayscale` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_grayscale&quot;>Grayscale&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="63"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_enable_text_selection` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_enable_text_selection&quot;>Enable text selection&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="64"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_start_page` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_start_page&quot;>Start page&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="65"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_start_page_dialog` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_start_page_dialog&quot;>Page to start document at (make sure it fits the number of pages in document you want to open): &lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="66"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_multi_threaded_rendering` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_multi_threaded_rendering&quot;>Multithreaded rendering&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="67"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_clear_cache` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_clear_cache&quot;>Clear cache&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="68"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_leak_canary_enabled` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_leak_canary_enabled&quot;>Enable LeakCanary&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="69"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_clear_app_data` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_clear_app_data&quot;>Clear app data&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="70"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_clear_app_data_summary` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_clear_app_data_summary&quot;>This will reset all stored app settings (kills the app, requires a restart).&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="71"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.preferred_language` appears to be unused"
+        errorLine1="    &lt;string name=&quot;preferred_language&quot;>Preferred language&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="73"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_show_search_action` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_show_search_action&quot;>Show search action&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="80"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_show_page_number_overlay` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_show_page_number_overlay&quot;>Show page number overlay&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="81"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_show_page_labels` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_show_page_labels&quot;>Show page labels&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="82"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_first_page_single` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_first_page_single&quot;>Display first page as single&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="99"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_show_gap_between_pages` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_show_gap_between_pages&quot;>Show gaps between pages&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="100"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.user_interface_view_mode` appears to be unused"
+        errorLine1="    &lt;string name=&quot;user_interface_view_mode&quot;>User interface view mode&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="106"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.hide_ui_when_creating_annotations` appears to be unused"
+        errorLine1="    &lt;string name=&quot;hide_ui_when_creating_annotations&quot;>Hide UI when creating annotations&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="119"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.setting_enable_volume_buttons_navigation` appears to be unused"
+        errorLine1="    &lt;string name=&quot;setting_enable_volume_buttons_navigation&quot;>Enable volume buttons navigation&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/settings_strings.xml"
+            line="120"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.title_activity_basic_example` appears to be unused"
+        errorLine1="    &lt;string name=&quot;title_activity_basic_example&quot;>Basic example&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="11"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.memoryDataProviderExampleTitle` appears to be unused"
+        errorLine1="    &lt;string name=&quot;memoryDataProviderExampleTitle&quot;>MemoryDataProvider&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="60"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.memoryDataProviderExampleDescription` appears to be unused"
+        errorLine1="    &lt;string name=&quot;memoryDataProviderExampleDescription&quot;>Loading a document from a byte-array using the MemoryDataProvider.&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="61"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.page_template_title_logo` appears to be unused"
+        errorLine1="    &lt;string name=&quot;page_template_title_logo&quot;>Custom Pattern&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="232"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.start_form_editing` appears to be unused"
+        errorLine1="    &lt;string name=&quot;start_form_editing&quot;>Start Form Editing&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="279"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.stop_form_editing` appears to be unused"
+        errorLine1="    &lt;string name=&quot;stop_form_editing&quot;>Stop Form Editing&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="280"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.start_signing` appears to be unused"
+        errorLine1="    &lt;string name=&quot;start_signing&quot;>Start Signing&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="281"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.string.checkbox_preference_enable_form_editing` appears to be unused"
+        errorLine1="    &lt;string name=&quot;checkbox_preference_enable_form_editing&quot;>Enable form editing&lt;/string>"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/strings.xml"
+            line="351"
+            column="13"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.style.PSPDFCatalog_Theme_MainActivity` appears to be unused"
+        errorLine1="    &lt;style name=&quot;PSPDFCatalog.Theme.MainActivity&quot; parent=&quot;Theme.MaterialComponents.Light&quot;>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/styles.xml"
+            line="24"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.style.PSPDFCatalog_Theme_PageCreator` appears to be unused"
+        errorLine1="    &lt;style name=&quot;PSPDFCatalog.Theme.PageCreator&quot;>"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/styles.xml"
+            line="115"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.style.Theme_CustomSearchUi` appears to be unused"
+        errorLine1="    &lt;style name=&quot;Theme_CustomSearchUi&quot; parent=&quot;Theme.AppCompat.NoActionBar&quot; />"
+        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/styles.xml"
+            line="122"
+            column="12"/>
+    </issue>
+
+    <issue
+        id="MonochromeLauncherIcon"
+        message="The application adaptive icon is missing a monochrome tag"
+        errorLine1="&lt;adaptive-icon xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
+        errorLine2="^">
+        <location
+            file="src/main/res/mipmap-v26/ic_launcher.xml"
+            line="8"
+            column="1"/>
+    </issue>
+
+    <issue
+        id="IconLocation"
+        message="Found bitmap drawable `res/drawable/mock_page.jpg` in densityless folder">
+        <location
+            file="src/main/res/drawable/mock_page.jpg"/>
+    </issue>
+
+    <issue
+        id="IconDensities"
+        message="Missing the following drawables in `drawable-hdpi`: page_template_preview.png (found in drawable-xxxhdpi)">
+        <location
+            file="src/main/res/drawable-hdpi"/>
+    </issue>
+
+    <issue
+        id="IconDensities"
+        message="Missing the following drawables in `drawable-mdpi`: page_template_preview.png (found in drawable-xxxhdpi)">
+        <location
+            file="src/main/res/drawable-mdpi"/>
+    </issue>
+
+    <issue
+        id="IconDensities"
+        message="Missing the following drawables in `drawable-xhdpi`: page_template_preview.png (found in drawable-xxxhdpi)">
+        <location
+            file="src/main/res/drawable-xhdpi"/>
+    </issue>
+
+    <issue
+        id="IconDensities"
+        message="Missing the following drawables in `drawable-xxhdpi`: page_template_preview.png (found in drawable-xxxhdpi)">
+        <location
+            file="src/main/res/drawable-xxhdpi"/>
+    </issue>
+
+    <issue
+        id="TextFields"
+        message="This text field does not specify an `inputType`"
+        errorLine1="    &lt;EditText"
+        errorLine2="     ~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_enter_instant_document_link.xml"
+            line="12"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="AlwaysShowAction"
+        message="Prefer &quot;`ifRoom`&quot; instead of &quot;`always`&quot;"
+        errorLine1="        app:showAsAction=&quot;collapseActionView|always&quot;/>"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/activity_main.xml"
+            line="18"
+            column="9"/>
+        <location
+            file="src/main/res/menu/activity_main.xml"
+            line="25"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute"
+        errorLine1="    &lt;EditText"
+        errorLine2="     ~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_enter_instant_document_link.xml"
+            line="12"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute"
+        errorLine1="    &lt;EditText"
+        errorLine2="     ~~~~~~~~">
+        <location
+            file="src/main/res/layout/custom_document_sharing_dialog.xml"
+            line="14"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute"
+        errorLine1="    &lt;EditText"
+        errorLine2="     ~~~~~~~~">
+        <location
+            file="src/main/res/layout/dialog_basic_auth.xml"
+            line="14"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="Autofill"
+        message="Missing `autofillHints` attribute"
+        errorLine1="    &lt;EditText"
+        errorLine2="     ~~~~~~~~">
+        <location
+            file="src/main/res/layout/dialog_basic_auth.xml"
+            line="24"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="        &lt;ImageView"
+        errorLine2="         ~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_custom_fragment.xml"
+            line="53"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="        &lt;ImageView"
+        errorLine2="         ~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_custom_fragment.xml"
+            line="61"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="        &lt;ImageView"
+        errorLine2="         ~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_custom_fragment.xml"
+            line="69"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="    &lt;ImageView"
+        errorLine2="     ~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_custom_search_ui_item.xml"
+            line="16"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="ContentDescription"
+        message="Missing `contentDescription` attribute on image"
+        errorLine1="&lt;ImageView"
+        errorLine2=" ~~~~~~~~~">
+        <location
+            file="src/main/res/layout/item_add_button.xml"
+            line="8"
+            column="2"/>
+    </issue>
+
+    <issue
+        id="LabelFor"
+        message="Missing accessibility label: provide either a view with an `android:labelFor` that references this view or provide an `android:hint`"
+        errorLine1="    &lt;EditText"
+        errorLine2="     ~~~~~~~~">
+        <location
+            file="src/main/res/layout/custom_document_sharing_dialog.xml"
+            line="14"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Enter Document Link&quot;, should use `@string` resource"
+        errorLine1="        android:hint=&quot;Enter Document Link&quot;/>"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_enter_instant_document_link.xml"
+            line="16"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Open Document&quot;, should use `@string` resource"
+        errorLine1="        android:text=&quot;Open Document&quot;/>"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_enter_instant_document_link.xml"
+            line="24"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Search&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Search&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/activity_fts_indexing.xml"
+            line="14"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Ignore page text&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Ignore page text&quot;/>"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/activity_fts_indexing.xml"
+            line="21"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Ignore annotations&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Ignore annotations&quot;/>"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/activity_fts_indexing.xml"
+            line="26"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Content Above&quot;, should use `@string` resource"
+        errorLine1="              android:text=&quot;Content Above&quot;/>"
+        errorLine2="              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_pdfuifragment_example.xml"
+            line="16"
+            column="15"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Content Below&quot;, should use `@string` resource"
+        errorLine1="              android:text=&quot;Content Below&quot;/>"
+        errorLine2="              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/activity_pdfuifragment_example.xml"
+            line="29"
+            column="15"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Rotate 90° clockwise&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Rotate 90° clockwise&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/activity_rotate_example.xml"
+            line="14"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Rotate 90° counterclockwise&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Rotate 90° counterclockwise&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/activity_rotate_example.xml"
+            line="19"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Previous annotation&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Previous annotation&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/activity_zoom_example.xml"
+            line="15"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Next annotation&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Next annotation&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/activity_zoom_example.xml"
+            line="21"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Next&quot;, should use `@string` resource"
+        errorLine1="                android:text=&quot;Next&quot;"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/custom_pdf_activity.xml"
+            line="50"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Previous&quot;, should use `@string` resource"
+        errorLine1="                android:text=&quot;Previous&quot;"
+        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/custom_pdf_activity.xml"
+            line="61"
+            column="17"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Reset All Flags&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Reset All Flags&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/flags_example.xml"
+            line="14"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Enable Hidden Flag&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Enable Hidden Flag&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/flags_example.xml"
+            line="19"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Enable Read-Only Flag&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Enable Read-Only Flag&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/flags_example.xml"
+            line="24"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Enable Print Flag (Enabled)&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Enable Print Flag (Enabled)&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/flags_example.xml"
+            line="29"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Enable No-View Flag&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Enable No-View Flag&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/flags_example.xml"
+            line="34"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Enable Locked Flag&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Enable Locked Flag&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/flags_example.xml"
+            line="39"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Enable Locked-Contents Flag&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Enable Locked-Contents Flag&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/flags_example.xml"
+            line="44"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Enable No-Zoom Flag&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Enable No-Zoom Flag&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/flags_example.xml"
+            line="49"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Perform OCR&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Perform OCR&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/ocr_example.xml"
+            line="13"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Extract range&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Extract range&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/processor_example.xml"
+            line="14"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Flatten annotations&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Flatten annotations&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/processor_example.xml"
+            line="19"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Remove link annotations&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Remove link annotations&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/processor_example.xml"
+            line="24"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Rotate pages by 90°&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Rotate pages by 90°&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/processor_example.xml"
+            line="29"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Add new pages&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Add new pages&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/processor_example.xml"
+            line="34"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Sharing dialog&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Sharing dialog&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/sharing_example.xml"
+            line="13"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Send via mail&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Send via mail&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/sharing_example.xml"
+            line="18"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Extract range&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Extract range&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/sharing_example.xml"
+            line="23"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="HardcodedText"
+        message="Hardcoded string &quot;Flatten annotations&quot;, should use `@string` resource"
+        errorLine1="        android:title=&quot;Flatten annotations&quot;"
+        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/sharing_example.xml"
+            line="28"
+            column="9"/>
+    </issue>
+
+    <issue
+        id="RelativeOverlap"
+        message="`@id/previousSearchResultButton` can overlap `@id/currentSearchResultTextView` if @id/currentSearchResultTextView, @string/previous grow due to localized text expansion"
+        errorLine1="        &lt;Button"
+        errorLine2="         ~~~~~~">
+        <location
+            file="src/main/res/layout/activity_custom_search_ui.xml"
+            line="54"
+            column="10"/>
+    </issue>
+
+    <issue
+        id="RelativeOverlap"
+        message="`@id/previousSearchResultButton` can overlap `@id/currentSearchResultTextView` if @id/currentSearchResultTextView, @string/previous grow due to localized text expansion"
+        errorLine1="    &lt;Button"
+        errorLine2="     ~~~~~~">
+        <location
+            file="src/main/res/layout/activity_custom_search_ui_navigationbar.xml"
+            line="37"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="RelativeOverlap"
+        message="`@id/show_user_interface_button` can overlap `@id/pspdf__activity_fragment_container` if @string/example_show_user_interface grows due to localized text expansion"
+        errorLine1="    &lt;Button"
+        errorLine2="     ~~~~~~">
+        <location
+            file="src/main/res/layout/user_interface_view_modes_activity.xml"
+            line="85"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="RelativeOverlap"
+        message="`@id/show_user_interface_button` can overlap `@id/pspdf__activity_title_overlay` if @string/example_show_user_interface grows due to localized text expansion"
+        errorLine1="    &lt;Button"
+        errorLine2="     ~~~~~~">
+        <location
+            file="src/main/res/layout/user_interface_view_modes_activity.xml"
+            line="85"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="RelativeOverlap"
+        message="`@id/show_user_interface_button` can overlap `FrameLayout-17` if @string/example_show_user_interface grows due to localized text expansion"
+        errorLine1="    &lt;Button"
+        errorLine2="     ~~~~~~">
+        <location
+            file="src/main/res/layout/user_interface_view_modes_activity.xml"
+            line="85"
+            column="6"/>
+    </issue>
+
+    <issue
+        id="RtlSymmetry"
+        message="When you define `paddingStart` you should probably also define `paddingEnd` for right-to-left symmetry"
+        errorLine1="            android:paddingStart=&quot;16dp&quot;"
+        errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/layout/custom_annotation_inspector.xml"
+            line="25"
+            column="13"/>
+    </issue>
+
+</issues>

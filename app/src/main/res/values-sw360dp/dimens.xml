@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~   Copyright © 2017-2024 PSPDFKit GmbH. All rights reserved.
+  ~
+  ~   The PSPDFKit Sample applications are licensed with a modified BSD license.
+  ~   Please see License for details. This notice may not be removed from this file.
+  -->
+
+<resources>
+
+    <!-- https://medium.com/sebs-top-tips/material-navigation-drawer-sizing-558aea1ad266 -->
+    <dimen name="drawer_max_width">304dp</dimen>
+</resources>

@@ -56,7 +56,7 @@ class DocumentComparisonActivity : PdfActivity(), ComparisonDialogListener {
     }
 
     private fun initViews() {
-        implementation.views.tabBar?.apply {
+        pspdfKitViews.tabBar?.apply {
             setCloseMode(PdfTabBarCloseMode.CLOSE_DISABLED)
             // Center the tabs.
             gravity = Gravity.CENTER_HORIZONTAL

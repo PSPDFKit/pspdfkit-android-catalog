@@ -200,10 +200,8 @@ class ConstructionExampleActivity :
     //region OnContextualToolbarLifecycleListener
     override fun onPrepareContextualToolbar(toolbar: ContextualToolbar<*>) {
         if (toolbar is AnnotationCreationToolbar) {
-            val annotationCreationToolbar = toolbar
-
             // Register grouping rule to tell toolbar how to group menu items.
-            annotationCreationToolbar.setMenuItemGroupingRule(
+            toolbar.setMenuItemGroupingRule(
                 CustomAnnotationCreationToolbarGroupingRule(this)
             )
         }

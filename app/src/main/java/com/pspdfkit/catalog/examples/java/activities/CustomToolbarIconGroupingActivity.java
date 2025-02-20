@@ -39,13 +39,13 @@ public class CustomToolbarIconGroupingActivity extends PdfActivity
 
     @Override
     public void onPrepareContextualToolbar(@NonNull ContextualToolbar toolbar) {
-        if (toolbar instanceof AnnotationCreationToolbar) {
-            toolbar.setDraggable(false);
-            toolbar.setUseBackButtonForCloseWhenHorizontal(true);
-            toolbar.setMenuItemGroupingRule(new CustomAnnotationCreationToolbarGroupingRule(this));
+        if (toolbar instanceof AnnotationCreationToolbar annotationCreationToolbar) {
+            annotationCreationToolbar.setDraggable(false);
+            annotationCreationToolbar.setUseBackButtonForCloseWhenHorizontal(true);
+            annotationCreationToolbar.setMenuItemGroupingRule(new CustomAnnotationCreationToolbarGroupingRule(this));
 
             // Get the existing menu items so we can add our item later.
-            final List<ContextualToolbarMenuItem> menuItems = ((AnnotationCreationToolbar) toolbar).getMenuItems();
+            final List<ContextualToolbarMenuItem> menuItems = annotationCreationToolbar.getMenuItems();
 
             // Create our custom menu item.
             final ContextualToolbarMenuItem customItem = ContextualToolbarMenuItem.createSingleItem(
@@ -60,10 +60,10 @@ public class CustomToolbarIconGroupingActivity extends PdfActivity
 
             // Tell the toolbar about our new item.
             menuItems.add(customItem);
-            toolbar.setMenuItems(menuItems);
+            annotationCreationToolbar.setMenuItems(menuItems);
 
             // Add a listener so we can handle clicking on our item.
-            toolbar.setOnMenuItemClickListener((toolbar1, menuItem) -> {
+            annotationCreationToolbar.setOnMenuItemClickListener((toolbar1, menuItem) -> {
                 if (menuItem.getId() == R.id.pspdf_menu_custom) {
                     Toast.makeText(CustomToolbarIconGroupingActivity.this, "Custom Action clicked", Toast.LENGTH_SHORT)
                             .show();
@@ -81,6 +81,9 @@ public class CustomToolbarIconGroupingActivity extends PdfActivity
                 }
                 return false;
             });
+
+            // Demonstrating how you can disable the stylus button with this API.
+            annotationCreationToolbar.setShouldShowStylusButton(false);
         } else if (toolbar instanceof AnnotationEditingToolbar) {
             // This shows how to hide annotation note button for all annotations.
             toolbar.setMenuItemVisibility(com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_note, View.GONE);

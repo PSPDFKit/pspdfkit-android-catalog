@@ -10,6 +10,7 @@
 plugins {
     id("com.android.application")
     id("kotlin-android")
+    id("org.jetbrains.kotlin.plugin.compose")
 }
 
 android {
@@ -21,8 +22,8 @@ android {
         minSdk = 21
         targetSdk = compileSdk
 
-        versionName = "2024.6.1"
-        versionCode = 140580
+        versionName = "2024.7.0"
+        versionCode = 140852
 
         vectorDrawables {
             useSupportLibrary = true
@@ -44,10 +45,6 @@ android {
     buildFeatures {
         compose = true
         buildConfig = true
-    }
-
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.14"
     }
 
     packaging {
@@ -72,11 +69,11 @@ dependencies {
 
     // PSPDFKit is integrated from the PSPDFKit Maven repository. See the `repositories` block at the beginning
     // of this file, which shows how to set up the repository in your app.
-    implementation("com.pspdfkit:pspdfkit:2024.6.1")
+    implementation("com.pspdfkit:pspdfkit:2024.7.0")
 
     // OCR library + English language pack.
-    implementation("com.pspdfkit:pspdfkit-ocr:2024.6.1")
-    implementation("com.pspdfkit:pspdfkit-ocr-english:2024.6.1")
+    implementation("com.pspdfkit:pspdfkit-ocr:2024.7.0")
+    implementation("com.pspdfkit:pspdfkit-ocr-english:2024.7.0")
 
 
     // Androidx
@@ -85,7 +82,7 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.3")
 
     // Compose
-    implementation(platform("androidx.compose:compose-bom:2024.06.00"))
+    implementation(platform("androidx.compose:compose-bom:2024.09.00"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")

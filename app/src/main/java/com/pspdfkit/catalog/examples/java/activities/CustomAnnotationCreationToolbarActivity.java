@@ -119,9 +119,7 @@ public class CustomAnnotationCreationToolbarActivity extends PdfActivity
 
     @Override // ToolbarCoordinatorLayout.OnContextualToolbarLifecycleListener
     public void onPrepareContextualToolbar(@NonNull final ContextualToolbar toolbar) {
-        if (toolbar instanceof AnnotationCreationToolbar) {
-            final AnnotationCreationToolbar annotationCreationToolbar = (AnnotationCreationToolbar) toolbar;
-
+        if (toolbar instanceof AnnotationCreationToolbar annotationCreationToolbar) {
             // Register this class as a mapper (see implemented methods below).
             annotationCreationToolbar.setItemToAnnotationToolMapper(this);
 

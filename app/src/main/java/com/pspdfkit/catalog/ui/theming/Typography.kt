@@ -4,9 +4,11 @@
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
  */
+@file:SuppressLint("UsingMaterialAndMaterial3Libraries")
 
 package com.pspdfkit.catalog.ui.theming
 
+import android.annotation.SuppressLint
 import androidx.compose.material.Typography
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight

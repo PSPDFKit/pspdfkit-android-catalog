@@ -4,8 +4,11 @@
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
  */
+@file:SuppressLint("UsingMaterialAndMaterial3Libraries")
+
 package com.pspdfkit.catalog.ui.theming
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateColorAsState
@@ -34,7 +37,6 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 
-@OptIn(ExperimentalAnimationApi::class)
 object Animations {
 
     private const val sectionExpandingDuration = 250

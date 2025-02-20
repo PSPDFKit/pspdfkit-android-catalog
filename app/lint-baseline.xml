@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<issues format="6" by="lint 8.2.1" type="baseline" client="gradle" dependencies="false" name="AGP (8.2.1)" variant="all" version="8.2.1">
+<issues format="6" by="lint 8.6.0" type="baseline" client="gradle" dependencies="false" name="AGP (8.6.0)" variant="all" version="8.6.0">
 
     <issue
         id="CheckResult"
@@ -63,7 +63,7 @@
         errorLine2="            ^">
         <location
             file="src/main/java/com/pspdfkit/catalog/examples/java/screenreader/ScreenReader.java"
-            line="129"
+            line="130"
             column="13"/>
     </issue>
 
@@ -118,7 +118,7 @@
         errorLine2="                ^">
         <location
             file="src/main/AndroidManifest.xml"
-            line="103"
+            line="107"
             column="17"/>
     </issue>
 
@@ -129,7 +129,7 @@
         errorLine2="                ^">
         <location
             file="src/main/AndroidManifest.xml"
-            line="108"
+            line="112"
             column="17"/>
     </issue>
 
@@ -140,7 +140,7 @@
         errorLine2="                ^">
         <location
             file="src/main/AndroidManifest.xml"
-            line="113"
+            line="117"
             column="17"/>
     </issue>
 
@@ -151,13 +151,13 @@
         errorLine2="                ^">
         <location
             file="src/main/AndroidManifest.xml"
-            line="118"
+            line="122"
             column="17"/>
     </issue>
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                .setAdditionalAction("
         errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
         <location
@@ -168,7 +168,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                        AnnotationTriggerEvent.FORM_CHANGED,"
         errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -179,7 +179,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                        new JavaScriptAction(&quot;AFNumber_Keystroke(2, 0, 0, 0, &apos;&apos;, true);&quot;))"
         errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -190,7 +190,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                .setAdditionalAction("
         errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
         <location
@@ -201,7 +201,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                        AnnotationTriggerEvent.FIELD_FORMAT,"
         errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -212,7 +212,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                        new JavaScriptAction(&quot;AFNumber_Format(2, 0, 0, 0, &apos;&apos;, true);&quot;))"
         errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -223,7 +223,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                .setAdditionalAction("
         errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
         <location
@@ -234,7 +234,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                        AnnotationTriggerEvent.FORM_CHANGED,"
         errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -245,7 +245,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                        new JavaScriptAction(&quot;AFNumber_Keystroke(0, 1, 0, 0, &apos;&apos;, true);&quot;))"
         errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -256,7 +256,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                .setAdditionalAction("
         errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
         <location
@@ -267,7 +267,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                        AnnotationTriggerEvent.FIELD_FORMAT,"
         errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -278,7 +278,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                        new JavaScriptAction(&quot;AFNumber_Format(0, 1, 0, 0, &apos;&apos;, true);&quot;))"
         errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -289,7 +289,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                .setAdditionalAction("
         errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
         <location
@@ -300,7 +300,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                        AnnotationTriggerEvent.FORM_CALCULATE,"
         errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -311,7 +311,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                        new JavaScriptAction("
         errorLine2="                                        ^">
         <location
@@ -322,7 +322,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                .setAdditionalAction("
         errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
         <location
@@ -333,7 +333,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                        AnnotationTriggerEvent.FIELD_FORMAT,"
         errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -344,7 +344,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                        new JavaScriptAction(&quot;AFNumber_Format(2, 1, 0, 0, &apos;&apos;, true);&quot;))"
         errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -355,7 +355,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setReadOnly can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setReadOnly can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                .setReadOnly(true)"
         errorLine2="                                 ~~~~~~~~~~~">
         <location
@@ -366,7 +366,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                .setAdditionalAction("
         errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
         <location
@@ -377,7 +377,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                        AnnotationTriggerEvent.FORM_CALCULATE,"
         errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -388,7 +388,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                        new JavaScriptAction(&quot;&quot;"
         errorLine2="                                        ^">
         <location
@@ -399,7 +399,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setReadOnly can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setReadOnly can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                .setReadOnly(true)"
         errorLine2="                                 ~~~~~~~~~~~">
         <location
@@ -410,7 +410,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                .setAdditionalAction("
         errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
         <location
@@ -421,7 +421,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                        AnnotationTriggerEvent.FORM_CHANGED,"
         errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -432,7 +432,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                        new JavaScriptAction(&quot;AFNumber_Keystroke(2, 0, 0, 0, &apos;&apos;, true);&quot;))"
         errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -443,7 +443,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                .setAdditionalAction("
         errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
         <location
@@ -454,7 +454,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                        AnnotationTriggerEvent.FIELD_FORMAT,"
         errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -465,7 +465,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                        new JavaScriptAction(&quot;AFNumber_Format(2, 0, 0, 0, &apos;&apos;, true);&quot;))"
         errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -476,7 +476,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                .setAdditionalAction("
         errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
         <location
@@ -487,7 +487,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                        AnnotationTriggerEvent.FORM_CHANGED,"
         errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -498,7 +498,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                        new JavaScriptAction(&quot;AFNumber_Keystroke(2, 3, 0, 0, &apos;€&apos;, true);&quot;))"
         errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -509,7 +509,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                .setAdditionalAction("
         errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
         <location
@@ -520,7 +520,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                        AnnotationTriggerEvent.FIELD_FORMAT,"
         errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -531,7 +531,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                        new JavaScriptAction(&quot;AFNumber_Format(2, 3, 0, 0, &apos;€&apos;, true);&quot;))"
         errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -542,7 +542,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                .setAdditionalAction("
         errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
         <location
@@ -553,7 +553,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                        AnnotationTriggerEvent.FORM_CHANGED,"
         errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -564,7 +564,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                        new JavaScriptAction(&quot;AFDate_KeystrokeEx(&apos;mm/dd/yyyy&apos;);&quot;))"
         errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -575,7 +575,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                .setAdditionalAction("
         errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
         <location
@@ -586,7 +586,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                        AnnotationTriggerEvent.FIELD_FORMAT,"
         errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -597,7 +597,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                        new JavaScriptAction(&quot;AFDate_FormatEx(&apos;mm/dd/yyyy&apos;);&quot;))"
         errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -608,7 +608,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                .setAdditionalAction("
         errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
         <location
@@ -619,7 +619,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                        AnnotationTriggerEvent.FORM_CHANGED,"
         errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -630,7 +630,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                        new JavaScriptAction(&quot;AFTime_Keystroke(&apos;HH:MM::ss&apos;);&quot;))"
         errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -641,7 +641,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                .setAdditionalAction("
         errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
         <location
@@ -652,7 +652,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                        AnnotationTriggerEvent.FIELD_FORMAT,"
         errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -663,7 +663,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                                        new JavaScriptAction(&quot;AFTime_Format(&apos;HH:MM::ss&apos;);&quot;))"
         errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -674,7 +674,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                .setAdditionalAction("
         errorLine2="                 ~~~~~~~~~~~~~~~~~~~">
         <location
@@ -685,7 +685,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                        AnnotationTriggerEvent.MOUSE_UP,"
         errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -696,7 +696,7 @@
 
     <issue
         id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:pspdfkit)"
+        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-pspdfkit)"
         errorLine1="                        new JavaScriptAction(&quot;&quot;"
         errorLine2="                        ^">
         <location
@@ -707,7 +707,7 @@
 
     <issue
         id="PrivateResource"
-        message="The resource `@drawable/pspdf__ic_align` is marked as private in android:pspdfkit:unspecified"
+        message="The resource `@drawable/pspdf__ic_align` is marked as private in android:sdk-pspdfkit:unspecified"
         errorLine1="        app:icon=&quot;@drawable/pspdf__ic_align&quot; />"
         errorLine2="                  ~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -718,7 +718,7 @@
 
     <issue
         id="PrivateResource"
-        message="The resource `@color/pspdf__color_white` is marked as private in android:pspdfkit:unspecified"
+        message="The resource `@color/pspdf__color_white` is marked as private in android:sdk-pspdfkit:unspecified"
         errorLine1="            android:textColor=&quot;@color/pspdf__color_white&quot;"
         errorLine2="                               ~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -729,7 +729,7 @@
 
     <issue
         id="PrivateResource"
-        message="The resource `@color/pspdf__color_black` is marked as private in android:pspdfkit:unspecified"
+        message="The resource `@color/pspdf__color_black` is marked as private in android:sdk-pspdfkit:unspecified"
         errorLine1="        &lt;item name=&quot;colorOnSecondary&quot;>@color/pspdf__color_black&lt;/item>"
         errorLine2="                                      ~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -740,7 +740,7 @@
 
     <issue
         id="PrivateResource"
-        message="The resource `@color/pspdf__color_black` is marked as private in android:pspdfkit:unspecified"
+        message="The resource `@color/pspdf__color_black` is marked as private in android:sdk-pspdfkit:unspecified"
         errorLine1="        &lt;item name=&quot;pspdf__backgroundColor&quot;>@color/pspdf__color_black&lt;/item>"
         errorLine2="                                            ~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -751,7 +751,7 @@
 
     <issue
         id="PrivateResource"
-        message="The resource `@color/pspdf__gray_70` is marked as private in android:pspdfkit:unspecified"
+        message="The resource `@color/pspdf__gray_70` is marked as private in android:sdk-pspdfkit:unspecified"
         errorLine1="        &lt;item name=&quot;pspdf__borderColor&quot;>@color/pspdf__gray_70&lt;/item>"
         errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -762,7 +762,7 @@
 
     <issue
         id="PrivateResource"
-        message="The resource `@color/pspdf__gray_80` is marked as private in android:pspdfkit:unspecified"
+        message="The resource `@color/pspdf__gray_80` is marked as private in android:sdk-pspdfkit:unspecified"
         errorLine1="        &lt;item name=&quot;pspdf__fontButtonsTintColor&quot;>@color/pspdf__gray_80&lt;/item>"
         errorLine2="                                                 ~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -773,7 +773,7 @@
 
     <issue
         id="PrivateResource"
-        message="The resource `@color/pspdf__gray_80` is marked as private in android:pspdfkit:unspecified"
+        message="The resource `@color/pspdf__gray_80` is marked as private in android:sdk-pspdfkit:unspecified"
         errorLine1="        &lt;item name=&quot;pspdf__fontSmallButtonsTintColor&quot;>@color/pspdf__gray_80&lt;/item>"
         errorLine2="                                                      ~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -784,7 +784,7 @@
 
     <issue
         id="PrivateResource"
-        message="The resource `@color/pspdf__gray_70` is marked as private in android:pspdfkit:unspecified"
+        message="The resource `@color/pspdf__gray_70` is marked as private in android:sdk-pspdfkit:unspecified"
         errorLine1="        &lt;item name=&quot;pspdf__fontButtonsTintColorChecked&quot;>@color/pspdf__gray_70&lt;/item>"
         errorLine2="                                                        ~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -795,7 +795,7 @@
 
     <issue
         id="PrivateResource"
-        message="The resource `@color/pspdf__gray_20` is marked as private in android:pspdfkit:unspecified"
+        message="The resource `@color/pspdf__gray_20` is marked as private in android:sdk-pspdfkit:unspecified"
         errorLine1="        &lt;item name=&quot;pspdf__textColor&quot;>@color/pspdf__gray_20&lt;/item>"
         errorLine2="                                      ~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -806,7 +806,7 @@
 
     <issue
         id="PrivateResource"
-        message="The resource `@color/pspdf__gray_20` is marked as private in android:pspdfkit:unspecified"
+        message="The resource `@color/pspdf__gray_20` is marked as private in android:sdk-pspdfkit:unspecified"
         errorLine1="        &lt;item name=&quot;pspdf__iconBorderColor&quot;>@color/pspdf__gray_20&lt;/item>"
         errorLine2="                                            ~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -817,7 +817,7 @@
 
     <issue
         id="PrivateResource"
-        message="The resource `@color/pspdf__gray_20` is marked as private in android:pspdfkit:unspecified"
+        message="The resource `@color/pspdf__gray_20` is marked as private in android:sdk-pspdfkit:unspecified"
         errorLine1="        &lt;item name=&quot;pspdf__iconsColor&quot;>@color/pspdf__gray_20&lt;/item>"
         errorLine2="                                       ~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -828,7 +828,7 @@
 
     <issue
         id="PrivateResource"
-        message="The resource `@color/pspdf__color_signature_yellow` is marked as private in android:pspdfkit:unspecified"
+        message="The resource `@color/pspdf__color_signature_yellow` is marked as private in android:sdk-pspdfkit:unspecified"
         errorLine1="        &lt;item name=&quot;pspdf__itemRippleBackgroundColor&quot;>@color/pspdf__color_signature_yellow&lt;/item>"
         errorLine2="                                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -839,7 +839,7 @@
 
     <issue
         id="PrivateResource"
-        message="The resource `@color/pspdf__gray_20` is marked as private in android:pspdfkit:unspecified"
+        message="The resource `@color/pspdf__gray_20` is marked as private in android:sdk-pspdfkit:unspecified"
         errorLine1="        &lt;item name=&quot;pspdf__titleTextColor&quot;>@color/pspdf__gray_20&lt;/item>"
         errorLine2="                                           ~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -850,7 +850,7 @@
 
     <issue
         id="PrivateResource"
-        message="The resource `@color/pspdf__gray_20` is marked as private in android:pspdfkit:unspecified"
+        message="The resource `@color/pspdf__gray_20` is marked as private in android:sdk-pspdfkit:unspecified"
         errorLine1="        &lt;item name=&quot;pspdf__titleIconsColor&quot;>@color/pspdf__gray_20&lt;/item>"
         errorLine2="                                            ~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -861,7 +861,7 @@
 
     <issue
         id="PrivateResource"
-        message="The resource `@color/pspdf__blue_darkmode` is marked as private in android:pspdfkit:unspecified"
+        message="The resource `@color/pspdf__blue_darkmode` is marked as private in android:sdk-pspdfkit:unspecified"
         errorLine1="        &lt;item name=&quot;colorPrimary&quot;>@color/pspdf__blue_darkmode&lt;/item>"
         errorLine2="                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -872,7 +872,7 @@
 
     <issue
         id="PrivateResource"
-        message="The resource `@color/pspdf__blue_darkmode` is marked as private in android:pspdfkit:unspecified"
+        message="The resource `@color/pspdf__blue_darkmode` is marked as private in android:sdk-pspdfkit:unspecified"
         errorLine1="        &lt;item name=&quot;colorAccent&quot;>@color/pspdf__blue_darkmode&lt;/item>"
         errorLine2="                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -883,7 +883,7 @@
 
     <issue
         id="PrivateResource"
-        message="The resource `@color/pspdf__color_black` is marked as private in android:pspdfkit:unspecified"
+        message="The resource `@color/pspdf__color_black` is marked as private in android:sdk-pspdfkit:unspecified"
         errorLine1="        &lt;item name=&quot;android:colorBackground&quot;>@color/pspdf__color_black&lt;/item>"
         errorLine2="                                             ~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -894,7 +894,7 @@
 
     <issue
         id="PrivateResource"
-        message="The resource `@color/pspdf__gray_70` is marked as private in android:pspdfkit:unspecified"
+        message="The resource `@color/pspdf__gray_70` is marked as private in android:sdk-pspdfkit:unspecified"
         errorLine1="        &lt;item name=&quot;pspdf__settings_unselected_color&quot;>@color/pspdf__gray_70&lt;/item>"
         errorLine2="                                                      ~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -905,7 +905,7 @@
 
     <issue
         id="PrivateResource"
-        message="The resource `@color/pspdf__color_black` is marked as private in android:pspdfkit:unspecified"
+        message="The resource `@color/pspdf__color_black` is marked as private in android:sdk-pspdfkit:unspecified"
         errorLine1="    &lt;item android:color=&quot;@color/pspdf__color_black&quot; android:state_activated=&quot;true&quot; android:state_enabled=&quot;false&quot; />"
         errorLine2="                         ~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -916,7 +916,7 @@
 
     <issue
         id="PrivateResource"
-        message="The resource `@color/pspdf__gray_70` is marked as private in android:pspdfkit:unspecified"
+        message="The resource `@color/pspdf__gray_70` is marked as private in android:sdk-pspdfkit:unspecified"
         errorLine1="    &lt;item android:color=&quot;@color/pspdf__gray_70&quot; android:state_activated=&quot;false&quot; android:state_enabled=&quot;false&quot; />"
         errorLine2="                         ~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -927,7 +927,7 @@
 
     <issue
         id="PrivateResource"
-        message="The resource `@color/pspdf__color_black` is marked as private in android:pspdfkit:unspecified"
+        message="The resource `@color/pspdf__color_black` is marked as private in android:sdk-pspdfkit:unspecified"
         errorLine1="    &lt;item android:color=&quot;@color/pspdf__color_black&quot; android:state_activated=&quot;true&quot; />"
         errorLine2="                         ~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -938,7 +938,7 @@
 
     <issue
         id="PrivateResource"
-        message="The resource `@color/pspdf__color_white` is marked as private in android:pspdfkit:unspecified"
+        message="The resource `@color/pspdf__color_white` is marked as private in android:sdk-pspdfkit:unspecified"
         errorLine1="        &lt;item name=&quot;colorOnSecondary&quot;>@color/pspdf__color_white&lt;/item>"
         errorLine2="                                      ~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -949,7 +949,7 @@
 
     <issue
         id="PrivateResource"
-        message="The resource `@color/pspdf__color_white` is marked as private in android:pspdfkit:unspecified"
+        message="The resource `@color/pspdf__color_white` is marked as private in android:sdk-pspdfkit:unspecified"
         errorLine1="        &lt;item name=&quot;pspdf__textColor&quot;>@color/pspdf__color_white&lt;/item>"
         errorLine2="                                      ~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
@@ -1939,7 +1939,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="60"
+            line="62"
             column="13"/>
     </issue>
 
@@ -1950,7 +1950,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="61"
+            line="63"
             column="13"/>
     </issue>
 
@@ -1961,7 +1961,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="232"
+            line="238"
             column="13"/>
     </issue>
 
@@ -1972,7 +1972,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="279"
+            line="285"
             column="13"/>
     </issue>
 
@@ -1983,7 +1983,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="280"
+            line="286"
             column="13"/>
     </issue>
 
@@ -1994,7 +1994,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="281"
+            line="287"
             column="13"/>
     </issue>
 
@@ -2005,7 +2005,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="351"
+            line="357"
             column="13"/>
     </issue>
 

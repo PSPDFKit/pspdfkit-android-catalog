@@ -6,8 +6,11 @@
  *   UNAUTHORIZED REPRODUCTION OR DISTRIBUTION IS SUBJECT TO CIVIL AND CRIMINAL PENALTIES.
  *   This notice may not be removed from this file.
  */
+@file:SuppressLint("UsingMaterialAndMaterial3Libraries")
+
 package com.pspdfkit.catalog.ui
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer

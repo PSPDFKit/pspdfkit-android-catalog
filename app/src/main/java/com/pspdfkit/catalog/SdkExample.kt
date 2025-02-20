@@ -65,7 +65,7 @@ abstract class SdkExample(
         configuration: PdfActivityConfiguration.Builder
     )
 
-    val exampleName: String
+    private val exampleName: String
         /**
          * Returns the example simple class name as given in the source code.
          *
@@ -79,10 +79,7 @@ abstract class SdkExample(
 
     private val isKotlin: Boolean
         /** Returns `true` when this example is written in Kotlin.  */
-        get() =
-            javaClass.declaredAnnotations.any { annotation ->
-                annotation.annotationClass == Metadata::class.java
-            }
+        get() = this::class.java.isAnnotationPresent(Metadata::class.java)
 
     /**
      * Called when the owning activity gets destroyed. Example is supposed to clean any required

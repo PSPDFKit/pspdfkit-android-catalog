@@ -72,11 +72,10 @@ public class CustomElectronicSignatureActivity extends AppCompatActivity
     // Here we are also showing how to configure the customizable signature colors and available
     // signing tabs (`signatureCreationModes`).
     @NonNull
-    private final ElectronicSignatureOptions signatureOptions = new ElectronicSignatureOptions.Builder()
-            .signatureSavingStrategy(SignatureSavingStrategy.SAVE_IF_SELECTED)
-            .signatureColorOptions(SignatureColorOptions.fromColorInt(Color.BLACK, Color.GRAY, Color.RED))
-            .signatureCreationModes(Arrays.asList(SignatureCreationMode.DRAW, SignatureCreationMode.TYPE))
-            .build();
+    private final ElectronicSignatureOptions signatureOptions = new ElectronicSignatureOptions(
+            SignatureSavingStrategy.SAVE_IF_SELECTED,
+            SignatureColorOptions.fromColorInt(Color.BLACK, Color.GRAY, Color.RED),
+            Arrays.asList(SignatureCreationMode.DRAW, SignatureCreationMode.TYPE));
 
     @Override
     protected void onCreate(@Nullable final Bundle savedInstanceState) {

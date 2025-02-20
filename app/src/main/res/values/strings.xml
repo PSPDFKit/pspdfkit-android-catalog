@@ -73,6 +73,8 @@
     <string name="customDataProviderExampleDescription">How to implement a DataProvider that can be used with PdfActivity.</string>
     <string name="zoomExampleTitle">Zoom Example</string>
     <string name="zoomExampleDescription">Zooming to certain page objects.</string>
+    <string name="viewPager2ExampleTitle">ViewPager2 Example</string>
+    <string name="viewPager2ExampleDescription">Demonstrates using multiple documents in a Viewpager2</string>
     <string name="formFillingExampleTitle">Form Filling</string>
     <string name="formFillingExampleDescription">Shows how to fill forms programmatically.</string>
     <string name="formFillingJavaScriptExampleTitle">JavaScript Form Filling</string>

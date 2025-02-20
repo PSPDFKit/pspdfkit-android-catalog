@@ -21,8 +21,8 @@ android {
         minSdk = 21
         targetSdk = compileSdk
 
-        versionName = "2024.5.1"
-        versionCode = 140388
+        versionName = "2024.6.1"
+        versionCode = 140580
 
         vectorDrawables {
             useSupportLibrary = true
@@ -72,11 +72,11 @@ dependencies {
 
     // PSPDFKit is integrated from the PSPDFKit Maven repository. See the `repositories` block at the beginning
     // of this file, which shows how to set up the repository in your app.
-    implementation("com.pspdfkit:pspdfkit:2024.5.1")
+    implementation("com.pspdfkit:pspdfkit:2024.6.1")
 
     // OCR library + English language pack.
-    implementation("com.pspdfkit:pspdfkit-ocr:2024.5.1")
-    implementation("com.pspdfkit:pspdfkit-ocr-english:2024.5.1")
+    implementation("com.pspdfkit:pspdfkit-ocr:2024.6.1")
+    implementation("com.pspdfkit:pspdfkit-ocr-english:2024.6.1")
 
 
     // Androidx

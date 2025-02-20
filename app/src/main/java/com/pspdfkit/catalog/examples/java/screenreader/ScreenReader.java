@@ -31,6 +31,7 @@ import com.pspdfkit.document.PdfDocument;
 import com.pspdfkit.ui.PdfFragment;
 import com.pspdfkit.ui.drawable.PdfDrawable;
 import com.pspdfkit.ui.drawable.PdfDrawableProvider;
+import com.pspdfkit.utils.TextBlockHelpersKt;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.BackpressureStrategy;
 import io.reactivex.rxjava3.core.Flowable;
@@ -273,7 +274,7 @@ public class ScreenReader {
                             end != BreakIterator.DONE && !emitter.isCancelled();
                             start = end, end = iterator.next()) {
                         emitter.onNext(new Unit(
-                                TextBlock.create(document, pageIndex, new Range(start, end - start)),
+                                TextBlockHelpersKt.createTextBlock(document, pageIndex, new Range(start, end - start)),
                                 highlightPadding));
                     }
 

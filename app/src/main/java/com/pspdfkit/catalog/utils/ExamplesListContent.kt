@@ -108,6 +108,7 @@ import com.pspdfkit.catalog.examples.kotlin.SimpleFragmentExample
 import com.pspdfkit.catalog.examples.kotlin.SoundAnnotationDataExtractionExample
 import com.pspdfkit.catalog.examples.kotlin.TextHighlightPopupCustomisationExample
 import com.pspdfkit.catalog.examples.kotlin.UserInterfaceViewModesExample
+import com.pspdfkit.catalog.examples.kotlin.ViewPager2Example
 import com.pspdfkit.catalog.examples.kotlin.WatermarkExample
 import com.pspdfkit.catalog.examples.kotlin.ZoomExample
 import com.pspdfkit.catalog.examples.kotlin.instant.InstantExample
@@ -292,6 +293,7 @@ fun getSectionsWithExamples(context: Context) = listOf(
         IndexedFullTextSearchExample(context),
         InlineMediaExample(context),
         DynamicMultimediaAnnotationExample(context),
-        RandomDocumentReplacementExample(context)
+        RandomDocumentReplacementExample(context),
+        ViewPager2Example(context)
     )
 )

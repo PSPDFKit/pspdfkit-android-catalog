@@ -286,5 +286,6 @@
     <style name="PSPDFCatalog.MeasurementTools.Dark" parent="PSPDFKit.MeasurementTools">
         <item name="pspdf__measurementValuePopupBackgroundColor">#FF0202</item>
         <item name="pspdf__scaleListItemBackgroundColor">@color/dark</item>
+        <item name="pspdf__scaleListItemCheckColor">@color/dark_accent</item>
     </style>
 </resources>

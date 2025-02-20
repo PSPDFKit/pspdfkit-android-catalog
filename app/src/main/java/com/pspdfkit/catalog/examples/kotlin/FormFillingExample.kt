@@ -119,10 +119,10 @@ class FormFillingActivity : PdfActivity() {
         }.addToDisposables()
 
         // Form elements (visible portion of the form field) can be queried by their name and filled that way.
-        document.formProvider.getFormElementWithNameAsync("Name_Last").subscribe { formElement ->
+        document.formProvider.getFormElementWithNameAsync("First Name").subscribe { formElement ->
             (formElement as TextFormElement).setText("John")
         }.addToDisposables()
-        document.formProvider.getFormElementWithNameAsync("Name_First").subscribe { formElement ->
+        document.formProvider.getFormElementWithNameAsync("Last Name").subscribe { formElement ->
             (formElement as TextFormElement).setText("Appleseed")
         }.addToDisposables()
 

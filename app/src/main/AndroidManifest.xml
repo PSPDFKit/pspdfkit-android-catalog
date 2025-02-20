@@ -570,6 +570,11 @@
             android:name=".examples.kotlin.DocumentScrollActivity"
             android:label="@string/documentScrollExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.ViewPager2Activity"
+            android:label="@string/viewPager2ExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
     </application>
 
 </manifest>

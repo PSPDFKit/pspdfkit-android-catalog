@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~   Copyright © 2017-2024 PSPDFKit GmbH. All rights reserved.
+  ~
+  ~   The PSPDFKit Sample applications are licensed with a modified BSD license.
+  ~   Please see License for details. This notice may not be removed from this file.
+  -->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:ignore="UnusedAttribute">
+
+    <FrameLayout
+        android:id="@+id/pspdf__activity_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layoutDirection="ltr"/>
+
+    <com.pspdfkit.ui.PdfThumbnailBar
+        android:id="@+id/pspdf__activity_thumbnail_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:background="?android:attr/colorBackground"
+        android:fitsSystemWindows="true"
+        android:layoutDirection="ltr"/>
+
+    <com.pspdfkit.ui.forms.FormEditingBar
+        android:id="@+id/pspdf__activity_form_editing_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"/>
+
+    <com.pspdfkit.ui.LocalizedTextView
+        android:id="@+id/pspdf__activity_page_overlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/pspdf__activity_thumbnail_bar"
+        android:layout_alignWithParentIfMissing="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:alpha="0"
+        android:background="@drawable/pspdf__rounded_rect"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:fontFamily="sans-serif-light"
+        android:layoutDirection="ltr"
+        android:paddingBottom="8dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="8dp"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        tools:ignore="UnusedAttribute"/>
+
+    <com.pspdfkit.ui.LocalizedTextView
+        android:id="@+id/pspdf__activity_title_overlay"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:alpha="0"
+        android:background="?attr/colorPrimary"
+        android:elevation="2dp"
+        android:ellipsize="end"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:gravity="center_horizontal"
+        android:layoutDirection="ltr"
+        android:maxLines="2"
+        android:paddingBottom="4dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:paddingTop="4dp"
+        android:textColor="@android:color/white"
+        android:textSize="16sp"
+        android:textStyle="bold"/>
+
+    <com.pspdfkit.ui.redaction.RedactionView
+        android:id="@+id/pspdf__redaction_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignBottom="@+id/pspdf__activity_page_overlay"/>
+
+    <Button
+        android:id="@+id/show_user_interface_button"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="16dp"
+        android:elevation="4dp"
+        android:text="@string/example_show_user_interface"/>
+
+    <Button
+        android:id="@+id/hide_user_interface_button"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@id/show_user_interface_button"
+        android:layout_centerVertical="true"
+        android:layout_marginEnd="16dp"
+        android:elevation="4dp"
+        android:text="@string/example_hide_user_interface"/>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:clipChildren="false"
+        android:clipToPadding="false"
+        android:elevation="@dimen/pspdf__toolbar_elevation">
+
+        <FrameLayout
+            android:id="@+id/pspdf__activity_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingTop="?attr/actionBarSize">
+
+            <com.pspdfkit.ui.PdfThumbnailGrid
+                android:id="@+id/pspdf__activity_thumbnail_grid"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:alpha="0"
+                android:clipToPadding="false"
+                android:layoutDirection="ltr"
+                android:listSelector="@android:color/transparent"
+                android:visibility="invisible"/>
+
+            <com.pspdfkit.ui.search.PdfSearchViewModular
+                android:id="@+id/pspdf__activity_search_view_modular"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="invisible"/>
+
+            <com.pspdfkit.ui.PdfOutlineView
+                android:id="@+id/pspdf__activity_outline_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:visibility="invisible"/>
+        </FrameLayout>
+
+        <com.pspdfkit.ui.toolbar.ToolbarCoordinatorLayout
+            android:id="@+id/pspdf__toolbar_coordinator"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <include layout="@layout/pspdf__toolbar_main"/>
+
+        </com.pspdfkit.ui.toolbar.ToolbarCoordinatorLayout>
+
+        <com.pspdfkit.ui.inspector.PropertyInspectorCoordinatorLayout
+            android:id="@+id/pspdf__inspector_coordinator"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </FrameLayout>
+
+</RelativeLayout>

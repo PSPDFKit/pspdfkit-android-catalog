@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~   Copyright © 2017-2024 PSPDFKit GmbH. All rights reserved.
+  ~
+  ~   The PSPDFKit Sample applications are licensed with a modified BSD license.
+  ~   Please see License for details. This notice may not be removed from this file.
+  -->
+
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <string name="action_settings">Settings</string>
+
+    <string name="setting_category_activity">Activity</string>
+    <string name="setting_category_layout">Layout</string>
+    <string name="setting_double_page_mode">Double Page</string>
+    <string name="setting_category_search">Search</string>
+    <string name="setting_category_thumbnails_outline">Thumbnails / Outline</string>
+    <string name="setting_category_annotations">Annotations</string>
+    <string name="setting_category_forms">Forms</string>
+    <string name="setting_category_actions">Actions</string>
+    <string name="setting_category_customization">Customization</string>
+    <string name="setting_category_other">Other</string>
+
+    <string name="setting_activity_immersive_mode">Immersive mode</string>
+    <string name="setting_actions_show_outline_action">Enable document outline</string>
+    <string name="setting_actions_show_annotationlist_action">Enable annotation list</string>
+    <string name="setting_show_thumbnail_grid_action">Show thumbnail grid</string>
+
+    <string name="thumbnail_bar_mode">Thumbnail bar mode</string>
+    <string name="thumbnail_bar_mode_pinned">Pinned</string>
+    <string name="thumbnail_bar_mode_scrollable">Scrollable</string>
+    <string name="thumbnail_bar_mode_floating">Floating</string>
+    <string name="thumbnail_bar_mode_none">No Thumbnail bar</string>
+    <string-array name="thumbnail_bar_modes">
+        <item>@string/thumbnail_bar_mode_pinned</item>
+        <item>@string/thumbnail_bar_mode_scrollable</item>
+        <item>@string/thumbnail_bar_mode_floating</item>
+        <item>@string/thumbnail_bar_mode_none</item>
+    </string-array>
+
+    <string name="setting_fit_page_to_width">Fit page to width</string>
+    <string name="setting_restore_last_viewed_page">Restore last viewed page</string>
+    <string name="setting_inline_search">Inline search</string>
+    <string name="setting_scroll_direction">Scroll direction</string>
+    <string name="setting_theme_mode">Viewer theme mode</string>
+    <string name="setting_page_layout">Page layout</string>
+    <string name="setting_scroll_continuously">Scroll continuously</string>
+    <string name="setting_enable_annotation_editing">Enable annotation editing</string>
+    <string name="setting_enable_annotation_rotation">Enable annotation rotation</string>
+    <string name="annotation_reply_mode">Annotation Replies</string>
+    <string name="annotation_reply_enabled">Enabled</string>
+    <string name="annotation_reply_read_only">Read Only</string>
+    <string name="annotation_reply_disabled">Disabled</string>
+    <string-array name="annotation_reply_modes">
+        <item>@string/annotation_reply_enabled</item>
+        <item>@string/annotation_reply_read_only</item>
+        <item>@string/annotation_reply_disabled</item>
+    </string-array>
+    <string name="setting_enable_form_editing">Enable form editing</string>
+    <string name="setting_show_share_action">Show share action</string>
+    <string name="setting_show_print_action">Show print action</string>
+    <string name="setting_invert_colors">Invert page colors</string>
+    <string name="setting_grayscale">Grayscale</string>
+    <string name="setting_enable_text_selection">Enable text selection</string>
+    <string name="setting_start_page">Start page</string>
+    <string name="setting_start_page_dialog">Page to start document at (make sure it fits the number of pages in document you want to open): </string>
+    <string name="setting_multi_threaded_rendering">Multithreaded rendering</string>
+    <string name="setting_clear_cache">Clear cache</string>
+    <string name="setting_leak_canary_enabled">Enable LeakCanary</string>
+    <string name="setting_clear_app_data">Clear app data</string>
+    <string name="setting_clear_app_data_summary">This will reset all stored app settings (kills the app, requires a restart).</string>
+
+    <string name="preferred_language">Preferred language</string>
+
+    <string name="page_scroll_direction_horizontal">Horizontal</string>
+    <string name="page_scroll_direction_vertical">Vertical</string>
+    <string name="page_layout_single">Single</string>
+    <string name="page_layout_double">Double</string>
+    <string name="page_layout_auto">Auto</string>
+    <string name="setting_show_search_action">Show search action</string>
+    <string name="setting_show_page_number_overlay">Show page number overlay</string>
+    <string name="setting_show_page_labels">Show page labels</string>
+    <string-array name="page_scroll_directions">
+        <item>@string/page_scroll_direction_horizontal</item>
+        <item>@string/page_scroll_direction_vertical</item>
+    </string-array>
+    <string-array name="page_layouts">
+        <item>@string/page_layout_auto</item>
+        <item>@string/page_layout_single</item>
+        <item>@string/page_layout_double</item>
+    </string-array>
+    <string name="theme_mode_default">Default</string>
+    <string name="theme_mode_night">Night</string>
+    <string-array name="theme_mode">
+        <item>@string/theme_mode_default</item>
+        <item>@string/theme_mode_night</item>
+    </string-array>
+
+    <string name="setting_first_page_single">Display first page as single</string>
+    <string name="setting_show_gap_between_pages">Show gaps between pages</string>
+
+    <string name="runtime_configuration_change_toggle_night_mode">Toggle night mode</string>
+    <string name="runtime_configuration_change_toggle_scroll_mode">Toggle scroll mode</string>
+    <string name="runtime_configuration_change_toggle_scroll_direction">Toggle scroll direction</string>
+
+    <string name="user_interface_view_mode">User interface view mode</string>
+    <string name="user_interface_view_mode_automatic">Automatic</string>
+    <string name="user_interface_view_mode_automatic_border_pages">Automatic (with border pages)</string>
+    <string name="user_interface_view_mode_visible">Always visible</string>
+    <string name="user_interface_view_mode_hidden">Always hidden</string>
+    <string name="user_interface_view_mode_manual">Manual</string>
+    <string-array name="user_interface_view_modes">
+        <item>@string/user_interface_view_mode_automatic</item>
+        <item>@string/user_interface_view_mode_automatic_border_pages</item>
+        <item>@string/user_interface_view_mode_visible</item>
+        <item>@string/user_interface_view_mode_hidden</item>
+        <item>@string/user_interface_view_mode_manual</item>
+    </string-array>
+    <string name="hide_ui_when_creating_annotations">Hide UI when creating annotations</string>
+    <string name="setting_enable_volume_buttons_navigation">Enable volume buttons navigation</string>
+</resources>

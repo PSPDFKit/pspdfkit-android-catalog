@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~   Copyright © 2020-2024 PSPDFKit GmbH. All rights reserved.
+  ~
+  ~   The PSPDFKit Sample applications are licensed with a modified BSD license.
+  ~   Please see License for details. This notice may not be removed from this file.
+  -->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <size android:height="@dimen/pspdf__thumbnailGridFilterPickerViewSelectionSpacing" android:width="@dimen/pspdf__thumbnailGridFilterPickerViewSelectionSpacing"/>
+</shape>

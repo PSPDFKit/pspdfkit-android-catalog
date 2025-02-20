@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~   Copyright © 2017-2024 PSPDFKit GmbH. All rights reserved.
+  ~
+  ~   The PSPDFKit Sample applications are licensed with a modified BSD license.
+  ~   Please see License for details. This notice may not be removed from this file.
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools">
+
+    <item
+        android:id="@+id/export_json"
+        android:title="Export Document JSON"
+        app:showAsAction="never"
+        tools:ignore="HardcodedText"/>
+
+    <item
+        android:id="@+id/import_json"
+        android:title="Import Document JSON"
+        app:showAsAction="never"
+        tools:ignore="HardcodedText"/>
+</menu>

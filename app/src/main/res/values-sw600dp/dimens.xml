@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~   Copyright © 2017-2024 PSPDFKit GmbH. All rights reserved.
+  ~
+  ~   The PSPDFKit Sample applications are licensed with a modified BSD license.
+  ~   Please see License for details. This notice may not be removed from this file.
+  -->
+
+<resources>
+    <dimen name="drawer_margin">64dp</dimen>
+
+    <dimen name="kiosk_grid_column_width">146dp</dimen>
+    <dimen name="kiosk_previewimage_width">130dp</dimen>
+    <dimen name="kiosk_previewimage_height">185dp</dimen>
+</resources>

@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~   Copyright © 2014-2024 PSPDFKit GmbH. All rights reserved.
+  ~
+  ~   The PSPDFKit Sample applications are licensed with a modified BSD license.
+  ~   Please see License for details. This notice may not be removed from this file.
+  -->
+
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
+
+    <string name="app_name">PSPDFKit Catalog</string>
+    <string name="title_activity_basic_example">Basic example</string>
+
+    <!-- Samples. -->
+    <string name="defaultExampleTitle">Default Example</string>
+    <string name="defaultExampleDescription">Default PdfActivity example. Opens the demo document from assets without any customization.</string>
+    <string name="playgroundExampleTitle">Playground Example</string>
+    <string name="playgroundExampleDescription">Start here to customize the behavior of PdfActivity.</string>
+    <string name="customActionsExampleTitle">Customized ActionBar Actions</string>
+    <string name="customActionsExampleDescription">This example shows how to modify the default set of ActionBar icons to your app\'s needs.</string>
+    <string name="toolbarsInFragmentExampleTitle">Custom Activity with Toolbars</string>
+    <string name="toolbarsInFragmentExampleDescription">Use toolbars within the custom activity using PdfFragment.</string>
+    <string name="formEditingInFragmentExampleTitle">Custom Activity with Form Editing UI</string>
+    <string name="formEditingInFragmentExampleDescription">Use form editing UI within the custom activity using PdfFragment.</string>
+    <string name="runtimeConfigurationChangeExampleTitle">Runtime Configuration Activity Example</string>
+    <string name="runtimeConfigurationChangeExampleDescription">This example shows how to change activity configuration at runtime.</string>
+    <string name="runtimeConfigurationFragmentExampleTitle">Runtime Configuration Fragment Example</string>
+    <string name="runtimeConfigurationFragmentExampleDescription">This example shows how to change fragment configuration at runtime.</string>
+    <string name="userInterfaceViewModesExampleTitle">User Interface View Modes Example</string>
+    <string name="userInterfaceViewModesExampleDescription">This example shows how to change user interface view mode in custom Activity.</string>
+    <string name="customLayoutExampleTitle">Custom Layout Example</string>
+    <string name="customLayoutExampleDescription">Use some custom layout resources to alter the activity appearance.</string>
+    <string name="externalDocumentExampleTitle">External Document</string>
+    <string name="externalDocumentExampleDescription">Choose a document from the file system.</string>
+    <string name="imageDocumentExampleTitle">Image Document</string>
+    <string name="imageDocumentExampleDescription">This example shows how to open a demo image document from the assets folder.</string>
+    <string name="inlineMultimediaExampleTitle">Inline Multimedia</string>
+    <string name="inlineMultimediaExampleDescription">Embed videos and galleries within a PDF document.</string>
+    <string name="dynamicMultimediaExampleTitle">Dynamic Multimedia Annotation</string>
+    <string name="dynamicMultimediaExampleDescription">This example shows how to dynamically add multimedia annotations to a document.</string>
+    <string name="passwordExampleTitle">Password Protected PDF</string>
+    <string name="passwordExampleDescription">Password is: test123</string>
+    <string name="darkThemeExampleTitle">Dark Theme</string>
+    <string name="darkThemeExampleDescription">An example with applied custom theme.</string>
+    <string name="fragmentExampleTitle">Fragment Example</string>
+    <string name="fragmentExampleDescription">Shows how to create an activity using the PdfFragment.</string>
+    <string name="simpleFragmentExampleTitle">Simple Fragment Example</string>
+    <string name="simpleFragmentExampleDescription">Most basic implementation of PdfFragment in a custom activity.</string>
+    <string name="randomDocumentReplacementExampleTitle">Random Document Replacement</string>
+    <string name="randomDocumentReplacementExampleDescription">Stress test by constantly replacing the displayed document in random time intervals.</string>
+    <string name="eLearningExampleTitle">E-Learning Example</string>
+    <string name="eLearningExampleDescription">Shows how to swap between documents and sync view state, annotations, and bookmarks.</string>
+    <string name="javaScriptActionExampleTitle">JavaScript Actions Example</string>
+    <string name="javaScriptActionExampleDescription">Shows how to create and execute JavaScript actions.</string>
+    <string name="javaScriptCalculatorExampleTitle">JavaScript Calculator Example</string>
+    <string name="javaScriptCalculatorExampleDescription">Basic calculator app implemented completely in PDF JavaScript.</string>
+    <string name="jetpackExampleTitle">Basic Example</string>
+    <string name="jetpackExampleDescription">Example of how to integrate PSPDFKit in a Jetpack compose application.</string>
+    <string name="jetpackImageExampleTitle">Image Example</string>
+    <string name="jetpackImageExampleDescription">Example of how to load an image using PSPDFKit in a Jetpack compose application.</string>
+    <string name="splitDocumentExampleTitle">Document Split-view</string>
+    <string name="splitDocumentExampleDescription">Usage example for two PdfFragment instances sitting side-by-side in a single activity.</string>
+    <string name="memoryDataProviderExampleTitle">MemoryDataProvider</string>
+    <string name="memoryDataProviderExampleDescription">Loading a document from a byte-array using the MemoryDataProvider.</string>
+    <string name="aesExampleTitle">AES Encrypted File Example</string>
+    <string name="aesExampleDescription">Open AES encrypted PDFs without decrypting them first.</string>
+    <string name="documentSwitcherExampleTitle">Document Switcher</string>
+    <string name="documentSwitcherExampleDescription">Switching between documents using a side navigation drawer.</string>
+    <string name="documentTabsExampleTitle">Tabbed Documents</string>
+    <string name="documentTabsExampleDescription">Opens multiple documents in a tabbed interface.</string>
+    <string name="persistentTabsExampleTitle">Persistent Tabs</string>
+    <string name="persistentTabsExampleDescription">Shows how to retain list of open tabs.</string>
+    <string name="customDataProviderExampleTitle">Custom Data Provider</string>
+    <string name="customDataProviderExampleDescription">How to implement a DataProvider that can be used with PdfActivity.</string>
+    <string name="zoomExampleTitle">Zoom Example</string>
+    <string name="zoomExampleDescription">Zooming to certain page objects.</string>
+    <string name="formFillingExampleTitle">Form Filling</string>
+    <string name="formFillingExampleDescription">Shows how to fill forms programmatically.</string>
+    <string name="formFillingJavaScriptExampleTitle">JavaScript Form Filling</string>
+    <string name="formFillingJavaScriptExampleDescription">Shows how to fill forms with JavaScript.</string>
+    <string name="javaScriptFormsExampleTitle">Forms JavaScript</string>
+    <string name="javaScriptFormsExampleDescription">Showcases how to use forms JavaScript.</string>
+    <string name="formCreationExampleTitle">Form Creation</string>
+    <string name="formCreationExampleDescription">Shows how to create forms programmatically.</string>
+    <string name="documentFromCanvasExampleTitle">Document Creation From Canvas</string>
+    <string name="documentFromCanvasExampleDescription">Shows how to create a document programmatically using an Android canvas.</string>
+    <string name="customFormHighlightColorExampleTitle">Custom Form Highlight Color</string>
+    <string name="customFormHighlightColorExampleDescription">Shows how to toggle the form highlight color.</string>
+    <string name="annotationCreationExampleTitle">Annotation Creation</string>
+    <string name="annotationCreationExampleDescription">Programmatic creation of annotations.</string>
+    <string name="fileAnnotationCreationExampleTitle">File Annotation Creation</string>
+    <string name="fileAnnotationCreationExampleDescription">Programmatic creation of file annotations.</string>
+    <string name="annotationRenderingExampleTitle">Annotation Rendering</string>
+    <string name="annotationRenderingExampleDescription">Shows how to render only a custom set of annotations.</string>
+    <string name="ocrExampleTitle">OCR</string>
+    <string name="ocrExampleDescription">Performs optical character recognition (OCR) on the document.</string>
+    <string name="annotationOverlayExampleTitle">Annotation Overlay</string>
+    <string name="annotationOverlayExampleDescription">Shows annotations in overlay mode.</string>
+    <string name="annotationConfigurationExampleTitle">Annotation Configuration</string>
+    <string name="annotationConfigurationExampleDescription">Shows how to customize annotation configuration.</string>
+    <string name="annotationSelectionViewStylingExampleTitle">Annotation Selection Layout</string>
+    <string name="annotationSelectionViewStylingExampleDescription">Shows how to customize the annotation selection layout.</string>
+    <string name="annotationFlagsExampleTitle">Annotation Flags</string>
+    <string name="annotationFlagsExampleDescription">Showcases annotation flags.</string>
+    <string name="annotationCustomInspectorExampleTitle">Custom Annotation Inspector</string>
+    <string name="annotationCustomInspectorExampleDescription">Shows how to customize annotation inspector.</string>
+    <string name="annotationSelectionControllerExampleTitle">Annotation Selection Customization</string>
+    <string name="annotationSelectionControllerExampleDescription">Shows how to customize annotation selection.</string>
+    <string name="annotationCustomStampAnnotationExampleTitle">Custom Stamp Annotations</string>
+    <string name="annotationCustomStampAnnotationExampleDescription">Customizes the default set of stamps in the StampPickerDialog.</string>
+    <string name="customElectronicSignatureExampleTitle">Custom Electronic Signature Flow</string>
+    <string name="customElectronicSignatureExampleDescription">Showcases how to use an `ElectronicSignatureFragment` to implement custom ink signature flow in custom activities using `PdfFragment`.</string>
+    <string name="documentProcessingExampleTitle">Document Processing Example</string>
+    <string name="documentProcessingExampleDescription">Showcases usage of the PdfProcessor class for document processing.</string>
+    <string name="htmlToPdfConversionExampleTitle">HTML-to-PDF Conversion</string>
+    <string name="htmlToPdfConversionExampleDescription">Shows how to convert an HTML file to a PDF.</string>
+    <string name="documentSharingExampleTitle">Document Sharing Example</string>
+    <string name="documentSharingExampleDescription">How to implement custom sharing actions.</string>
+    <string name="documentSharingMenuExampleTitle">Custom Document Sharing Menu</string>
+    <string name="documentSharingMenuExampleDescription">Showcases how to build a custom share menu action.</string>
+    <string name="fullTextSearchIndexingExampleTitle">FTS Indexing Example</string>
+    <string name="fullTextSearchIndexingExampleDescription">Index all documents of the catalog app and make them searchable.</string>
+    <string name="customSearchUiExampleTitle">Custom Search UI</string>
+    <string name="customSearchUiExampleDescription">Showcases how to build a custom search view on top of the search API.</string>
+    <string name="disabledAnnotationPropertyExampleTitle">Disabled Annotation Property</string>
+    <string name="disabledAnnotationPropertyExampleDescription">Shows how to disable annotation note option in the annotation editing toolbar.</string>
+    <string name="customInlineSearchExampleTitle">Custom Inline Search</string>
+    <string name="customInlineSearchExampleDescription">Example of how to use the PdfSearchViewInline in a custom layout.</string>
+    <string name="screenReaderExampleTitle">Screen Reader Example</string>
+    <string name="screenReaderExampleDescription">A small screen reader that uses TTS to speak words on the document while highlighting them.</string>
+    <string name="documentDownloadExampleTitle">Document Download Example</string>
+    <string name="documentDownloadExampleDescription">How to download a PDF document from the web.</string>
+    <string name="verticalScrollbarExampleTitle">VerticalScrollBar Example</string>
+    <string name="verticalScrollbarExampleDescription">Example of the VerticalScrollBar widget for quick page navigation.</string>
+    <string name="customToolbarItemGroupingExampleTitle">Custom Annotation Toolbar Grouping</string>
+    <string name="customToolbarItemGroupingExampleDescription">Example of how to alter contextual toolbar menu items structure. Displayed on AnnotationCreationToolbar.</string>
+    <string name="customAnnotationCreationToolbarExampleTitle">Custom Annotation Creation Toolbar</string>
+    <string name="customAnnotationCreationToolbarExampleDescription">Example showing how to use custom items in annotation creation toolbar and bind them to the annotation tool and variant.</string>
+    <string name="scientificPaperExampleTitle">Settings for a Scientific Paper</string>
+    <string name="scientificPaperExampleDescription">Continuous Scrolling, Persistent User Interface, Default Style.</string>
+    <string name="customApplicationPolicyExampleTitle">Custom Application Policy</string>
+    <string name="customApplicationPolicyExampleDescription">Example of how to customize application policy to prevent copying text.</string>
+    <string name="kioskExampleTitle">Kiosk Grid</string>
+    <string name="kioskExampleDescription">Displays all documents in the assets folder.</string>
+    <string name="customShareDialogExampleTitle">Custom Document Sharing Dialog</string>
+    <string name="customShareDialogExampleDescription">Showcases how to build a custom sharing dialog.</string>
+    <string name="customAnnotationNoteHinterProviderExampleTitle">Custom Note Annotation Hinter Provider</string>
+    <string name="customAnnotationNoteHinterProviderExampleDescription">Example of how to create a custom annotation hinter drawable provider.</string>
+    <string name="progressProviderExampleTitle">Progress Data Provider Example</string>
+    <string name="progressProviderExampleDescription">Showcases how to use the ProgressDataProvider.</string>
+    <string name="customDownloadDialogExampleTitle">Custom Download Dialog Example</string>
+    <string name="customDownloadDialogExampleDescription">Showcases how to build a custom DownloadProgressFragment.</string>
+    <string name="digitalSignatureExampleTitle">Digital Signatures</string>
+    <string name="digitalSignatureExampleDescription">A simple example adding a digital signature to a document. Either basic CMS or advances PAdES. Certificate password is: test</string>
+    <string name="digitalSignatureLtvExampleTitle">Long-Term-Validation Signature</string>
+    <string name="digitalSignatureLtvExampleDescription">PAdES signature with added LTV and Timestamp data.</string>
+    <string name="digitalSignatureLtvAddedExampleTitle">Long-Term-Validation added to Signature</string>
+    <string name="digitalSignatureLtvAddedExampleDescription">Opens an already signed document and adds LTV data to the existing signature.</string>
+    <string name="manualSigningExampleTitle">Manual Signing Example</string>
+    <string name="manualSigningExampleDescription">Showcases how to use a custom signing lambda to manually sign a document with a private key.</string>
+    <string name="watermarkExampleTitle">Watermarks</string>
+    <string name="watermarkExampleDescription">Shows how to display watermarks using Drawable API.</string>
+    <string name="composeExampleTitle">Sample Application</string>
+    <string name="composeExampleDescription">Dedicated Jetpack Compose example application using all the available features of PSPDFKit Compose SDK (New). </string>
+    <string name="filterableThumbnailGridExampleTitle">Filterable Thumbnail Grid</string>
+    <string name="filterableThumbnailGridExampleDescription">Shows how to combine PDF processor and customizable nature of the thumbnail grid to create filters.</string>
+    <string name="documentJsonExampleTitle">Document JSON</string>
+    <string name="documentJsonExampleDescription">Shows how to import and export Instant Document JSON with PSPDFKit.</string>
+    <string name="annotationWithAlphaCreationExampleTitle">Annotation Creation With Alpha</string>
+    <string name="annotationWithAlphaCreationExampleDescription">Programmatic creation of annotations with alpha.</string>
+    <string name="customPageTemplateExampleTitle">Custom New Page Template</string>
+    <string name="customPageTemplateExampleDescription">Shows how to add custom templates to the NewPageDialog.</string>
+    <string name="rotatePageExampleTitle">Rotate Page</string>
+    <string name="rotatePageExampleDescription">Shows how to temporarily apply a rotation to a page.</string>
+    <string name="CombineElectronicSignaturesWithDigitalSigningExampleTitle">Electronic Signatures and Digital Signing Combined</string>
+    <string name="CombineElectronicSignaturesWithDigitalSigningExampleDescription">This example shows how to combine a signature render created with the ElectronicSignatureDialog with digitally signing the document with a certificate.</string>
+    <string name="signatureStorageDatabaseExampleTitle">Electronic Signature Storage Database Example</string>
+    <string name="signatureStorageDatabaseExampleDescription">Shows how to initialize a signature storage database that can be used for storing electronic signatures.</string>
+    <string name="generateReportExampleTitle">Generate PDF Report</string>
+    <string name="generateReportExampleDescription">Shows how to create a PDF report using our document processor. The password is: password</string>
+    <string name="mergeDocumentsExampleTitle">Merge Documents</string>
+    <string name="mergeDocumentsExampleDescription">Shows how to merge multiple PDFs using the document processor.</string>
+    <string name="xfdfExampleTitle">XFDF Example</string>
+    <string name="xfdfExampleDescription">Shows how to import and export annotations in XFDF format.</string>
+    <string name="hideRevealAnnotationsCreationTitle">Hide and Reveal Annotations</string>
+    <string name="hideRevealAnnotationsCreationDescription">Allow users to select areas to hide/reveal on a page.</string>
+    <string name="documentComparisonExampleTitle">Document Comparison</string>
+    <string name="documentComparisonExampleDescription">Compare PDFs using a different stroke color for each document.</string>
+    <string name="emptyActivityExampleTitle">Empty Activity</string>
+    <string name="emptyActivityExampleDescription">Shows how to start a PdfActivity without any document loaded.</string>
+    <string name="pdfUiFragmentExampleTitle">Experimental: PdfUiFragment Example</string>
+    <string name="pdfUiFragmentExampleDescription">Shows how to use the PdfUiFragment to display documents.</string>
+    <string name="outlineProviderExample">Custom Outline Provider</string>
+    <string name="outlineProviderExampleDescription">This example shows how to use an outline provider to display a custom document outline.</string>
+    <string name="overlayViewsExample">Overlay View</string>
+    <string name="overlayViewsExampleDescription">Experimental: This example shows you how to overlay views on the document.</string>
+    <string name="bookmarkHighlightingExampleTitle">Bookmark Highlighting</string>
+    <string name="bookmarkHighlightingExampleDescription">Shows how to use the drawable API to put a indicator on all bookmarked pages in the thumbnail bar and thumbnail grid.</string>
+    <string name="annotationSidebarExampleTitle">Persistent Annotation Sidebar</string>
+    <string name="annotationSidebarExampleDescription">Shows how to show a persistent sidebar containing a list of all annotations.</string>
+    <string name="readerViewExampleTitle">Reader View</string>
+    <string name="readerViewExampleDescription">Shows the reader view, which re-flows documents for easy reading.</string>
+    <string name="pdfFromImageExampleTitle">PDF from Image</string>
+    <string name="pdfFromImageExampleDescription">Shows how to capture an image and convert it to a PDF.</string>
+    <string name="measurementToolsExampleTitle">Measurement Tools</string>
+    <string name="measurementToolsExampleDescription">Shows how to read and create measurement annotations.</string>
+    <string name="textHighlightPopupCustomisationTitle">Text Highlight Popup Customization</string>
+    <string name="textHighlightPopupCustomisationDescription">Shows how to customize the text highlight popup toolbar buttons.</string>
+    <string name="soundAnnotationDataExtractionTitle">Sound Annotation Data Extraction</string>
+    <string name="soundAnnotationDataExtractionDescription">Shows how to add a sound annotation and how to extract the audio data into a .wav file.</string>
+    <string name="documentScrollExampleTitle">Add a page during scroll</string>
+    <string name="documentScrollExampleDescription">Shows how to detect when a document has been scrolled to the end and how to add a new page at the end of the document.</string>
+
+    <string name="tryInstantExampleTitle">Try Instant</string>
+    <string name="tryInstantExampleDescription">Downloads a document for collaborative editing.</string>
+
+    <string name="externalDocumentExamplePermissionExplanation">The file you selected is on the local device. Granting direct file access will allow PSPDFKit to use optimized file system reading, which yields much higher throughput.</string>
+    <string name="grantAccess">Grant access</string>
+    <string name="continueWithout">Continue without</string>
+
+    <!-- Strings used by samples -->
+    <string name="example_show_user_interface">Show user interface</string>
+    <string name="example_hide_user_interface">Hide user interface</string>
+    <string name="open_editor">Open annotation editor</string>
+    <string name="close_editor">Close annotation editor</string>
+    <string name="signature_creation_disabled">Signature creation disabled</string>
+    <string name="signature_creation_enabled">Signature creation enabled</string>
+    <string name="next">Next</string>
+    <string name="previous">Prev</string>
+    <string name="currently_selected_result">Result %1$d of %2$d</string>
+    <string name="custom_search_ui_splash"><![CDATA[This document has <strong>%1$d</strong> pages with ~<strong>%2$d</strong> words<br/>]]></string>
+
+    <string name="dialog_download_title">Downloading</string>
+    <string name="dialog_download_description">Downloading to \'%1$s\'</string>
+
+    <string name="page_template_title">Custom Page Template</string>
+    <string name="page_template_title_logo">Custom Pattern</string>
+
+    <plurals name="search_results">
+        <item quantity="zero">No matches found</item>
+        <item quantity="one">%d match found</item>
+        <item quantity="other">%d matches found</item>
+        <item quantity="few">%d matches found</item>
+    </plurals>
+
+    <string name="mail">Mail</string>
+    <string name="mail_to">Mail to…</string>
+
+    <string name="share">Share</string>
+    <string name="flatten_annotations">Flatten Annotations</string>
+    <string name="print_annotations">Print Annotations</string>
+
+    <!-- Instant example -->
+    <string name="instant_description">With PSPDFKit Instant (Document Engine), it’s easier than ever to add real-time collaboration features to your PSPDFKit-powered app, allowing your users to seamlessly share, edit and annotate PDF documents across iOS, Android and Web apps.\n\nThe PSPDFKit SDKs for Android, iOS and Web support Instant out of the box. Just connect your app to an Instant (Document Engine) server and document management and syncing is taken care of.\n\nYou can try this right here, by getting a new copy of the document or copying the URL for an existing document from pspdfkit.com/demo</string>
+
+    <string name="instant_create_new_document">Create New Document</string>
+    <string name="instant_create_new_document_description">Get a new document code, then collaborate by opening the document link in a web browser or scanning its QR code in PSPDFKit Catalog on another device.</string>
+    <string name="instant_creating">Creating…</string>
+
+    <string name="instant_scan_qr_code">Scan QR code</string>
+    <string name="instant_edit_existing_document_description">Scan the QR code from pspdfkit.com/demo to connect to the document shown in your browser.\n\nAlternatively:</string>
+    <string name="instant_enter_link_manually">Enter Link Manually …</string>
+    <string name="instant_connecting">Connecting…</string>
+
+    <string name="instant_error_invalid_id">You entered an invalid code</string>
+    <string name="instant_error_server_error">Something went wrong on our end</string>
+    <string name="instant_error_no_connection">There is no connection currently</string>
+    <string name="instant_error_something_went_wrong">Something went wrong</string>
+    <string name="instant_error_connection_failed">Connection failed: %1$s</string>
+
+    <string name="instant_collaborate">Collaborate</string>
+    <string name="instant_open_in_browser">Open in Browser</string>
+    <string name="instant_share_document_link">Share Document Link</string>
+
+    <string name="instant_username">Username</string>
+    <string name="instant_password">Password</string>
+    <string name="instant_login">Login</string>
+    <string name="instant_authentication_required">Authentication required</string>
+
+    <!-- Clipboard example -->
+    <string name="copy_to_clipboard_action">Copy To Clipboard</string>
+
+    <!-- Overlay View Example -->
+    <string name="start_form_editing">Start Form Editing</string>
+    <string name="stop_form_editing">Stop Form Editing</string>
+    <string name="start_signing">Start Signing</string>
+
+    <!-- Persistent Sidebar Example -->
+    <string name="pse_empty_title">No Annotations</string>
+    <string name="pse_empty_description">This persistent side bar will show a list of all annotations as soon as you add them.</string>
+
+    <!-- Compose - main examples page -->
+    <string name="section_button_content_desc">%1$s section header expand arrow.</string>
+    <string name="section_icon_content_desc">%1$s section icon.</string>
+
+    <!-- Compose - preferences page -->
+    <string name="preferences_pspdfkit_logo">The PSPDFKit logo.</string>
+    <string name="preferences_header_version">v%1$s</string>
+    <string name="preferences_starting_page_dialog_desc">Page to start document at. Make sure it fits the number of pages in the document you want to open:</string>
+
+    <!-- Compose - snackbar -->
+    <string name="toast_cache_cleared">Cache cleared!</string>
+
+    <!-- Example section names -->
+    <string name="example_section_industry">Industry Examples</string>
+    <string name="example_section_basic">Basic</string>
+    <string name="example_section_opening_documents">Opening Documents</string>
+    <string name="example_section_behaviour_customization">Behaviour Customization</string>
+    <string name="example_section_annotations">Annotations</string>
+    <string name="example_section_forms">Forms</string>
+    <string name="example_section_digital_signing">Digital Signing</string>
+    <string name="example_section_electronic_signatures">Electronic Signatures</string>
+    <string name="example_section_components">Components</string>
+    <string name="example_section_javascript">JavaScript</string>
+    <string name="example_section_document_processing">Document Processing</string>
+    <string name="example_section_layout_customization">Layout Customization</string>
+    <string name="example_section_toolbar_customization">Toolbar Customization</string>
+    <string name="example_section_sharing">Sharing</string>
+    <string name="example_section_jc_examples">Jetpack Compose</string>
+    <string name="example_section_misc_examples">Misc. Examples</string>
+
+    <!-- Preference section names -->
+    <string name="preference_section_layout">Layout</string>
+    <string name="preference_section_double_page">Double Page</string>
+    <string name="preference_section_search">Search</string>
+    <string name="preference_section_thumbnails_outline">Thumbnails / Outline</string>
+    <string name="preference_section_annotations">Annotations</string>
+    <string name="preference_section_forms">Forms</string>
+    <string name="preference_section_actions">Actions</string>
+    <string name="preference_section_customization">Customization</string>
+    <string name="preference_section_activity">Activity</string>
+    <string name="preference_section_other">Other</string>
+
+    <!-- Preference names -->
+    <string name="radio_preference_scroll_direction">Scroll direction</string>
+    <string name="radio_preference_page_layout">Page layout</string>
+    <string name="radio_preference_user_interface_view_mode">User interface view mode</string>
+    <string name="radio_preference_theme_mode">Theme mode</string>
+    <string name="radio_preference_thumbnail_bar_mode">Thumbnail bar mode</string>
+    <string name="radio_preference_annotation_replies">Annotation Replies</string>
+    <string name="checkbox_preference_scroll_continuously">Scroll continuously</string>
+    <string name="checkbox_preference_fit_page_to_width">Fit page to width</string>
+    <string name="checkbox_preference_restore_last_viewed_page">Restore last viewed page</string>
+    <string name="checkbox_preference_show_page_number_overlay">Show page number overlay</string>
+    <string name="checkbox_preference_show_page_labels">Show page labels</string>
+    <string name="checkbox_preference_hide_ui_when_creating_annotations">Hide UI when creating annotations</string>
+    <string name="checkbox_preference_display_first_page_as_single">Display first page as single</string>
+    <string name="checkbox_preference_show_gaps_between_pages">Show gaps between pages</string>
+    <string name="checkbox_preference_show_search_action">Show search action</string>
+    <string name="checkbox_preference_inline_search">Inline search</string>
+    <string name="checkbox_preference_show_thumbnail_grid">Show thumbnail grid</string>
+    <string name="checkbox_preference_enable_document_outline">Enable document outline</string>
+    <string name="checkbox_preference_enable_annotation_list">Enable annotation list</string>
+    <string name="checkbox_preference_enable_annotation_editing">Enable annotation editing</string>
+    <string name="checkbox_preference_enable_annotation_rotation">Enable annotation rotation</string>
+    <string name="checkbox_preference_enable_form_editing">Enable form editing</string>
+    <string name="checkbox_preference_show_share_action">Show share action</string>
+    <string name="checkbox_preference_show_print_action">Show print action</string>
+    <string name="checkbox_preference_invert_page_colors">Invert page colors</string>
+    <string name="checkbox_preference_grayscale">Grayscale</string>
+    <string name="checkbox_preference_enable_text_selection">Enable text selection</string>
+    <string name="checkbox_preference_enable_volume_buttons_navigation">Enable volume buttons navigation</string>
+    <string name="checkbox_preference_immersive_mode">Immersive mode</string>
+    <string name="checkbox_preference_multithreaded_rendering">Multithreaded rendering</string>
+    <string name="checkbox_preference_enable_leakcanary">Enable LeakCanary</string>
+    <string name="integer_preference_start_page">Start page</string>
+    <string name="integer_preference_start_page_description">Start the document at page: </string>
+    <string name="button_preference_clear_cache">Clear cache</string>
+    <string name="button_preference_clear_app_data">Clear app data</string>
+    <string name="button_preference_clear_app_data_description">This will reset all stored app settings. It kills the app, requiring a restart.</string>
+    <string name="instantJsonAttachmentTitle">Instant JSON Attachment</string>
+    <string name="instantJsonAttachmentDescription">Import and export Instant JSON Attachment binary data for an image stamp annotation.</string>
+    <string name="constructionExampleTitle">Construction</string>
+    <string name="constructionExampleDescription">Shows how to configure PSPDFKit to display a building floor plan.</string>
+
+    <!-- Custom Alert Dialog -->
+    <string name="selectDigitalSignatureType">Select Digital Signature Type</string>
+    <string name="digitalSignatureTypeBasic">Basic</string>
+    <string name="digitalSignatureTypePAdES">PAdES</string>
+    <string name="signatureDialogDescription">Select the level of signature for the document.\nBasic = CMS standard digital signature\nPAdES = ETSI compliant advanced digital signature</string>
+
+
+</resources>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~   Copyright © 2017-2024 PSPDFKit GmbH. All rights reserved.
+  ~
+  ~   The PSPDFKit Sample applications are licensed with a modified BSD license.
+  ~   Please see License for details. This notice may not be removed from this file.
+  -->
+
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusableInTouchMode="true">
+
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?actionBarSize"/>
+
+    <RelativeLayout
+        android:id="@+id/searchResultNavigationContainer"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginTop="?actionBarSize"
+        android:background="?colorPrimaryDark"
+        android:orientation="horizontal"
+        android:paddingEnd="0dp"
+        android:paddingStart="16dp"
+        android:visibility="invisible">
+
+        <TextView
+            android:id="@+id/currentSearchResultTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:textColor="?android:textColorSecondaryInverse"
+            tools:text="Result 4 of 10"/>
+
+        <Button
+            android:id="@+id/nextSearchResultButton"
+            style="?android:borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="?selectableItemBackgroundBorderless"
+            android:text="@string/next"
+            android:textColor="?android:textColorPrimaryInverse"/>
+
+        <Button
+            android:id="@+id/previousSearchResultButton"
+            style="?borderlessButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/nextSearchResultButton"
+            android:background="?selectableItemBackgroundBorderless"
+            android:text="@string/previous"
+            android:textColor="?android:textColorPrimaryInverse"/>
+    </RelativeLayout>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?colorPrimary"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
+
+    <FrameLayout
+        android:id="@+id/searchResultsListContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="?actionBarSize"
+        android:visibility="invisible"
+        tools:visibility="visible"
+        >
+
+        <ListView
+            android:id="@+id/searchResultsListView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?android:colorBackground"
+            android:clipToPadding="false"
+            android:paddingBottom="8dp"
+            android:paddingTop="8dp"
+            />
+
+        <TextView
+            android:id="@+id/empty"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?colorPrimary"
+            android:gravity="center_horizontal|top"
+            android:maxWidth="80dp"
+            android:padding="16dp"
+            android:textColor="?android:textColorTertiaryInverse"
+            android:textSize="24sp"
+            tools:text="This document consists of 8 pages with a approximate total of 3124 words."
+            />
+    </FrameLayout>
+</FrameLayout>

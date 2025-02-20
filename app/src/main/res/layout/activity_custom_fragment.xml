@@ -1,0 +1,78 @@
+<!--
+  ~   Copyright © 2014-2024 PSPDFKit GmbH. All rights reserved.
+  ~
+  ~   The PSPDFKit Sample applications are licensed with a modified BSD license.
+  ~   Please see License for details. This notice may not be removed from this file.
+  -->
+
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".examples.java.activities.CustomFragmentActivity"
+             tools:ignore="UnusedAttribute">
+
+    <FrameLayout
+        android:id="@+id/fragmentContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <com.pspdfkit.ui.PdfThumbnailBar
+        android:id="@+id/thumbnailBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"/>
+
+    <com.pspdfkit.ui.search.PdfSearchViewModular
+        android:id="@+id/modularSearchView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="8dp"
+        android:visibility="visible"/>
+
+    <com.pspdfkit.ui.PdfThumbnailGrid
+        android:id="@+id/thumbnailGrid"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"/>
+
+    <com.pspdfkit.ui.PdfOutlineView
+        android:id="@+id/outlineView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="invisible"/>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|center"
+        android:splitMotionEvents="false"
+        android:background="@color/color_primary"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/openSearchButton"
+            android:padding="12dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:src="@drawable/pspdf__ic_search"/>
+
+        <ImageView
+            android:id="@+id/openOutlineButton"
+            android:padding="12dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:src="@drawable/pspdf__ic_outline"/>
+
+        <ImageView
+            android:id="@+id/openThumbnailGridButton"
+            android:padding="12dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="?android:attr/selectableItemBackground"
+            android:src="@drawable/pspdf__ic_thumbnails"/>
+
+    </LinearLayout>
+</FrameLayout>

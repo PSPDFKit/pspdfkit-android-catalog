@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~   Copyright © 2017-2024 PSPDFKit GmbH. All rights reserved.
+  ~
+  ~   The PSPDFKit Sample applications are licensed with a modified BSD license.
+  ~   Please see License for details. This notice may not be removed from this file.
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                style="@style/TextAppearance.AppCompat.SearchResult.Title"
+                android:layout_width="match_parent"
+                android:layout_height="88dp"
+    >
+
+    <ImageView
+        android:id="@+id/pagePreviewImageView"
+        android:layout_width="@dimen/custom_search_ui_previewimage_width"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:scaleType="centerInside"
+        tools:src="@drawable/mock_page"/>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@id/pagePreviewImageView"
+        android:clipToPadding="false"
+        android:gravity="center_vertical|start"
+        android:orientation="vertical"
+        android:paddingBottom="20sp"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp"
+        android:paddingTop="16dp">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/searchResultsCountView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:textSize="16sp"
+                tools:text="7 results"/>
+
+            <TextView
+                android:id="@+id/pageNumberTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start"
+                android:textAppearance="?textAppearanceListItem"
+                android:textColor="?android:textColorPrimary"
+                android:textSize="16sp"
+                tools:text="Page 5"/>
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/previewTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textColor="?android:textColorSecondary"
+            android:textSize="16sp"
+            tools:text="Time To Market PSPDFKit supports balzingly fast PDF viewing..."/>
+
+    </LinearLayout>
+
+</RelativeLayout>

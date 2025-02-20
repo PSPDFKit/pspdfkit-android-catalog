@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~   Copyright © 2017-2024 PSPDFKit GmbH. All rights reserved.
+  ~
+  ~   The PSPDFKit Sample applications are licensed with a modified BSD license.
+  ~   Please see License for details. This notice may not be removed from this file.
+  -->
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:background="?colorPrimaryDark"
+                android:orientation="horizontal"
+                android:paddingEnd="0dp"
+                android:paddingStart="16dp">
+
+    <TextView
+        android:id="@+id/currentSearchResultTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:textColor="?android:textColorSecondaryInverse"
+        tools:text="Result 4 of 10"/>
+
+    <Button
+        android:id="@+id/nextSearchResultButton"
+        style="?borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_centerVertical="true"
+        android:text="@string/next"
+        android:textColor="?android:textColorPrimaryInverse"/>
+
+    <Button
+        android:id="@+id/previousSearchResultButton"
+        style="?borderlessButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@+id/nextSearchResultButton"
+        android:text="@string/previous"
+        android:textColor="?android:textColorPrimaryInverse"/>
+</RelativeLayout>

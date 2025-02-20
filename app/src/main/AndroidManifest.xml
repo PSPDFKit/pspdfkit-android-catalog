@@ -1,0 +1,575 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~   Copyright © 2014-2024 PSPDFKit GmbH. All rights reserved.
+  ~
+  ~   The PSPDFKit Sample applications are licensed with a modified BSD license.
+  ~   Please see License for details. This notice may not be removed from this file.
+  -->
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
+        android:maxSdkVersion="32" />
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <!-- Used for sound annotations recording. -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!-- Some devices does not have microphone, make it optional. -->
+    <uses-feature
+        android:name="android.hardware.microphone"
+        android:required="false" />
+
+    <!-- Camera is used to scan QR codes to start the Instant demo. -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+
+
+    <!-- Required for the `InlineMediaExample` to play the Youtube videos when clicking on the videos in the document. -->
+    <queries>
+        <intent>
+            <action android:name="com.google.android.youtube.api.service.START" />
+        </intent>
+    </queries>
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/PSPDFCatalog.Theme.Light"
+        tools:ignore="UnusedAttribute">
+
+        <meta-data
+            android:name="pspdfkit_license_key"
+            android:value="@string/PSPDFKIT_LICENSE_KEY" />
+
+        <!--
+          In order to enable inline YouTube integration for your PDFs you need to provide a valid
+          API key.
+          -->
+        <meta-data
+            android:name="youtube_api_key"
+            android:value="@string/YOUTUBE_API_KEY" />
+
+        <meta-data
+            android:name="pspdfkit_font_path"
+            android:value="assets/font" />
+
+        <!--
+          Main catalog activity containing the list of examples and configuration drawer.
+        -->
+        <activity
+            android:name=".ui.MainActivity"
+            android:exported="true"
+            android:theme="@style/PSPDFCatalog.Theme.Launcher">
+
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+
+            <intent-filter tools:ignore="AppLinkUrlError">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/pdf" />
+            </intent-filter>
+
+            <intent-filter tools:ignore="AppLinkUrlError">
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.EDIT" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="application/pdf" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <action android:name="android.intent.action.EDIT" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:scheme="file"
+                    android:mimeType="application/pdf" />
+            </intent-filter>
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="*"
+                    android:pathPattern=".*\.pdf"
+                    android:scheme="http" />
+
+                <data
+                    android:host="*"
+                    android:pathPattern=".*\.pdf"
+                    android:scheme="https" />
+
+                <data
+                    android:host="*"
+                    android:pathPattern=".*\.PDF"
+                    android:scheme="http" />
+
+                <data
+                    android:host="*"
+                    android:pathPattern=".*\.PDF"
+                    android:scheme="https" />
+            </intent-filter>
+
+            <!--
+                Minimum width and height of the main activity when resized (both in split-screen and freeform modes).
+                This setting will be applied to all activities in the MainActivity task stack.
+             -->
+            <layout
+                android:minWidth="320dp"
+                android:minHeight="380dp" />
+        </activity>
+
+        <!-- This is the service that monitors downloaded files directory and opens PdfActivity with newly created files. -->
+        <service
+            android:name=".service.DownloadedFilesObserverService"
+            android:exported="false" />
+
+        <!--
+            This is the PSPDFKit activity that uses the appcompat-v7 library.
+        -->
+        <activity
+            android:name="com.pspdfkit.ui.PdfActivity"
+            android:resizeableActivity="true"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <!-- Inline multimedia activities & provider -->
+
+        <activity
+            android:name="com.pspdfkit.ui.PdfMediaDialog"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/PSPDFCatalog.Theme.MediaView" />
+
+        <activity
+            android:name="com.pspdfkit.ui.PdfYouTubeActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:theme="@style/Theme.AppCompat.DialogWhenLarge" />
+
+        <!-- Examples -->
+
+        <!-- This is the activity that provides "Copy to Clipboard" action for images shared from other apps. -->
+        <activity
+            android:name=".examples.java.activities.CopyToClipboardActivity"
+            android:excludeFromRecents="true"
+            android:label="@string/copy_to_clipboard_action"
+            android:logo="@drawable/ic_logo_padded"
+            android:noHistory="true"
+            android:exported="true"
+            android:theme="@style/PSPDFCatalog.Theme.Transparent">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="image/*" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".examples.kotlin.PlaygroundActivity"
+            android:label="@string/playgroundExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.activities.CustomActionsActivity"
+            android:label="@string/customActionsExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.java.activities.CustomAnnotationCreationToolbarActivity"
+            android:label="@string/customAnnotationCreationToolbarExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.activities.ConstructionExampleActivity"
+            android:label="@string/constructionExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.java.activities.CustomElectronicSignatureActivity"
+            android:label="@string/customElectronicSignatureExampleTitle"
+            android:windowSoftInputMode="adjustNothing"/>
+
+        <activity
+            android:name=".examples.java.activities.RandomDocumentReplacementActivity"
+            android:label="@string/randomDocumentReplacementExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.activities.ELearningActivity"
+            android:label="@string/eLearningExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.java.activities.SplitDocumentActivity"
+            android:label="@string/splitDocumentExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.java.activities.DocumentSwitcherActivity"
+            android:label="@string/documentSwitcherExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.java.activities.JavaScriptFormFillingActivity"
+            android:label="@string/formFillingJavaScriptExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.java.activities.CustomFormHighlightColorActivity"
+            android:label="@string/customFormHighlightColorExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.java.activities.AnnotationWithAlphaCreationActivity"
+            android:label="@string/annotationWithAlphaCreationExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.java.activities.FileAnnotationCreationActivity"
+            android:label="@string/fileAnnotationCreationExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.java.activities.AnnotationOverlayActivity"
+            android:label="@string/annotationOverlayExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.java.activities.AnnotationFlagsActivity"
+            android:label="@string/annotationFlagsExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.java.activities.CustomAnnotationInspectorActivity"
+            android:label="@string/annotationCustomInspectorExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.java.activities.AnnotationSelectionCustomizationActivity"
+            android:label="@string/annotationSelectionControllerExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.java.activities.CustomStampAnnotationsActivity"
+            android:label="@string/annotationCustomStampAnnotationExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.java.activities.ToolbarsInFragmentActivity"
+            android:label="@string/toolbarsInFragmentExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.java.activities.FormEditingInFragmentActivity"
+            android:label="@string/formEditingInFragmentExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.java.activities.DocumentSharingExampleActivity"
+            android:label="@string/documentSharingExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.java.activities.CustomSharingMenuActivity"
+            android:label="@string/documentSharingMenuExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.java.activities.IndexedFullTextSearchActivity"
+            android:label="@string/fullTextSearchIndexingExampleTitle"
+            android:theme="@style/Theme.AppCompat.Light" />
+
+        <activity
+            android:name=".examples.java.activities.CustomInlineSearchExampleActivity"
+            android:label="@string/customInlineSearchExampleTitle" />
+
+        <activity
+            android:name=".examples.java.activities.CustomSearchUiActivity"
+            android:label="@string/customSearchUiExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.java.activities.DisabledAnnotationPropertyActivity"
+            android:label="@string/disabledAnnotationPropertyExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.java.activities.CustomToolbarIconGroupingActivity"
+            android:label="@string/customToolbarItemGroupingExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.java.activities.VerticalScrollbarExampleActivity"
+            android:label="@string/verticalScrollbarExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.java.activities.CustomShareDialogActivity"
+            android:label="@string/customShareDialogExampleTitle" />
+
+
+        <activity android:name=".examples.java.activities.ScreenReaderExampleActivity" />
+
+        <activity
+            android:name=".examples.java.activities.WatermarkExampleActivity"
+            android:label="@string/watermarkExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.java.activities.FilterableThumbnailGridActivity"
+            android:label="@string/filterableThumbnailGridExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.java.activities.CustomPageTemplateActivity"
+            android:label="@string/customPageTemplateExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.java.activities.JavaScriptActionsActivity"
+            android:label="@string/javaScriptActionExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.java.activities.FormsJavaScriptActivity"
+            android:label="@string/javaScriptFormsExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.java.activities.XfdfExampleActivity"
+            android:label="@string/xfdfExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.activities.HideRevealAnnotationsCreationActivity"
+            android:label="@string/hideRevealAnnotationsCreationTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity android:name=".examples.kotlin.instant.activities.BarcodeActivity" />
+
+        <activity android:name=".examples.kotlin.instant.activities.EnterDocumentLinkActivity" />
+
+        <activity
+            android:name=".examples.java.activities.MultimediaAnnotationsActivity"
+            android:label="@string/inlineMultimediaExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.activities.JetpackComposeActivity"
+            android:label="@string/jetpackExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.activities.JetpackComposeImageActivity"
+            android:label="@string/jetpackImageExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.activities.PdfUiFragmentExampleActivity"
+            android:label="@string/pdfUiFragmentExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.activities.PersistentTabsActivity"
+            android:label="@string/persistentTabsExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.OutlineProviderActivity"
+            android:label="@string/outlineProviderExample"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.activities.OverlayViewsActivity"
+            android:label="@string/overlayViewsExample"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.KioskActivity"
+            android:label="@string/kioskExampleTitle"
+            android:theme="@style/Theme.AppCompat" />
+
+        <activity
+            android:name=".examples.kotlin.instant.activities.InstantExampleConnectionActivity"
+            android:label="@string/tryInstantExampleTitle"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name=".examples.kotlin.instant.activities.InstantExampleActivity"
+            android:resizeableActivity="true"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.DocumentTabsActivity"
+            android:label="@string/documentSwitcherExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.ExternalExampleActivity"
+            android:label="@string/externalDocumentExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.ZoomExampleActivity"
+            android:label="@string/zoomExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.CombineElectronicSignaturesWithDigitalSigningActivity"
+            android:label="Combine Electronic Signatures With Digital Signing Example"
+            android:windowSoftInputMode="adjustNothing"/>
+
+        <activity
+            android:name=".examples.kotlin.SignatureStorageDatabaseActivity"
+            android:label="@string/signatureStorageDatabaseExampleTitle"
+            android:windowSoftInputMode="adjustNothing"/>
+
+        <activity
+            android:name=".examples.kotlin.RuntimeConfigurationActivity"
+            android:label="@string/runtimeConfigurationChangeExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.CustomFragmentRuntimeConfigurationActivity"
+            android:label="@string/runtimeConfigurationFragmentExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.UserInterfaceViewModesActivity"
+            android:label="@string/userInterfaceViewModesExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.CustomAnnotationNoteHinterProviderActivity"
+            android:label="@string/customAnnotationNoteHinterProviderExampleTitle" />
+
+        <activity
+            android:name=".examples.kotlin.RotatePageActivity"
+            android:label="@string/rotatePageExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.AnnotationCreationActivity"
+            android:label="@string/annotationCreationExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.AnnotationConfigurationExampleActivity"
+            android:label="@string/annotationConfigurationExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.DocumentJsonExampleActivity"
+            android:label="@string/documentJsonExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.FormFillingActivity"
+            android:label="@string/formFillingExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.FormCreationActivity"
+            android:label="@string/formCreationExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.activities.DocumentProcessingExampleActivity"
+            android:label="@string/documentProcessingExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.activities.OcrProcessingActivity"
+            android:label="@string/ocrExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.CustomLayoutActivity"
+            android:label="@string/customLayoutExampleTitle"
+            android:theme="@style/PSPDFCatalog.Theme.Light.CustomisedLoadingView"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.CustomFragmentActivity"
+            android:label="@string/fragmentExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.SimpleFragmentActivity"
+            android:label="@string/simpleFragmentExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.WatermarkExampleActivity"
+            android:label="@string/watermarkExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.BookmarkHighlightingActivity"
+            android:label="@string/bookmarkHighlightingExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.PersistentAnnotationSidebarActivity"
+            android:label="@string/bookmarkHighlightingExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.AnnotationSelectionViewStylingActivity"
+            android:label="@string/annotationSelectionViewStylingExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.PdfFromImageActivity"
+            android:label="@string/pdfFromImageExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.activities.DocumentComparisonActivity"
+            android:label="@string/documentComparisonExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity
+            android:name=".examples.kotlin.activities.InstantJsonAttachmentExampleActivity"
+            android:label="@string/instantJsonAttachmentTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.activities.MeasurementToolsActivity"
+            android:label="@string/measurementToolsExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.TextHighlightPopupCustomisationActivity"
+            android:label="@string/textHighlightPopupCustomisationTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.SoundAnnotationDataExtractionActivity"
+            android:label="@string/soundAnnotationDataExtractionTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.AddLtvAfterSigningActivity"
+            android:label="@string/digitalSignatureLtvAddedExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.DocumentScrollActivity"
+            android:label="@string/documentScrollExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+    </application>
+
+</manifest>

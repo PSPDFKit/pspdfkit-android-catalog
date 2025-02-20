@@ -17,6 +17,7 @@ import com.pspdfkit.catalog.R;
 import com.pspdfkit.catalog.SdkExample;
 import com.pspdfkit.catalog.examples.java.activities.CustomInlineSearchExampleActivity;
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration;
+import com.pspdfkit.configuration.search.SearchType;
 import com.pspdfkit.ui.PdfActivityIntentBuilder;
 import com.pspdfkit.ui.search.PdfSearchViewInline;
 
@@ -39,7 +40,7 @@ public class CustomInlineSearchExample extends SdkExample {
         // This example requires inline search, so override any catalog configuration.
         // To change the location of the PdfSearchViewInline as well as the way it is integrated,
         // you have to use a custom activity.
-        configuration.setSearchType(PdfActivityConfiguration.SEARCH_INLINE).enableSearch();
+        configuration.setSearchType(SearchType.INLINE).searchEnabled(true);
 
         // Load the example document from the assets and launch the activity.
         extract(QUICK_START_GUIDE, getTitle(), context, documentFile -> {

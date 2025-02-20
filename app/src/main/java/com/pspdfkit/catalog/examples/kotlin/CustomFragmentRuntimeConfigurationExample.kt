@@ -95,17 +95,14 @@ class CustomFragmentRuntimeConfigurationActivity : AppCompatActivity() {
         val scrollDirection = fragment.configuration.scrollDirection
 
         // Copy existing configuration to a new configuration builder.
-        val configurationBuilder = PdfConfiguration.Builder(fragment.configuration)
-
-        // Toggle scroll direction.
-        configurationBuilder.scrollDirection(
-            if (scrollDirection == PageScrollDirection.HORIZONTAL) PageScrollDirection.VERTICAL else PageScrollDirection.HORIZONTAL
+        val newConfig = fragment.configuration.copy(
+            scrollDirection = if (scrollDirection == PageScrollDirection.HORIZONTAL) PageScrollDirection.VERTICAL else PageScrollDirection.HORIZONTAL
         )
 
         // Create a new fragment based on the current fragment and the new configuration.
         // This copies the state (loaded document, scrolled page, selected annotations etc.) of the
         // current fragment while applying the new configuration.
-        val newFragment = PdfFragment.newInstance(fragment, configurationBuilder.build())
+        val newFragment = PdfFragment.newInstance(fragment, newConfig)
 
         // Replace the current fragment with it.
         setFragment(newFragment)
@@ -120,15 +117,15 @@ class CustomFragmentRuntimeConfigurationActivity : AppCompatActivity() {
         val isNightModeActive = fragment.configuration.isInvertColors
 
         // Copy existing configuration to a new configuration builder.
-        val configurationBuilder = PdfConfiguration.Builder(fragment.configuration)
-
-        // Toggle invert colors property.
-        configurationBuilder.invertColors(!isNightModeActive)
+        val newConfig = fragment.configuration.copy(
+            // Toggle invert colors property.
+            isInvertColors = !isNightModeActive
+        )
 
         // Create a new fragment based on the current fragment and the new configuration.
         // This copies the state (loaded document, scrolled page, selected annotations etc.) of the
         // current fragment while applying the new configuration.
-        val newFragment = PdfFragment.newInstance(fragment, configurationBuilder.build())
+        val newFragment = PdfFragment.newInstance(fragment, newConfig)
         setFragment(newFragment)
 
         // Activity theme must be applied before setContentView. Thus we need to restart the activity.

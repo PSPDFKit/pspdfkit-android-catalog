@@ -13,8 +13,6 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
-import com.pspdfkit.annotations.Annotation
-import com.pspdfkit.annotations.AnnotationType
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.tasks.ExtractAssetTask.extract
@@ -24,6 +22,7 @@ import com.pspdfkit.forms.SignatureFormElement
 import com.pspdfkit.signatures.DigitalSignatureMetadata
 import com.pspdfkit.signatures.Signature
 import com.pspdfkit.signatures.SignatureAppearance
+import com.pspdfkit.signatures.SignatureGraphic
 import com.pspdfkit.signatures.SignerOptions
 import com.pspdfkit.signatures.SigningManager
 import com.pspdfkit.signatures.getPrivateKeyEntryFromP12Stream
@@ -166,11 +165,7 @@ class CombineElectronicSignaturesWithDigitalSigningActivity :
                 val formFieldAnnotation = clickedSignatureFormElement.annotation
 
                 // The signature object provides convenient conversion to ink or stamp annotation.
-                val signatureAnnotation: Annotation = when (signature.annotationType) {
-                    AnnotationType.INK -> signature.toInkAnnotation(document, formFieldAnnotation.pageIndex, formFieldAnnotation.boundingBox)
-                    AnnotationType.STAMP -> signature.toStampAnnotation(document, formFieldAnnotation.pageIndex, formFieldAnnotation.boundingBox)
-                    else -> throw IllegalStateException("Unhandled Signature type. Neither Ink, nor Stamp.")
-                }
+                val signatureAnnotation = signature.toAnnotation(document, formFieldAnnotation.pageIndex, formFieldAnnotation.boundingBox)
 
                 // Add the annotation to the document. This step is required so we can render the signature
                 // in order to pass the render to the `SignatureAppearance` when digitally signing in the
@@ -199,10 +194,10 @@ class CombineElectronicSignaturesWithDigitalSigningActivity :
     private fun signDocumentWithSignatureBitmap(formElement: SignatureFormElement, signatureBitmap: Bitmap) {
         val outputFile = File(filesDir, "signedDocument.pdf")
 
-        val signatureAppearance = SignatureAppearance.Builder()
-            .setShowWatermark(false)
-            .setSignatureGraphic(SignatureAppearance.SignatureGraphic.fromBitmap(getImageUri(signatureBitmap)))
-            .build()
+        val signatureAppearance = SignatureAppearance(
+            showWatermark = false,
+            signatureGraphic = SignatureGraphic.fromBitmap(getImageUri(signatureBitmap))
+        )
 
         val key = getPrivateKeyEntry(this)
         val signedDocumentUri = Uri.fromFile(outputFile)

@@ -42,7 +42,7 @@ public class DocumentSwitcherExample extends SdkExample {
                 .setTabBarHidingMode(TabBarHidingMode.HIDE)
                 // The custom layout has no content editor. In order to prevent the activity from accessing
                 // it we have to deactivate it in the configuration.
-                .disableContentEditing()
+                .contentEditingEnabled(false)
                 .layout(R.layout.activity_document_switcher);
 
         // Launch the custom example activity using the (read-only) document from assets and

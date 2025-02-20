@@ -10,8 +10,8 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        // The PSPDFKit library is loaded from the PSPDFKit Maven repository, added by this configuration.
-        maven(url = "https://customers.pspdfkit.com/maven/")
+        // The Nutrient library is loaded from the Nutrient Maven repository, added by this configuration.
+        maven(url = "https://my.nutrient.io/maven/")
     }
 
     versionCatalogs {

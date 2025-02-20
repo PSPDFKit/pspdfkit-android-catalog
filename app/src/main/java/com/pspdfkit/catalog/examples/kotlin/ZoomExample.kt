@@ -35,9 +35,9 @@ class ZoomExample(context: Context) : SdkExample(context, R.string.zoomExampleTi
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // This example uses a custom activity which adds some option menu items.
         // The default menu items are deactivated for simplicity.
-        configuration.disableSearch()
-            .disableOutline()
-            .hideThumbnailGrid()
+        configuration.searchEnabled(false)
+            .outlineEnabled(false)
+            .thumbnailGridEnabled(false)
 
         // Start the activity once the example document has been extracted from the app's assets.
         ExtractAssetTask.extract(QUICK_START_GUIDE, title, context) { documentFile ->

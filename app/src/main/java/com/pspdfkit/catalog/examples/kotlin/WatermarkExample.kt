@@ -22,15 +22,11 @@ import androidx.annotation.IntRange
 import androidx.annotation.UiThread
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
-import com.pspdfkit.catalog.examples.java.activities.WatermarkExampleActivity
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.document.PdfDocument
 import com.pspdfkit.document.providers.AssetDataProvider
 import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
-import com.pspdfkit.ui.PdfFragment
-import com.pspdfkit.ui.PdfThumbnailBar
-import com.pspdfkit.ui.PdfThumbnailGrid
 import com.pspdfkit.ui.drawable.PdfDrawable
 import com.pspdfkit.ui.drawable.PdfDrawableProvider
 

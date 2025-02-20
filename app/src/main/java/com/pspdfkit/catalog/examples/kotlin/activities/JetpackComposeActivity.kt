@@ -53,7 +53,7 @@ class JetpackComposeActivity : AppCompatActivity() {
                     .build()
 
                 val documentState = rememberDocumentState(uri, pdfActivityConfiguration)
-                var currentPage = pdfActivityConfiguration.page()
+                var currentPage = pdfActivityConfiguration.page
 
                 Box(Modifier.padding(paddingValues)) {
                     DocumentView(

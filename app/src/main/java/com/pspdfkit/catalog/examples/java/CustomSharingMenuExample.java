@@ -33,7 +33,11 @@ public class CustomSharingMenuExample extends SdkExample {
         // This example uses a custom activity which shows how to implement custom sharing.
 
         // For sake of simplicity, deactivate actions.
-        configuration.disableAnnotationList().disableSearch().disableOutline().hideThumbnailGrid();
+        configuration
+                .annotationListEnabled(false)
+                .searchEnabled(false)
+                .outlineEnabled(false)
+                .thumbnailGridEnabled(false);
 
         // First extract the document from the assets.
         extract(ANNOTATIONS_EXAMPLE, getTitle(), context, documentFile -> {

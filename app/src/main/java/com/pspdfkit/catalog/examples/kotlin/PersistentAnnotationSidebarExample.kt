@@ -45,16 +45,16 @@ class PersistentAnnotationSidebarExample(context: Context) : SdkExample(
 ) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // We don't need to show it in the outline since we will build our own UI for this.
-        configuration.disableAnnotationList()
+        configuration.annotationListEnabled(false)
 
         // We also disable the rest of the outline to make a bit more space in the toolbar.
-        configuration.disableOutline()
-        configuration.disableBookmarkList()
-        configuration.disableDocumentInfoView()
+        configuration.outlineEnabled(false)
+        configuration.bookmarkListEnabled(false)
+        configuration.documentInfoViewEnabled(false)
 
         // We also hide the share option to make a bit more space.
         configuration.setEnabledShareFeatures(EnumSet.noneOf(ShareFeatures::class.java))
-        configuration.disablePrinting()
+        configuration.printingEnabled(false)
 
         configuration.useImmersiveMode(false)
 

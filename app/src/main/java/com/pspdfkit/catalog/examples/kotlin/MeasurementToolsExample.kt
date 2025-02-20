@@ -57,12 +57,12 @@ class MeasurementToolsExample(context: Context) :
             // Turn off saving, so we have the clean original document every time the example is launched.
             .autosaveEnabled(false)
             .layoutMode(PageLayoutMode.SINGLE)
-            .disableDocumentInfoView()
-            .disableSearch()
-            .disableContentEditing()
+            .documentInfoViewEnabled(false)
+            .searchEnabled(false)
+            .contentEditingEnabled(false)
             .setEnabledShareFeatures(ShareFeatures.none())
-            .disablePrinting()
-            .hideThumbnailGrid()
+            .printingEnabled(false)
+            .thumbnailGridEnabled(false)
             .setRedactionUiEnabled(false)
             // We only enable the measurement tools for this example.
             .enabledAnnotationTools(

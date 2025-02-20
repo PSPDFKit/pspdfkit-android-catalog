@@ -25,6 +25,7 @@ import com.pspdfkit.configuration.page.PageFitMode
 import com.pspdfkit.configuration.page.PageLayoutMode
 import com.pspdfkit.configuration.page.PageScrollDirection
 import com.pspdfkit.configuration.page.PageScrollMode
+import com.pspdfkit.configuration.search.SearchType
 import com.pspdfkit.configuration.sharing.ShareFeatures
 import com.pspdfkit.configuration.theming.ThemeMode
 import java.util.Locale
@@ -98,7 +99,7 @@ data class State(
 fun State.getPdfActivityConfigurationBuilder(context: Context): PdfActivityConfiguration.Builder {
     val scrollMode = if (scrollContinuously) PageScrollMode.CONTINUOUS else PageScrollMode.PER_PAGE
     val fitPageToWidth = if (fitPageToWidth) PageFitMode.FIT_TO_WIDTH else PageFitMode.FIT_TO_SCREEN
-    val searchType = if (inlineSearch) PdfActivityConfiguration.SEARCH_INLINE else PdfActivityConfiguration.SEARCH_MODULAR
+    val searchType = if (inlineSearch) SearchType.INLINE else SearchType.MODULAR
 
     val configuration = PdfActivityConfiguration.Builder(context)
         .scrollDirection(PageScrollDirection.valueOf(scrollDirection))
@@ -120,76 +121,25 @@ fun State.getPdfActivityConfigurationBuilder(context: Context): PdfActivityConfi
         .useImmersiveMode(enableImmersiveMode)
         .setMultithreadedRenderingEnabled(enableMultithreadingRendering)
 
-    if (showSearchAction) {
-        configuration.enableSearch()
-    } else {
-        configuration.disableSearch()
-    }
-
-    if (showThumbnailGrid) {
-        configuration.showThumbnailGrid()
-    } else {
-        configuration.hideThumbnailGrid()
-    }
-
-    if (enableDocumentOutline) {
-        configuration.enableOutline()
-    } else {
-        configuration.disableOutline()
-    }
-
-    if (enableAnnotationList) {
-        configuration.enableAnnotationList()
-    } else {
-        configuration.disableAnnotationList()
-    }
-
-    if (showPageNumberOverlay) {
-        configuration.showPageNumberOverlay()
-    } else {
-        configuration.hidePageNumberOverlay()
-    }
-
-    if (showPageLabels) {
-        configuration.showPageLabels()
-    } else {
-        configuration.hidePageLabels()
-    }
-
-    if (enableAnnotationEditing) {
-        configuration.enableAnnotationEditing()
-    } else {
-        configuration.disableAnnotationEditing()
-    }
-
-    if (enableAnnotationRotation) {
-        configuration.enableAnnotationRotation()
-    } else {
-        configuration.disableAnnotationRotation()
-    }
-
-    if (enableFormEditing) {
-        configuration.enableFormEditing()
-    } else {
-        configuration.disableFormEditing()
-    }
-
+    configuration.searchEnabled(showSearchAction)
+    configuration.thumbnailGridEnabled(showThumbnailGrid)
+    configuration.outlineEnabled(enableDocumentOutline)
+    configuration.annotationListEnabled(enableAnnotationList)
+    configuration.pageNumberOverlayEnabled(showPageNumberOverlay)
+    configuration.pageLabelsEnabled(showPageLabels)
+    configuration.annotationEditingEnabled(enableAnnotationEditing)
+    configuration.annotationRotationEnabled(enableAnnotationRotation)
+    configuration.formEditingEnabled(enableFormEditing)
+    configuration.printingEnabled(showPrintAction)
+    configuration.textSelectionEnabled(enableTextSelection)
+    configuration.setVolumeButtonsNavigationEnabled(enableVolumeButtonNavigation)
+    configuration.toGrayscale(grayscale)
+    configuration.invertColors(invertPageColors || themeMode == ThemeMode.NIGHT.name)
     if (showShareAction) {
         configuration.setEnabledShareFeatures(ShareFeatures.all())
     } else {
         configuration.setEnabledShareFeatures(ShareFeatures.none())
     }
-
-    if (showPrintAction) {
-        configuration.enablePrinting()
-    } else {
-        configuration.disablePrinting()
-    }
-
-    configuration.textSelectionEnabled(enableTextSelection)
-    configuration.setVolumeButtonsNavigationEnabled(enableVolumeButtonNavigation)
-    configuration.toGrayscale(grayscale)
-    configuration.invertColors(invertPageColors || themeMode == ThemeMode.NIGHT.name)
 
     return configuration
 }

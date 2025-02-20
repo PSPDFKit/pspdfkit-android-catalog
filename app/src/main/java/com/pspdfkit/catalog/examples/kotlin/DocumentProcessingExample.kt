@@ -26,10 +26,10 @@ class DocumentProcessingExample(context: Context) : SdkExample(context, R.string
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // This example uses a custom activity which showcases several document processing features.
         // For the sake of simplicity, deactivate actions in the processing activity.
-        configuration.disableAnnotationList()
-            .disableSearch()
-            .disableOutline()
-            .hideThumbnailGrid()
+        configuration.annotationListEnabled(false)
+            .searchEnabled(false)
+            .outlineEnabled(false)
+            .thumbnailGridEnabled(false)
 
         // First extract the example document from the assets.
         ExtractAssetTask.extract(ANNOTATIONS_EXAMPLE, title, context) { documentFile ->

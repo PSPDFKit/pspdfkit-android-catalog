@@ -51,9 +51,9 @@ class ManualSigningExample(context: Context) : SdkExample(context, R.string.manu
         outputFile.delete() // make sure output is deleted from previous runs.
 
         /** Configure the appearance of the signature using [SignatureAppearance] **/
-        val appearance = SignatureAppearance.Builder()
-            .setSignatureAppearanceMode(SignatureAppearanceMode.SIGNATURE_ONLY)
-            .build()
+        val appearance = SignatureAppearance(
+            signatureAppearanceMode = SignatureAppearanceMode.SIGNATURE_ONLY
+        )
         val metadata = DigitalSignatureMetadata(
             signatureAppearance = appearance,
             timestampData = TimestampData("https://freetsa.org/tsr")

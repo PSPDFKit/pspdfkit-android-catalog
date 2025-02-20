@@ -32,12 +32,12 @@ class OcrExample(context: Context) : SdkExample(context, R.string.ocrExampleTitl
             val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
                 .configuration(
                     configuration
-                        .disableDocumentInfoView()
-                        .disableAnnotationList()
-                        .disableBookmarkList()
-                        .hideSettingsMenu()
-                        .hideThumbnailGrid()
-                        .disableOutline().build()
+                        .documentInfoViewEnabled(false)
+                        .annotationListEnabled(false)
+                        .bookmarkListEnabled(false)
+                        .settingsMenuEnabled(false)
+                        .thumbnailGridEnabled(false)
+                        .outlineEnabled(false).build()
                 )
                 .activityClass(OcrProcessingActivity::class)
                 .build()

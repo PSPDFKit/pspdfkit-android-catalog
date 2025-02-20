@@ -67,8 +67,8 @@ class DocumentScrollActivity : PdfActivity() {
 
     override fun onDocumentLoaded(document: PdfDocument) {
         super.onDocumentLoaded(document)
-        val pageScrollDirection = configuration.getConfiguration().getScrollDirection()
-        val scrollMode = configuration.getConfiguration().scrollMode
+        val pageScrollDirection = configuration.configuration.scrollDirection
+        val scrollMode = configuration.configuration.scrollMode
 
         requirePdfFragment().addDocumentScrollListener(object : DocumentScrollListener {
             override fun onScrollStateChanged(state: ScrollState) {}

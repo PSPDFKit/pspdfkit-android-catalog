@@ -34,7 +34,7 @@ public class JavaScriptFormFillingExample extends SdkExample {
                 // Turn off saving, so we have the clean original document every time the example is
                 // launched.
                 .autosaveEnabled(false)
-                .enableFormEditing()
+                .formEditingEnabled(true)
                 .build();
 
         // Extract the document from the assets.

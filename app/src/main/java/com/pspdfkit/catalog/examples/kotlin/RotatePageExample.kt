@@ -26,7 +26,7 @@ class RotatePageExample(context: Context) : SdkExample(context, R.string.rotateP
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // This example uses a custom activity which adds some option menu items. The default
         // menu items are deactivated for simplicity.
-        configuration.disableSearch().disableOutline()
+        configuration.searchEnabled(false).outlineEnabled(false)
 
         // Start the activity once the example document has been extracted from the app's assets.
         ExtractAssetTask.extract(QUICK_START_GUIDE, title, context) { documentFile ->

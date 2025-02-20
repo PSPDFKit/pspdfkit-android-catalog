@@ -89,6 +89,7 @@ import com.pspdfkit.catalog.examples.kotlin.LongTermValidationExample
 import com.pspdfkit.catalog.examples.kotlin.ManualSigningExample
 import com.pspdfkit.catalog.examples.kotlin.MeasurementToolsExample
 import com.pspdfkit.catalog.examples.kotlin.MergeDocumentsExample
+import com.pspdfkit.catalog.examples.kotlin.NavHostExample
 import com.pspdfkit.catalog.examples.kotlin.OcrExample
 import com.pspdfkit.catalog.examples.kotlin.OutlineProviderExample
 import com.pspdfkit.catalog.examples.kotlin.OverlayViewsExample
@@ -278,7 +279,8 @@ fun getSectionsWithExamples(context: Context) = listOf(
         R.drawable.ic_jetpack_compose,
         ComposeExampleApp(context),
         JetpackComposeExample(context),
-        JetpackComposeImageExample(context)
+        JetpackComposeImageExample(context),
+        NavHostExample(context)
     ),
 
     SdkExample.Section(

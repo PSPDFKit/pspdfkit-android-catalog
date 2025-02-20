@@ -42,15 +42,15 @@ class DocumentJsonExample(context: Context) : SdkExample(context, R.string.docum
 
         // Clean-up the primary toolbar for the sake of simplicity in this example.
         configuration
-            .disableAnnotationList()
-            .disableBookmarkList()
-            .hideThumbnailGrid()
-            .hideSettingsMenu()
-            .disableDocumentEditor()
-            .disableOutline()
-            .disablePrinting()
+            .annotationListEnabled(false)
+            .bookmarkListEnabled(false)
+            .thumbnailGridEnabled(false)
+            .settingsMenuEnabled(false)
+            .documentEditorEnabled(false)
+            .outlineEnabled(false)
+            .printingEnabled(false)
             .setEnabledShareFeatures(ShareFeatures.none())
-            .disableSearch()
+            .searchEnabled(false)
 
         // Load and show the a custom activity for importing and exporting document JSON.
         ExtractAssetTask.extract(ANNOTATIONS_EXAMPLE, title, context, false) { documentFile ->

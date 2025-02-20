@@ -30,7 +30,7 @@ class HideRevealAnnotationsCreationExample(context: Context) :
             // Disable thumbnail bar.
             .setThumbnailBarMode(ThumbnailBarMode.THUMBNAIL_BAR_MODE_NONE)
             // Disable annotation copy and paste.
-            .disableCopyPaste()
+            .copyPastEnabled(false)
             // Disable text selection.
             .textSelectionEnabled(false)
 

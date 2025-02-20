@@ -37,7 +37,7 @@ class FormFillingExample(context: Context) : SdkExample(context, R.string.formFi
         configuration.autosaveEnabled(false)
 
         // Enable form editing UI.
-        configuration.enableFormEditing()
+        configuration.formEditingEnabled(true)
 
         // Extract the example document from the assets.
         ExtractAssetTask.extract("Form_example.pdf", title, context) { documentFile ->

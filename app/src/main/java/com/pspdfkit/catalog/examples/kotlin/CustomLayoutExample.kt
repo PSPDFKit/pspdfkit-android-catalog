@@ -23,6 +23,7 @@ import com.pspdfkit.catalog.utils.Utils
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.configuration.activity.TabBarHidingMode
 import com.pspdfkit.configuration.activity.ThumbnailBarMode
+import com.pspdfkit.configuration.search.SearchType
 import com.pspdfkit.document.PdfDocument
 import com.pspdfkit.listeners.OnVisibilityChangedListener
 import com.pspdfkit.ui.PdfActivity
@@ -47,17 +48,17 @@ class CustomLayoutExample(context: Context) : SdkExample(context, R.string.custo
             // The custom layout has no thumbnail bar.
             setThumbnailBarMode(ThumbnailBarMode.THUMBNAIL_BAR_MODE_NONE)
             // The custom layout has no document editor.
-            disableDocumentEditor()
+            documentEditorEnabled(false)
             // The custom layout has no document title overlay.
-            hideDocumentTitleOverlay()
+            documentTitleOverlayEnabled(false)
             // The custom layout has no navigation buttons.
-            hideNavigationButtons()
+            navigationButtonsEnabled(false)
             // This example shows the thumbnail grid in a custom drawer layout.
-            showThumbnailGrid()
+            thumbnailGridEnabled(true)
             // Disable forms editing.
-            disableFormEditing()
+            formEditingEnabled(false)
             // The custom layout has no content editor.
-            disableContentEditing()
+            contentEditingEnabled(false)
             // Disable measurements
             setMeasurementToolsEnabled(false)
         }
@@ -67,7 +68,7 @@ class CustomLayoutExample(context: Context) : SdkExample(context, R.string.custo
 
         // We keep things simple, and use inline search and deactivate immersive mode for this example.
         configuration.apply {
-            setSearchType(PdfActivityConfiguration.SEARCH_INLINE)
+            setSearchType(SearchType.INLINE)
             useImmersiveMode(false)
         }
 

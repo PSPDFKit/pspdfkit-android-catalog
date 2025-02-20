@@ -324,11 +324,6 @@
         <activity android:name=".examples.java.activities.ScreenReaderExampleActivity" />
 
         <activity
-            android:name=".examples.java.activities.WatermarkExampleActivity"
-            android:label="@string/watermarkExampleTitle"
-            android:windowSoftInputMode="adjustNothing" />
-
-        <activity
             android:name=".examples.java.activities.FilterableThumbnailGridActivity"
             android:label="@string/filterableThumbnailGridExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
@@ -464,6 +459,11 @@
         <activity
             android:name=".examples.kotlin.AnnotationCreationActivity"
             android:label="@string/annotationCreationExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.NavHostActivity"
+            android:label="@string/navHostExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity

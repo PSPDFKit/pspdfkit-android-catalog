@@ -87,6 +87,8 @@
     <string name="documentFromCanvasExampleDescription">Shows how to create a document programmatically using an Android canvas.</string>
     <string name="customFormHighlightColorExampleTitle">Custom Form Highlight Color</string>
     <string name="customFormHighlightColorExampleDescription">Shows how to toggle the form highlight color.</string>
+    <string name="navHostExampleTitle">Compose Navigation</string>
+    <string name="navHostExampleDescription">Shows how to use DocumentView Composable in NavHost.</string>
     <string name="annotationCreationExampleTitle">Annotation Creation</string>
     <string name="annotationCreationExampleDescription">Programmatic creation of annotations.</string>
     <string name="fileAnnotationCreationExampleTitle">File Annotation Creation</string>

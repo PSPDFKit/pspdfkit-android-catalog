@@ -22,8 +22,8 @@ android {
         minSdk = 21
         targetSdk = compileSdk
 
-        versionName = "2024.7.0"
-        versionCode = 140852
+        versionName = "2024.8.1"
+        versionCode = 141140
 
         vectorDrawables {
             useSupportLibrary = true
@@ -67,13 +67,13 @@ android {
 
 dependencies {
 
-    // PSPDFKit is integrated from the PSPDFKit Maven repository. See the `repositories` block at the beginning
+    // Nutrient is integrated from the Nutrient Maven repository. See the `repositories` block at the beginning
     // of this file, which shows how to set up the repository in your app.
-    implementation("com.pspdfkit:pspdfkit:2024.7.0")
+    implementation("com.pspdfkit:pspdfkit:2024.8.1")
 
     // OCR library + English language pack.
-    implementation("com.pspdfkit:pspdfkit-ocr:2024.7.0")
-    implementation("com.pspdfkit:pspdfkit-ocr-english:2024.7.0")
+    implementation("com.pspdfkit:pspdfkit-ocr:2024.8.1")
+    implementation("com.pspdfkit:pspdfkit-ocr-english:2024.8.1")
 
 
     // Androidx
@@ -114,6 +114,9 @@ dependencies {
 
     // Http logging.
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+
+    // Compose navigation
+    implementation("androidx.navigation:navigation-compose:2.5.3")
 
     // YouTube player (inline videos).
     implementation(files("libs/YouTubeAndroidPlayerApi.jar"))

@@ -34,12 +34,12 @@ class UserInterfaceViewModesExample(context: Context) : SdkExample(context, R.st
         configuration.layout(R.layout.user_interface_view_modes_activity)
 
         // Hide navigation buttons and tab bar since they are not used by this example.
-        configuration.hideNavigationButtons()
+        configuration.navigationButtonsEnabled(false)
         configuration.setTabBarHidingMode(TabBarHidingMode.HIDE)
 
         // The custom layout has no content editor. In order to prevent the activity from accessing
         // it we have to deactivate it in the configuration.
-        configuration.disableContentEditing()
+        configuration.contentEditingEnabled(false)
 
         // Disable measurements as well
         configuration.setMeasurementToolsEnabled(false)

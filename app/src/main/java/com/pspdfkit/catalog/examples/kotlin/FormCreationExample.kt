@@ -52,7 +52,7 @@ class FormCreationExample(context: Context) :
         configuration.autosaveEnabled(false)
 
         // Enable form editing UI.
-        configuration.enableFormEditing()
+        configuration.formEditingEnabled(true)
 
         // Create an A4 page document from scratch.
         val newPage = NewPage.emptyPage(NewPage.PAGE_SIZE_A4).build()

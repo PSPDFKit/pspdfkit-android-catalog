@@ -36,14 +36,14 @@ class ELearningExample(context: Context) :
             // Use single page mode.
             .layoutMode(PageLayoutMode.SINGLE)
             // Disable all the menu items but annotations editing and bookmark list.
-            .disableOutline()
-            .disableDocumentInfoView()
-            .disableAnnotationList()
-            .disableSearch()
-            .hideSettingsMenu()
+            .outlineEnabled(false)
+            .documentInfoViewEnabled(false)
+            .annotationListEnabled(false)
+            .searchEnabled(false)
+            .settingsMenuEnabled(false)
             .setEnabledShareFeatures(ShareFeatures.none())
-            .disablePrinting()
-            .hideThumbnailGrid()
+            .printingEnabled(false)
+            .thumbnailGridEnabled(false)
             .setRedactionUiEnabled(false)
             .enabledAnnotationTools(annotationTools)
 

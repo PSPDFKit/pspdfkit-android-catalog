@@ -24,14 +24,14 @@ class ReaderViewExample(context: Context) : AssetExample(context, R.string.reade
             enableReaderView(true)
 
             // We disable additional features which are enabled by default. This just keeps the example simpler.
-            disableAnnotationEditing()
-            disableAnnotationList()
-            disableBookmarkList()
-            disableOutline()
-            disablePrinting()
-            disableSearch()
+            annotationEditingEnabled(false)
+            annotationListEnabled(false)
+            bookmarkListEnabled(false)
+            outlineEnabled(false)
+            printingEnabled(false)
+            searchEnabled(false)
             setEnabledShareFeatures(EnumSet.noneOf(ShareFeatures::class.java))
-            hideSettingsMenu()
+            settingsMenuEnabled(false)
         }
     }
 }

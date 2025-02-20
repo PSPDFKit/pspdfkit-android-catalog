@@ -19,7 +19,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import com.pspdfkit.annotations.Annotation;
-import com.pspdfkit.annotations.InkAnnotation;
 import com.pspdfkit.catalog.R;
 import com.pspdfkit.configuration.PdfConfiguration;
 import com.pspdfkit.configuration.signatures.SignatureColorOptions;
@@ -220,8 +219,8 @@ public class CustomElectronicSignatureActivity extends AppCompatActivity
         if (fragment.getDocument() == null || touchedPoint == null) return;
 
         // Create signature annotation from returned signature data.
-        final InkAnnotation signatureAnnotation =
-                signature.toInkAnnotation(fragment.getDocument(), touchedPageIndex, touchedPoint);
+        final Annotation signatureAnnotation =
+                signature.toAnnotation(fragment.getDocument(), touchedPageIndex, touchedPoint);
         // Set annotation's creator as set in annotation preferences.
         if (fragment.getAnnotationPreferences().isAnnotationCreatorSet()) {
             signatureAnnotation.setCreator(fragment.getAnnotationPreferences().getAnnotationCreator());

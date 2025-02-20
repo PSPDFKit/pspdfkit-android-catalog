@@ -60,9 +60,10 @@ class RuntimeConfigurationActivity : PdfActivity() {
                 val themeId = if (!isNightMode) R.style.PSPDFCatalog_Theme_Dark else R.style.PSPDFCatalog_Theme
 
                 // Provide theme resource id when constructing the configuration builder.
-                PdfActivityConfiguration.Builder(configuration, themeId)
+                PdfActivityConfiguration.Builder(configuration)
                     // Invert document colors in night mode.
                     .invertColors(!isNightMode)
+                    .theme(themeId)
                     .build()
             }
             R.id.toggle_scroll_direction -> {

@@ -29,7 +29,7 @@ class InstantExample(context: Context) : SdkExample(context, R.string.tryInstant
         // NOTE: Since Instant Comments have to be supported by the used PSPDFKit Document Engine license,
         // PSPDFKit for Android disables Instant Comment functionality by default. In our example,
         // our server supports Instant Comments, so we can safely enable these tools here.
-        val enabledTools = configuration.build().configuration.enabledAnnotationTools
+        val enabledTools = configuration.build().configuration.enabledAnnotationTools.toMutableList()
         enabledTools.addAll(EnumSet.of(AnnotationTool.INSTANT_COMMENT_MARKER, AnnotationTool.INSTANT_HIGHLIGHT_COMMENT))
         configuration.enabledAnnotationTools(enabledTools)
         intent.putExtra(InstantExampleConnectionActivity.CONFIGURATION_ARG, configuration.build())

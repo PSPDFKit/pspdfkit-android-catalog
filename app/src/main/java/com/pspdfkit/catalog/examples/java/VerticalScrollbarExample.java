@@ -46,15 +46,15 @@ public class VerticalScrollbarExample extends SdkExample {
                 .layout(R.layout.custom_scrollbar_activity)
                 .setThumbnailBarMode(ThumbnailBarMode.THUMBNAIL_BAR_MODE_NONE)
                 .setTabBarHidingMode(TabBarHidingMode.HIDE)
-                .hideDocumentTitleOverlay()
-                .hideNavigationButtons()
+                .documentTitleOverlayEnabled(false)
+                .navigationButtonsEnabled(false)
                 // Although the widget also works for horizontal scrolling, we switch to vertical
                 // continuous scroll mode in this example.
                 .scrollDirection(PageScrollDirection.VERTICAL)
                 .scrollMode(PageScrollMode.CONTINUOUS)
                 // The custom layout has no content editor. In order to prevent the activity from accessing
                 // it we have to deactivate it in the configuration.
-                .disableContentEditing()
+                .contentEditingEnabled(false)
                 .setMeasurementToolsEnabled(false);
 
         // We use a custom utility class to extract the example document from the assets.

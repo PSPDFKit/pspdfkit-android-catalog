@@ -31,12 +31,12 @@ public class DocumentSharingExample extends SdkExample {
             @NonNull final Context context, @NonNull final PdfActivityConfiguration.Builder configuration) {
         // For sake of simplicity, deactivate actions.
         configuration
-                .disableAnnotationList()
-                .disableSearch()
-                .disableOutline()
+                .annotationListEnabled(false)
+                .searchEnabled(false)
+                .outlineEnabled(false)
                 .setEnabledShareFeatures(ShareFeatures.none())
-                .disablePrinting()
-                .hideThumbnailGrid();
+                .printingEnabled(false)
+                .thumbnailGridEnabled(false);
 
         // First extract the document from the assets.
         ExtractAssetTask.extract(ANNOTATIONS_EXAMPLE, getTitle(), context, documentFile -> {

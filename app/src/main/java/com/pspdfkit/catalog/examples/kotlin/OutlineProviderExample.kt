@@ -83,7 +83,7 @@ class OutlineProviderActivity : PdfActivity() {
                 .setColor(Color.BLUE)
                 .setStyle(Typeface.ITALIC)
                 // Set action that opens PSPDFKit's website after clicking on the outline element.
-                .setAction(UriAction("https://pspdfkit.com"))
+                .setAction(UriAction("https://nutrient.io"))
                 .build()
         )
 

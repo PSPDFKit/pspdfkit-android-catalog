@@ -39,7 +39,7 @@ import retrofit2.HttpException
 import java.net.UnknownHostException
 
 /**
- * Allows to connect to the example Instant Server (PSPDFKit Document Engine).
+ * Allows to connect to the example Instant Server (Nutrient Document Engine).
  */
 class InstantExampleConnectionActivity : AppCompatActivity() {
     /** Configuration that will be passed to created [InstantExampleActivity].  */

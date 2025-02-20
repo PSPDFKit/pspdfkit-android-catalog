@@ -39,7 +39,7 @@ class ProgressProviderExample(context: Context) : SdkExample(context, R.string.p
 
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // Create an instance of the custom data provider. See the implementation details below.
-        val dataProvider: DataProvider = RemoteDataProvider("https://pspdfkit.com/downloads/case-study-box.pdf")
+        val dataProvider: DataProvider = RemoteDataProvider("https://nutrient.io/downloads/case-study-box.pdf")
 
         // Start the activity using our custom data provider.
         val intent = PdfActivityIntentBuilder.fromDataProvider(context, dataProvider)

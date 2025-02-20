@@ -14,13 +14,19 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Button
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Icon
 import androidx.compose.material.Scaffold
 import androidx.compose.material.Text
-import androidx.compose.ui.Alignment
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Save
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
@@ -46,15 +52,59 @@ class JetpackComposeActivity : AppCompatActivity() {
         val uri = intent.getSupportParcelableExtra(EXTRA_URI, Uri::class.java)!!
 
         setContent {
-            Scaffold { paddingValues ->
-                val pdfActivityConfiguration = PdfActivityConfiguration
-                    .Builder(this)
-                    .setUserInterfaceViewMode(UserInterfaceViewMode.USER_INTERFACE_VIEW_MODE_HIDDEN)
-                    .build()
+            val pdfActivityConfiguration = PdfActivityConfiguration
+                .Builder(this)
+                .setUserInterfaceViewMode(UserInterfaceViewMode.USER_INTERFACE_VIEW_MODE_HIDDEN)
+                .build()
 
-                val documentState = rememberDocumentState(uri, pdfActivityConfiguration)
-                var currentPage = pdfActivityConfiguration.page
+            val documentState = rememberDocumentState(uri, pdfActivityConfiguration)
 
+            var currentPage = pdfActivityConfiguration.page
+
+            Scaffold(
+                floatingActionButton = {
+                    FloatingActionButton(
+                        onClick = {
+                            documentState.documentConnection.save()
+                        }
+                    ) {
+                        Icon(imageVector = Icons.Default.Save, contentDescription = "save")
+                    }
+                },
+                bottomBar = {
+                    Row(
+                        horizontalArrangement = Arrangement.SpaceAround
+                    ) {
+                        Button(
+                            onClick = {
+                                documentState.documentConnection.setPageIndex(
+                                    (currentPage - 1).coerceAtLeast(
+                                        0
+                                    )
+                                )
+                            },
+                            modifier = Modifier.padding(8.dp)
+                        ) {
+                            Text("Previous page")
+                        }
+
+                        Spacer(modifier = Modifier.weight(1f))
+
+                        Button(
+                            onClick = {
+                                documentState.documentConnection.setPageIndex(
+                                    (currentPage + 1).coerceAtMost(
+                                        17
+                                    )
+                                )
+                            },
+                            modifier = Modifier.padding(8.dp)
+                        ) {
+                            Text("Next page")
+                        }
+                    }
+                }
+            ) { paddingValues ->
                 Box(Modifier.padding(paddingValues)) {
                     DocumentView(
                         documentState = documentState,
@@ -67,6 +117,10 @@ class JetpackComposeActivity : AppCompatActivity() {
                                 onPageChanged = { document, page ->
                                     currentPage = page
                                     Log.e(TAG, "onPageChanged: ${document.title} - $page")
+                                },
+                                onDocumentSave = { document, _ ->
+                                    Log.e(TAG, "onDocumentSave ${document.title}")
+                                    true
                                 },
                                 onDocumentSaved = {
                                     Log.e(TAG, "onDocumentSaved ${it.title}")
@@ -85,38 +139,6 @@ class JetpackComposeActivity : AppCompatActivity() {
                             )
                         )
                     )
-
-                    // Loading via uri is also supported, and the default pdfActivityConfiguration is being used
-                    // DocumentView(
-                    //     documentUri = uri,
-                    //     modifier = Modifier.fillMaxSize()
-                    // )
-
-                    // As well as loading images, using image URI
-                    // ImageDocumentView(
-                    //     imageUri = uri,
-                    //     modifier = Modifier.fillMaxSize()
-                    // )
-
-                    // Or using documentState
-                    // ImageDocumentView(
-                    //     documentState = documentState,
-                    //     modifier = Modifier.fillMaxSize()
-                    // )
-
-                    Button(
-                        onClick = { documentState.documentConnection.setPageIndex((currentPage + 1).coerceAtMost(17)) },
-                        modifier = Modifier.align(Alignment.BottomEnd).padding(8.dp)
-                    ) {
-                        Text("Go to next page")
-                    }
-
-                    Button(
-                        onClick = { documentState.documentConnection.setPageIndex((currentPage - 1).coerceAtLeast(0)) },
-                        modifier = Modifier.align(Alignment.BottomStart).padding(8.dp)
-                    ) {
-                        Text("Go to Previous page")
-                    }
                 }
             }
         }

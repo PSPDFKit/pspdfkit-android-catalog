@@ -112,7 +112,7 @@ public class CustomDocumentDownloadExample extends SdkExample {
 
         // Build a download request based on various input parameters.
         final DownloadRequest request = new DownloadRequest.Builder(context)
-                .uri("https://pspdfkit.com/downloads/case-study-box.pdf")
+                .uri("https://nutrient.io/downloads/case-study-box.pdf")
                 .outputFile(new File(context.getDir("documents", Context.MODE_PRIVATE), "case-study-box.pdf"))
                 .overwriteExisting(true)
                 .build();

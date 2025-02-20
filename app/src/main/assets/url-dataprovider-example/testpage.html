@@ -1,0 +1,51 @@
+<!--
+  ~   Copyright © 2020-2024 PSPDFKit GmbH. All rights reserved.
+  ~
+  ~   The PSPDFKit Sample applications are licensed with a modified BSD license.
+  ~   Please see License for details. This notice may not be removed from this file.
+  -->
+
+<!--
+  Based on the Simple HTML invoice template covered by MIT License: https://github.com/sparksuite/simple-html-invoice-template/blob/master/LICENSE
+-->
+
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>HTML document for the remote URL example</title>
+    
+    <style>
+    .example-style {
+        max-width: 800px;
+        margin: auto;
+        padding: 30px;
+        font-size: 16px;
+        line-height: 24px;
+        font-family: 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+    }
+    /** RTL **/
+    .rtl {
+        direction: rtl;
+        font-family: Tahoma, 'Helvetica Neue', 'Helvetica', Helvetica, Arial, sans-serif;
+    }
+    
+    .rtl table {
+        text-align: right;
+    }
+    
+    .rtl table tr td:nth-child(2) {
+        text-align: left;
+    }
+    </style>
+</head>
+
+<body style="background-color:#efebe7;">
+    <div class="example-style">
+        <img src="logo-icon.svg" style="width:100%; max-width:100px;" alt="nutrient logo">
+        <h2 style="text-align:center;">Remote URL example</h2>
+        <p style="text-align:center;"><br><br>Tap <a href="https://www.nutrient.io/downloads/examples/credit-card-application.pdf">here</a> to download and display a remote document.<br><br>Or <a href="https://www.nutrient.io/assets/images/blog/2024/designing-company-impact/article-header.png">here</a> for an image document.</p>
+
+    </div>
+</body>
+</html>

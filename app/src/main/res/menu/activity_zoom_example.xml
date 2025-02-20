@@ -6,18 +6,21 @@
   ~   Please see License for details. This notice may not be removed from this file.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/previousAnnotation"
         android:icon="@drawable/ic_arrow_left"
         android:title="Previous annotation"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom"
+        tools:ignore="HardcodedText" />
 
     <item
         android:id="@+id/nextAnnotation"
         android:icon="@drawable/ic_arrow_right"
         android:title="Next annotation"
-        app:showAsAction="ifRoom"/>
+        app:showAsAction="ifRoom"
+        tools:ignore="HardcodedText" />
 </menu>

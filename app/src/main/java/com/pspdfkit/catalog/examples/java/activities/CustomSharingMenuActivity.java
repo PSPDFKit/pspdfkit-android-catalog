@@ -67,7 +67,8 @@ public class CustomSharingMenuActivity extends PdfActivity implements ActionMenu
     @Override
     public boolean onPrepareActionMenu(@NonNull ActionMenu actionMenu) {
         // Add fixed menu item to action menu.
-        actionMenu.addMenuItem(new FixedActionMenuItem(this, R.id.item_send_mail, R.drawable.ic_mail, R.string.mail));
+        actionMenu.addMenuItem(
+                new FixedActionMenuItem(this, R.id.item_send_mail, R.drawable.ic_custom_sharing, R.string.mail));
         // Make sure to return true, if you want sharing menu to display your actions.
         return true;
     }

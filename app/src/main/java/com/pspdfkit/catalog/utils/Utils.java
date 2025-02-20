@@ -30,8 +30,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import com.pspdfkit.catalog.R;
 
-// We can't use AndroidVersion.INSTANCE.isAtLeastMarshmallow in this
-// class because  of the way it gets obfuscated after building
 public class Utils {
     /**
      * Returns {@code true} if the app has read and write permission to external storage.
@@ -43,11 +41,6 @@ public class Utils {
     public static boolean hasExternalStorageRwPermission(@NonNull final Context context) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
             return Environment.isExternalStorageManager();
-        } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            // On Android 6.0+ external storage access has to be granted at runtime.
-            // We can't use AndroidVersion.INSTANCE.isOlderThanMarshmallow here because
-            // of the way it gets obfuscated after building
-            return true;
         } else {
             return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
                     == PackageManager.PERMISSION_GRANTED;
@@ -76,7 +69,7 @@ public class Utils {
                 intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
                 activity.startActivityForResult(intent, requestCode);
             }
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        } else {
             if (ContextCompat.checkSelfPermission(activity, Manifest.permission.READ_EXTERNAL_STORAGE)
                     != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(

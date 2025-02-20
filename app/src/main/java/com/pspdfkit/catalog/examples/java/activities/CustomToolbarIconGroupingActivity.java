@@ -51,7 +51,7 @@ public class CustomToolbarIconGroupingActivity extends PdfActivity
             final ContextualToolbarMenuItem customItem = ContextualToolbarMenuItem.createSingleItem(
                     this,
                     R.id.pspdf_menu_custom,
-                    ContextCompat.getDrawable(this, R.drawable.ic_bookmark_outline),
+                    ContextCompat.getDrawable(this, R.drawable.ic_bookmark),
                     "Bookmark",
                     Color.WHITE,
                     Color.WHITE,

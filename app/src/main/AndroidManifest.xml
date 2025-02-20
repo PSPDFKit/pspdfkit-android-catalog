@@ -166,7 +166,7 @@
             android:name=".examples.java.activities.CopyToClipboardActivity"
             android:excludeFromRecents="true"
             android:label="@string/copy_to_clipboard_action"
-            android:logo="@drawable/ic_logo_padded"
+            android:logo="@drawable/ic_logo"
             android:noHistory="true"
             android:exported="true"
             android:theme="@style/PSPDFCatalog.Theme.Transparent">
@@ -364,6 +364,16 @@
 
         <activity
             android:name=".examples.kotlin.activities.JetpackComposeActivity"
+            android:label="@string/jetpackExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.FormInterceptActivity"
+            android:label="@string/jetpackExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.customsearchuicompose.CustomSearchUiComposeActivity"
             android:label="@string/jetpackExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
@@ -575,6 +585,12 @@
             android:name=".examples.kotlin.ViewPager2Activity"
             android:label="@string/viewPager2ExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.WebViewActivity"
+            android:label="@string/remoteUrlDataProviderExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
     </application>
 
 </manifest>

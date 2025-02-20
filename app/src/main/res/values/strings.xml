@@ -7,8 +7,7 @@
 
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
-    <string name="app_name">PSPDFKit Catalog</string>
-    <string name="title_activity_basic_example">Basic example</string>
+    <string name="app_name">Catalog</string>
 
     <!-- Samples. -->
     <string name="defaultExampleTitle">Default Example</string>
@@ -54,9 +53,9 @@
     <string name="javaScriptCalculatorExampleTitle">JavaScript Calculator Example</string>
     <string name="javaScriptCalculatorExampleDescription">Basic calculator app implemented completely in PDF JavaScript.</string>
     <string name="jetpackExampleTitle">Basic Example</string>
-    <string name="jetpackExampleDescription">Example of how to integrate PSPDFKit in a Jetpack compose application.</string>
+    <string name="jetpackExampleDescription">Example of how to integrate Nutrient in a Jetpack compose application.</string>
     <string name="jetpackImageExampleTitle">Image Example</string>
-    <string name="jetpackImageExampleDescription">Example of how to load an image using PSPDFKit in a Jetpack compose application.</string>
+    <string name="jetpackImageExampleDescription">Example of how to load an image using Nutrient in a Jetpack compose application.</string>
     <string name="splitDocumentExampleTitle">Document Split-view</string>
     <string name="splitDocumentExampleDescription">Usage example for two PdfFragment instances sitting side-by-side in a single activity.</string>
     <string name="memoryDataProviderExampleTitle">MemoryDataProvider</string>
@@ -71,6 +70,8 @@
     <string name="persistentTabsExampleDescription">Shows how to retain list of open tabs.</string>
     <string name="customDataProviderExampleTitle">Custom Data Provider</string>
     <string name="customDataProviderExampleDescription">How to implement a DataProvider that can be used with PdfActivity.</string>
+    <string name="remoteUrlDataProviderExampleTitle">Download from Remote URL</string>
+    <string name="remoteUrlDataProviderExampleDescription">Shows how to download and display a remote document using the UrlDataProvider.</string>
     <string name="zoomExampleTitle">Zoom Example</string>
     <string name="zoomExampleDescription">Zooming to certain page objects.</string>
     <string name="viewPager2ExampleTitle">ViewPager2 Example</string>
@@ -83,6 +84,8 @@
     <string name="javaScriptFormsExampleDescription">Showcases how to use forms JavaScript.</string>
     <string name="formCreationExampleTitle">Form Creation</string>
     <string name="formCreationExampleDescription">Shows how to create forms programmatically.</string>
+    <string name="formInterceptExampleTitle">Form Intercept with Compose</string>
+    <string name="formInterceptExampleDescription">Shows how to intercept form click with the `DocumentView` Composable.</string>
     <string name="documentFromCanvasExampleTitle">Document Creation From Canvas</string>
     <string name="documentFromCanvasExampleDescription">Shows how to create a document programmatically using an Android canvas.</string>
     <string name="customFormHighlightColorExampleTitle">Custom Form Highlight Color</string>
@@ -125,6 +128,8 @@
     <string name="fullTextSearchIndexingExampleDescription">Index all documents of the catalog app and make them searchable.</string>
     <string name="customSearchUiExampleTitle">Custom Search UI</string>
     <string name="customSearchUiExampleDescription">Showcases how to build a custom search view on top of the search API.</string>
+    <string name="customSearchUiComposeExampleTitle">Custom Search UI Compose</string>
+    <string name="customSearchUiComposeExampleDescription">Showcases how to build a custom search view on top of the search API in Compose.</string>
     <string name="disabledAnnotationPropertyExampleTitle">Disabled Annotation Property</string>
     <string name="disabledAnnotationPropertyExampleDescription">Shows how to disable annotation note option in the annotation editing toolbar.</string>
     <string name="customInlineSearchExampleTitle">Custom Inline Search</string>
@@ -164,11 +169,11 @@
     <string name="watermarkExampleTitle">Watermarks</string>
     <string name="watermarkExampleDescription">Shows how to display watermarks using Drawable API.</string>
     <string name="composeExampleTitle">Sample Application</string>
-    <string name="composeExampleDescription">Dedicated Jetpack Compose example application using all the available features of PSPDFKit Compose SDK (New). </string>
+    <string name="composeExampleDescription">Dedicated Jetpack Compose example application using all the available features of Nutrient Compose SDK (New). </string>
     <string name="filterableThumbnailGridExampleTitle">Filterable Thumbnail Grid</string>
     <string name="filterableThumbnailGridExampleDescription">Shows how to combine PDF processor and customizable nature of the thumbnail grid to create filters.</string>
     <string name="documentJsonExampleTitle">Document JSON</string>
-    <string name="documentJsonExampleDescription">Shows how to import and export Instant Document JSON with PSPDFKit.</string>
+    <string name="documentJsonExampleDescription">Shows how to import and export Instant Document JSON with Nutrient.</string>
     <string name="annotationWithAlphaCreationExampleTitle">Annotation Creation With Alpha</string>
     <string name="annotationWithAlphaCreationExampleDescription">Programmatic creation of annotations with alpha.</string>
     <string name="customPageTemplateExampleTitle">Custom New Page Template</string>
@@ -217,7 +222,7 @@
     <string name="tryInstantExampleTitle">Try Instant</string>
     <string name="tryInstantExampleDescription">Downloads a document for collaborative editing.</string>
 
-    <string name="externalDocumentExamplePermissionExplanation">The file you selected is on the local device. Granting direct file access will allow PSPDFKit to use optimized file system reading, which yields much higher throughput.</string>
+    <string name="externalDocumentExamplePermissionExplanation">The file you selected is on the local device. Granting direct file access will allow Nutrient to use optimized file system reading, which yields much higher throughput.</string>
     <string name="grantAccess">Grant access</string>
     <string name="continueWithout">Continue without</string>
 
@@ -254,14 +259,14 @@
     <string name="print_annotations">Print Annotations</string>
 
     <!-- Instant example -->
-    <string name="instant_description">With PSPDFKit Instant (Document Engine), it’s easier than ever to add real-time collaboration features to your PSPDFKit-powered app, allowing your users to seamlessly share, edit and annotate PDF documents across iOS, Android and Web apps.\n\nThe PSPDFKit SDKs for Android, iOS and Web support Instant out of the box. Just connect your app to an Instant (Document Engine) server and document management and syncing is taken care of.\n\nYou can try this right here, by getting a new copy of the document or copying the URL for an existing document from pspdfkit.com/demo</string>
+    <string name="instant_description">With Nutrient Instant (Document Engine), it’s easier than ever to add real-time collaboration features to your Nutrient-powered app, allowing your users to seamlessly share, edit and annotate PDF documents across iOS, Android and Web apps.\n\nThe Nutrient SDKs for Android, iOS and Web support Instant out of the box. Just connect your app to an Instant (Document Engine) server and document management and syncing is taken care of.\n\nYou can try this right here, by getting a new copy of the document or copying the URL for an existing document from nutrient.io/demo</string>
 
     <string name="instant_create_new_document">Create New Document</string>
-    <string name="instant_create_new_document_description">Get a new document code, then collaborate by opening the document link in a web browser or scanning its QR code in PSPDFKit Catalog on another device.</string>
+    <string name="instant_create_new_document_description">Get a new document code, then collaborate by opening the document link in a web browser or scanning its QR code in Nutrient Catalog on another device.</string>
     <string name="instant_creating">Creating…</string>
 
     <string name="instant_scan_qr_code">Scan QR code</string>
-    <string name="instant_edit_existing_document_description">Scan the QR code from pspdfkit.com/demo to connect to the document shown in your browser.\n\nAlternatively:</string>
+    <string name="instant_edit_existing_document_description">Scan the QR code from nutrient.io/demo to connect to the document shown in your browser.\n\nAlternatively:</string>
     <string name="instant_enter_link_manually">Enter Link Manually …</string>
     <string name="instant_connecting">Connecting…</string>
 
@@ -297,7 +302,7 @@
     <string name="section_icon_content_desc">%1$s section icon.</string>
 
     <!-- Compose - preferences page -->
-    <string name="preferences_pspdfkit_logo">The PSPDFKit logo.</string>
+    <string name="preferences_nutrient_logo">The Nutrient logo.</string>
     <string name="preferences_header_version">v%1$s</string>
     <string name="preferences_starting_page_dialog_desc">Page to start document at. Make sure it fits the number of pages in the document you want to open:</string>
 
@@ -374,7 +379,7 @@
     <string name="instantJsonAttachmentTitle">Instant JSON Attachment</string>
     <string name="instantJsonAttachmentDescription">Import and export Instant JSON Attachment binary data for an image stamp annotation.</string>
     <string name="constructionExampleTitle">Construction</string>
-    <string name="constructionExampleDescription">Shows how to configure PSPDFKit to display a building floor plan.</string>
+    <string name="constructionExampleDescription">Shows how to configure Nutrient to display a building floor plan.</string>
 
     <!-- Custom Alert Dialog -->
     <string name="selectDigitalSignatureType">Select Digital Signature Type</string>

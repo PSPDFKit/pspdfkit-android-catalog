@@ -14,7 +14,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.os.Build
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.result.ActivityResultLauncher
@@ -149,15 +148,11 @@ class MainActivity : AppCompatActivity() {
     private suspend fun storagePermissionsAreGranted() = suspendCoroutine<Boolean> {
         // On Android 6.0+ we ask for SD card access permission.
         // Since documents can be annotated we ask for write permission as well.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if (checkStoragePermission()) {
-                it.resume(true)
-            } else {
-                storagePermissionLauncherCallback = it::resume
-                storagePermissionLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            }
-        } else {
+        if (checkStoragePermission()) {
             it.resume(true)
+        } else {
+            storagePermissionLauncherCallback = it::resume
+            storagePermissionLauncher.launch(Manifest.permission.WRITE_EXTERNAL_STORAGE)
         }
     }
 

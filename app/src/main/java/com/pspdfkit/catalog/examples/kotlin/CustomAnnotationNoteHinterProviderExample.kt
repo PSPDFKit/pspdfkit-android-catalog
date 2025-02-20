@@ -82,8 +82,8 @@ class CustomAnnotationNoteHinterProviderActivity : PdfActivity() {
 /**
  * A custom annotation note hinter provider that works only for ink annotations.
  */
-private class CustomAnnotationNoteHinter internal constructor(private val pdfActivity: PdfActivity) : PdfDrawableProvider(), OnAnnotationUpdatedListener {
-    private val noteIcon: Drawable = ContextCompat.getDrawable(pdfActivity, R.drawable.ic_bookmark)
+private class CustomAnnotationNoteHinter(private val pdfActivity: PdfActivity) : PdfDrawableProvider(), OnAnnotationUpdatedListener {
+    private val noteIcon: Drawable = ContextCompat.getDrawable(pdfActivity, R.drawable.ic_pin_drop)
         ?: throw IllegalStateException("Can't retrieve note drawable from resources.")
 
     override fun getDrawablesForPage(

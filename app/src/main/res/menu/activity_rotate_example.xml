@@ -6,16 +6,19 @@
   ~   Please see License for details. This notice may not be removed from this file.
   -->
 
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
+<menu xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
       xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
         android:id="@+id/rotateClockwise"
         android:title="Rotate 90° clockwise"
-        app:showAsAction="never"/>
+        app:showAsAction="never"
+        tools:ignore="HardcodedText" />
 
     <item
         android:id="@+id/rotateCounterClockwise"
         android:title="Rotate 90° counterclockwise"
-        app:showAsAction="never"/>
+        app:showAsAction="never"
+        tools:ignore="HardcodedText" />
 </menu>

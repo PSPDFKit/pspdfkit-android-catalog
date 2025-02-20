@@ -23,7 +23,6 @@
     <color name="color_secondary_dark">#0F1F31</color>
 
     <color name="splash_background">#142132</color>
-    <color name="splash_dark">#051628</color>
 
     <!-- Dark theme -->
     <color name="dark">#28313E</color>

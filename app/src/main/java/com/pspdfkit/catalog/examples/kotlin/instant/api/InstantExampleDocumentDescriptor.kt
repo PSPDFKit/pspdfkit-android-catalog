@@ -14,7 +14,7 @@ import android.os.Parcelable
  * Describes single Instant document on the web preview server.
  */
 class InstantExampleDocumentDescriptor(
-    /** Instant Server (PSPDFKit Document Engine) url.  */
+    /** Instant Server (Nutrient Document Engine) url.  */
     val serverUrl: String,
     /** Instant document id.  */
     private val documentId: String,

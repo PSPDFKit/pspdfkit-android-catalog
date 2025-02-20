@@ -1,6 +1,6 @@
-# PSPDFKit for Android - Catalog
+# Nutrient for Android - Catalog
 
-This is the example Catalog app of [PSPDFKit for Android](https://pspdfkit.com/pdf-sdk/android/).
+This is the example Catalog app of [Nutrient for Android](https://nutrient.io/pdf-sdk/android/).
 
 ## Prerequisites
 
@@ -25,7 +25,7 @@ You can now open the project inside Android Studio, or build and install the app
 
 Here's a video tutorial that explains how to checkout and build the Catalog on your machine:
 
-[![Downloading and Running our Catalog App | PSPDFKit for Android](http://img.youtube.com/vi/GsUKQ9fSjLQ/0.jpg)](http://www.youtube.com/watch?v=GsUKQ9fSjLQ "Downloading and Running our Catalog App | PSPDFKit for Android")
+[![Downloading and Running our Catalog App | Nutrient for Android](http://img.youtube.com/vi/GsUKQ9fSjLQ/0.jpg)](http://www.youtube.com/watch?v=GsUKQ9fSjLQ "Downloading and Running our Catalog App | Nutrient for Android")
 
 ## License
 
@@ -33,8 +33,8 @@ This software is licensed under a [modified BSD license](LICENSE).
 
 ## Additional Resources
 
-* PSPDFKit for Android online guides: https://pspdfkit.com/guides/android/current/
-* PSPDFKit API reference:
-  * KDoc: https://pspdfkit.com/api/android/kdoc/
-  * Javadoc: https://pspdfkit.com/api/android/javadoc/
-* PSPDFKit technical customer support: https://pspdfkit.com/support/request/  
+* Nutrient for Android online guides: https://nutrient.io/guides/android/current/
+* Nutrient API reference:
+  * KDoc: https://nutrient.io/api/android/kdoc/
+  * Javadoc: https://nutrient.io/api/android/javadoc/
+* Nutrient technical customer support: https://nutrient.io/support/request/

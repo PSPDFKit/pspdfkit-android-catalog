@@ -122,8 +122,8 @@ fun Preferences(
                 ) {
                     Image(
                         modifier = Modifier.padding(top = 16.dp),
-                        painter = painterResource(id = R.drawable.ic_pspdfkit_circle_logo),
-                        contentDescription = stringResource(R.string.preferences_pspdfkit_logo)
+                        painter = painterResource(id = R.drawable.ic_circle_logo),
+                        contentDescription = stringResource(R.string.preferences_nutrient_logo)
                     )
 
                     Text(

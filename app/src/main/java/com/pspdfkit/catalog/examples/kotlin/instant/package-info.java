@@ -6,7 +6,7 @@
  */
 
 /**
- * Example showing connection to example Instant Server (PSPDFKit Document Engine) at
- * <a href="https://pspdfkit.com/demo"> pspdfkit.com/demo </a>
+ * Example showing connection to example Instant Server (Nutrient Document Engine) at
+ * <a href="https://nutrient.io/demo"> nutrient.io/demo </a>
  */
 package com.pspdfkit.catalog.examples.kotlin.instant;

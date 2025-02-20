@@ -17,7 +17,7 @@ import com.pspdfkit.ui.special_mode.controller.AnnotationTool
 import java.util.EnumSet
 
 /**
- * Connects to example Instant Server (PSPDFKit Document Engine) at [pspdfkit.com/demo](https://pspdfkit.com/demo)
+ * Connects to example Instant Server (Nutrient Document Engine) at [nutrient.io/demo](https://nutrient.io/demo)
  */
 class InstantExample(context: Context) : SdkExample(context, R.string.tryInstantExampleTitle, R.string.tryInstantExampleDescription) {
 
@@ -26,8 +26,8 @@ class InstantExample(context: Context) : SdkExample(context, R.string.tryInstant
         val intent = Intent(context, InstantExampleConnectionActivity::class.java)
         // Pass the configuration to the connection activity. This configuration will
         // be passed to created InstantPdfActivity with downloaded Instant document.
-        // NOTE: Since Instant Comments have to be supported by the used PSPDFKit Document Engine license,
-        // PSPDFKit for Android disables Instant Comment functionality by default. In our example,
+        // NOTE: Since Instant Comments have to be supported by the used Nutrient Document Engine license,
+        // Nutrient for Android disables Instant Comment functionality by default. In our example,
         // our server supports Instant Comments, so we can safely enable these tools here.
         val enabledTools = configuration.build().configuration.enabledAnnotationTools.toMutableList()
         enabledTools.addAll(EnumSet.of(AnnotationTool.INSTANT_COMMENT_MARKER, AnnotationTool.INSTANT_HIGHLIGHT_COMMENT))

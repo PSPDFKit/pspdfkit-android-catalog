@@ -22,9 +22,9 @@ import com.pspdfkit.ui.special_mode.controller.AnnotationTool
 
 /**
  * Measurement Tools example.
- * This example showcases the measurement tools introduced in PSPDFKit for Android 8.4.
- * You can read more about the measurement tools in our [guides](https://pspdfkit.com/guides/android/measurements/)
- *  and [Announcement blog post](https://pspdfkit.com/blog/2022/announcing-pspdfkit-measurement-tools).
+ * This example showcases the measurement tools introduced in Nutrient for Android 8.4.
+ * You can read more about the measurement tools in our [guides](https://nutrient.io/guides/android/measurements/)
+ *  and [Announcement blog post](https://nutrient.io/blog/2022/announcing-pspdfkit-measurement-tools).
  */
 class MeasurementToolsExample(context: Context) :
     SdkExample(context, R.string.measurementToolsExampleTitle, R.string.measurementToolsExampleDescription) {

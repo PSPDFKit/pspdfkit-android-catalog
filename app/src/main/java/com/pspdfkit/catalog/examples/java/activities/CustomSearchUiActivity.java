@@ -15,7 +15,6 @@ import android.graphics.Point;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.Html;
 import android.text.SpannableString;
@@ -365,13 +364,7 @@ public class CustomSearchUiActivity extends AppCompatActivity implements Adapter
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(s -> {
-                    Spanned result;
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                        result = Html.fromHtml(s, 0);
-                    } else {
-                        //noinspection deprecation
-                        result = Html.fromHtml(s);
-                    }
+                    Spanned result = Html.fromHtml(s, 0);
                     splashTextView.setText(result);
                 });
     }

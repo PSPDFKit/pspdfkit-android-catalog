@@ -61,7 +61,6 @@ class DocumentComparisonExample(context: Context) : SdkExample(
             setThumbnailBarMode(ThumbnailBarMode.THUMBNAIL_BAR_MODE_NONE)
             annotationEditingEnabled(false)
             outlineEnabled(false)
-            bookmarkEditingEnabled(false)
             settingsMenuEnabled(false)
             bookmarkListEnabled(false)
             thumbnailGridEnabled(false)

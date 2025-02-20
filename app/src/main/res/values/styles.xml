@@ -7,10 +7,6 @@
 
 <resources>
     <style name="PSPDFCatalog.Theme.Launcher" parent="Theme.MaterialComponents.Light">
-        <item name="colorPrimary">@color/splash_background</item>
-        <item name="colorPrimaryDark">@color/splash_dark</item>
-        <item name="colorAccent">@color/color_primary_dark</item>
-
         <item name="android:windowBackground">@drawable/launch_screen</item>
     </style>
 

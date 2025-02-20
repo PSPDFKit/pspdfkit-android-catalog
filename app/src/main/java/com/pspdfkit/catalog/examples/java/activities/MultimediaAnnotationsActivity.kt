@@ -60,7 +60,7 @@ class MultimediaAnnotationsActivity : PdfActivity() {
             // To let the link point to the multimedia content, we have to set a UriAction on the link. The UriAction encodes the actual URL of the content.
             // The multimedia URL uses the pspdfkit:// URL scheme, has optional options in square brackets, followed by the local file system URI of the file.
             // Note the the videoPathUri also carries a file:// scheme which is required for video discovery. For a comprehensive list of supported URI formats
-            // and options, please consult our Multimedia Annotation online guides at: https://pspdfkit.com/guides/android/current/annotations/multimedia-annotations/
+            // and options, please consult our Multimedia Annotation online guides at: https://nutrient.io/guides/android/current/annotations/multimedia-annotations/
             action = UriAction("pspdfkit://[autoplay:true]$videoPathUri")
         }
 
@@ -80,7 +80,7 @@ class MultimediaAnnotationsActivity : PdfActivity() {
      */
     private fun addGalleryAnnotation() {
         // This example defines a custom JSON content for the gallery. It writes this JSON to a local file and then create an annotation pointing to the file.
-        // See our online guides at https://pspdfkit.com/guides/android/current/annotations/multimedia-annotations/ for a full specification of the JSON format
+        // See our online guides at https://nutrient.io/guides/android/current/annotations/multimedia-annotations/ for a full specification of the JSON format
         // used by galleries.
         @Language("JSON")
         val galleryJson = """
@@ -124,7 +124,7 @@ class MultimediaAnnotationsActivity : PdfActivity() {
             // To let the link point to the gallery file, we have to set a UriAction on the link. The UriAction encodes the actual URL of the content.
             // The multimedia URL uses the pspdfkit:// URL scheme followed by the local file system URI of the file. Galleries don't support multimedia options.
             // Note the the galleryPathUri also carries a file:// scheme which is required for gallery discovery. For a comprehensive list of supported URI
-            // formats, please consult our Multimedia Annotation online guides at: https://pspdfkit.com/guides/android/current/annotations/multimedia-annotations/
+            // formats, please consult our Multimedia Annotation online guides at: https://nutrient.io/guides/android/current/annotations/multimedia-annotations/
             action = UriAction("pspdfkit://$galleryPathUri")
         }
 

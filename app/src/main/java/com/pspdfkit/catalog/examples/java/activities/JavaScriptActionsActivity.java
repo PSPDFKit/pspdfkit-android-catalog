@@ -79,9 +79,9 @@ public class JavaScriptActionsActivity extends PdfActivity {
     /** Opens default mail client with document as attachment via JavaScript. */
     private void executeMailDocumentAction() {
         executeJavaScript("doc.mailDoc(true, "
-                + "\"john@pspdfkit.com\", "
-                + "\"cc@pspdfkit.com\", "
-                + "\"bcc@pspdfkit.com\", "
+                + "\"john@nutrient.io\", "
+                + "\"cc@nutrient.io\", "
+                + "\"bcc@nutrient.io\", "
                 + "\"subject\", "
                 + "\"This is a message\");");
     }

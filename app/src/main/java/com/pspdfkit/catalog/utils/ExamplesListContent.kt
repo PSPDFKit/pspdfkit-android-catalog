@@ -72,6 +72,7 @@ import com.pspdfkit.catalog.examples.kotlin.ELearningExample
 import com.pspdfkit.catalog.examples.kotlin.EmptyActivityExample
 import com.pspdfkit.catalog.examples.kotlin.ExternalDocumentExample
 import com.pspdfkit.catalog.examples.kotlin.FileAnnotationCreationExample
+import com.pspdfkit.catalog.examples.kotlin.FormClickInterceptExample
 import com.pspdfkit.catalog.examples.kotlin.FormCreationExample
 import com.pspdfkit.catalog.examples.kotlin.FormFillingExample
 import com.pspdfkit.catalog.examples.kotlin.FragmentExample
@@ -101,6 +102,7 @@ import com.pspdfkit.catalog.examples.kotlin.PersistentTabsExample
 import com.pspdfkit.catalog.examples.kotlin.PlaygroundExample
 import com.pspdfkit.catalog.examples.kotlin.ProgressProviderExample
 import com.pspdfkit.catalog.examples.kotlin.ReaderViewExample
+import com.pspdfkit.catalog.examples.kotlin.RemoteUrlExample
 import com.pspdfkit.catalog.examples.kotlin.RotatePageExample
 import com.pspdfkit.catalog.examples.kotlin.RuntimeConfigurationExample
 import com.pspdfkit.catalog.examples.kotlin.ScientificPaperExample
@@ -112,6 +114,7 @@ import com.pspdfkit.catalog.examples.kotlin.UserInterfaceViewModesExample
 import com.pspdfkit.catalog.examples.kotlin.ViewPager2Example
 import com.pspdfkit.catalog.examples.kotlin.WatermarkExample
 import com.pspdfkit.catalog.examples.kotlin.ZoomExample
+import com.pspdfkit.catalog.examples.kotlin.customsearchuicompose.CustomSearchUiComposeExample
 import com.pspdfkit.catalog.examples.kotlin.instant.InstantExample
 
 fun getSectionsWithExamples(context: Context) = listOf(
@@ -143,7 +146,8 @@ fun getSectionsWithExamples(context: Context) = listOf(
         ProgressProviderExample(context),
         PasswordExample(context),
         AesEncryptedFileExample(context),
-        ImageDocumentExample(context)
+        ImageDocumentExample(context),
+        RemoteUrlExample(context)
     ),
 
     SdkExample.Section(
@@ -186,6 +190,7 @@ fun getSectionsWithExamples(context: Context) = listOf(
         R.drawable.ic_forms,
         FormFillingExample(context),
         FormCreationExample(context),
+        FormClickInterceptExample(context),
         CustomFormHighlightColorExample(context)
     ),
 
@@ -278,6 +283,7 @@ fun getSectionsWithExamples(context: Context) = listOf(
         context.getString(R.string.example_section_jc_examples),
         R.drawable.ic_jetpack_compose,
         ComposeExampleApp(context),
+        CustomSearchUiComposeExample(context),
         JetpackComposeExample(context),
         JetpackComposeImageExample(context),
         NavHostExample(context)

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<issues format="6" by="lint 8.6.0" type="baseline" client="gradle" dependencies="false" name="AGP (8.6.0)" variant="all" version="8.6.0">
+<issues format="6" by="lint 8.7.2" type="baseline" client="gradle" dependencies="false" name="AGP (8.7.2)" variant="all" version="8.7.2">
 
     <issue
         id="CheckResult"
@@ -30,7 +30,7 @@
         errorLine2="        ^">
         <location
             file="src/main/java/com/pspdfkit/catalog/examples/java/activities/CustomSearchUiActivity.java"
-            line="354"
+            line="353"
             column="9"/>
     </issue>
 
@@ -98,17 +98,6 @@
             file="src/main/java/com/pspdfkit/catalog/examples/java/activities/ScreenReaderExampleActivity.java"
             line="81"
             column="56"/>
-    </issue>
-
-    <issue
-        id="UnusedAttribute"
-        message="Attribute `android:foreground` has no effect on API levels lower than 23 (current min is 21)"
-        errorLine1="    android:foreground=&quot;?selectableItemBackgroundBorderless&quot;"
-        errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/item_add_button.xml"
-            line="16"
-            column="5"/>
     </issue>
 
     <issue
@@ -943,7 +932,7 @@
         errorLine2="                                      ~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/styles.xml"
-            line="35"
+            line="31"
             column="39"/>
     </issue>
 
@@ -954,7 +943,7 @@
         errorLine2="                                      ~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/styles.xml"
-            line="85"
+            line="81"
             column="39"/>
     </issue>
 
@@ -1246,17 +1235,6 @@
 
     <issue
         id="UnusedResources"
-        message="The resource `R.menu.activity_main` appears to be unused"
-        errorLine1="&lt;menu xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
-        errorLine2="^">
-        <location
-            file="src/main/res/menu/activity_main.xml"
-            line="8"
-            column="1"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
         message="The resource `R.layout.activity_main_catalog` appears to be unused"
         errorLine1="&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
         errorLine2="^">
@@ -1264,24 +1242,6 @@
             file="src/main/res/layout/activity_main_catalog.xml"
             line="8"
             column="1"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.menu.activity_settings` appears to be unused"
-        errorLine1="&lt;menu xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
-        errorLine2="^">
-        <location
-            file="src/main/res/menu/activity_settings.xml"
-            line="9"
-            column="1"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.drawable.bg_splash_logo` appears to be unused">
-        <location
-            file="src/main/res/drawable-hdpi/bg_splash_logo.png"/>
     </issue>
 
     <issue
@@ -1302,7 +1262,7 @@
         errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/colors.xml"
-            line="33"
+            line="32"
             column="12"/>
     </issue>
 
@@ -1313,7 +1273,7 @@
         errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/colors.xml"
-            line="44"
+            line="43"
             column="12"/>
     </issue>
 
@@ -1324,7 +1284,7 @@
         errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/colors.xml"
-            line="46"
+            line="45"
             column="12"/>
     </issue>
 
@@ -1335,7 +1295,7 @@
         errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/colors.xml"
-            line="68"
+            line="67"
             column="12"/>
     </issue>
 
@@ -1346,7 +1306,7 @@
         errorLine2="           ~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/colors.xml"
-            line="71"
+            line="70"
             column="12"/>
     </issue>
 
@@ -1357,7 +1317,7 @@
         errorLine2="           ~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/colors.xml"
-            line="72"
+            line="71"
             column="12"/>
     </issue>
 
@@ -1440,27 +1400,6 @@
 
     <issue
         id="UnusedResources"
-        message="The resource `R.drawable.ic_magnify` appears to be unused">
-        <location
-            file="src/main/res/drawable-hdpi/ic_magnify.png"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.drawable.ic_view_module` appears to be unused">
-        <location
-            file="src/main/res/drawable-hdpi/ic_view_module.png"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.drawable.ic_view_quilt` appears to be unused">
-        <location
-            file="src/main/res/drawable-hdpi/ic_view_quilt.png"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
         message="The resource `R.layout.item_section` appears to be unused"
         errorLine1="&lt;FrameLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
         errorLine2="^">
@@ -1472,551 +1411,12 @@
 
     <issue
         id="UnusedResources"
-        message="The resource `R.xml.preferences` appears to be unused"
-        errorLine1="&lt;PreferenceScreen xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
-        errorLine2="^">
-        <location
-            file="src/main/res/xml/preferences.xml"
-            line="9"
-            column="1"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.action_settings` appears to be unused"
-        errorLine1="    &lt;string name=&quot;action_settings&quot;>Settings&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="11"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_category_activity` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_category_activity&quot;>Activity&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="13"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_category_layout` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_category_layout&quot;>Layout&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="14"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_double_page_mode` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_double_page_mode&quot;>Double Page&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="15"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_category_search` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_category_search&quot;>Search&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="16"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_category_thumbnails_outline` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_category_thumbnails_outline&quot;>Thumbnails / Outline&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="17"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_category_annotations` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_category_annotations&quot;>Annotations&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="18"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_category_forms` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_category_forms&quot;>Forms&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="19"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_category_actions` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_category_actions&quot;>Actions&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="20"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_category_customization` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_category_customization&quot;>Customization&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="21"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_category_other` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_category_other&quot;>Other&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="22"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_activity_immersive_mode` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_activity_immersive_mode&quot;>Immersive mode&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="24"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_actions_show_outline_action` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_actions_show_outline_action&quot;>Enable document outline&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="25"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_actions_show_annotationlist_action` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_actions_show_annotationlist_action&quot;>Enable annotation list&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="26"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_show_thumbnail_grid_action` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_show_thumbnail_grid_action&quot;>Show thumbnail grid&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="27"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.thumbnail_bar_mode` appears to be unused"
-        errorLine1="    &lt;string name=&quot;thumbnail_bar_mode&quot;>Thumbnail bar mode&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="29"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
         message="The resource `R.string.setting_fit_page_to_width` appears to be unused"
         errorLine1="    &lt;string name=&quot;setting_fit_page_to_width&quot;>Fit page to width&lt;/string>"
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/settings_strings.xml"
-            line="41"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_restore_last_viewed_page` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_restore_last_viewed_page&quot;>Restore last viewed page&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="42"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_inline_search` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_inline_search&quot;>Inline search&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="43"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_scroll_direction` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_scroll_direction&quot;>Scroll direction&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="44"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_theme_mode` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_theme_mode&quot;>Viewer theme mode&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="45"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_page_layout` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_page_layout&quot;>Page layout&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="46"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_scroll_continuously` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_scroll_continuously&quot;>Scroll continuously&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="47"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_enable_annotation_editing` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_enable_annotation_editing&quot;>Enable annotation editing&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="48"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_enable_annotation_rotation` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_enable_annotation_rotation&quot;>Enable annotation rotation&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="49"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.annotation_reply_mode` appears to be unused"
-        errorLine1="    &lt;string name=&quot;annotation_reply_mode&quot;>Annotation Replies&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="50"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_enable_form_editing` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_enable_form_editing&quot;>Enable form editing&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="59"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_show_share_action` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_show_share_action&quot;>Show share action&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="60"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_show_print_action` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_show_print_action&quot;>Show print action&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="61"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_invert_colors` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_invert_colors&quot;>Invert page colors&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="62"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_grayscale` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_grayscale&quot;>Grayscale&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="63"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_enable_text_selection` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_enable_text_selection&quot;>Enable text selection&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="64"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_start_page` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_start_page&quot;>Start page&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="65"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_start_page_dialog` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_start_page_dialog&quot;>Page to start document at (make sure it fits the number of pages in document you want to open): &lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="66"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_multi_threaded_rendering` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_multi_threaded_rendering&quot;>Multithreaded rendering&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="67"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_clear_cache` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_clear_cache&quot;>Clear cache&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="68"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_leak_canary_enabled` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_leak_canary_enabled&quot;>Enable LeakCanary&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="69"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_clear_app_data` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_clear_app_data&quot;>Clear app data&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="70"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_clear_app_data_summary` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_clear_app_data_summary&quot;>This will reset all stored app settings (kills the app, requires a restart).&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="71"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.preferred_language` appears to be unused"
-        errorLine1="    &lt;string name=&quot;preferred_language&quot;>Preferred language&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="73"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_show_search_action` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_show_search_action&quot;>Show search action&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="80"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_show_page_number_overlay` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_show_page_number_overlay&quot;>Show page number overlay&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="81"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_show_page_labels` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_show_page_labels&quot;>Show page labels&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="82"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_first_page_single` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_first_page_single&quot;>Display first page as single&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="99"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_show_gap_between_pages` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_show_gap_between_pages&quot;>Show gaps between pages&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="100"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.user_interface_view_mode` appears to be unused"
-        errorLine1="    &lt;string name=&quot;user_interface_view_mode&quot;>User interface view mode&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="106"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.hide_ui_when_creating_annotations` appears to be unused"
-        errorLine1="    &lt;string name=&quot;hide_ui_when_creating_annotations&quot;>Hide UI when creating annotations&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="119"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.setting_enable_volume_buttons_navigation` appears to be unused"
-        errorLine1="    &lt;string name=&quot;setting_enable_volume_buttons_navigation&quot;>Enable volume buttons navigation&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/settings_strings.xml"
-            line="120"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.title_activity_basic_example` appears to be unused"
-        errorLine1="    &lt;string name=&quot;title_activity_basic_example&quot;>Basic example&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="11"
+            line="22"
             column="13"/>
     </issue>
 
@@ -2027,7 +1427,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="62"
+            line="61"
             column="13"/>
     </issue>
 
@@ -2038,7 +1438,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="63"
+            line="62"
             column="13"/>
     </issue>
 
@@ -2049,7 +1449,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="240"
+            line="243"
             column="13"/>
     </issue>
 
@@ -2060,7 +1460,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="287"
+            line="290"
             column="13"/>
     </issue>
 
@@ -2071,7 +1471,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="288"
+            line="291"
             column="13"/>
     </issue>
 
@@ -2082,7 +1482,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="289"
+            line="292"
             column="13"/>
     </issue>
 
@@ -2093,7 +1493,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="359"
+            line="362"
             column="13"/>
     </issue>
 
@@ -2104,7 +1504,7 @@
         errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/styles.xml"
-            line="24"
+            line="20"
             column="12"/>
     </issue>
 
@@ -2115,7 +1515,7 @@
         errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/styles.xml"
-            line="115"
+            line="111"
             column="12"/>
     </issue>
 
@@ -2126,54 +1526,8 @@
         errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/styles.xml"
-            line="122"
+            line="118"
             column="12"/>
-    </issue>
-
-    <issue
-        id="MonochromeLauncherIcon"
-        message="The application adaptive icon is missing a monochrome tag"
-        errorLine1="&lt;adaptive-icon xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;>"
-        errorLine2="^">
-        <location
-            file="src/main/res/mipmap-v26/ic_launcher.xml"
-            line="8"
-            column="1"/>
-    </issue>
-
-    <issue
-        id="IconLocation"
-        message="Found bitmap drawable `res/drawable/mock_page.jpg` in densityless folder">
-        <location
-            file="src/main/res/drawable/mock_page.jpg"/>
-    </issue>
-
-    <issue
-        id="IconDensities"
-        message="Missing the following drawables in `drawable-hdpi`: page_template_preview.png (found in drawable-xxxhdpi)">
-        <location
-            file="src/main/res/drawable-hdpi"/>
-    </issue>
-
-    <issue
-        id="IconDensities"
-        message="Missing the following drawables in `drawable-mdpi`: page_template_preview.png (found in drawable-xxxhdpi)">
-        <location
-            file="src/main/res/drawable-mdpi"/>
-    </issue>
-
-    <issue
-        id="IconDensities"
-        message="Missing the following drawables in `drawable-xhdpi`: page_template_preview.png (found in drawable-xxxhdpi)">
-        <location
-            file="src/main/res/drawable-xhdpi"/>
-    </issue>
-
-    <issue
-        id="IconDensities"
-        message="Missing the following drawables in `drawable-xxhdpi`: page_template_preview.png (found in drawable-xxxhdpi)">
-        <location
-            file="src/main/res/drawable-xxhdpi"/>
     </issue>
 
     <issue
@@ -2185,21 +1539,6 @@
             file="src/main/res/layout/activity_enter_instant_document_link.xml"
             line="12"
             column="6"/>
-    </issue>
-
-    <issue
-        id="AlwaysShowAction"
-        message="Prefer &quot;`ifRoom`&quot; instead of &quot;`always`&quot;"
-        errorLine1="        app:showAsAction=&quot;collapseActionView|always&quot;/>"
-        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/menu/activity_main.xml"
-            line="18"
-            column="9"/>
-        <location
-            file="src/main/res/menu/activity_main.xml"
-            line="25"
-            column="9"/>
     </issue>
 
     <issue
@@ -2336,39 +1675,6 @@
 
     <issue
         id="HardcodedText"
-        message="Hardcoded string &quot;Search&quot;, should use `@string` resource"
-        errorLine1="        android:title=&quot;Search&quot;"
-        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/menu/activity_fts_indexing.xml"
-            line="14"
-            column="9"/>
-    </issue>
-
-    <issue
-        id="HardcodedText"
-        message="Hardcoded string &quot;Ignore page text&quot;, should use `@string` resource"
-        errorLine1="        android:title=&quot;Ignore page text&quot;/>"
-        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/menu/activity_fts_indexing.xml"
-            line="21"
-            column="9"/>
-    </issue>
-
-    <issue
-        id="HardcodedText"
-        message="Hardcoded string &quot;Ignore annotations&quot;, should use `@string` resource"
-        errorLine1="        android:title=&quot;Ignore annotations&quot;/>"
-        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/menu/activity_fts_indexing.xml"
-            line="26"
-            column="9"/>
-    </issue>
-
-    <issue
-        id="HardcodedText"
         message="Hardcoded string &quot;Content Above&quot;, should use `@string` resource"
         errorLine1="              android:text=&quot;Content Above&quot;/>"
         errorLine2="              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
@@ -2387,50 +1693,6 @@
             file="src/main/res/layout/activity_pdfuifragment_example.xml"
             line="29"
             column="15"/>
-    </issue>
-
-    <issue
-        id="HardcodedText"
-        message="Hardcoded string &quot;Rotate 90° clockwise&quot;, should use `@string` resource"
-        errorLine1="        android:title=&quot;Rotate 90° clockwise&quot;"
-        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/menu/activity_rotate_example.xml"
-            line="14"
-            column="9"/>
-    </issue>
-
-    <issue
-        id="HardcodedText"
-        message="Hardcoded string &quot;Rotate 90° counterclockwise&quot;, should use `@string` resource"
-        errorLine1="        android:title=&quot;Rotate 90° counterclockwise&quot;"
-        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/menu/activity_rotate_example.xml"
-            line="19"
-            column="9"/>
-    </issue>
-
-    <issue
-        id="HardcodedText"
-        message="Hardcoded string &quot;Previous annotation&quot;, should use `@string` resource"
-        errorLine1="        android:title=&quot;Previous annotation&quot;"
-        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/menu/activity_zoom_example.xml"
-            line="15"
-            column="9"/>
-    </issue>
-
-    <issue
-        id="HardcodedText"
-        message="Hardcoded string &quot;Next annotation&quot;, should use `@string` resource"
-        errorLine1="        android:title=&quot;Next annotation&quot;"
-        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/menu/activity_zoom_example.xml"
-            line="21"
-            column="9"/>
     </issue>
 
     <issue

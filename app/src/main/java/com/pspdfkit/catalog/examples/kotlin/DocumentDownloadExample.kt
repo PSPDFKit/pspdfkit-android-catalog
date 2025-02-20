@@ -37,7 +37,7 @@ class DocumentDownloadExample(context: Context) : SdkExample(context, R.string.d
         // The web download source is a custom DownloadSource implemented below.
         val source: WebDownloadSource = try {
             // Try to parse the URL pointing to the PDF document. If an error occurs, log it and leave the example.
-            WebDownloadSource(URL("https://pspdfkit.com/downloads/case-study-box.pdf"))
+            WebDownloadSource(URL("https://nutrient.io/downloads/case-study-box.pdf"))
         } catch (e: MalformedURLException) {
             Log.e(LOG_TAG, "Error while trying to parse the PDF Download URL.", e)
             return

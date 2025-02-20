@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2014-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2014-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -37,8 +37,7 @@ public class SplitDocumentActivity extends AppCompatActivity implements ExtractA
         // This example uses a PDF document from the app's assets. Before loading it to the
         // fragments we extract it
         // to the internal device storage.
-        ExtractAssetTask.extract(
-                SdkExample.QUICK_START_GUIDE, getString(R.string.splitDocumentExampleTitle), this, this);
+        ExtractAssetTask.extract(SdkExample.WELCOME_DOC, getString(R.string.splitDocumentExampleTitle), this, this);
     }
 
     /**

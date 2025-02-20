@@ -1,14 +1,12 @@
 /*
- *   Copyright © 2021-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2021-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
  */
-@file:SuppressLint("UsingMaterialAndMaterial3Libraries")
 
 package com.pspdfkit.catalog.ui.theming
 
-import android.annotation.SuppressLint
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateColorAsState
@@ -24,7 +22,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.getValue
@@ -79,9 +77,9 @@ object Animations {
     fun sectionExpandingColor(expanded: Boolean): State<Color> =
         animateColorAsState(
             targetValue = if (expanded) {
-                MaterialTheme.colors.primary
+                MaterialTheme.colorScheme.primary
             } else {
-                MaterialTheme.colors.onBackground
+                MaterialTheme.colorScheme.onBackground
             },
             animationSpec = tween(
                 durationMillis = sectionExpandingDuration,
@@ -93,6 +91,7 @@ object Animations {
 @Composable
 @ExperimentalAnimationApi
 fun CircularReveal(
+    modifier: Modifier = Modifier,
     isVisible: Boolean,
     rippleOrigin: Offset,
     content: @Composable () -> Unit
@@ -104,14 +103,14 @@ fun CircularReveal(
 
     // Calculate the minimum size needed for the ripple effect
     val maxRadiusPx = kotlin.math.hypot(widthInPx.toDouble(), heightInPx.toDouble())
-    val backgroundColor = MaterialTheme.colors.background
+    val backgroundColor = MaterialTheme.colorScheme.background
     val radius by animateFloatAsState(
         targetValue = if (isVisible) maxRadiusPx.toFloat() else 0f,
         animationSpec = tween()
     )
 
     Box(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxWidth()
             .height(height)
             .background(Color.Transparent)

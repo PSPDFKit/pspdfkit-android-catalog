@@ -1,35 +1,34 @@
 /*
- *   Copyright © 2023-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2023-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   THIS SOURCE CODE AND ANY ACCOMPANYING DOCUMENTATION ARE PROTECTED BY INTERNATIONAL COPYRIGHT LAW
  *   AND MAY NOT BE RESOLD OR REDISTRIBUTED. USAGE IS BOUND TO THE PSPDFKIT LICENSE AGREEMENT.
  *   UNAUTHORIZED REPRODUCTION OR DISTRIBUTION IS SUBJECT TO CIVIL AND CRIMINAL PENALTIES.
  *   This notice may not be removed from this file.
  */
-@file:SuppressLint("UsingMaterialAndMaterial3Libraries")
 
 package com.pspdfkit.catalog.ui
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Text
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.pspdfkit.catalog.R
 import com.pspdfkit.signatures.DigitalSignatureType
 
 @Composable
-fun CustomAlertDialog(dialogVisibility: Boolean, onDismissRequest: () -> Unit, action: (DigitalSignatureType) -> Unit) {
+fun SelectSignatureTypeDialog(dialogVisibility: Boolean, onDismissRequest: () -> Unit, action: (DigitalSignatureType) -> Unit) {
     if (dialogVisibility) {
         AlertDialog(
             onDismissRequest = {
@@ -38,13 +37,13 @@ fun CustomAlertDialog(dialogVisibility: Boolean, onDismissRequest: () -> Unit, a
             title = {
                 Text(
                     text = stringResource(id = R.string.selectDigitalSignatureType),
-                    color = MaterialTheme.colors.primary
+                    color = MaterialTheme.colorScheme.primary
                 )
             },
             text = {
                 Text(stringResource(id = R.string.signatureDialogDescription))
             },
-            buttons = {
+            confirmButton = {
                 Row(
                     modifier = Modifier
                         .padding(10.dp)
@@ -72,4 +71,10 @@ fun CustomAlertDialog(dialogVisibility: Boolean, onDismissRequest: () -> Unit, a
             }
         )
     }
+}
+
+@Preview
+@Composable
+fun CustomAlertDialogPreview() {
+    SelectSignatureTypeDialog(dialogVisibility = true, onDismissRequest = {}, action = {})
 }

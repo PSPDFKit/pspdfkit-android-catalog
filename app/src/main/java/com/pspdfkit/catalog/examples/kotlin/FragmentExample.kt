@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -54,11 +54,11 @@ import com.pspdfkit.utils.getSupportParcelableExtra
 
 /**
  * This example shows how to build a custom activity using the [PdfFragment] together
- * with some of the PSPDFKit views.
+ * with some of the Nutrient views.
  */
 class FragmentExample(context: Context) : SdkExample(context, R.string.fragmentExampleTitle, R.string.fragmentExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
-        ExtractAssetTask.extract(QUICK_START_GUIDE, title, context) { documentFile ->
+        ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
             val intent = Intent(context, CustomFragmentActivity::class.java)
 
             // We pass the Uri for the PDF file that should be opened in `PdfFragment` via Intent extra.
@@ -137,7 +137,7 @@ class CustomFragmentActivity : AppCompatActivity(), DocumentListener, OnDocument
                 return@run newFragment
             }
 
-        // Initialize all PSPDFKit UI components.
+        // Initialize all Nutrient UI components.
         initModularSearchViewAndButton()
         initOutlineViewAndButton()
         initThumbnailBar()

@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2016-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2016-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -36,7 +36,7 @@ public class CustomSearchUiExample extends SdkExample {
     public void launchExample(
             @NonNull final Context context, @NonNull final PdfActivityConfiguration.Builder configuration) {
         // Load the example document from the assets and launch the activity.
-        extract(QUICK_START_GUIDE, getTitle(), context, documentFile -> {
+        extract(WELCOME_DOC, getTitle(), context, documentFile -> {
             final Intent intent = new Intent(context, CustomSearchUiActivity.class);
             intent.putExtra(CustomSearchUiActivity.EXTRA_URI, Uri.fromFile(documentFile));
             context.startActivity(intent);

@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -35,7 +35,7 @@ import com.pspdfkit.ui.drawable.PdfDrawableProvider
  */
 class WatermarkExample(context: Context) : SdkExample(context, R.string.watermarkExampleTitle, R.string.watermarkExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
-        val intent = PdfActivityIntentBuilder.fromDataProvider(context, AssetDataProvider(QUICK_START_GUIDE))
+        val intent = PdfActivityIntentBuilder.fromDataProvider(context, AssetDataProvider(WELCOME_DOC))
             .configuration(configuration.build())
             .activityClass(WatermarkExampleActivity::class.java)
             .build()
@@ -130,7 +130,7 @@ private class TwoSquaresDrawable(private val pageCoordinates: RectF) : PdfDrawab
     }
 
     /**
-     * PSPDFKit calls this method every time the page was moved or resized on screen.
+     * Nutrient calls this method every time the page was moved or resized on screen.
      * It will provide a fresh transformation for calculating screen coordinates from
      * PDF coordinates.
      */
@@ -248,7 +248,7 @@ private class WatermarkDrawable(private val text: String, startingPoint: PointF)
     }
 
     /**
-     * PSPDFKit calls this method every time the page was moved or resized on screen.
+     * Nutrient calls this method every time the page was moved or resized on screen.
      * It will provide a fresh transformation for calculating screen coordinates from
      * PDF coordinates.
      */

@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2019-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2019-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -12,7 +12,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.ImageView
-import com.pspdfkit.PSPDFKit
+import com.pspdfkit.Nutrient
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.examples.kotlin.TabsPreferences
 import com.pspdfkit.catalog.utils.Utils
@@ -58,7 +58,7 @@ class PersistentTabsActivity : PdfActivity() {
     }
 
     private fun addNewTab() {
-        // On Android 6.0+ we ask for SD card access permission. This isn't strictly necessary, but PSPDFKit
+        // On Android 6.0+ we ask for SD card access permission. This isn't strictly necessary, but Nutrient
         // being able to access file directly will significantly improve performance.
         // Since documents can be annotated we ask for write permission as well.
         if (Utils.requestExternalStorageRwPermission(this, REQUEST_ASK_FOR_PERMISSION)) {
@@ -85,7 +85,7 @@ class PersistentTabsActivity : PdfActivity() {
 
         if (requestCode == REQUEST_ASK_FOR_PERMISSION) {
             // We attempt to open document after permissions have been requested.
-            // PSPDFKit can open documents without the permissions when SAF is used, however the access
+            // Nutrient can open documents without the permissions when SAF is used, however the access
             // without permissions will be significantly slower.
             showOpenFileDialog()
         }
@@ -101,7 +101,7 @@ class PersistentTabsActivity : PdfActivity() {
                 val isImageFile = ImageDocumentUtils.isImageUri(this, uri)
 
                 // Some URIs can be opened directly, including local filesystem, app assets, and content provider URIs.
-                if (PSPDFKit.isOpenableUri(this, uri)) {
+                if (Nutrient.isOpenableUri(this, uri)) {
                     showDocumentInNewTab(uri, isImageFile)
                 } else {
                     // The Uri cannot be directly opened. Download the PDF document from the uri, for local access.

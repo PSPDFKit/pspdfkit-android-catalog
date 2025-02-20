@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -25,6 +25,7 @@ class ReaderViewExample(context: Context) : AssetExample(context, R.string.reade
 
             // We disable additional features which are enabled by default. This just keeps the example simpler.
             annotationEditingEnabled(false)
+            setWebViewFileAccessAllowed(true)
             annotationListEnabled(false)
             bookmarkListEnabled(false)
             outlineEnabled(false)

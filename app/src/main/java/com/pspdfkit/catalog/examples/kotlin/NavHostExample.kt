@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2023-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2023-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -21,21 +21,20 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.OutlinedButton
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.primarySurface
+import androidx.compose.material3.ElevatedButton
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
 import androidx.core.net.toUri
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -53,7 +52,6 @@ import com.pspdfkit.forms.TextFormConfiguration
 import com.pspdfkit.jetpack.compose.interactors.DefaultListeners
 import com.pspdfkit.jetpack.compose.interactors.getDefaultDocumentManager
 import com.pspdfkit.jetpack.compose.interactors.rememberDocumentState
-import com.pspdfkit.jetpack.compose.utilities.ExperimentalPSPDFKitApi
 import com.pspdfkit.jetpack.compose.views.DocumentView
 
 private const val URL_PARAM = "url_param"
@@ -64,7 +62,7 @@ private const val URL_PARAM = "url_param"
 class NavHostExample(context: Context) : SdkExample(context, R.string.navHostExampleTitle, R.string.navHostExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // Extract the document from the assets.
-        ExtractAssetTask.extract(QUICK_START_GUIDE, title, context) { url ->
+        ExtractAssetTask.extract(WELCOME_DOC, title, context) { url ->
             context.startActivity(
                 Intent(context, NavHostActivity::class.java).apply {
                     putExtra(URL_PARAM, url.toUri().toString())
@@ -103,7 +101,6 @@ class NavHostActivity : AppCompatActivity() {
 /**
  * ScreenOne contains a DocumentView
  */
-@OptIn(ExperimentalPSPDFKitApi::class)
 @Composable
 fun ScreenOne(path: String, navigate: () -> Unit) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
@@ -140,7 +137,7 @@ fun ScreenOne(path: String, navigate: () -> Unit) {
                 )
             )
         )
-        OutlinedButton(navigate, modifier = Modifier.padding(24.dp)) {
+        ElevatedButton(navigate, modifier = Modifier) {
             Text("Navigate by NavController")
         }
     }
@@ -149,7 +146,7 @@ fun ScreenOne(path: String, navigate: () -> Unit) {
 /**
  * ScreenTwo contains a DocumentView with a slightly different configuration.
  */
-@OptIn(ExperimentalPSPDFKitApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ScreenTwo(path: String, navigate: () -> Unit) {
     Box(modifier = Modifier.fillMaxSize()) {
@@ -186,10 +183,9 @@ fun ScreenTwo(path: String, navigate: () -> Unit) {
                 )
             )
         )
-        Box(modifier = Modifier.background(MaterialTheme.colors.primarySurface)) {
+        Box(modifier = Modifier.background(MaterialTheme.colorScheme.surface)) {
             TopAppBar(
                 title = { Text("${documentState.getTitle()}") },
-                elevation = 0.dp,
                 navigationIcon = {
                     IconButton(navigate) {
                         Icon(Icons.AutoMirrored.Default.ArrowBack, contentDescription = "Back")

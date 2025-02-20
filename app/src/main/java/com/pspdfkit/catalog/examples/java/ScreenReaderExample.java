@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2016-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2016-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -20,7 +20,7 @@ import com.pspdfkit.ui.PdfActivityIntentBuilder;
 
 /**
  * This example showcases how to build a screen reader. It uses Android's {@link TextToSpeech} class
- * for text synthesis while highlighting spoken text using PSPDFKit's drawable provider API.
+ * for text synthesis while highlighting spoken text using Nutrient's drawable provider API.
  */
 public class ScreenReaderExample extends SdkExample {
 
@@ -35,8 +35,7 @@ public class ScreenReaderExample extends SdkExample {
         // Simply loads a document from the assets. The actual screen reading is performed by the
         // activity.
         // Launch the custom example activity using the document and configuration.
-        final Intent intent = PdfActivityIntentBuilder.fromDataProvider(
-                        context, new AssetDataProvider(QUICK_START_GUIDE))
+        final Intent intent = PdfActivityIntentBuilder.fromDataProvider(context, new AssetDataProvider(WELCOME_DOC))
                 .configuration(configuration.build())
                 .activityClass(ScreenReaderExampleActivity.class)
                 .build();

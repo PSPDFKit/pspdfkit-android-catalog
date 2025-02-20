@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -40,7 +40,7 @@ class ConvertHtmlToPdfExample(context: Context) : SdkExample(
         progressDialog.show()
 
         // Perform the conversion. We'll use an HTML document from the assets in this example.
-        val subscription = HtmlToPdfConverter.fromUri(context, Uri.parse("file:///android_asset/html-conversion/invoice.html"))
+        val subscription = HtmlToPdfConverter.fromUri(context, Uri.parse("file:///android_asset/html-conversion/invoice.html"), true)
             // Alternatively, you can also pass your HTML as a string via:
             // HtmlToPdfConverter.fromHTMLString(context, "<html>....</html>")
             // Use A4 page size.
@@ -53,6 +53,9 @@ class ConvertHtmlToPdfExample(context: Context) : SdkExample(
             .subscribe(
                 { outputFile ->
                     // Open the converted document in PdfActivity.
+
+                    configuration.setWebViewFileAccessAllowed(true)
+
                     val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(outputFile))
                         .configuration(configuration.build())
                         .build()

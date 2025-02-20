@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2019-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2019-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -34,7 +34,7 @@ public class CustomAnnotationCreationToolbarExample extends SdkExample {
     @Override
     public void launchExample(@NonNull Context context, @NonNull PdfActivityConfiguration.Builder configuration) {
         // We use a custom utility class to extract the example document from the assets.
-        extract(QUICK_START_GUIDE, getTitle(), context, documentFile -> {
+        extract(WELCOME_DOC, getTitle(), context, documentFile -> {
             final Intent intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
                     .configuration(configuration.build())
                     .activityClass(CustomAnnotationCreationToolbarActivity.class)

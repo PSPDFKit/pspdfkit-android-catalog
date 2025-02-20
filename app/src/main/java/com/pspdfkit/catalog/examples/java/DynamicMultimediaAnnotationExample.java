@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2018-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2018-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -36,7 +36,7 @@ public class DynamicMultimediaAnnotationExample extends SdkExample {
         // another link annotation to the document at runtime.
         ExtractAssetTask.extract("media/videos/small.mp4", getTitle(), context, false, "mp4", videoFile -> {
             // Next extract the demo document and launch it.
-            ExtractAssetTask.extract(QUICK_START_GUIDE, getTitle(), context, documentFile -> {
+            ExtractAssetTask.extract(WELCOME_DOC, getTitle(), context, documentFile -> {
                 // For normal multimedia content playback, it is not necessary to
                 // subclass PdfActivity as no custom code is required (only
                 // annotations using

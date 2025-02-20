@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2014-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2014-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -31,7 +31,7 @@ public class DocumentSwitcherActivity extends PdfActivity {
 
     /** List of documents presented in the navigation menu */
     private static final String[] assetFiles =
-            new String[] {SdkExample.QUICK_START_GUIDE, "Classbook.pdf", "Aviation.pdf", "Annotations.pdf"};
+            new String[] {SdkExample.WELCOME_DOC, "Classbook.pdf", "Aviation.pdf", "Annotations.pdf"};
 
     private DrawerLayout drawerLayout;
     private ListView drawerListView;

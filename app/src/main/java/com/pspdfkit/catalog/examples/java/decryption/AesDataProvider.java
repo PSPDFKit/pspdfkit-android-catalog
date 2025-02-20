@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2017-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2017-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -217,7 +217,7 @@ public class AesDataProvider implements WritableDataProvider, Parcelable {
         }
     }
 
-    /** PSPDFKit expects size of decrypted PDF here. */
+    /** Nutrient expects size of decrypted PDF here. */
     @Override
     public long getSize() {
         if (decryptedFileSize == FILE_SIZE_NOT_SET) {

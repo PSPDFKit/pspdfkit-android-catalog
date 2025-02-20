@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2017-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2017-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -16,7 +16,7 @@ import java.io.IOException;
 
 public class HeapDumpingUncaughtExceptionHandler implements Thread.UncaughtExceptionHandler {
     private static final String HPROF_DUMP_BASENAME = "LeakingApp.dalvik-hprof";
-    private static final String LOG_TAG = "PSPDFKit";
+    private static final String LOG_TAG = "Nutrient";
     private final String dataDir;
 
     @Nullable

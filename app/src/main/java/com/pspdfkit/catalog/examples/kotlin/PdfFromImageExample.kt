@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -117,7 +117,7 @@ class PdfFromImageActivity : Activity() {
     }
 
     companion object {
-        internal const val EXTRA_CONFIGURATION = "PSPDFKit.PdfFromImageActivity.configuration"
+        internal const val EXTRA_CONFIGURATION = "Nutrient.PdfFromImageActivity.configuration"
 
         private const val REQUEST_IMAGE = 1
     }

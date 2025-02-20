@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2023-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2023-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -89,7 +89,7 @@ class AnnotationCreationExample(context: Context) : SdkExample(context, R.string
         }
 
         // Extract the document from the assets. The launched activity will add annotations to that document.
-        ExtractAssetTask.extract(QUICK_START_GUIDE, title, context) { documentFile ->
+        ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
             val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
                 .configuration(configuration.build())
                 .activityClass(AnnotationCreationActivity::class)
@@ -110,8 +110,8 @@ class AnnotationCreationActivity : PdfActivity() {
         val pageIndex = 0
 
         // Highlight annotations can be used to highlight page text.
-        createHighlightAnnotation(pageIndex, "PSPDFKit", Color.YELLOW)
-        createHighlightAnnotation(pageIndex, "QuickStart", Color.GREEN)
+        createHighlightAnnotation(pageIndex, "Nutrient", Color.YELLOW)
+        createHighlightAnnotation(pageIndex, "Welcome", Color.GREEN)
 
         // Notes are also supported. These come in 2 variants:
         // Note annotations represent single textual stick it notes represented by an icon displayed on the page.
@@ -267,7 +267,7 @@ class AnnotationCreationActivity : PdfActivity() {
             halfHeight - 100
         )
 
-        // PSPDFKit ships with multiple pre-built stamp types.
+        // Nutrient ships with multiple pre-built stamp types.
         val stamp = StampAnnotation(pageIndex, rect, StampType.ACCEPTED).apply {
             // Stamp border color.
             color = Color.rgb(255, 0, 0)
@@ -292,7 +292,7 @@ class AnnotationCreationActivity : PdfActivity() {
 
         val stampAnnotation = StampAnnotation(pageIndex, pageRect, "Stamp with custom AP stream").apply {
             // Set PDF from assets containing vector logo as annotation's appearance stream generator.
-            appearanceStreamGenerator = AssetAppearanceStreamGenerator("images/PSPDFKit_Logo.pdf")
+            appearanceStreamGenerator = AssetAppearanceStreamGenerator("images/Nutrient_Logo.pdf")
         }
 
         addAnnotationToDocument(stampAnnotation)

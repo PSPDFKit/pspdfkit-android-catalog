@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2018-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2018-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -96,7 +96,7 @@ class MultimediaAnnotationsActivity : PdfActivity() {
             ]
         """.trimIndent()
 
-        // Write the JSON to a local gallery file on the file system. It is important that the file uses the .gallery file extension so that PSPDFKit can
+        // Write the JSON to a local gallery file on the file system. It is important that the file uses the .gallery file extension so that Nutrient can
         // recognize the file for showing a gallery.
         val outputFile = filesDir.resolve("sample.gallery").apply {
             // For the sake of this example, we recreate the gallery file from scratch. We therefore delete it if it already exists.

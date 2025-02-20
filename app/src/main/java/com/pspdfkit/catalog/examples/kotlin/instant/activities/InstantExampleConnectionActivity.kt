@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -45,7 +45,7 @@ class InstantExampleConnectionActivity : AppCompatActivity() {
     /** Configuration that will be passed to created [InstantExampleActivity].  */
     private var configuration: PdfActivityConfiguration? = null
 
-    /** Client for connecting to PSPDFKit web example client.  */
+    /** Client for connecting to Nutrient web example client.  */
     private val apiClient = WebPreviewClient()
 
     /** Disposable for the web preview server connections.  */

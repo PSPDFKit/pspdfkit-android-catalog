@@ -1,18 +1,16 @@
 /*
- *   Copyright © 2021-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2021-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
  */
-@file:SuppressLint("UsingMaterialAndMaterial3Libraries")
 
 package com.pspdfkit.catalog.ui
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.defaultMinSize
-import androidx.compose.material.Icon
-import androidx.compose.material.IconToggleButton
-import androidx.compose.material.MaterialTheme
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconToggleButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -45,7 +43,7 @@ fun ExpandSectionButton(
                 .defaultMinSize(iconSize)
                 .rotate(rotateAnimation),
             painter = painterResource(id = R.drawable.ic_expand_arrow),
-            tint = MaterialTheme.colors.secondaryVariant,
+            tint = MaterialTheme.colorScheme.onBackground,
             contentDescription = stringResource(R.string.section_button_content_desc, sectionTitle)
         )
     }

@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -25,10 +25,10 @@ import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 /**
- * Client for the PSPDFKit web preview server. In your own app, you would connect to your
+ * Client for the Nutrient web preview server. In your own app, you would connect to your
  * own Document Engine (Previously Server) backend to get Instant document identifiers and authentication tokens.
  */
-class WebPreviewClient constructor(serverUrl: String = "https://web-examples.services.demo.pspdfkit.com/api/") {
+class WebPreviewClient constructor(serverUrl: String = "https://web-examples.our.services.nutrient-powered.io/api/") {
     private val apiService: WebPreviewService
     private val basicAuthInterceptor: BasicAuthInterceptor = BasicAuthInterceptor()
 

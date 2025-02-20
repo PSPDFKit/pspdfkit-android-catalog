@@ -1,21 +1,20 @@
 /*
- *   Copyright © 2021-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2021-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
  */
-@file:SuppressLint("UsingMaterialAndMaterial3Libraries")
 
 package com.pspdfkit.catalog.ui
 
 import android.Manifest
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
@@ -23,15 +22,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
-import com.pspdfkit.PSPDFKit
+import com.pspdfkit.Nutrient
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.service.DownloadedFilesObserverService
@@ -67,6 +64,7 @@ class MainActivity : AppCompatActivity() {
         // Setting the theme before onCreate
         setTheme(R.style.PSPDFCatalog_Theme)
 
+        enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
         storagePermissionLauncher = activityResultRegistry.register(
@@ -78,7 +76,6 @@ class MainActivity : AppCompatActivity() {
         setContent {
             CatalogTheme {
                 @Suppress("DEPRECATION")
-                window.statusBarColor = MaterialTheme.colors.primaryVariant.toArgb()
                 val configuration = LocalConfiguration.current
                 val isTablet = configuration.screenWidthDp > Dimens.tabletWidthCutout.value
 
@@ -94,15 +91,15 @@ class MainActivity : AppCompatActivity() {
 
         // Launch specific example if launch example extra was provided.
         if (intent != null && intent.hasExtra(EXTRA_LAUNCH_EXAMPLE)) {
-            // When launching examples directly, ensure that PSPDFKit has completed initialization.
+            // When launching examples directly, ensure that Nutrient has completed initialization.
             val sleepTimeMs = 5L
             val timeoutMs = 2000 // roughly 2 sec before crashing
             var loopCount = 0
-            while (!PSPDFKit.isInitialized() && (sleepTimeMs * loopCount++ < timeoutMs)) {
+            while (!Nutrient.isInitialized() && (sleepTimeMs * loopCount++ < timeoutMs)) {
                 Thread.sleep(sleepTimeMs)
             }
             // Crash if timeout was was hit.
-            PSPDFKit.ensureInitialized()
+            Nutrient.ensureInitialized()
             val className = intent.getStringExtra(EXTRA_LAUNCH_EXAMPLE) ?: return
             launchExampleWithClassName(className)
         }
@@ -165,7 +162,7 @@ class MainActivity : AppCompatActivity() {
 
         // If the URI can be resolved to a local filesystem path, we can directly access it for
         // best performance.
-        if (PSPDFKit.isLocalFileUri(this, uri)) {
+        if (Nutrient.isLocalFileUri(this, uri)) {
             openDocumentAndFinishActivity(uri)
             return
         }
@@ -206,7 +203,7 @@ class MainActivity : AppCompatActivity() {
     private fun showDownloadErrorAndFinishActivity() {
         AlertDialog.Builder(this)
             .setTitle("Download error")
-            .setMessage("PSPDFKit could not download the PDF file from the given URL.")
+            .setMessage("Nutrient could not download the PDF file from the given URL.")
             .setNeutralButton("Exit catalog app") { dialog, _ -> dialog.dismiss() }
             .setOnDismissListener { finish() }
             .setCancelable(false)

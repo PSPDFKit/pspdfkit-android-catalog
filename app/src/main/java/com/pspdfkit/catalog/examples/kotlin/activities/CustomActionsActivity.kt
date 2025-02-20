@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2018-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2018-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -139,7 +139,7 @@ class CustomActionsActivity : PdfActivity() {
         }
 
         // Return true if you have handled the current event. If your code has not handled the event,
-        // pass it on to the superclass. This is important or standard PSPDFKit actions won't work.
+        // pass it on to the superclass. This is important or standard Nutrient actions won't work.
         return handled || super.onOptionsItemSelected(item)
     }
 

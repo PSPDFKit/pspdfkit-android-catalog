@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2016-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2016-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -381,7 +381,7 @@ public class ScreenReader {
         }
 
         /**
-         * Every time this method is called, PSPDFKit provides a fresh transformation matrix that
+         * Every time this method is called, Nutrient provides a fresh transformation matrix that
          * holds the current PDF-to-view transformation. Using the matrix the drawable can convert
          * PDF coordinates to view/screen coordinates. This example uses the matrix to calculate
          * screen coordinates of {@link TextBlock} instances that should be highlighted.

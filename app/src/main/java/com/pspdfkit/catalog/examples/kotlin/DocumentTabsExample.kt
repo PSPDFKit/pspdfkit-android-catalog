@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -13,7 +13,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.ImageView
-import com.pspdfkit.PSPDFKit
+import com.pspdfkit.Nutrient
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.tasks.ExtractAssetTask
@@ -39,7 +39,7 @@ class DocumentTabsExample(context: Context) : SdkExample(context, R.string.docum
         configuration.setTabBarHidingMode(TabBarHidingMode.SHOW)
 
         // First, extract the initial document from the app's assets and place it in the device's internal storage.
-        ExtractAssetTask.extract(QUICK_START_GUIDE, title, context) { documentFile ->
+        ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
             // Launch the custom example activity using the document and configuration.
             val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
                 .configuration(configuration.build())
@@ -112,7 +112,7 @@ class DocumentTabsActivity : PdfActivity() {
             val isImageFile = ImageDocumentUtils.isImageUri(this, uri)
 
             // Some URIs can be opened directly, including local filesystem, app assets, and content provider URIs.
-            if (PSPDFKit.isOpenableUri(this, uri)) {
+            if (Nutrient.isOpenableUri(this, uri)) {
                 showDocumentInNewTab(uri, isImageFile)
             } else {
                 // Find the DownloadProgressFragment for showing download progress, or create a new one.

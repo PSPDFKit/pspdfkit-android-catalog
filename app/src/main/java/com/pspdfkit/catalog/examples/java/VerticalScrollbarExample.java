@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2017-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2017-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -58,7 +58,7 @@ public class VerticalScrollbarExample extends SdkExample {
                 .setMeasurementToolsEnabled(false);
 
         // We use a custom utility class to extract the example document from the assets.
-        ExtractAssetTask.extract(QUICK_START_GUIDE, getTitle(), context, documentFile -> {
+        ExtractAssetTask.extract(WELCOME_DOC, getTitle(), context, documentFile -> {
             final Intent intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
                     .configuration(configuration.build())
                     .activityClass(VerticalScrollbarExampleActivity.class)

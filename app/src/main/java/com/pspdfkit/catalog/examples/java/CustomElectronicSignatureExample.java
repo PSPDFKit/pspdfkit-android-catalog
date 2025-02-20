@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2017-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2017-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -35,7 +35,7 @@ public class CustomElectronicSignatureExample extends SdkExample {
     @Override
     public void launchExample(
             @NonNull final Context context, @NonNull final PdfActivityConfiguration.Builder configuration) {
-        extract(QUICK_START_GUIDE, getTitle(), context, documentFile -> {
+        extract(WELCOME_DOC, getTitle(), context, documentFile -> {
             final Intent intent = new Intent(context, CustomElectronicSignatureActivity.class);
             intent.putExtra(CustomElectronicSignatureActivity.EXTRA_URI, Uri.fromFile(documentFile));
             context.startActivity(intent);

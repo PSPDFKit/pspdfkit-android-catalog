@@ -1,15 +1,13 @@
 /*
- *   Copyright © 2021-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2021-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
  */
-@file:SuppressLint("UsingMaterialAndMaterial3Libraries")
 
 package com.pspdfkit.catalog.ui.theming
 
-import android.annotation.SuppressLint
-import androidx.compose.material.Typography
+import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
@@ -18,7 +16,7 @@ import androidx.compose.ui.unit.sp
 
 val catalogTypography = Typography(
     // Used for section headers.
-    h1 = TextStyle(
+    displayLarge = TextStyle(
         fontWeight = FontWeight.W500,
         fontSize = 18.sp,
         lineHeight = 24.sp,
@@ -26,15 +24,15 @@ val catalogTypography = Typography(
     ),
 
     // Used for example list titles.
-    h2 = TextStyle(
+    displayMedium = TextStyle(
         fontWeight = FontWeight.W500,
         fontSize = 18.sp,
         lineHeight = 21.09.sp,
         letterSpacing = 0.02.sp
     ),
 
-    // Used by the PSPDFKit title on the settings screen.
-    h3 = TextStyle(
+    // Used by the Nutrient title on the settings screen.
+    displaySmall = TextStyle(
         fontWeight = FontWeight.W500,
         fontSize = 20.sp,
         lineHeight = 24.sp,
@@ -42,21 +40,21 @@ val catalogTypography = Typography(
     ),
 
     // Used by settings list titles.
-    h4 = TextStyle(
+    headlineMedium = TextStyle(
         fontWeight = FontWeight.W400,
         fontSize = 14.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.01.sp
     ),
 
-    body1 = TextStyle(
+    bodyLarge = TextStyle(
         fontWeight = FontWeight.W400,
         fontSize = 14.sp,
         lineHeight = 16.sp,
         letterSpacing = 0.01.sp
     ),
 
-    body2 = TextStyle(
+    bodyMedium = TextStyle(
         fontWeight = FontWeight.W400,
         fontSize = 14.sp,
         lineHeight = 22.sp,
@@ -64,7 +62,7 @@ val catalogTypography = Typography(
     ),
 
     // Used for the language badges.
-    subtitle1 = TextStyle(
+    titleMedium = TextStyle(
         fontWeight = FontWeight.W400,
         fontSize = 12.sp,
         lineHeight = 18.sp,
@@ -72,7 +70,7 @@ val catalogTypography = Typography(
     ),
 
     // Used for example descriptions.
-    subtitle2 = TextStyle(
+    titleSmall = TextStyle(
         fontWeight = FontWeight.W400,
         fontSize = 12.sp,
         lineHeight = 16.sp,

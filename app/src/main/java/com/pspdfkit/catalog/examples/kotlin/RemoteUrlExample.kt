@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2024-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -29,7 +29,7 @@ import java.net.URL
 
 /**
  * This example illustrates how to make use of the [UrlDataProvider] to automatically download documents
- * from the internet and open them in PSPDFKit.
+ * from the internet and open them in Nutrient.
  */
 
 class RemoteUrlExample(val context: Context) : SdkExample(context, R.string.remoteUrlDataProviderExampleTitle, R.string.remoteUrlDataProviderExampleDescription) {

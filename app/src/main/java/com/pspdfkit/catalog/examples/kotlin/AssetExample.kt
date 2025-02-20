@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -23,7 +23,7 @@ abstract class AssetExample(context: Context, @StringRes titleRes: Int, @StringR
      * @return The path to the asset
      */
     protected open val assetPath: String
-        get() = QUICK_START_GUIDE
+        get() = WELCOME_DOC
 
     /**
      * Allows subclasses to adjust the configuration before displaying the document.
@@ -39,7 +39,7 @@ abstract class AssetExample(context: Context, @StringRes titleRes: Int, @StringR
         prepareConfiguration(configuration)
 
         // Extract the document to the Catalog's private files, so that examples can freely modify the file.
-        // Since PSPDFKit does not directly read documents from the assets, we extract them
+        // Since Nutrient does not directly read documents from the assets, we extract them
         // to the internal device storage using a custom AsyncTask implementation.
         ExtractAssetTask.extract(assetPath, title, context) { documentFile ->
             // Now, as the documentFile is sitting in the internal device storage, we can

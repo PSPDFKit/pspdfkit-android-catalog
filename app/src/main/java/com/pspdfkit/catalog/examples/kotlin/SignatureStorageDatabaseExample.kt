@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2021-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2021-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -36,7 +36,7 @@ class SignatureStorageDatabaseExample(context: Context) :
         // a SignatureStorage database has been set (see ¦SignatureStorageDatabaseActivity`).
         configuration.signatureSavingStrategy(SignatureSavingStrategy.SAVE_IF_SELECTED)
         // Extract the document to the Catalog's private files, so that examples can freely modify the file.
-        ExtractAssetTask.extract(QUICK_START_GUIDE, title, context) { documentFile ->
+        ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
             // Create an intent for showing the SignatureStorageDatabaseActivity.
             val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
                 // Signature form field on page index 16.
@@ -68,7 +68,7 @@ class SignatureStorageDatabaseActivity : PdfActivity() {
         requirePdfFragment().signatureStorage = DatabaseSignatureStorage.withName(
             this,
             // You can use any name for your database signature storage. Here, the default one
-            // suggested by PSPDFKit. For example, if your app supports multiple users, you can
+            // suggested by Nutrient. For example, if your app supports multiple users, you can
             // have a separate database signature storage for every user.
             DatabaseSignatureStorage.SIGNATURE_DB_NAME
         )

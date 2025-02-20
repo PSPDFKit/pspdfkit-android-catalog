@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -26,7 +26,7 @@ class JavaScriptCalculatorExample(context: Context) : AssetExample(context, R.st
     override fun prepareConfiguration(configuration: PdfActivityConfiguration.Builder) {
         configuration
             .fitMode(PageFitMode.FIT_TO_WIDTH)
-            // Disable all PSPDFKit views.
+            // Disable all Nutrient views.
             .annotationEditingEnabled(false)
             .documentEditorEnabled(false)
             .searchEnabled(false)

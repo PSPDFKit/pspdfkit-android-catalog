@@ -1,14 +1,12 @@
 /*
- *   Copyright © 2019-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2019-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
  */
-@file:SuppressLint("UsingMaterialAndMaterial3Libraries")
 
 package com.pspdfkit.catalog.examples.kotlin.activities
 
-import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -16,11 +14,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Scaffold
+import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import com.pspdfkit.document.ImageDocumentLoader
 import com.pspdfkit.jetpack.compose.interactors.rememberImageDocumentState
-import com.pspdfkit.jetpack.compose.utilities.ExperimentalPSPDFKitApi
 import com.pspdfkit.jetpack.compose.views.ImageDocumentView
 import com.pspdfkit.ui.PdfUiFragment
 import com.pspdfkit.utils.getSupportParcelableExtra
@@ -30,7 +27,6 @@ import com.pspdfkit.utils.getSupportParcelableExtra
  */
 class JetpackComposeImageActivity : AppCompatActivity() {
 
-    @OptIn(ExperimentalPSPDFKitApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

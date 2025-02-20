@@ -1,14 +1,12 @@
 /*
- *   Copyright © 2021-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2021-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
  */
-@file:SuppressLint("UsingMaterialAndMaterial3Libraries")
 
 package com.pspdfkit.catalog.ui
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -23,10 +21,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -76,7 +74,7 @@ fun Examples(state: State, dispatcher: Dispatcher) {
         }
     }
 
-    CustomAlertDialog(dialogVisibility, { dialogVisibility = false }) {
+    SelectSignatureTypeDialog(dialogVisibility, { dialogVisibility = false }) {
         selectedClass?.apply { digitalSignatureType = it }?.launchExample(context, state.getPdfActivityConfigurationBuilder(context))
     }
 
@@ -163,13 +161,13 @@ fun ExampleHeader(
     val shouldHaveSpacerAbove = isPreviousSectionExpanded && !isCurrentHeader
 
     Surface(
-        elevation = if (isExpanded) 2.dp else 0.dp,
+        shadowElevation = if (isExpanded) 2.dp else 0.dp,
         modifier = Modifier
             .height(if (shouldHaveSpacerAbove) Dimens.listHeaderHeight + 8.dp else Dimens.listHeaderHeight)
             .zIndex(if (isExpanded) 0f else 1f)
             .fillMaxWidth()
-            .background(MaterialTheme.colors.background)
-            .clickable { onExpandButtonClicked() }
+            .clickable { onExpandButtonClicked() },
+        color = MaterialTheme.colorScheme.background
     ) {
         Column {
             if (shouldHaveSpacerAbove) {
@@ -202,7 +200,7 @@ fun ExampleHeader(
                         .alpha(expandTextAlphaAnimation),
 
                     text = sectionTitle,
-                    style = MaterialTheme.typography.h1,
+                    style = MaterialTheme.typography.displayLarge,
                     color = expandColorAnimation
                 )
 
@@ -232,7 +230,7 @@ fun ExampleListItem(
         modifier = Modifier
             .fillMaxWidth()
             // This is needed so the shadow under the header doesn't show when it's not stickied.
-            .background(color = MaterialTheme.colors.background)
+            .background(color = MaterialTheme.colorScheme.background)
             .padding(Dimens.examplesListItemPadding),
 
         verticalAlignment = CenterVertically,
@@ -244,14 +242,14 @@ fun ExampleListItem(
             Text(
                 modifier = Modifier.alpha(AlphaDefs.title),
                 text = title,
-                style = MaterialTheme.typography.h2
+                style = MaterialTheme.typography.displayMedium
             )
             Text(
                 modifier = Modifier
                     .padding(end = 32.dp)
                     .alpha(AlphaDefs.half),
                 text = description,
-                style = MaterialTheme.typography.subtitle2
+                style = MaterialTheme.typography.titleSmall
             )
         }
 
@@ -265,14 +263,15 @@ fun ExampleListItem(
                     .size(width = 45.dp, height = 18.dp),
 
                 shape = RoundedCornerShape(16.dp),
-                color = MaterialTheme.colors.secondary
+                color = MaterialTheme.colorScheme.secondaryContainer
             ) {
                 val languageName = exampleLanguage.name.firstCharacterUpperCase()
 
                 Text(
+                    color = MaterialTheme.colorScheme.onSecondaryContainer,
                     modifier = Modifier.alpha(AlphaDefs.half),
                     text = languageName,
-                    style = MaterialTheme.typography.subtitle1,
+                    style = MaterialTheme.typography.titleMedium,
                     textAlign = TextAlign.Center,
                     maxLines = 1
                 )

@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2016-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2016-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -35,7 +35,7 @@ public class CustomToolbarIconGroupingExample extends SdkExample {
     public void launchExample(
             @NonNull final Context context, @NonNull final PdfActivityConfiguration.Builder configuration) {
         // We use a custom utility class to extract the example document from the assets.
-        extract(QUICK_START_GUIDE, getTitle(), context, documentFile -> {
+        extract(WELCOME_DOC, getTitle(), context, documentFile -> {
             // To start the DarkThemeActivity create a launch intent using the builder.
             final Intent intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
                     .configuration(configuration.build())

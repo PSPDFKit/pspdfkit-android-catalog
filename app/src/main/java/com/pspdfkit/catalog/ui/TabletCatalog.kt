@@ -1,32 +1,33 @@
 /*
- *   Copyright © 2021-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2021-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
  */
-@file:SuppressLint("UsingMaterialAndMaterial3Libraries")
 
 package com.pspdfkit.catalog.ui
 
-import android.annotation.SuppressLint
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.DrawerState
-import androidx.compose.material.DrawerValue
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.ModalDrawer
-import androidx.compose.material.Scaffold
-import androidx.compose.material.rememberDrawerState
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material3.DrawerState
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ModalNavigationDrawer
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.LayoutDirection
+import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.ui.model.Action
 import com.pspdfkit.catalog.ui.model.Dispatcher
 import com.pspdfkit.catalog.ui.model.Page
@@ -44,8 +45,10 @@ fun TabletCatalog(
     dispatcher: Dispatcher
 ) {
     Scaffold(
-        scaffoldState = state.scaffoldState,
-        backgroundColor = MaterialTheme.colors.background,
+        modifier = Modifier
+            .background(color = colorResource(R.color.color_primary_dark))
+            .statusBarsPadding(),
+        containerColor = MaterialTheme.colorScheme.background,
         topBar = { CatalogAppBar(state, dispatcher, isTablet = true) }
     ) { paddingValues ->
         Box(Modifier.padding(paddingValues)) {
@@ -78,7 +81,7 @@ fun TabletCatalog(
 
 @Composable
 private fun EndPositionedModalDrawer(
-    drawerContent: @Composable ColumnScope.() -> Unit,
+    drawerContent: @Composable () -> Unit,
     drawerState: DrawerState = rememberDrawerState(DrawerValue.Closed),
     content: @Composable () -> Unit
 ) {
@@ -93,7 +96,7 @@ private fun EndPositionedModalDrawer(
     }
 
     WithLayoutDirection(oppositeLayoutDirection) {
-        ModalDrawer(
+        ModalNavigationDrawer(
             drawerContent = {
                 WithLayoutDirection(originalLayoutDirection) {
                     drawerContent()

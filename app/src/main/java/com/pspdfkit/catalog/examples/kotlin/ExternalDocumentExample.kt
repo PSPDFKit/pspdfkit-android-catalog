@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -18,7 +18,7 @@ import android.os.Bundle
 import android.os.Environment
 import android.widget.Toast
 import androidx.fragment.app.FragmentActivity
-import com.pspdfkit.PSPDFKit
+import com.pspdfkit.Nutrient
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.utils.Utils
@@ -87,7 +87,7 @@ class ExternalExampleActivity : FragmentActivity() {
                 val isImageFile = ImageDocumentUtils.isImageUri(this, uri)
 
                 // Some URIs can be opened directly, including local filesystem, app assets, and content provider URIs.
-                if (PSPDFKit.isOpenableUri(this, uri)) {
+                if (Nutrient.isOpenableUri(this, uri)) {
                     startActivity(createActivityIntent(uri, configuration, isImageFile))
                     finish()
                 } else {
@@ -152,7 +152,7 @@ class ExternalExampleActivity : FragmentActivity() {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == REQUEST_ASK_FOR_PERMISSION) {
             // We attempt to open document after permissions have been requested.
-            // PSPDFKit can open documents without the permissions when SAF is used, however the access
+            // Nutrient can open documents without the permissions when SAF is used, however the access
             // without permissions will be significantly slower.
             showOpenFileDialog()
         }
@@ -189,11 +189,11 @@ class ExternalExampleActivity : FragmentActivity() {
     }
 
     companion object {
-        internal const val EXTRA_CONFIGURATION = "PSPDFKit.ExternalExampleActivity.configuration"
+        internal const val EXTRA_CONFIGURATION = "Nutrient.ExternalExampleActivity.configuration"
 
         private const val REQUEST_OPEN_DOCUMENT = 1
         private const val REQUEST_ASK_FOR_PERMISSION = 2
-        private const val IS_WAITING_FOR_RESULT = "PSPDFKit.ExternalExampleActivity.waitingForResult"
+        private const val IS_WAITING_FOR_RESULT = "Nutrient.ExternalExampleActivity.waitingForResult"
         private const val DOWNLOAD_PROGRESS_FRAGMENT = "DownloadProgressFragment"
     }
 }

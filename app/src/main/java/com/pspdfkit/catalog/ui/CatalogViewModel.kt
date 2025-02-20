@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2021-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2021-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -19,7 +19,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.CreationExtras
-import com.pspdfkit.PSPDFKit
+import com.pspdfkit.Nutrient
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.ui.model.Action
 import com.pspdfkit.catalog.ui.model.Page
@@ -135,7 +135,7 @@ class CatalogViewModel(
             }
 
             PreferenceKeys.ClearCache -> {
-                PSPDFKit.clearCaches()
+                Nutrient.clearCaches()
                 Toast
                     .makeText(context, context.getString(R.string.toast_cache_cleared), Toast.LENGTH_SHORT)
                     .show()

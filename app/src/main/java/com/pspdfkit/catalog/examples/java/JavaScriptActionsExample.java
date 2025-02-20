@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2018-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2018-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -40,7 +40,7 @@ public class JavaScriptActionsExample extends SdkExample {
                 // launched.
                 .autosaveEnabled(false);
 
-        extract(QUICK_START_GUIDE, getTitle(), context, documentFile -> {
+        extract(WELCOME_DOC, getTitle(), context, documentFile -> {
             // Launch the custom example activity using the document and configuration.
             final Intent intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
                     .configuration(configuration.build())

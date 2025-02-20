@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2014-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2014-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -47,8 +47,7 @@ public class DocumentSwitcherExample extends SdkExample {
 
         // Launch the custom example activity using the (read-only) document from assets and
         // configuration.
-        final Intent intent = PdfActivityIntentBuilder.fromDataProvider(
-                        context, new AssetDataProvider(QUICK_START_GUIDE))
+        final Intent intent = PdfActivityIntentBuilder.fromDataProvider(context, new AssetDataProvider(WELCOME_DOC))
                 .configuration(configuration.build())
                 .activityClass(DocumentSwitcherActivity.class)
                 .build();

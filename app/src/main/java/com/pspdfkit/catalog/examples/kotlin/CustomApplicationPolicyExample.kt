@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -9,7 +9,7 @@ package com.pspdfkit.catalog.examples.kotlin
 
 import android.content.Context
 import android.net.Uri
-import com.pspdfkit.PSPDFKit
+import com.pspdfkit.Nutrient
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.tasks.ExtractAssetTask
@@ -27,10 +27,10 @@ class CustomApplicationPolicyExample(context: Context) : SdkExample(context, R.s
         val customApplicationPolicy = CustomApplicationPolicy()
 
         // Application policy needs to be set before documents are loaded.
-        PSPDFKit.setApplicationPolicy(customApplicationPolicy)
+        Nutrient.setApplicationPolicy(customApplicationPolicy)
 
         // We use a custom utility class to extract the example document from the assets.
-        ExtractAssetTask.extract(QUICK_START_GUIDE, title, context) { documentFile ->
+        ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
             // Open the example document in PdfActivity.
             val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
                 .configuration(configuration.build())

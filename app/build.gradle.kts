@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2019-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2019-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -22,14 +22,14 @@ android {
         minSdk = 26
         targetSdk = compileSdk
 
-        versionName = "2024.9.1"
-        versionCode = 141407
+        versionName = "10.0.0"
+        versionCode = 141874
 
         vectorDrawables {
             useSupportLibrary = true
         }
 
-        resValue("string", "PSPDFKIT_LICENSE_KEY", "\"LICENSE_KEY_GOES_HERE\"")
+        resValue("string", "NUTRIENT_LICENSE_KEY", "\"LICENSE_KEY_GOES_HERE\"")
         resValue("string", "YOUTUBE_API_KEY", "\"YOUTUBE_API_KEY_GOES_HERE\"")
     }
 
@@ -69,11 +69,11 @@ dependencies {
 
     // Nutrient is integrated from the Nutrient Maven repository. See the `repositories` block at the beginning
     // of this file, which shows how to set up the repository in your app.
-    implementation("com.pspdfkit:pspdfkit:2024.9.1")
+    implementation("io.nutrient:nutrient:10.0.0")
 
     // OCR library + English language pack.
-    implementation("com.pspdfkit:pspdfkit-ocr:2024.9.1")
-    implementation("com.pspdfkit:pspdfkit-ocr-english:2024.9.1")
+    implementation("io.nutrient:nutrient-ocr:10.0.0")
+    implementation("io.nutrient:nutrient-ocr-english:10.0.0")
 
 
     // Androidx
@@ -82,17 +82,17 @@ dependencies {
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.3")
 
     // Compose
-    implementation(platform("androidx.compose:compose-bom:2024.09.00"))
+    implementation(platform("androidx.compose:compose-bom:2024.12.01"))
+    androidTestImplementation(platform("androidx.compose:compose-bom:2024.12.01"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material:material")
-// Activate this to switch the app to Material 3
-//    implementation("androidx.compose.material3:material3:1.2.1")
+    implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.material:material-icons-extended")
-    implementation("androidx.activity:activity-compose:1.9.0")
-    implementation("androidx.compose.runtime:runtime-rxjava3:1.6.8")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.6.8")
+    implementation("androidx.activity:activity-compose:1.9.3")
+    implementation("androidx.compose.runtime:runtime-rxjava3")
+    implementation("androidx.core:core-splashscreen:1.0.1")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
 
     // Picasso (image loading for inline galleries).
     implementation("com.squareup.picasso:picasso:2.5.2")

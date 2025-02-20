@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2017-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2017-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -173,7 +173,7 @@ public class CustomElectronicSignatureActivity extends AppCompatActivity
 
             @Override
             public boolean onFormElementClicked(@NonNull FormElement formElement) {
-                // This click event is not interesting to us. Return false to let PSPDFKit
+                // This click event is not interesting to us. Return false to let Nutrient
                 // handle this event.
                 return false;
             }

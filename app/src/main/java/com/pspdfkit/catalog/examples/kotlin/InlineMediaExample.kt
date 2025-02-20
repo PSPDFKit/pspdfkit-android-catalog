@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -12,7 +12,7 @@ import com.pspdfkit.catalog.R
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 
 /**
- * This example showcases the inline multimedia extension of PSPDFKit. The multimedia-capable document
+ * This example showcases the inline multimedia extension of Nutrient. The multimedia-capable document
  * as well as the media files themselves are located within the asset folder.
  */
 class InlineMediaExample(context: Context) : AssetExample(context, R.string.inlineMultimediaExampleTitle, R.string.inlineMultimediaExampleDescription) {

@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -29,7 +29,7 @@ class RotatePageExample(context: Context) : SdkExample(context, R.string.rotateP
         configuration.searchEnabled(false).outlineEnabled(false)
 
         // Start the activity once the example document has been extracted from the app's assets.
-        ExtractAssetTask.extract(QUICK_START_GUIDE, title, context) { documentFile ->
+        ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
             val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
                 .configuration(configuration.build())
                 .activityClass(RotatePageActivity::class.java)

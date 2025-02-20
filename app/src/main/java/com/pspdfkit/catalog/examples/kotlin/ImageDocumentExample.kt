@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -36,7 +36,7 @@ class ImageDocumentExample(context: Context) : AssetExample(context, R.string.im
         // page number overlay are hidden).
         val imageDocumentConfiguration = ImageDocumentLoader.getDefaultImageDocumentActivityConfiguration(configuration.build())
 
-        // Since PSPDFKit does not directly read documents from the assets, we extract them
+        // Since Nutrient does not directly read documents from the assets, we extract them
         // to the internal device storage using a custom AsyncTask implementation.
         ExtractAssetTask.extract(assetPath, title, context) { documentFile ->
             // Now, as the image document file is sitting in the internal device storage, we can

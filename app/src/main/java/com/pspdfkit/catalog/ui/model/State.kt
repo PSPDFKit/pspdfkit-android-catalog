@@ -1,19 +1,13 @@
 /*
- *   Copyright © 2021-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2021-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
  */
-@file:SuppressLint("UsingMaterialAndMaterial3Libraries")
 
 package com.pspdfkit.catalog.ui.model
 
-import android.annotation.SuppressLint
 import android.content.Context
-import androidx.compose.material.DrawerState
-import androidx.compose.material.DrawerValue
-import androidx.compose.material.ScaffoldState
-import androidx.compose.material.SnackbarHostState
 import androidx.datastore.preferences.core.Preferences
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
@@ -55,10 +49,6 @@ data class State(
     val preferenceSections: List<PreferencesSection> = emptyList(),
     val expandedPreferenceSectionTitles: Set<String> = emptySet(),
     val searchState: SearchState = SearchState.Hidden,
-    val scaffoldState: ScaffoldState = ScaffoldState(
-        drawerState = DrawerState(initialValue = DrawerValue.Closed),
-        snackbarHostState = SnackbarHostState()
-    ),
     val showedExampleLanguageHint: Boolean = false,
     val preferences: Map<Preferences.Key<*>, Any> = mapOf(
         Pair(PreferenceKeys.PageScrollDirection, PageScrollDirection.HORIZONTAL.name),

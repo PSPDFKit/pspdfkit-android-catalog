@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2017-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2017-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -133,6 +133,8 @@ public class CustomSearchUiActivity extends AppCompatActivity implements Adapter
             showCouldNotStartExample("Some of the required views were not inflated.");
             return;
         }
+
+        getWindow().getDecorView().setBackgroundColor(getColor(R.color.color_primary_dark));
 
         setSupportActionBar(toolbar);
 

@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2022-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2022-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -31,7 +31,7 @@ class InstantJsonAttachmentExample(context: Context) : SdkExample(
         configuration.autosaveEnabled(false)
 
         // We use a custom utility class to extract the example document from the assets.
-        ExtractAssetTask.extract(QUICK_START_GUIDE, title, context) { documentFile ->
+        ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
             // To start the `InstantJsonAttachmentExampleActivity` create a launch intent using the builder.
             val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
                 .configuration(configuration.build())

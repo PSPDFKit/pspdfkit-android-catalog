@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2014-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2014-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -129,7 +129,7 @@ public class CustomStampAnnotationsActivity extends PdfActivity {
     private StampPickerItem createCustomApStreamStampItem() {
         // We supply our logo image from assets.
         AssetAppearanceStreamGenerator appearanceStreamGenerator =
-                new AssetAppearanceStreamGenerator("images/PSPDFKit_Logo.pdf");
+                new AssetAppearanceStreamGenerator("images/Nutrient_Logo.pdf");
 
         // Create picker item from custom subject with appearance stream generator set.
         StampPickerItem stampPickerItem = StampPickerItem.fromTitle(this, CUSTOM_AP_STREAM_SUBJECT)

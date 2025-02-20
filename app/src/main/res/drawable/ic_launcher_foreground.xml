@@ -1,19 +1,17 @@
-<!--
-  ~   Copyright © 2019-2024 PSPDFKit GmbH. All rights reserved.
-  ~
-  ~   THIS SOURCE CODE AND ANY ACCOMPANYING DOCUMENTATION ARE PROTECTED BY INTERNATIONAL COPYRIGHT LAW
-  ~   AND MAY NOT BE RESOLD OR REDISTRIBUTED. USAGE IS BOUND TO THE PSPDFKIT LICENSE AGREEMENT.
-  ~   UNAUTHORIZED REPRODUCTION OR DISTRIBUTION IS SUBJECT TO CIVIL AND CRIMINAL PENALTIES.
-  ~   This notice may not be removed from this file.
-  -->
-
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:width="108dp"
     android:height="108dp"
-    android:viewportWidth="108"
-    android:viewportHeight="108">
-  <path
-      android:pathData="M108,0H0V108H108V0ZM59.993,51.769C60.289,52.011 59.998,52.477 59.653,52.316C51.447,48.522 40.54,42.515 42.206,33.243C42.444,31.918 43.626,29.66 46.609,28.724C51.138,27.3 55.819,30.753 54.484,36.545C52.728,44.173 54.394,47.187 59.993,51.769ZM49.718,49.946C49.682,49.566 49.136,49.548 49.073,49.924C47.904,57.064 46.13,60.016 38.641,62.309C32.957,64.051 32.307,69.829 35.806,73.041C38.108,75.155 40.652,75.052 41.92,74.595C50.784,71.397 50.533,58.95 49.718,49.946ZM52.938,60.302C52.58,60.437 52.32,59.953 52.634,59.733C60.02,54.529 70.676,48.083 77.874,54.157C78.909,55.03 80.27,57.18 79.59,60.23C78.559,64.867 73.229,67.191 68.88,63.142C63.151,57.807 59.706,57.745 52.938,60.302Z"
-      android:fillColor="#ffffff"
-      android:fillType="evenOdd"/>
+    android:viewportWidth="240"
+    android:viewportHeight="169">
+  <group android:scaleX="0.38"
+      android:scaleY="0.26758334"
+      android:translateX="74.4"
+      android:translateY="61.88921">
+    <path
+        android:pathData="M20,104.3c-11.1,0 -20,-8.9 -20,-20s8.9,-20 20,-20 20,8.9 20,20 -9,20 -20,20ZM220,64.3c-11.1,0 -20,8.9 -20,20s8.9,20 20,20 20,-8.9 20,-20 -8.9,-20 -20,-20ZM30.5,133.2c-8.5,7.1 -9.6,19.7 -2.5,28.2 7.1,8.5 19.7,9.6 28.2,2.5 8.5,-7.1 9.6,-19.7 2.5,-28.2 -7.1,-8.5 -19.7,-9.6 -28.2,-2.5ZM209.5,35.3c8.5,-7.1 9.6,-19.7 2.5,-28.2 -7.1,-8.5 -19.7,-9.6 -28.2,-2.5 -8.5,7.1 -9.6,19.7 -2.5,28.2 7.1,8.5 19.7,9.6 28.2,2.5ZM56.2,4.7c-8.5,-7.1 -21.1,-6 -28.2,2.5 -7.1,8.5 -6,21.1 2.5,28.2 8.5,7.1 21.1,6 28.2,-2.5 7.1,-8.5 6,-21.1 -2.5,-28.2ZM209.5,133.2c-8.5,-7.1 -21.1,-6 -28.2,2.5 -7.1,8.5 -6,21.1 2.5,28.2 8.5,7.1 21.1,6 28.2,-2.5 7.1,-8.5 6,-21.1 -2.5,-28.2ZM158.4,90.4c-8.5,-7.1 -21.1,-6 -28.2,2.5 -7.1,8.5 -6,21.1 2.5,28.2 8.5,7.1 21.1,6 28.2,-2.5s6,-21.1 -2.5,-28.2ZM107.3,47.5c-8.5,-7.1 -21.1,-6 -28.2,2.5 -7.1,8.5 -6,21.1 2.5,28.2 8.5,7.1 21.1,6 28.2,-2.5s6,-21.1 -2.5,-28.2Z"
+        android:strokeWidth="0"
+        android:fillColor="#efebe7"
+        tools:ignore="VectorPath" />
+  </group>
 </vector>

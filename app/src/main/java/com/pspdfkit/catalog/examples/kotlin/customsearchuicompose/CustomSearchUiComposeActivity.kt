@@ -1,15 +1,12 @@
 /*
- *   Copyright © 2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2024-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
  */
 
-@file:SuppressLint("UsingMaterialAndMaterial3Libraries")
-
 package com.pspdfkit.catalog.examples.kotlin.customsearchuicompose
 
-import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.compose.setContent
@@ -19,16 +16,15 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Scaffold
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.ui.Modifier
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.configuration.activity.UserInterfaceViewMode
 import com.pspdfkit.jetpack.compose.interactors.DefaultListeners
 import com.pspdfkit.jetpack.compose.interactors.getDefaultDocumentManager
 import com.pspdfkit.jetpack.compose.interactors.rememberDocumentState
-import com.pspdfkit.jetpack.compose.utilities.ExperimentalPSPDFKitApi
 import com.pspdfkit.jetpack.compose.views.DocumentView
 import com.pspdfkit.ui.search.SearchResultHighlighter
 import com.pspdfkit.utils.getSupportParcelableExtra
@@ -39,7 +35,6 @@ class CustomSearchUiComposeActivity : AppCompatActivity() {
 
     private var highlighter: SearchResultHighlighter? = null
 
-    @OptIn(ExperimentalPSPDFKitApi::class)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 

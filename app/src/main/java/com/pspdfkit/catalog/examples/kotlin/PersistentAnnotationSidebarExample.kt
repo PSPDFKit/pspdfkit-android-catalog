@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -58,7 +58,7 @@ class PersistentAnnotationSidebarExample(context: Context) : SdkExample(
 
         configuration.useImmersiveMode(false)
 
-        ExtractAssetTask.extract(QUICK_START_GUIDE, title, context) { documentFile ->
+        ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
             val intent = Intent(context, PersistentAnnotationSidebarActivity::class.java)
             intent.putExtra(EXTRA_URI, Uri.fromFile(documentFile))
             intent.putExtra(EXTRA_CONFIGURATION, configuration.build())

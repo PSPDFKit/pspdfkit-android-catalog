@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2018-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2018-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -37,13 +37,13 @@ public class CustomPageTemplateActivity extends PdfActivity {
         try {
             pageTemplates.add(new PageTemplate(
                     PdfDocumentLoader.openDocument(
-                            this, new DocumentSource(new AssetDataProvider(SdkExample.QUICK_START_GUIDE))),
+                            this, new DocumentSource(new AssetDataProvider(SdkExample.WELCOME_DOC))),
                     8,
                     // The image should be 100x100dp.
                     getString(R.string.page_template_title),
                     ContextCompat.getDrawable(this, R.drawable.page_template_preview)));
         } catch (IOException e) {
-            throw new IllegalStateException("Couldn't open '" + SdkExample.QUICK_START_GUIDE + "' file.", e);
+            throw new IllegalStateException("Couldn't open '" + SdkExample.WELCOME_DOC + "' file.", e);
         }
 
         PdfThumbnailGrid thumbnailGrid = getPSPDFKitViews().getThumbnailGridView();

@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -45,7 +45,7 @@ class MergeDocumentsExample(context: Context) : SdkExample(context, R.string.mer
 
         mergingDisposable = Single.fromCallable {
             // Open the documents we are going to merge.
-            val documents = listOf("AnnualReport.pdf", "Scientific-Report.pdf", QUICK_START_GUIDE)
+            val documents = listOf("AnnualReport.pdf", "Scientific-Report.pdf", WELCOME_DOC)
                 .asSequence()
                 .map { PdfDocumentLoader.openDocument(context, DocumentSource(AssetDataProvider(it))) }
 

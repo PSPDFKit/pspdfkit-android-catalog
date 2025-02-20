@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -95,7 +95,7 @@ class RawResourceDataProvider(@RawRes private val resId: Int) : InputStreamDataP
 
     override fun getTitle(): String {
         // If you know the file or document name upfront, you can return it here. Otherwise return null,
-        // which will instruct PSPDFKit to use the title stored within the document (if any).
+        // which will instruct Nutrient to use the title stored within the document (if any).
         return "PSPDFKit Quickstart Guide"
     }
 

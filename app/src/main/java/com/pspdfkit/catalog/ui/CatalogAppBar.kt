@@ -1,31 +1,32 @@
 /*
- *   Copyright © 2021-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2021-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
  */
-@file:SuppressLint("UsingMaterialAndMaterial3Libraries")
 
 package com.pspdfkit.catalog.ui
 
-import android.annotation.SuppressLint
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.animateContentSize
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.Icon
-import androidx.compose.material.IconButton
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
-import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -36,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.geometry.Offset
@@ -62,6 +64,7 @@ import com.pspdfkit.catalog.ui.theming.CircularReveal
 import com.pspdfkit.utils.getSupportPackageInfo
 import kotlinx.coroutines.delay
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 @ExperimentalAnimationApi
 @ExperimentalComposeUiApi
@@ -75,7 +78,7 @@ fun CatalogAppBar(
     TopAppBar(
         title = {
             Row {
-                Text(stringResource(R.string.app_name))
+                Text("${stringResource(R.string.company_name)} ${stringResource(R.string.app_name)}")
 
                 val context = LocalContext.current
                 val version = remember { context.packageManager.getSupportPackageInfo(context.packageName, 0).versionName }
@@ -90,21 +93,14 @@ fun CatalogAppBar(
                 )
             }
         },
-
-        navigationIcon =
-        if (isOnMainPage) {
-            null
-        } else {
-            (
-                {
-                    BackNavigationIconButton(
-                        isTablet = isTablet,
-                        onClick = { dispatcher(Action.UpButtonTapped) }
-                    )
-                }
+        navigationIcon = {
+            if (!isOnMainPage) {
+                BackNavigationIconButton(
+                    isTablet = isTablet,
+                    onClick = { dispatcher(Action.UpButtonTapped) }
                 )
+            }
         },
-
         actions = {
             // These are wrapped in a row so they animate nicely when navigating.
             Row(
@@ -116,7 +112,7 @@ fun CatalogAppBar(
                     // TODO: COMPOSE extract the strings
                     Icon(
                         painter = painterResource(id = R.drawable.ic_topbar_search),
-                        tint = MaterialTheme.colors.onPrimary,
+                        tint = MaterialTheme.colorScheme.onPrimary,
                         contentDescription = "Search button"
                     )
                 }
@@ -129,17 +125,22 @@ fun CatalogAppBar(
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_topbar_settings),
-                            tint = MaterialTheme.colors.onPrimary,
+                            tint = MaterialTheme.colorScheme.onPrimary,
                             contentDescription = "Search button in the top bar."
                         )
                     }
                 }
             }
         },
-        elevation = 4.dp
+        colors = TopAppBarDefaults.topAppBarColors(
+            containerColor = MaterialTheme.colorScheme.primary,
+            titleContentColor = MaterialTheme.colorScheme.onPrimary
+        ),
+        modifier = Modifier.shadow(4.dp)
     )
 
     SearchToolbar(
+        modifier = Modifier.statusBarsPadding(),
         searchState = state.searchState,
         isOnMainPage = isOnMainPage,
         onSearchQueryChanged = { dispatcher(Action.SearchQueryChanged(it)) },
@@ -162,7 +163,7 @@ private fun BackNavigationIconButton(
     IconButton(onClick = onClick) {
         Icon(
             imageVector = icon,
-            tint = MaterialTheme.colors.onPrimary,
+            tint = MaterialTheme.colorScheme.onPrimary,
             contentDescription = "Back navigation button in the top bar."
         )
     }
@@ -172,6 +173,7 @@ private fun BackNavigationIconButton(
 @Composable
 @ExperimentalAnimationApi
 private fun SearchToolbar(
+    modifier: Modifier = Modifier,
     searchState: SearchState,
     isOnMainPage: Boolean,
     onSearchQueryChanged: (String) -> Unit,
@@ -187,6 +189,7 @@ private fun SearchToolbar(
     }
 
     CircularReveal(
+        modifier = modifier,
         isVisible = isVisible,
         rippleOrigin = rippleOrigin
     ) {
@@ -215,7 +218,7 @@ private fun SearchToolbar(
                 },
                 placeholder = { Text(text = "Search") },
                 singleLine = true,
-                colors = TextFieldDefaults.textFieldColors(backgroundColor = Color.Transparent),
+                colors = TextFieldDefaults.colors(focusedContainerColor = Color.Transparent, unfocusedContainerColor = Color.Transparent),
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                 keyboardActions = KeyboardActions(
                     onSearch = {

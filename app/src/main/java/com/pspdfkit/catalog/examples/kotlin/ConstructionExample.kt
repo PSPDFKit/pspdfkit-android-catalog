@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2022-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2022-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -36,7 +36,7 @@ class ConstructionExample(context: Context) : AssetExample(
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         prepareConfiguration(configuration)
 
-        // Since PSPDFKit does not directly read documents from the assets, we extract them
+        // Since Nutrient does not directly read documents from the assets, we extract them
         // to the internal device storage using a custom AsyncTask implementation.
         ExtractAssetTask.extract(assetPath, title, context) { documentFile ->
             // Now, as the PDF document file is sitting in the internal device storage, we can

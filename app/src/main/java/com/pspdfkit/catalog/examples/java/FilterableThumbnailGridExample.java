@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -31,8 +31,7 @@ public class FilterableThumbnailGridExample extends SdkExample {
 
     @Override
     public void launchExample(@NonNull Context context, @NonNull PdfActivityConfiguration.Builder configuration) {
-        final Intent intent = PdfActivityIntentBuilder.fromDataProvider(
-                        context, new AssetDataProvider(QUICK_START_GUIDE))
+        final Intent intent = PdfActivityIntentBuilder.fromDataProvider(context, new AssetDataProvider(WELCOME_DOC))
                 .configuration(configuration.build())
                 .activityClass(FilterableThumbnailGridActivity.class)
                 .build();

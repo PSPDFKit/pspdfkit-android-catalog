@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -22,7 +22,7 @@ import com.pspdfkit.ui.PdfActivityIntentBuilder
 class DarkThemeExample(context: Context) : SdkExample(context, R.string.darkThemeExampleTitle, R.string.darkThemeExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // We use a custom utility class to extract the example document from the assets.
-        ExtractAssetTask.extract(QUICK_START_GUIDE, title, context) { documentFile ->
+        ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
 
             // You can set the custom theme directly through PdfActivity configuration.
             configuration.theme(R.style.PSPDFCatalog_Theme_Dark)

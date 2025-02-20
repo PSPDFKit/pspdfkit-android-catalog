@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2014-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2014-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -31,7 +31,7 @@ public class RandomDocumentReplacementExample extends SdkExample {
     public void launchExample(
             @NonNull final Context context, @NonNull final PdfActivityConfiguration.Builder configuration) {
         // Launch the example activity with an initial document.
-        final String initialAssetFile = QUICK_START_GUIDE;
+        final String initialAssetFile = WELCOME_DOC;
         extract(initialAssetFile, getTitle(), context, documentFile -> {
             // Launch the custom example activity using the document and configuration.
             final Intent intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))

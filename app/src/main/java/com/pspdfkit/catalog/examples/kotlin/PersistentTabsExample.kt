@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2019-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2019-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -45,7 +45,7 @@ class PersistentTabsExample(context: Context) : SdkExample(context.getString(R.s
         // If there are no document descriptors this this means that this example is running for
         // the first time. In this case, we'll extract a few documents from the app assets to be shown as tabs.
         if (restoredDocumentDescriptors == null) {
-            val pdfFiles = listOf(QUICK_START_GUIDE, "Aviation.pdf", "Annotations.pdf")
+            val pdfFiles = listOf(WELCOME_DOC, "Aviation.pdf", "Annotations.pdf")
             val imageFiles = listOf("images/android.png")
 
             val extractAssetsObservable = Observable.concat(
@@ -100,7 +100,7 @@ class TabsPreferences(private val preferences: SharedPreferences) {
 
     companion object {
         // We use separate preferences
-        const val PREFERENCES_NAME = "PSPDFKit.PersistentTabsExample"
+        const val PREFERENCES_NAME = "Nutrient.PersistentTabsExample"
 
         const val JSON_DESCRIPTOR_URI = "uri"
         const val JSON_DESCRIPTOR_TITLE = "title"

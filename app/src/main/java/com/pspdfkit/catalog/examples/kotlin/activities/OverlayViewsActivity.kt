@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2019-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2019-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -128,8 +128,8 @@ class MyViewProvider(
         // You can embed any kind of view, even a WebView.
         secondPageView = WebView(context)
         secondPageView.settings.javaScriptEnabled = true
-        // Load the PSPDFKit homepage.
-        secondPageView.loadUrl("https://pspdfkit.com/")
+        // Load the Nutrient homepage.
+        secondPageView.loadUrl("https://nutrient.io/")
         // We fill the entire page, the Webview will consume all scroll events so scrolling the page will only work in the margins.
         secondPageView.layoutParams = OverlayLayoutParams(
             RectF(0f, 1024f, 768f, 0f),

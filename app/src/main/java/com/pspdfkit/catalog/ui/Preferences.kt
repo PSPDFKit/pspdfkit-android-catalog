@@ -1,14 +1,12 @@
 /*
- *   Copyright © 2021-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2021-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
  */
-@file:SuppressLint("UsingMaterialAndMaterial3Libraries")
 
 package com.pspdfkit.catalog.ui
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -21,20 +19,22 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredHeightIn
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.selection.selectable
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.AlertDialog
-import androidx.compose.material.Checkbox
-import androidx.compose.material.CheckboxDefaults
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.RadioButton
-import androidx.compose.material.RadioButtonDefaults
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.material.TextField
-import androidx.compose.material.TextFieldDefaults
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Checkbox
+import androidx.compose.material3.CheckboxDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
+import androidx.compose.material3.RadioButtonDefaults
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -46,6 +46,7 @@ import androidx.compose.ui.Alignment.Companion.CenterVertically
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -106,7 +107,8 @@ fun Preferences(
     }
 
     Surface(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
     ) {
         // We use our own ExpandableList, which implements a LazyColumn.
         ExpandableList(
@@ -121,15 +123,18 @@ fun Preferences(
                     modifier = Modifier.padding(Dimens.preferencesPageHeaderPadding)
                 ) {
                     Image(
-                        modifier = Modifier.padding(top = 16.dp),
-                        painter = painterResource(id = R.drawable.ic_circle_logo),
+                        modifier = Modifier
+                            .padding(top = 16.dp)
+                            .size(40.dp)
+                            .clip(RoundedCornerShape(8.dp)),
+                        painter = painterResource(id = R.drawable.ic_logo),
                         contentDescription = stringResource(R.string.preferences_nutrient_logo)
                     )
 
                     Text(
                         text = stringResource(R.string.app_name),
-                        style = MaterialTheme.typography.h3,
-                        color = MaterialTheme.colors.onBackground,
+                        style = MaterialTheme.typography.displaySmall,
+                        color = MaterialTheme.colorScheme.onBackground,
                         modifier = Modifier
                             .alpha(AlphaDefs.title)
                             .padding(top = 11.dp, bottom = 1.dp)
@@ -140,7 +145,7 @@ fun Preferences(
                     Text(
                         modifier = Modifier.alpha(AlphaDefs.half),
                         text = stringResource(R.string.preferences_header_version, version ?: ""),
-                        style = MaterialTheme.typography.body1
+                        style = MaterialTheme.typography.displayLarge
                     )
                 }
 
@@ -223,7 +228,7 @@ fun CheckboxSetting(
             Checkbox(
                 checked = value,
                 onCheckedChange = { onValueChanged(preference.key, it) },
-                colors = CheckboxDefaults.colors(checkedColor = MaterialTheme.colors.primary)
+                colors = CheckboxDefaults.colors(checkedColor = MaterialTheme.colorScheme.primary)
             )
 
             Text(
@@ -231,7 +236,7 @@ fun CheckboxSetting(
                     .padding(start = 32.dp)
                     .alpha(AlphaDefs.title),
                 text = preference.title,
-                style = MaterialTheme.typography.h4
+                style = MaterialTheme.typography.headlineMedium
             )
         }
 
@@ -264,7 +269,7 @@ fun PreferenceHeader(
                 modifier = Modifier.alpha(expandSectionAlphaAnimation),
 
                 text = sectionTitle,
-                style = MaterialTheme.typography.h1,
+                style = MaterialTheme.typography.displayLarge,
                 color = expandSectionColorAnimation
             )
 
@@ -308,13 +313,13 @@ fun IntegerSetting(
             onDismissRequest = {
                 openDialog.value = false
             },
-
+            confirmButton = {},
             title = {
                 Text(
                     modifier = Modifier
                         .alpha(AlphaDefs.title),
                     text = preference.title,
-                    style = MaterialTheme.typography.h4
+                    style = MaterialTheme.typography.headlineMedium
                 )
             },
 
@@ -324,7 +329,7 @@ fun IntegerSetting(
                         modifier = Modifier
                             .alpha(AlphaDefs.half),
                         text = stringResource(R.string.preferences_starting_page_dialog_desc),
-                        style = MaterialTheme.typography.body1
+                        style = MaterialTheme.typography.bodyLarge
                     )
 
                     TextField(
@@ -342,7 +347,7 @@ fun IntegerSetting(
                         },
                         placeholder = { Text(text = value.toString()) },
                         maxLines = 1,
-                        colors = TextFieldDefaults.textFieldColors(backgroundColor = Color.Transparent),
+                        colors = TextFieldDefaults.colors(focusedContainerColor = Color.Transparent, unfocusedContainerColor = Color.Transparent),
 
                         keyboardOptions = KeyboardOptions(
                             keyboardType = KeyboardType.NumberPassword,
@@ -353,9 +358,7 @@ fun IntegerSetting(
                         )
                     )
                 }
-            },
-
-            buttons = { }
+            }
         )
     }
 }
@@ -390,7 +393,7 @@ fun SettingItemWithDescription(preference: Preference<*>, descriptionExtras: Str
     ) {
         Text(
             text = preference.title,
-            style = MaterialTheme.typography.h4,
+            style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.alpha(AlphaDefs.title)
         )
 
@@ -404,7 +407,7 @@ fun SettingItemWithDescription(preference: Preference<*>, descriptionExtras: Str
 
             Text(
                 text = finalDescription,
-                style = MaterialTheme.typography.body1,
+                style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.alpha(AlphaDefs.half)
             )
         }
@@ -499,14 +502,14 @@ fun PopUpRadioSetting(
             modifier = Modifier
                 .alpha(AlphaDefs.title),
             text = preference.title,
-            style = MaterialTheme.typography.h4
+            style = MaterialTheme.typography.titleMedium
         )
 
         Text(
             modifier = Modifier
                 .alpha(AlphaDefs.half),
             text = selectedOption,
-            style = MaterialTheme.typography.h4
+            style = MaterialTheme.typography.titleMedium
         )
     }
 
@@ -521,13 +524,13 @@ fun PopUpRadioSetting(
             onDismissRequest = {
                 openDialog.value = false
             },
-
+            confirmButton = {},
             title = {
                 Text(
                     modifier = Modifier
                         .alpha(AlphaDefs.title),
                     text = preference.title,
-                    style = MaterialTheme.typography.h4
+                    style = MaterialTheme.typography.titleMedium
                 )
             },
 
@@ -541,9 +544,7 @@ fun PopUpRadioSetting(
                         onSelectionChanged.invoke(it)
                     }
                 }
-            },
-
-            buttons = { }
+            }
         )
     }
 }
@@ -576,7 +577,7 @@ fun RadioButtonGroup(
             ) {
                 RadioButton(
                     selected = isSelected,
-                    colors = RadioButtonDefaults.colors(selectedColor = MaterialTheme.colors.primary),
+                    colors = RadioButtonDefaults.colors(selectedColor = MaterialTheme.colorScheme.primary),
                     onClick = null
                 )
                 Text(
@@ -584,7 +585,7 @@ fun RadioButtonGroup(
                         .padding(start = 32.dp)
                         .alpha(AlphaDefs.title),
                     text = currentOption,
-                    style = MaterialTheme.typography.h4
+                    style = MaterialTheme.typography.titleMedium
                 )
             }
 

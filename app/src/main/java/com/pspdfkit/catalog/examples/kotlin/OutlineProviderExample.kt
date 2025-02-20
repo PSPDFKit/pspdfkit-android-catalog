@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2019-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2019-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -31,7 +31,7 @@ class OutlineProviderExample(context: Context) :
 
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // We use a custom utility class to extract the example document from the assets.
-        ExtractAssetTask.extract(QUICK_START_GUIDE, title, context) { documentFile ->
+        ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
             val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
                 .configuration(configuration.build())
                 .activityClass(OutlineProviderActivity::class)
@@ -82,7 +82,7 @@ class OutlineProviderActivity : PdfActivity() {
                 // Outline text color and style are configurable.
                 .setColor(Color.BLUE)
                 .setStyle(Typeface.ITALIC)
-                // Set action that opens PSPDFKit's website after clicking on the outline element.
+                // Set action that opens Nutrient's website after clicking on the outline element.
                 .setAction(UriAction("https://nutrient.io"))
                 .build()
         )

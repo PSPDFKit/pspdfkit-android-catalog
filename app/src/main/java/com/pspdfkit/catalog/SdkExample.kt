@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2017-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2017-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -48,7 +48,6 @@ abstract class SdkExample(
     override val stringsToMatch by lazy {
         listOf(
             title.lowercase(Locale.getDefault()),
-            description.lowercase(Locale.getDefault()),
             exampleName.lowercase(Locale.getDefault())
         )
     }
@@ -89,7 +88,7 @@ abstract class SdkExample(
 
     companion object {
         // Documents used in our examples.
-        const val QUICK_START_GUIDE: String = "Quickstart.pdf"
+        const val WELCOME_DOC: String = "Nutrient welcome.pdf"
         const val ANNOTATIONS_EXAMPLE: String = "Annotations.pdf"
 
         // Image used in our examples.

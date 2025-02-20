@@ -1,20 +1,22 @@
 /*
- *   Copyright © 2021-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2021-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
  */
-@file:SuppressLint("UsingMaterialAndMaterial3Libraries")
 
 package com.pspdfkit.catalog.ui.theming
 
-import android.annotation.SuppressLint
+import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
+import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 
 // Put colors and anything theme-related here, then pass it to the default MaterialTheme below.
 
@@ -28,6 +30,7 @@ object AlphaDefs {
 
 private val primaryPurple = Color(0xff4537de)
 private val variantPurple = Color(0xff2a1cb4)
+private val lightPurple = Color(0xff777cf0)
 private val white = Color(0xffffffff)
 private val secondaryLightGray = Color(0xffd7dce4)
 private val variantDarkerGray = Color(0xff717885)
@@ -37,24 +40,20 @@ private val textLightGray = Color(0xffd4d4d4)
 private val black = Color(0xff000000)
 private val snackbarOnSurface = Color(0xff142132)
 
-val catalogLightColors = lightColors(
+val LightColorScheme = lightColorScheme(
     primary = primaryPurple,
-    primaryVariant = variantPurple,
+    onPrimary = white,
     secondary = secondaryLightGray,
-    secondaryVariant = variantDarkerGray,
     background = white,
     onBackground = textDarkGray,
     onSurface = snackbarOnSurface
 )
 
-val catalogDarkColors = darkColors(
-    primary = white,
-    primaryVariant = variantDark,
+val DarkColorScheme = darkColorScheme(
+    primary = lightPurple,
     onPrimary = white,
     secondary = textLightGray,
-    secondaryVariant = textLightGray,
-    onSecondary = black,
-    background = variantDark,
+    background = black,
     onBackground = white,
     surface = variantDark,
     onSurface = white
@@ -63,14 +62,22 @@ val catalogDarkColors = darkColors(
 val snackbarText = Color(0xffA8BBF8)
 
 @Composable
-fun CatalogTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
+fun CatalogTheme(
+    darkTheme: Boolean = isSystemInDarkTheme(),
+    dynamicColor: Boolean = true, // Dynamic color is available on Android 12+
+    content: @Composable () -> Unit
+) {
     MaterialTheme(
         typography = catalogTypography,
 
-        colors = if (darkTheme) {
-            catalogDarkColors
-        } else {
-            catalogLightColors
+        colorScheme = when {
+            (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) && dynamicColor -> {
+                val context = LocalContext.current
+                if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+            }
+
+            darkTheme -> DarkColorScheme
+            else -> LightColorScheme
         }
     ) {
         content()

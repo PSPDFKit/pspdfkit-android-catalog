@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2018-2024 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2018-2025 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -25,7 +25,7 @@ class CustomActionsExample(context: Context) :
 
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // We use a custom utility class to extract the example document from the assets.
-        ExtractAssetTask.extract(SdkExample.QUICK_START_GUIDE, title, context) { documentFile ->
+        ExtractAssetTask.extract(SdkExample.WELCOME_DOC, title, context) { documentFile ->
             val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
                 .configuration(configuration.build())
                 .activityClass(CustomActionsActivity::class)

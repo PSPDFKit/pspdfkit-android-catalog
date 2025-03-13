@@ -65,6 +65,7 @@ import com.pspdfkit.catalog.examples.kotlin.DocumentComparisonExample
 import com.pspdfkit.catalog.examples.kotlin.DocumentDownloadExample
 import com.pspdfkit.catalog.examples.kotlin.DocumentFromCanvasExample
 import com.pspdfkit.catalog.examples.kotlin.DocumentJsonExample
+import com.pspdfkit.catalog.examples.kotlin.DocumentPagerExample
 import com.pspdfkit.catalog.examples.kotlin.DocumentProcessingExample
 import com.pspdfkit.catalog.examples.kotlin.DocumentScrollExample
 import com.pspdfkit.catalog.examples.kotlin.DocumentTabsExample
@@ -110,10 +111,13 @@ import com.pspdfkit.catalog.examples.kotlin.SignatureStorageDatabaseExample
 import com.pspdfkit.catalog.examples.kotlin.SimpleFragmentExample
 import com.pspdfkit.catalog.examples.kotlin.SoundAnnotationDataExtractionExample
 import com.pspdfkit.catalog.examples.kotlin.TextHighlightPopupCustomisationExample
+import com.pspdfkit.catalog.examples.kotlin.ThirdPartySigningExample
+import com.pspdfkit.catalog.examples.kotlin.TwoStepSigningExample
 import com.pspdfkit.catalog.examples.kotlin.UserInterfaceViewModesExample
 import com.pspdfkit.catalog.examples.kotlin.ViewPager2Example
 import com.pspdfkit.catalog.examples.kotlin.WatermarkExample
 import com.pspdfkit.catalog.examples.kotlin.ZoomExample
+import com.pspdfkit.catalog.examples.kotlin.ai.AiAssistantComposeExample
 import com.pspdfkit.catalog.examples.kotlin.customsearchuicompose.CustomSearchUiComposeExample
 import com.pspdfkit.catalog.examples.kotlin.instant.InstantExample
 
@@ -199,6 +203,8 @@ fun getSectionsWithExamples(context: Context) = listOf(
         R.drawable.ic_digital_signatures,
         DigitalSignatureExample(context),
         ManualSigningExample(context),
+        TwoStepSigningExample(context),
+        ThirdPartySigningExample(context),
         LongTermValidationExample(context),
         LongTermValidationAfterSigningExample(context),
         CombineElectronicSignaturesWithDigitalSigningExample(context)
@@ -210,6 +216,12 @@ fun getSectionsWithExamples(context: Context) = listOf(
         CombineElectronicSignaturesWithDigitalSigningExample(context),
         CustomElectronicSignatureExample(context),
         SignatureStorageDatabaseExample(context)
+    ),
+
+    SdkExample.Section(
+        context.getString(R.string.example_section_ai_assistant),
+        R.drawable.ic_ai_assistant,
+        AiAssistantComposeExample(context)
     ),
 
     SdkExample.Section(
@@ -302,6 +314,7 @@ fun getSectionsWithExamples(context: Context) = listOf(
         InlineMediaExample(context),
         DynamicMultimediaAnnotationExample(context),
         RandomDocumentReplacementExample(context),
+        DocumentPagerExample(context),
         ViewPager2Example(context)
     )
 )

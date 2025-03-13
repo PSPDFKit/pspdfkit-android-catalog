@@ -17,4 +17,4 @@
     android:paddingStart="8dp"
     android:paddingEnd="8dp"
     android:src="@drawable/pspdf__ic_add"
-    app:tint="@color/white" />
+    app:tint="@color/onPrimaryLight" />

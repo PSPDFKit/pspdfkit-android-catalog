@@ -82,7 +82,7 @@ class CustomActionsActivity : PdfActivity() {
             com.pspdfkit.R.attr.pspdf__actionBarIconsStyle,
             com.pspdfkit.R.style.PSPDFKit_ActionBarIcons
         )
-        val mainToolbarIconsColor = a.getColor(com.pspdfkit.R.styleable.pspdf__ActionBarIcons_pspdf__iconsColor, ContextCompat.getColor(this, R.color.white))
+        val mainToolbarIconsColor = a.getColor(com.pspdfkit.R.styleable.pspdf__ActionBarIcons_pspdf__iconsColor, ContextCompat.getColor(this, com.pspdfkit.R.color.pspdf__onPrimary))
         a.recycle()
 
         // Tinting all custom menu drawables (you can do it the easier way if you iterate over your ids).

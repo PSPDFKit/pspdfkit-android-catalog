@@ -29,7 +29,6 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.pspdfkit.Nutrient
-import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.service.DownloadedFilesObserverService
 import com.pspdfkit.catalog.ui.model.State
@@ -61,9 +60,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        // Setting the theme before onCreate
-        setTheme(R.style.PSPDFCatalog_Theme)
-
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
@@ -75,7 +71,6 @@ class MainActivity : AppCompatActivity() {
 
         setContent {
             CatalogTheme {
-                @Suppress("DEPRECATION")
                 val configuration = LocalConfiguration.current
                 val isTablet = configuration.screenWidthDp > Dimens.tabletWidthCutout.value
 

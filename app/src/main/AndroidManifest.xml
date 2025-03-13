@@ -49,7 +49,7 @@
         tools:ignore="UnusedAttribute">
 
         <meta-data
-            android:name="pspdfkit_license_key"
+            android:name="nutrient_license_key"
             android:value="@string/NUTRIENT_LICENSE_KEY" />
 
         <!--
@@ -61,7 +61,7 @@
             android:value="@string/YOUTUBE_API_KEY" />
 
         <meta-data
-            android:name="pspdfkit_font_path"
+            android:name="nutrient_font_path"
             android:value="assets/font" />
 
         <!--
@@ -382,6 +382,11 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
+            android:name=".examples.kotlin.ai.AiAssistantComposeActivity"
+            android:label="@string/jetpackAiAssistantExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
             android:name=".examples.kotlin.activities.PdfUiFragmentExampleActivity"
             android:label="@string/pdfUiFragmentExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
@@ -508,7 +513,6 @@
         <activity
             android:name=".examples.kotlin.CustomLayoutActivity"
             android:label="@string/customLayoutExampleTitle"
-            android:theme="@style/PSPDFCatalog.Theme.Light.CustomisedLoadingView"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
@@ -588,6 +592,11 @@
         <activity
             android:name=".examples.kotlin.WebViewActivity"
             android:label="@string/remoteUrlDataProviderExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.DocumentPagerExampleActivity"
+            android:label="@string/documentPagerExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
     </application>

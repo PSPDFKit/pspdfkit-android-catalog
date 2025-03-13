@@ -15,7 +15,6 @@ import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 // Put colors and anything theme-related here, then pass it to the default MaterialTheme below.
@@ -28,56 +27,97 @@ object AlphaDefs {
     const val onSurface = 0.87f
 }
 
-private val primaryPurple = Color(0xff4537de)
-private val variantPurple = Color(0xff2a1cb4)
-private val lightPurple = Color(0xff777cf0)
-private val white = Color(0xffffffff)
-private val secondaryLightGray = Color(0xffd7dce4)
-private val variantDarkerGray = Color(0xff717885)
-private val variantDark = Color(0xff051628)
-private val textDarkGray = Color(0xff051628)
-private val textLightGray = Color(0xffd4d4d4)
-private val black = Color(0xff000000)
-private val snackbarOnSurface = Color(0xff142132)
-
-val LightColorScheme = lightColorScheme(
-    primary = primaryPurple,
-    onPrimary = white,
-    secondary = secondaryLightGray,
-    background = white,
-    onBackground = textDarkGray,
-    onSurface = snackbarOnSurface
+private val lightScheme = lightColorScheme(
+    primary = primaryLight,
+    onPrimary = onPrimaryLight,
+    primaryContainer = primaryContainerLight,
+    onPrimaryContainer = onPrimaryContainerLight,
+    secondary = secondaryLight,
+    onSecondary = onSecondaryLight,
+    secondaryContainer = secondaryContainerLight,
+    onSecondaryContainer = onSecondaryContainerLight,
+    tertiary = tertiaryLight,
+    onTertiary = onTertiaryLight,
+    tertiaryContainer = tertiaryContainerLight,
+    onTertiaryContainer = onTertiaryContainerLight,
+    error = errorLight,
+    onError = onErrorLight,
+    errorContainer = errorContainerLight,
+    onErrorContainer = onErrorContainerLight,
+    background = backgroundLight,
+    onBackground = onBackgroundLight,
+    surface = surfaceLight,
+    onSurface = onSurfaceLight,
+    surfaceVariant = surfaceVariantLight,
+    onSurfaceVariant = onSurfaceVariantLight,
+    outline = outlineLight,
+    outlineVariant = outlineVariantLight,
+    scrim = scrimLight,
+    inverseSurface = inverseSurfaceLight,
+    inverseOnSurface = inverseOnSurfaceLight,
+    inversePrimary = inversePrimaryLight,
+    surfaceDim = surfaceDimLight,
+    surfaceBright = surfaceBrightLight,
+    surfaceContainerLowest = surfaceContainerLowestLight,
+    surfaceContainerLow = surfaceContainerLowLight,
+    surfaceContainer = surfaceContainerLight,
+    surfaceContainerHigh = surfaceContainerHighLight,
+    surfaceContainerHighest = surfaceContainerHighestLight
 )
 
-val DarkColorScheme = darkColorScheme(
-    primary = lightPurple,
-    onPrimary = white,
-    secondary = textLightGray,
-    background = black,
-    onBackground = white,
-    surface = variantDark,
-    onSurface = white
+private val darkScheme = darkColorScheme(
+    primary = primaryDark,
+    onPrimary = onPrimaryDark,
+    primaryContainer = primaryContainerDark,
+    onPrimaryContainer = onPrimaryContainerDark,
+    secondary = secondaryDark,
+    onSecondary = onSecondaryDark,
+    secondaryContainer = secondaryContainerDark,
+    onSecondaryContainer = onSecondaryContainerDark,
+    tertiary = tertiaryDark,
+    onTertiary = onTertiaryDark,
+    tertiaryContainer = tertiaryContainerDark,
+    onTertiaryContainer = onTertiaryContainerDark,
+    error = errorDark,
+    onError = onErrorDark,
+    errorContainer = errorContainerDark,
+    onErrorContainer = onErrorContainerDark,
+    background = backgroundDark,
+    onBackground = onBackgroundDark,
+    surface = surfaceDark,
+    onSurface = onSurfaceDark,
+    surfaceVariant = surfaceVariantDark,
+    onSurfaceVariant = onSurfaceVariantDark,
+    outline = outlineDark,
+    outlineVariant = outlineVariantDark,
+    scrim = scrimDark,
+    inverseSurface = inverseSurfaceDark,
+    inverseOnSurface = inverseOnSurfaceDark,
+    inversePrimary = inversePrimaryDark,
+    surfaceDim = surfaceDimDark,
+    surfaceBright = surfaceBrightDark,
+    surfaceContainerLowest = surfaceContainerLowestDark,
+    surfaceContainerLow = surfaceContainerLowDark,
+    surfaceContainer = surfaceContainerDark,
+    surfaceContainerHigh = surfaceContainerHighDark,
+    surfaceContainerHighest = surfaceContainerHighestDark
 )
-
-val snackbarText = Color(0xffA8BBF8)
 
 @Composable
 fun CatalogTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
-    dynamicColor: Boolean = true, // Dynamic color is available on Android 12+
+    dynamicColor: Boolean = false, // Dynamic color is available on Android 12+
     content: @Composable () -> Unit
 ) {
     MaterialTheme(
         typography = catalogTypography,
-
         colorScheme = when {
             (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) && dynamicColor -> {
                 val context = LocalContext.current
                 if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
             }
-
-            darkTheme -> DarkColorScheme
-            else -> LightColorScheme
+            darkTheme -> darkScheme
+            else -> lightScheme
         }
     ) {
         content()

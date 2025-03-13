@@ -17,6 +17,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
+import com.pspdfkit.catalog.SdkExample.Companion.WELCOME_DOC
 import com.pspdfkit.configuration.PdfConfiguration
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.ui.PdfFragment
@@ -66,7 +67,7 @@ class PdfFragmentAdapter(activity: ViewPager2Activity) : FragmentStateAdapter(ac
 
     // Load PDFs from assets.
     private fun getPdfPath(position: Int) = "file:///android_asset/${when (position) {
-        0 -> "Quickstart"
+        0 -> WELCOME_DOC.removeSuffix(".pdf")
         1 -> "Scientific-paper"
         2 -> "Teacher"
         else -> "The-Cosmic-Context-for-Life"

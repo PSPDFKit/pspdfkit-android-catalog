@@ -57,6 +57,8 @@
     <string name="jetpackExampleDescription">Example of how to integrate Nutrient in a Jetpack compose application.</string>
     <string name="jetpackImageExampleTitle">Image Example</string>
     <string name="jetpackImageExampleDescription">Example of how to load an image using Nutrient in a Jetpack compose application.</string>
+    <string name="jetpackAiAssistantExampleTitle">AI Assistant Compose</string>
+    <string name="jetpackAiAssistantExampleDescription">AI chat for intelligent document analysis and interaction using our Jetpack Compose API. You must also run the AI Assistant demo server on your Machine.</string>
     <string name="splitDocumentExampleTitle">Document Split-view</string>
     <string name="splitDocumentExampleDescription">Usage example for two PdfFragment instances sitting side-by-side in a single activity.</string>
     <string name="memoryDataProviderExampleTitle">MemoryDataProvider</string>
@@ -165,8 +167,12 @@
     <string name="digitalSignatureLtvExampleDescription">PAdES signature with added LTV and Timestamp data.</string>
     <string name="digitalSignatureLtvAddedExampleTitle">Long-Term-Validation added to Signature</string>
     <string name="digitalSignatureLtvAddedExampleDescription">Opens an already signed document and adds LTV data to the existing signature.</string>
-    <string name="manualSigningExampleTitle">Manual Signing Example</string>
+    <string name="manualSigningExampleTitle">Custom Signing Example</string>
     <string name="manualSigningExampleDescription">Showcases how to use a custom signing lambda to manually sign a document with a private key.</string>
+    <string name="twoStepSigningExampleTitle">Two Step Signing Example</string>
+    <string name="twoStepSigningExampleDescription">Sign a document with a private key in two stages allowing for custom byte array encryption.</string>
+    <string name="thirdPartySigningExampleTitle">Third Party Signing Example</string>
+    <string name="thirdPartySigningExampleDescription">Sign a document with PCSK@7 signature using any third party signature generator.</string>
     <string name="watermarkExampleTitle">Watermarks</string>
     <string name="watermarkExampleDescription">Shows how to display watermarks using Drawable API.</string>
     <string name="composeExampleTitle">Sample Application</string>
@@ -219,6 +225,8 @@
     <string name="soundAnnotationDataExtractionDescription">Shows how to add a sound annotation and how to extract the audio data into a .wav file.</string>
     <string name="documentScrollExampleTitle">Add a page during scroll</string>
     <string name="documentScrollExampleDescription">Shows how to detect when a document has been scrolled to the end and how to add a new page at the end of the document.</string>
+    <string name="documentPagerExampleTitle">Multiple document pager</string>
+    <string name="documentPagerExampleDescription">Shows how multiple pdfs can be utilised in a Compose Horizontal Pager</string>
 
     <string name="tryInstantExampleTitle">Try Instant</string>
     <string name="tryInstantExampleDescription">Downloads a document for collaborative editing.</string>
@@ -320,6 +328,7 @@
     <string name="example_section_digital_signing">Digital Signing</string>
     <string name="example_section_electronic_signatures">Electronic Signatures</string>
     <string name="example_section_components">Components</string>
+    <string name="example_section_ai_assistant">AI Assistant</string>
     <string name="example_section_javascript">JavaScript</string>
     <string name="example_section_document_processing">Document Processing</string>
     <string name="example_section_layout_customization">Layout Customization</string>

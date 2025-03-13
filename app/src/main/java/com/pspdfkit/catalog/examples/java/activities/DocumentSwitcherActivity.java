@@ -86,7 +86,7 @@ public class DocumentSwitcherActivity extends PdfActivity {
                         com.pspdfkit.R.style.PSPDFKit_ActionBarIcons);
         int toolbarIconsColor = a.getColor(
                 com.pspdfkit.R.styleable.pspdf__ActionBarIcons_pspdf__iconsColor,
-                ContextCompat.getColor(this, com.pspdfkit.R.color.pspdf__color_white));
+                ContextCompat.getColor(this, com.pspdfkit.R.color.pspdf__onPrimaryLight));
         a.recycle();
 
         drawerDrawable.setColor(toolbarIconsColor);

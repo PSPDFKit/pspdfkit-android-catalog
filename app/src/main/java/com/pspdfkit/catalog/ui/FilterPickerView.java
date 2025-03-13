@@ -51,10 +51,10 @@ public class FilterPickerView extends LinearLayout {
     public FilterPickerView(@NonNull final Context context) {
         super(context);
 
-        backgroundColor = ContextCompat.getColor(context, com.pspdfkit.R.color.pspdf__color_white);
-        foregroundColor = ContextCompat.getColor(context, com.pspdfkit.R.color.pspdf__color_gray_dark);
-        backgroundColorSelected = ContextCompat.getColor(context, com.pspdfkit.R.color.pspdf__color);
-        foregroundColorSelected = ContextCompat.getColor(context, com.pspdfkit.R.color.pspdf__color_white);
+        backgroundColor = ContextCompat.getColor(context, com.pspdfkit.R.color.pspdf__onPrimaryLight);
+        foregroundColor = ContextCompat.getColor(context, com.pspdfkit.R.color.pspdf__outlineLight);
+        backgroundColorSelected = ContextCompat.getColor(context, com.pspdfkit.R.color.pspdf__primaryLight);
+        foregroundColorSelected = ContextCompat.getColor(context, com.pspdfkit.R.color.pspdf__onPrimaryLight);
 
         int padding =
                 (int) getContext().getResources().getDimension(R.dimen.pspdf__thumbnailGridFilterPickerViewPadding);

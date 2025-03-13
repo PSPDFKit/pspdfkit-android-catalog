@@ -6,9 +6,9 @@
   ~   Please see License for details. This notice may not be removed from this file.
   -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
-       android:shape="rectangle">
+    android:shape="rectangle">
     <size
         android:width="1px"
         android:height="1px"/>
-    <solid android:color="@color/list_divider_light"/>
+    <solid android:color="@color/outlineVariantLight"/>
 </shape>

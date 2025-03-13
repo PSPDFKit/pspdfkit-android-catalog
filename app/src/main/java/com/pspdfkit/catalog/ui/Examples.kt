@@ -19,7 +19,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -258,18 +257,15 @@ fun ExampleListItem(
         if (BuildConfig.DEBUG) {
             Surface(
                 modifier = Modifier
-                    .weight(weight = 0.25f, fill = false)
-                    .align(CenterVertically)
-                    .size(width = 45.dp, height = 18.dp),
-
+                    .align(CenterVertically),
                 shape = RoundedCornerShape(16.dp),
                 color = MaterialTheme.colorScheme.secondaryContainer
             ) {
                 val languageName = exampleLanguage.name.firstCharacterUpperCase()
 
                 Text(
-                    color = MaterialTheme.colorScheme.onSecondaryContainer,
-                    modifier = Modifier.alpha(AlphaDefs.half),
+                    color = MaterialTheme.colorScheme.onBackground,
+                    modifier = Modifier.padding(6.dp),
                     text = languageName,
                     style = MaterialTheme.typography.titleMedium,
                     textAlign = TextAlign.Center,

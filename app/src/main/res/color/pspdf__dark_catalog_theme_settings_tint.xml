@@ -6,8 +6,8 @@
   -->
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:color="@color/pspdf__color_black" android:state_activated="true" android:state_enabled="false" />
-    <item android:color="@color/pspdf__gray_70" android:state_activated="false" android:state_enabled="false" />
-    <item android:color="@color/pspdf__color_black" android:state_activated="true" />
+    <item android:color="@color/backgroundDark" android:state_activated="true" android:state_enabled="false" />
+    <item android:color="@color/surfaceBrightDark" android:state_activated="false" android:state_enabled="false" />
+    <item android:color="@color/backgroundDark" android:state_activated="true" />
     <item android:color="?colorAccent" />
 </selector>

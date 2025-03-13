@@ -47,7 +47,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|center"
         android:splitMotionEvents="false"
-        android:background="@color/color_primary"
         android:orientation="vertical">
 
         <ImageView

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<issues format="6" by="lint 8.7.2" type="baseline" client="gradle" dependencies="false" name="AGP (8.7.2)" variant="all" version="8.7.2">
+<issues format="6" by="lint 8.8.0" type="baseline" client="gradle" dependencies="false" name="AGP (8.8.0)" variant="all" version="8.8.0">
 
     <issue
         id="CheckResult"
@@ -30,7 +30,7 @@
         errorLine2="        ^">
         <location
             file="src/main/java/com/pspdfkit/catalog/examples/java/activities/CustomSearchUiActivity.java"
-            line="358"
+            line="353"
             column="9"/>
     </issue>
 
@@ -107,7 +107,7 @@
         errorLine2="                ^">
         <location
             file="src/main/AndroidManifest.xml"
-            line="106"
+            line="107"
             column="17"/>
     </issue>
 
@@ -118,7 +118,7 @@
         errorLine2="                ^">
         <location
             file="src/main/AndroidManifest.xml"
-            line="111"
+            line="112"
             column="17"/>
     </issue>
 
@@ -129,7 +129,7 @@
         errorLine2="                ^">
         <location
             file="src/main/AndroidManifest.xml"
-            line="116"
+            line="117"
             column="17"/>
     </issue>
 
@@ -140,7 +140,7 @@
         errorLine2="                ^">
         <location
             file="src/main/AndroidManifest.xml"
-            line="121"
+            line="122"
             column="17"/>
     </issue>
 
@@ -707,244 +707,13 @@
 
     <issue
         id="PrivateResource"
-        message="The resource `@color/pspdf__color_white` is marked as private in android:sdk-nutrient:unspecified"
-        errorLine1="            android:textColor=&quot;@color/pspdf__color_white&quot;"
-        errorLine2="                               ~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/custom_annotation_inspector.xml"
-            line="27"
-            column="32"/>
-    </issue>
-
-    <issue
-        id="PrivateResource"
-        message="The resource `@color/pspdf__color_black` is marked as private in android:sdk-nutrient:unspecified"
-        errorLine1="        &lt;item name=&quot;colorOnSecondary&quot;>@color/pspdf__color_black&lt;/item>"
-        errorLine2="                                      ~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/dark_theme.xml"
-            line="15"
-            column="39"/>
-    </issue>
-
-    <issue
-        id="PrivateResource"
-        message="The resource `@color/pspdf__color_black` is marked as private in android:sdk-nutrient:unspecified"
-        errorLine1="        &lt;item name=&quot;pspdf__backgroundColor&quot;>@color/pspdf__color_black&lt;/item>"
-        errorLine2="                                            ~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/dark_theme.xml"
-            line="63"
-            column="45"/>
-    </issue>
-
-    <issue
-        id="PrivateResource"
-        message="The resource `@color/pspdf__gray_70` is marked as private in android:sdk-nutrient:unspecified"
-        errorLine1="        &lt;item name=&quot;pspdf__borderColor&quot;>@color/pspdf__gray_70&lt;/item>"
-        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/dark_theme.xml"
-            line="64"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="PrivateResource"
-        message="The resource `@color/pspdf__gray_80` is marked as private in android:sdk-nutrient:unspecified"
-        errorLine1="        &lt;item name=&quot;pspdf__fontButtonsTintColor&quot;>@color/pspdf__gray_80&lt;/item>"
-        errorLine2="                                                 ~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/dark_theme.xml"
-            line="65"
-            column="50"/>
-    </issue>
-
-    <issue
-        id="PrivateResource"
-        message="The resource `@color/pspdf__gray_80` is marked as private in android:sdk-nutrient:unspecified"
-        errorLine1="        &lt;item name=&quot;pspdf__fontSmallButtonsTintColor&quot;>@color/pspdf__gray_80&lt;/item>"
-        errorLine2="                                                      ~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/dark_theme.xml"
-            line="66"
-            column="55"/>
-    </issue>
-
-    <issue
-        id="PrivateResource"
-        message="The resource `@color/pspdf__gray_70` is marked as private in android:sdk-nutrient:unspecified"
-        errorLine1="        &lt;item name=&quot;pspdf__fontButtonsTintColorChecked&quot;>@color/pspdf__gray_70&lt;/item>"
-        errorLine2="                                                        ~~~~~~~~~~~~~~~~~~~~~">
+        message="The resource `@color/pspdf__outlineDark` is marked as private in android:sdk-nutrient:unspecified"
+        errorLine1="        &lt;item name=&quot;pspdf__fontButtonsTintColorChecked&quot;>@color/pspdf__outlineDark&lt;/item>"
+        errorLine2="                                                        ~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/dark_theme.xml"
             line="67"
             column="57"/>
-    </issue>
-
-    <issue
-        id="PrivateResource"
-        message="The resource `@color/pspdf__gray_20` is marked as private in android:sdk-nutrient:unspecified"
-        errorLine1="        &lt;item name=&quot;pspdf__textColor&quot;>@color/pspdf__gray_20&lt;/item>"
-        errorLine2="                                      ~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/dark_theme.xml"
-            line="68"
-            column="39"/>
-    </issue>
-
-    <issue
-        id="PrivateResource"
-        message="The resource `@color/pspdf__gray_20` is marked as private in android:sdk-nutrient:unspecified"
-        errorLine1="        &lt;item name=&quot;pspdf__iconBorderColor&quot;>@color/pspdf__gray_20&lt;/item>"
-        errorLine2="                                            ~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/dark_theme.xml"
-            line="69"
-            column="45"/>
-    </issue>
-
-    <issue
-        id="PrivateResource"
-        message="The resource `@color/pspdf__gray_20` is marked as private in android:sdk-nutrient:unspecified"
-        errorLine1="        &lt;item name=&quot;pspdf__iconsColor&quot;>@color/pspdf__gray_20&lt;/item>"
-        errorLine2="                                       ~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/dark_theme.xml"
-            line="70"
-            column="40"/>
-    </issue>
-
-    <issue
-        id="PrivateResource"
-        message="The resource `@color/pspdf__color_signature_yellow` is marked as private in android:sdk-nutrient:unspecified"
-        errorLine1="        &lt;item name=&quot;pspdf__itemRippleBackgroundColor&quot;>@color/pspdf__color_signature_yellow&lt;/item>"
-        errorLine2="                                                      ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/dark_theme.xml"
-            line="175"
-            column="55"/>
-    </issue>
-
-    <issue
-        id="PrivateResource"
-        message="The resource `@color/pspdf__gray_20` is marked as private in android:sdk-nutrient:unspecified"
-        errorLine1="        &lt;item name=&quot;pspdf__titleTextColor&quot;>@color/pspdf__gray_20&lt;/item>"
-        errorLine2="                                           ~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/dark_theme.xml"
-            line="260"
-            column="44"/>
-    </issue>
-
-    <issue
-        id="PrivateResource"
-        message="The resource `@color/pspdf__gray_20` is marked as private in android:sdk-nutrient:unspecified"
-        errorLine1="        &lt;item name=&quot;pspdf__titleIconsColor&quot;>@color/pspdf__gray_20&lt;/item>"
-        errorLine2="                                            ~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/dark_theme.xml"
-            line="261"
-            column="45"/>
-    </issue>
-
-    <issue
-        id="PrivateResource"
-        message="The resource `@color/pspdf__blue_darkmode` is marked as private in android:sdk-nutrient:unspecified"
-        errorLine1="        &lt;item name=&quot;colorPrimary&quot;>@color/pspdf__blue_darkmode&lt;/item>"
-        errorLine2="                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/dark_theme.xml"
-            line="265"
-            column="35"/>
-    </issue>
-
-    <issue
-        id="PrivateResource"
-        message="The resource `@color/pspdf__blue_darkmode` is marked as private in android:sdk-nutrient:unspecified"
-        errorLine1="        &lt;item name=&quot;colorAccent&quot;>@color/pspdf__blue_darkmode&lt;/item>"
-        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/dark_theme.xml"
-            line="266"
-            column="34"/>
-    </issue>
-
-    <issue
-        id="PrivateResource"
-        message="The resource `@color/pspdf__color_black` is marked as private in android:sdk-nutrient:unspecified"
-        errorLine1="        &lt;item name=&quot;android:colorBackground&quot;>@color/pspdf__color_black&lt;/item>"
-        errorLine2="                                             ~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/dark_theme.xml"
-            line="267"
-            column="46"/>
-    </issue>
-
-    <issue
-        id="PrivateResource"
-        message="The resource `@color/pspdf__gray_70` is marked as private in android:sdk-nutrient:unspecified"
-        errorLine1="        &lt;item name=&quot;pspdf__settings_unselected_color&quot;>@color/pspdf__gray_70&lt;/item>"
-        errorLine2="                                                      ~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/dark_theme.xml"
-            line="268"
-            column="55"/>
-    </issue>
-
-    <issue
-        id="PrivateResource"
-        message="The resource `@color/pspdf__color_black` is marked as private in android:sdk-nutrient:unspecified"
-        errorLine1="    &lt;item android:color=&quot;@color/pspdf__color_black&quot; android:state_activated=&quot;true&quot; android:state_enabled=&quot;false&quot; />"
-        errorLine2="                         ~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/color/pspdf__dark_catalog_theme_settings_tint.xml"
-            line="9"
-            column="26"/>
-    </issue>
-
-    <issue
-        id="PrivateResource"
-        message="The resource `@color/pspdf__gray_70` is marked as private in android:sdk-nutrient:unspecified"
-        errorLine1="    &lt;item android:color=&quot;@color/pspdf__gray_70&quot; android:state_activated=&quot;false&quot; android:state_enabled=&quot;false&quot; />"
-        errorLine2="                         ~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/color/pspdf__dark_catalog_theme_settings_tint.xml"
-            line="10"
-            column="26"/>
-    </issue>
-
-    <issue
-        id="PrivateResource"
-        message="The resource `@color/pspdf__color_black` is marked as private in android:sdk-nutrient:unspecified"
-        errorLine1="    &lt;item android:color=&quot;@color/pspdf__color_black&quot; android:state_activated=&quot;true&quot; />"
-        errorLine2="                         ~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/color/pspdf__dark_catalog_theme_settings_tint.xml"
-            line="11"
-            column="26"/>
-    </issue>
-
-    <issue
-        id="PrivateResource"
-        message="The resource `@color/pspdf__color_white` is marked as private in android:sdk-nutrient:unspecified"
-        errorLine1="        &lt;item name=&quot;colorOnSecondary&quot;>@color/pspdf__color_white&lt;/item>"
-        errorLine2="                                      ~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/styles.xml"
-            line="34"
-            column="39"/>
-    </issue>
-
-    <issue
-        id="PrivateResource"
-        message="The resource `@color/pspdf__color_white` is marked as private in android:sdk-nutrient:unspecified"
-        errorLine1="        &lt;item name=&quot;pspdf__textColor&quot;>@color/pspdf__color_white&lt;/item>"
-        errorLine2="                                      ~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/styles.xml"
-            line="84"
-            column="39"/>
     </issue>
 
     <issue
@@ -960,44 +729,11 @@
 
     <issue
         id="VectorPath"
-        message="Very long vector path (1774 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector."
-        errorLine1="        android:pathData=&quot;M13.9846,12.6191L13.3522,10.7217L13.3522,10.7217L13.9846,12.6191ZM13.7078,12.7114L13.0754,10.814L13.0754,10.814L13.7078,12.7114ZM11.6041,10.2386L13.5015,10.871L11.6041,10.2386ZM12.5352,13.8093L11.121,15.2236L12.5352,16.6378L13.9494,15.2236L12.5352,13.8093ZM10.4139,11.688L8.9996,10.2738L7.5854,11.688L8.9996,13.1022L10.4139,11.688ZM18.5456,4.2634L19.9598,5.6776L22.7882,2.8492L21.374,1.435L18.5456,4.2634ZM13.3522,10.7217L13.0754,10.814L14.3403,14.6087L14.6171,14.5165L13.3522,10.7217ZM13.4092,11.1478L13.5015,10.871L9.7067,9.6061L9.6145,9.8829L13.4092,11.1478ZM12.0982,11.4179L11.121,12.3951L13.9494,15.2236L14.9266,14.2464L12.0982,11.4179ZM13.9494,12.3951L11.8281,10.2738L8.9996,13.1022L11.121,15.2236L13.9494,12.3951ZM11.8281,13.1022L12.8053,12.125L9.9768,9.2966L8.9996,10.2738L11.8281,13.1022ZM19.9598,4.2634L13.7431,10.4801L16.5715,13.3086L22.7882,7.0918L19.9598,4.2634ZM13.7431,10.4801L19.9598,4.2634L17.1314,1.435L10.9146,7.6517L13.7431,10.4801ZM9.6145,9.8829C9.6881,9.662 9.8122,9.4613 9.9768,9.2966L12.8053,12.125C13.0797,11.8506 13.2865,11.516 13.4092,11.1478L9.6145,9.8829ZM13.0754,10.814C12.7072,10.9367 12.3726,11.1435 12.0982,11.4179L14.9266,14.2464C14.7619,14.411 14.5612,14.5351 14.3403,14.6087L13.0754,10.814ZM14.6171,14.5165C15.3535,14.271 16.0226,13.8574 16.5715,13.3086L13.7431,10.4801C13.6333,10.5899 13.4995,10.6726 13.3522,10.7217L14.6171,14.5165ZM13.5015,10.871C13.5506,10.7237 13.6333,10.5899 13.7431,10.4801L10.9146,7.6517C10.3658,8.2006 9.9522,8.8697 9.7067,9.6061L13.5015,10.871ZM19.9598,5.6776C19.5693,5.2871 19.5693,4.6539 19.9598,4.2634L22.7882,7.0918C23.9598,5.9203 23.9598,4.0208 22.7882,2.8492L19.9598,5.6776ZM21.374,1.435C20.2024,0.2634 18.3029,0.2634 17.1314,1.435L19.9598,4.2634C19.5693,4.6539 18.9361,4.6539 18.5456,4.2634L21.374,1.435Z&quot;"
-        errorLine2="                          ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/drawable/ic_annotations.xml"
-            line="17"
-            column="27"/>
-    </issue>
-
-    <issue
-        id="VectorPath"
-        message="Very long vector path (2452 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector."
-        errorLine1="      android:pathData=&quot;M16.3867,12C16.4849,11.999 16.5802,12.0335 16.655,12.0972C16.7297,12.1609 16.7789,12.2495 16.7934,12.3467L17.0467,14.0467C17.3996,14.1408 17.7383,14.2821 18.0534,14.4667L19.4334,13.4467C19.5121,13.3878 19.6095,13.3593 19.7076,13.3667C19.8056,13.374 19.8977,13.4167 19.9667,13.4867L20.5134,14.0334C20.5834,14.1024 20.6261,14.1945 20.6334,14.2925C20.6408,14.3906 20.6124,14.488 20.5534,14.5667L19.5334,15.9467C19.718,16.2618 19.8593,16.6005 19.9534,16.9534L21.6534,17.2067C21.7506,17.2212 21.8392,17.2704 21.9029,17.3451C21.9666,17.4199 22.0012,17.5152 22.0001,17.6134V18.3867C22.0012,18.4849 21.9666,18.5802 21.9029,18.655C21.8392,18.7297 21.7506,18.7789 21.6534,18.7934L19.9534,19.0467C19.8593,19.3996 19.718,19.7383 19.5334,20.0534L20.5534,21.4334C20.6124,21.5121 20.6408,21.6095 20.6334,21.7076C20.6261,21.8056 20.5834,21.8977 20.5134,21.9667L19.9667,22.5134C19.8977,22.5834 19.8056,22.6261 19.7076,22.6334C19.6095,22.6408 19.5121,22.6124 19.4334,22.5534L18.0534,21.5334C17.7383,21.718 17.3996,21.8593 17.0467,21.9534L16.7934,23.6534C16.7789,23.7506 16.7297,23.8392 16.655,23.9029C16.5802,23.9666 16.4849,24.0012 16.3867,24.0001H15.6134C15.5152,24.0012 15.4199,23.9666 15.3451,23.9029C15.2704,23.8392 15.2212,23.7506 15.2067,23.6534L14.9534,21.9534C14.6005,21.8593 14.2618,21.718 13.9467,21.5334L12.5667,22.5534C12.488,22.6124 12.3906,22.6408 12.2925,22.6334C12.1945,22.6261 12.1024,22.5834 12.0334,22.5134L11.4867,22.0001C11.4167,21.931 11.374,21.839 11.3667,21.7409C11.3593,21.6429 11.3878,21.5455 11.4467,21.4667L12.4667,20.0534C12.2821,19.7383 12.1408,19.3996 12.0467,19.0467L10.3467,18.7934C10.2495,18.7789 10.1609,18.7297 10.0972,18.655C10.0335,18.5802 9.999,18.4849 10,18.3867V17.6134C9.999,17.5152 10.0335,17.4199 10.0972,17.3451C10.1609,17.2704 10.2495,17.2212 10.3467,17.2067L12.0467,16.9534C12.1408,16.6005 12.2821,16.2618 12.4667,15.9467L11.4467,14.5667C11.3781,14.4857 11.3439,14.3811 11.3514,14.2752C11.3588,14.1693 11.4074,14.0706 11.4867,14L12,13.4867C12.0691,13.4167 12.1611,13.374 12.2592,13.3667C12.3573,13.3593 12.4547,13.3878 12.5334,13.4467L13.9467,14.4667C14.2618,14.2821 14.6005,14.1408 14.9534,14.0467L15.2067,12.3467C15.2212,12.2495 15.2704,12.1609 15.3451,12.0972C15.4199,12.0335 15.5152,11.999 15.6134,12H16.3867ZM16.0001,20.0001C17.1047,20.0001 18.0001,19.1047 18.0001,18.0001C18.0001,16.8956 17.1047,16.0001 16.0001,16.0001C14.8956,16.0001 14.0001,16.8956 14.0001,18.0001C14.0001,19.1047 14.8956,20.0001 16.0001,20.0001Z&quot;"
-        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/drawable/ic_document_processing.xml"
-            line="13"
-            column="25"/>
-    </issue>
-
-    <issue
-        id="VectorPath"
         message="Very long vector path (2252 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector."
         errorLine1="      android:pathData=&quot;M15.8822,4.8221C14.6763,4.3189 13.3701,3.9967 12,3.9967C8.6301,3.9967 5.6468,5.9458 3.5915,7.7441C2.5467,8.6583 1.7006,9.5698 1.1157,10.2522C0.8227,10.5941 0.5936,10.8803 0.4363,11.0831C0.3577,11.1845 0.2968,11.2653 0.2549,11.3218C0.2339,11.35 0.2176,11.3723 0.2061,11.388L0.1925,11.4067L0.1885,11.4124L0.1866,11.4149C-0.0617,11.7626 -0.0621,12.2302 0.1863,12.5779L1,11.9967C0.1863,12.5779 0.1869,12.5789 0.1871,12.5792L0.1885,12.581L0.1925,12.5867L0.2061,12.6054C0.2176,12.6212 0.2339,12.6434 0.2549,12.6716C0.2968,12.7282 0.3577,12.8089 0.4363,12.9103C0.5936,13.1131 0.8227,13.3993 1.1157,13.7412C1.7006,14.4236 2.5467,15.3351 3.5915,16.2493C3.741,16.3801 3.8953,16.5116 4.0544,16.6432L5.476,15.2224C5.282,15.0651 5.0927,14.9053 4.9085,14.7441C3.9533,13.9083 3.1743,13.0698 2.6342,12.4397C2.4942,12.2762 2.3706,12.1273 2.2646,11.9967C2.3706,11.8661 2.4942,11.7172 2.6342,11.5537C3.1743,10.9236 3.9533,10.0851 4.9085,9.2493C6.8532,7.5476 9.3698,5.9967 12,5.9967C12.7895,5.9967 13.5687,6.1364 14.3254,6.3781L15.8822,4.8221ZM18.5208,8.7685L19.9416,7.3469C20.1021,7.4796 20.2578,7.6122 20.4085,7.7441C21.4533,8.6583 22.2993,9.5698 22.8842,10.2522C23.1773,10.5941 23.4064,10.8803 23.5637,11.0831C23.6423,11.1845 23.7031,11.2653 23.7451,11.3218C23.7661,11.35 23.7824,11.3723 23.7939,11.388L23.8075,11.4067L23.8115,11.4124L23.8129,11.4142C23.8131,11.4145 23.8137,11.4155 23,11.9967L23.8133,12.5785L23.8115,12.581L23.8075,12.5867L23.7939,12.6054C23.7824,12.6212 23.7661,12.6434 23.7451,12.6716C23.7031,12.7282 23.6423,12.8089 23.5637,12.9103C23.4064,13.1131 23.1773,13.3993 22.8842,13.7412C22.2993,14.4236 21.4533,15.3351 20.4085,16.2493C18.3532,18.0477 15.3698,19.9967 12,19.9967C10.6315,19.9967 9.3268,19.6753 8.1221,19.1731L9.6779,17.6164C10.4335,17.8574 11.2116,17.9967 12,17.9967C14.6301,17.9967 17.1468,16.4458 19.0915,14.7441C20.0467,13.9083 20.8256,13.0698 21.3657,12.4397C21.5058,12.2762 21.6294,12.1273 21.7354,11.9967C21.6294,11.8661 21.5058,11.7172 21.3657,11.5537C20.8256,10.9236 20.0467,10.0851 19.0915,9.2493C18.9063,9.0872 18.716,8.9266 18.5208,8.7685ZM23.8133,12.5785C23.8135,12.5782 23.8137,12.5779 23,11.9967L23.8137,11.4155C24.0621,11.7632 24.0617,12.2308 23.8133,12.5785ZM1,11.9967L0.1866,11.4149C0.1864,11.4152 0.1863,11.4155 1,11.9967Z&quot;"
         errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/drawable/ic_hide.xml"
-            line="7"
-            column="25"/>
-    </issue>
-
-    <issue
-        id="VectorPath"
-        message="Very long vector path (2296 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector."
-        errorLine1="      android:pathData=&quot;M5.5618,19.19C4.8398,19.19 4.1685,19.0443 3.5478,18.753C2.9272,18.449 2.4205,18.031 2.0278,17.499C1.8758,17.271 1.7998,17.0493 1.7998,16.834C1.7998,16.53 1.9202,16.2703 2.1608,16.055C2.4015,15.827 2.6485,15.713 2.9018,15.713C3.2312,15.713 3.5858,15.903 3.9658,16.283C4.2065,16.511 4.4535,16.6757 4.7068,16.777C4.9602,16.8657 5.2452,16.91 5.5618,16.91C5.9292,16.91 6.2775,16.815 6.6068,16.625C6.9488,16.435 7.2212,16.1817 7.4238,15.865C7.6265,15.5357 7.7278,15.1937 7.7278,14.839V6.859C7.7278,6.5297 7.8482,6.2573 8.0888,6.042C8.3295,5.814 8.6082,5.7 8.9248,5.7C9.2795,5.7 9.5645,5.8077 9.7798,6.023C9.9952,6.2383 10.1028,6.517 10.1028,6.859V14.839C10.1028,15.599 9.9002,16.3147 9.4948,16.986C9.0895,17.6573 8.5385,18.1957 7.8418,18.601C7.1452,18.9937 6.3852,19.19 5.5618,19.19ZM17.3232,19.19C16.4112,19.19 15.6006,19.076 14.8912,18.848C14.1819,18.62 13.5169,18.2337 12.8962,17.689C12.5542,17.385 12.3832,17.0493 12.3832,16.682C12.3832,16.3907 12.4909,16.1373 12.7062,15.922C12.9216,15.694 13.1812,15.58 13.4852,15.58C13.7259,15.58 13.9412,15.656 14.1312,15.808C14.6379,16.226 15.1319,16.53 15.6132,16.72C16.0946,16.91 16.6646,17.005 17.3232,17.005C18.0326,17.005 18.6406,16.8467 19.1472,16.53C19.6666,16.2133 19.9262,15.8207 19.9262,15.352C19.9262,14.782 19.6729,14.3387 19.1662,14.022C18.6596,13.6927 17.8552,13.4457 16.7532,13.281C13.9792,12.8757 12.5922,11.5837 12.5922,9.405C12.5922,8.607 12.8012,7.9167 13.2192,7.334C13.6372,6.7387 14.2072,6.289 14.9292,5.985C15.6512,5.6683 16.4556,5.51 17.3422,5.51C18.1402,5.51 18.8876,5.6303 19.5842,5.871C20.2936,6.1117 20.8826,6.4283 21.3512,6.821C21.7186,7.1123 21.9022,7.448 21.9022,7.828C21.9022,8.1193 21.7946,8.379 21.5792,8.607C21.3639,8.8223 21.1106,8.93 20.8192,8.93C20.6292,8.93 20.4582,8.873 20.3062,8.759C19.9769,8.493 19.5146,8.2523 18.9192,8.037C18.3366,7.809 17.8109,7.695 17.3422,7.695C16.5442,7.695 15.9236,7.847 15.4802,8.151C15.0496,8.4423 14.8342,8.8287 14.8342,9.31C14.8342,9.8547 15.0559,10.2663 15.4992,10.545C15.9552,10.8237 16.6646,11.0517 17.6272,11.229C18.7166,11.419 19.5842,11.666 20.2302,11.97C20.8889,12.2613 21.3829,12.6667 21.7122,13.186C22.0416,13.6927 22.2062,14.3703 22.2062,15.219C22.2062,16.017 21.9782,16.72 21.5222,17.328C21.0789,17.9233 20.4836,18.3857 19.7362,18.715C18.9889,19.0317 18.1846,19.19 17.3232,19.19Z&quot;"
-        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/drawable/ic_javascript.xml"
             line="7"
             column="25"/>
     </issue>
@@ -1158,83 +894,6 @@
 
     <issue
         id="UnusedResources"
-        message="The resource `R.color.gray_darker` appears to be unused"
-        errorLine1="    &lt;color name=&quot;gray_darker&quot;>#3D434E&lt;/color>"
-        errorLine2="           ~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/colors.xml"
-            line="14"
-            column="12"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.color.black_translucent` appears to be unused"
-        errorLine1="    &lt;color name=&quot;black_translucent&quot;>#64000000&lt;/color>"
-        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/colors.xml"
-            line="30"
-            column="12"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.color.dark_theme_orange` appears to be unused"
-        errorLine1="    &lt;color name=&quot;dark_theme_orange&quot;>#FFFCBF20&lt;/color>"
-        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/colors.xml"
-            line="41"
-            column="12"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.color.dark_annotation_menu_background` appears to be unused"
-        errorLine1="    &lt;color name=&quot;dark_annotation_menu_background&quot;>#142132&lt;/color>"
-        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/colors.xml"
-            line="43"
-            column="12"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.color.dialog_text_color` appears to be unused"
-        errorLine1="    &lt;color name=&quot;dialog_text_color&quot;>#FF212121&lt;/color>"
-        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/colors.xml"
-            line="65"
-            column="12"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.color.java_blue` appears to be unused"
-        errorLine1="    &lt;color name=&quot;java_blue&quot;>#DD007396&lt;/color>"
-        errorLine2="           ~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/colors.xml"
-            line="68"
-            column="12"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.color.java_orange` appears to be unused"
-        errorLine1="    &lt;color name=&quot;java_orange&quot;>#DDED8B00&lt;/color>"
-        errorLine2="           ~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/colors.xml"
-            line="69"
-            column="12"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
         message="The resource `R.dimen.activity_horizontal_margin` appears to be unused"
         errorLine1="    &lt;dimen name=&quot;activity_horizontal_margin&quot;>16dp&lt;/dimen>"
         errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
@@ -1290,6 +949,17 @@
 
     <issue
         id="UnusedResources"
+        message="The resource `R.dimen.pspdf__max_image_memory_ratio` appears to be unused"
+        errorLine1="    &lt;item tools:override=&quot;true&quot; name=&quot;pspdf__max_image_memory_ratio&quot; format=&quot;float&quot; type=&quot;dimen&quot; >0.35&lt;/item>"
+        errorLine2="                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/values/dimens.xml"
+            line="35"
+            column="33"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
         message="The resource `R.drawable.ic_java` appears to be unused"
         errorLine1="&lt;vector android:height=&quot;24dp&quot; android:viewportHeight=&quot;502.632&quot;"
         errorLine2="^">
@@ -1339,7 +1009,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="62"
+            line="64"
             column="13"/>
     </issue>
 
@@ -1350,7 +1020,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="63"
+            line="65"
             column="13"/>
     </issue>
 
@@ -1361,7 +1031,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="246"
+            line="252"
             column="13"/>
     </issue>
 
@@ -1372,7 +1042,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="293"
+            line="299"
             column="13"/>
     </issue>
 
@@ -1383,7 +1053,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="294"
+            line="300"
             column="13"/>
     </issue>
 
@@ -1394,7 +1064,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="295"
+            line="301"
             column="13"/>
     </issue>
 
@@ -1405,19 +1075,8 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="365"
+            line="372"
             column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.style.Theme_Catalog` appears to be unused"
-        errorLine1="    &lt;style name=&quot;Theme.Catalog&quot; parent=&quot;android:Theme.Material.Light.NoActionBar&quot; />"
-        errorLine2="           ~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/styles.xml"
-            line="9"
-            column="12"/>
     </issue>
 
     <issue
@@ -1427,7 +1086,7 @@
         errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/styles.xml"
-            line="23"
+            line="22"
             column="12"/>
     </issue>
 
@@ -1438,7 +1097,7 @@
         errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/styles.xml"
-            line="114"
+            line="113"
             column="12"/>
     </issue>
 
@@ -1449,7 +1108,7 @@
         errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/styles.xml"
-            line="121"
+            line="120"
             column="12"/>
     </issue>
 
@@ -1515,7 +1174,7 @@
         errorLine2="         ~~~~~~~~~">
         <location
             file="src/main/res/layout/activity_custom_fragment.xml"
-            line="53"
+            line="52"
             column="10"/>
     </issue>
 
@@ -1526,7 +1185,7 @@
         errorLine2="         ~~~~~~~~~">
         <location
             file="src/main/res/layout/activity_custom_fragment.xml"
-            line="61"
+            line="60"
             column="10"/>
     </issue>
 
@@ -1537,7 +1196,7 @@
         errorLine2="         ~~~~~~~~~">
         <location
             file="src/main/res/layout/activity_custom_fragment.xml"
-            line="69"
+            line="68"
             column="10"/>
     </issue>
 

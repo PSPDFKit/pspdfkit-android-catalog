@@ -134,8 +134,6 @@ public class CustomSearchUiActivity extends AppCompatActivity implements Adapter
             return;
         }
 
-        getWindow().getDecorView().setBackgroundColor(getColor(R.color.color_primary_dark));
-
         setSupportActionBar(toolbar);
 
         nextResultButton.setOnClickListener(v -> selectSearchResultAtIndex(selectedSearchResult + 1));

@@ -22,8 +22,8 @@ android {
         minSdk = 26
         targetSdk = compileSdk
 
-        versionName = "10.0.1"
-        versionCode = 141879
+        versionName = "10.1.0"
+        versionCode = 142256
 
         vectorDrawables {
             useSupportLibrary = true
@@ -69,30 +69,28 @@ dependencies {
 
     // Nutrient is integrated from the Nutrient Maven repository. See the `repositories` block at the beginning
     // of this file, which shows how to set up the repository in your app.
-    implementation("io.nutrient:nutrient:10.0.1")
+    implementation("io.nutrient:nutrient:10.1.0")
 
     // OCR library + English language pack.
-    implementation("io.nutrient:nutrient-ocr:10.0.1")
-    implementation("io.nutrient:nutrient-ocr-english:10.0.1")
+    implementation("io.nutrient:nutrient-ocr:10.1.0")
+    implementation("io.nutrient:nutrient-ocr-english:10.1.0")
 
 
     // Androidx
     implementation("androidx.datastore:datastore-preferences:1.1.1")
     implementation("androidx.fragment:fragment-ktx:1.8.1")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.8.3")
+    implementation("androidx.activity:activity-compose:1.9.3")
+    implementation("androidx.core:core-splashscreen:1.0.1")
 
     // Compose
-    implementation(platform("androidx.compose:compose-bom:2024.12.01"))
-    androidTestImplementation(platform("androidx.compose:compose-bom:2024.12.01"))
+    implementation(platform("androidx.compose:compose-bom:2025.01.01"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
     implementation("androidx.compose.material:material-icons-extended")
-    implementation("androidx.activity:activity-compose:1.9.3")
     implementation("androidx.compose.runtime:runtime-rxjava3")
-    implementation("androidx.core:core-splashscreen:1.0.1")
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
 
     // Picasso (image loading for inline galleries).
     implementation("com.squareup.picasso:picasso:2.5.2")
@@ -120,4 +118,20 @@ dependencies {
 
     // YouTube player (inline videos).
     implementation(files("libs/YouTubeAndroidPlayerApi.jar"))
+
+    // Markwon (Markdown rendering).
+    implementation("io.noties.markwon:core:4.6.2")
+    implementation("io.noties.markwon:html:4.6.2")
+    implementation("io.noties.markwon:linkify:4.6.2")
+    implementation("io.noties.markwon:ext-tables:4.6.2")
+    implementation("io.noties.markwon:ext-strikethrough:4.6.2")
+
+    // Socket.IO
+    implementation("io.socket:socket.io-client:2.1.1")
+
+    // Json Web Tokens
+    implementation("io.github.nefilim.kjwt:kjwt-core:0.9.0")
+    implementation("io.jsonwebtoken:jjwt-api:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
+    runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
 }

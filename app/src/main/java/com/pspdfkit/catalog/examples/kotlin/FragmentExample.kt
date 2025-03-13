@@ -174,7 +174,7 @@ class CustomFragmentActivity : AppCompatActivity(), DocumentListener, OnDocument
             setImageDrawable(
                 tintDrawable(
                     openThumbnailGridButton.drawable,
-                    ContextCompat.getColor(this@CustomFragmentActivity, R.color.white)
+                    ContextCompat.getColor(this@CustomFragmentActivity, com.pspdfkit.R.color.pspdf__onPrimary)
                 )
             )
             setOnClickListener {
@@ -212,7 +212,7 @@ class CustomFragmentActivity : AppCompatActivity(), DocumentListener, OnDocument
             setImageDrawable(
                 tintDrawable(
                     openOutlineButton.drawable,
-                    ContextCompat.getColor(this@CustomFragmentActivity, R.color.white)
+                    ContextCompat.getColor(this@CustomFragmentActivity, com.pspdfkit.R.color.pspdf__onPrimary)
                 )
             )
             setOnClickListener {
@@ -259,7 +259,7 @@ class CustomFragmentActivity : AppCompatActivity(), DocumentListener, OnDocument
             setImageDrawable(
                 tintDrawable(
                     drawable,
-                    ContextCompat.getColor(this@CustomFragmentActivity, R.color.white)
+                    ContextCompat.getColor(this@CustomFragmentActivity, com.pspdfkit.R.color.pspdf__onPrimary)
                 )
             )
             setOnClickListener {

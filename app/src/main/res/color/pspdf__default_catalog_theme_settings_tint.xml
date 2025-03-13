@@ -7,7 +7,7 @@
 
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:color="?android:attr/colorBackground" android:state_activated="true" android:state_enabled="false" />
-    <item android:color="@color/gray_light" android:state_activated="false" android:state_enabled="false" />
+    <item android:color="@color/outlineVariantLight" android:state_activated="false" android:state_enabled="false" />
     <item android:color="?android:attr/colorBackground" android:state_activated="true" />
-    <item android:color="@color/color_primary" />
+    <item android:color="?colorPrimary" />
 </selector>

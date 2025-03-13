@@ -6,65 +6,34 @@
   -->
 
 <resources>
-    <!-- Elementary -->
-    <color name="white">#FFFFFF</color>
-    <color name="white_50">#7FFFFFFF</color>
-    <color name="black">#000000</color>
-    <color name="gray_dark">#7E7E7E</color>
-    <color name="gray_darker">#3D434E</color>
-    <color name="gray">#A8A8A8</color>
-    <color name="gray_light">#D7DCE4</color>
-    <color name="red_light">#EF5350</color>
-    <color name="teal">#1DE9B6</color>
+    <color name="primaryLight">#FF834C76</color>
+    <color name="onPrimaryLight">#FFFFFFFF</color>
+    <color name="primaryContainerLight">#FFDE9DCC</color>
+    <color name="onPrimaryContainerLight">#FF65325A</color>
+    <color name="secondaryLight">#FF256B38</color>
+    <color name="onSecondaryLight">#FFFFFFFF</color>
+    <color name="backgroundLight">#FFFFF7F9</color>
+    <color name="surfaceLight">#FFFDF8F7</color>
+    <color name="outlineVariantLight">#FFCEC5BC</color>
 
-    <!-- Light theme -->
-    <color name="color_primary">#4537DE</color>
-    <color name="color_primary_dark">#2B1CC1</color>
-    <color name="color_secondary_dark">#0F1F31</color>
 
-    <!-- Dark theme -->
-    <color name="dark">#28313E</color>
-    <color name="dark_blueish">#051628</color>
-    <color name="grayer_blueish">#142132</color>
-    <color name="dark_translucent">#c8000000</color>
-    <color name="black_translucent">#64000000</color>
-    <color name="dark_accent">@color/white</color>
-    <color name="dark_secondary">#929EF3</color>
-    <color name="fab_gray">#8F9BF4</color>
-
-    <color name="dark_status_bar">@color/grayer_blueish</color>
-    <color name="dark_background_color">@color/dark_blueish</color>
-    <color name="dark_background_color_secondary">@color/dark_blueish</color>
-    <color name="dark_selection_text">#363D42</color>
-    <color name="dark_selection_background">@color/dark_accent</color>
-    <color name="dark_scrollbars">#99D2ED4F</color>
-    <color name="dark_theme_orange">#FFFCBF20</color>
-
-    <color name="dark_annotation_menu_background">#142132</color>
-
-    <color name="dark_drag_target">#D32F2F</color>
-    <color name="list_divider_light">#55000000</color>
-
-    <color name="dark_text_selection_highlight">#99D2EDAA</color>
-    <color name="dark_text_selection_left_handle">#99D2EDAA</color>
-    <color name="dark_text_selection_right_handle">#99D2EDAA</color>
-
-    <color name="dark_document_info_item_title_text">@color/gray</color>
-    <color name="dark_document_info_item_value_text">@color/gray_light</color>
-    <color name="dark_document_info_item_value_hint_text">@color/gray_dark</color>
-
-    <!-- Search results -->
-    <color name="search_result_highlight_border_color">#89000000</color>
-
-    <!-- Signatures -->
-    <color name="signature_black">#000000</color>
-    <color name="signature_blue">#0066FF</color>
-    <color name="signature_red">#CC0000</color>
-
-    <!-- Text color -->
-    <color name="dialog_text_color">#FF212121</color>
-    <color name="error">#FF4015</color>
-
-    <color name="java_blue">#DD007396</color>
-    <color name="java_orange">#DDED8B00</color>
+    <color name="primaryDark">#FFFCB8E8</color>
+    <color name="onPrimaryDark">#FF4E1E45</color>
+    <color name="primaryContainerDark">#FFDE9DCC</color>
+    <color name="onPrimaryContainerDark">#FF65325A</color>
+    <color name="secondaryDark">#FF8ED798</color>
+    <color name="onSecondaryDark">#FF003915</color>
+    <color name="secondaryContainerDark">#FF6EB579</color>
+    <color name="tertiaryContainerDark">#FFF0C968</color>
+    <color name="errorDark">#FFFFB4A6</color>
+    <color name="onErrorDark">#FF660700</color>
+    <color name="errorContainerDark">#FFF56047</color>
+    <color name="backgroundDark">#FF171215</color>
+    <color name="onBackgroundDark">#FFEAE0E4</color>
+    <color name="surfaceDark">#FF141313</color>
+    <color name="onSurfaceDark">#FFE5E2E1</color>
+    <color name="onSurfaceVariantDark">#FFCEC5BC</color>
+    <color name="outlineDark">#FF988F87</color>
+    <color name="inverseOnSurfaceDark">#FF313030</color>
+    <color name="surfaceBrightDark">#FF3A3938</color>
 </resources>

@@ -5,7 +5,7 @@
   ~   Please see License for details. This notice may not be removed from this file.
   -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
@@ -30,4 +30,7 @@
     <dimen name="pspdf__thumbnailGridFilterPickerViewSelectionPadding">8dp</dimen>
     <dimen name="pspdf__thumbnailGridFilterPickerViewSelectionSpacing">4dp</dimen>
     <dimen name="pspdf__thumbnailGridFilterPickerViewElevation">4dp</dimen>
+
+    <!--overriding the value of pspdf__max_image_memory_ratio to 0.35-->
+    <item tools:override="true" name="pspdf__max_image_memory_ratio" format="float" type="dimen" >0.35</item>
 </resources>

@@ -20,17 +20,17 @@
         We'll probably move our catalog themes to material components theme sometime down the road and this workaround will be removed.
     -->
     <style name="PSPDFCatalog.Theme.MainActivity" parent="Theme.MaterialComponents.Light">
-        <item name="colorPrimary">@color/color_primary</item>
-        <item name="colorPrimaryDark">@color/color_primary_dark</item>
-        <item name="colorAccent">@color/color_primary_dark</item>
+        <item name="colorPrimary">@color/primaryLight</item>
+        <item name="colorPrimaryDark">@color/onPrimaryContainerLight</item>
+        <item name="colorAccent">@color/onPrimaryContainerLight</item>
     </style>
 
     <style name="PSPDFCatalog.Theme" parent="PSPDFKit.Theme.Default">
-        <item name="colorPrimary">@color/color_primary</item>
-        <item name="colorPrimaryDark">@color/color_primary_dark</item>
-        <item name="colorAccent">@color/color_primary_dark</item>
-        <item name="colorSecondary">@color/color_secondary_dark</item>
-        <item name="colorOnSecondary">@color/pspdf__color_white</item>
+        <item name="colorPrimary">@color/primaryLight</item>
+        <item name="colorPrimaryDark">@color/onPrimaryContainerLight</item>
+        <item name="colorAccent">@color/onPrimaryContainerLight</item>
+        <item name="colorSecondary">@color/secondaryLight</item>
+        <item name="colorOnSecondary">@color/onSecondaryLight</item>
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -42,7 +42,7 @@
         <item name="pspdf__actionBarIconsStyle">@style/PSPDFCatalog.Theme.ActionBarIconsStyle</item>
         <item name="pspdf__settingsModePickerItemStyle">@style/PSPDFCatalog.Theme.SettingsModePickerItemStyle</item>
 
-        <item name="pspdf__backgroundColor">@color/gray_light</item>
+        <item name="pspdf__backgroundColor">@color/surfaceLight</item>
         <item name="pspdf__outlineViewStyle">@style/PSPDFKit.OutlineView</item>
         <item name="pspdf__inlineSearchStyle">@style/PSPDFKit.SearchViewInline</item>
         <item name="pspdf__modularSearchStyle">@style/PSPDFKit.SearchViewModular</item>
@@ -73,22 +73,26 @@
     <style name="PSPDFCatalog.SettingsDialog" parent="PSPDFKit.SettingsDialog" />
 
     <style name="PSPDFCatalog.Theme.ToolbarPopupTheme" parent="@style/PSPDFKit.ToolbarPopupTheme">
-        <item name="android:colorBackground">@color/color_primary_dark</item>
+        <item name="android:colorBackground">@color/primaryLight</item>
     </style>
 
-    <style name="PSPDFCatalog.TabBar" parent="PSPDFKit.TabBar"/>
+    <style name="PSPDFCatalog.TabBar" parent="PSPDFKit.TabBar">
+        <item name="pspdf__tabIndicatorColor">#9C7B96</item>
+        <item name="pspdf__tabTextColorSelected">@color/onPrimaryLight</item>
+        <item name="pspdf__tabIconColorSelected">@color/onPrimaryLight</item>
+    </style>
 
     <style name="PSPDFCatalog.Theme.MainToolbarStyle">
         <item name="pspdf__backgroundColor">?colorPrimary</item>
-        <item name="pspdf__textColor">@color/pspdf__color_white</item>
+        <item name="pspdf__textColor">@color/onPrimaryLight</item>
 
         <item name="pspdf__toolbarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
         <item name="pspdf__toolbarPopupTheme">@style/PSPDFCatalog.Theme.ToolbarPopupTheme</item>
     </style>
 
     <style name="PSPDFCatalog.Theme.ActionBarIconsStyle" parent="PSPDFKit.ActionBarIcons">
-        <item name="pspdf__iconsColor">@color/white</item>
-        <item name="pspdf__iconsColorActivated">@color/white_50</item>
+        <item name="pspdf__iconsColor">@color/onPrimaryLight</item>
+        <item name="pspdf__iconsColorActivated">@color/primaryContainerLight</item>
     </style>
 
     <style name="PSPDFCatalog.Theme.SettingsModePickerItemStyle">
@@ -99,20 +103,16 @@
         <item name="android:windowTranslucentStatus">false</item>
     </style>
 
-    <style name="PSPDFCatalog.Theme.Light.CustomisedLoadingView">
-        <item name="pspdf__loading_view_background_color">@color/color_primary</item>
-    </style>
-
     <style name="PSPDFCatalog.Theme.MediaView">
         <item name="android:windowIsTranslucent">false</item>
-        <item name="android:windowBackground">@color/black</item>
+        <item name="android:windowBackground">@color/backgroundLight</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowNoTitle">true</item>
     </style>
 
     <style name="PSPDFCatalog.Theme.PageCreator">
         <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowBackground">@color/black_translucent</item>
+        <item name="android:windowBackground">@color/backgroundLight</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowNoTitle">true</item>
     </style>
@@ -137,11 +137,18 @@
     </style>
 
     <style name="AnnotationSelectionExample.Theme" parent="PSPDFKit.Theme.Default">
-        <item name="colorPrimary">@color/color_primary</item>
-        <item name="colorPrimaryDark">@color/color_primary_dark</item>
-        <item name="colorAccent">@color/color_primary_dark</item>
-
+        <item name="colorPrimary">@color/primaryLight</item>
+        <item name="colorPrimaryDark">@color/onPrimaryContainerLight</item>
+        <item name="colorAccent">@color/primaryLight</item>
+        <item name="colorSecondary">@color/secondaryLight</item>
         <item name="pspdf__annotationSelectionStyle">@style/AnnotationSelectionCustomization</item>
+    </style>
+
+    <style name="PSPDFCatalog.AIAssistantDialog" parent="PSPDFCatalog.Theme">
+        <item name="pspdf__aiAssistantDialogStyle">@style/AIAssistantDialog</item>
+    </style>
+
+    <style name="AIAssistantDialog" parent="PSPDFKit.AIAssistantDialog">
     </style>
 
     <style name="AnnotationSelectionCustomization" parent="PSPDFKit.AnnotationSelection">
@@ -152,7 +159,7 @@
         <item name="pspdf__backgroundDrawable">@drawable/annotation_selection_background</item>
 
         <!-- Setting this to `@android:color/transparent` will make the rotation handle line disappear. -->
-        <item name="pspdf__borderColor">@color/color_primary</item>
+        <item name="pspdf__borderColor">@color/primaryLight</item>
     </style>
 
     <style name="PSPDFKit.AnnotationCreationToolbarIcons.ConstructionExample" parent="PSPDFKit.AnnotationCreationToolbarIcons">

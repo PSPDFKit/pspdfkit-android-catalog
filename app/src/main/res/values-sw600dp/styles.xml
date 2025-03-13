@@ -8,9 +8,10 @@
 
 <resources>
 
-    <style name="PSPDFCatalog.Theme.MediaView" parent="PSPDFCatalog.Theme">
+<!--    <style name="PSPDFCatalog.Theme.MediaView" parent="PSPDFCatalog.Theme">-->
+    <style name="PSPDFCatalog.Theme.MediaView">
         <item name="android:windowIsTranslucent">true</item>
-        <item name="android:windowBackground">@color/dark_translucent</item>
+<!--        <item name="android:windowBackground">@color/dark_translucent</item>-->
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowNoTitle">true</item>
     </style>

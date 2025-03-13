@@ -9,13 +9,10 @@ package com.pspdfkit.catalog.ui
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberDrawerState
@@ -25,9 +22,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalLayoutDirection
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.unit.LayoutDirection
-import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.ui.model.Action
 import com.pspdfkit.catalog.ui.model.Dispatcher
 import com.pspdfkit.catalog.ui.model.Page
@@ -45,10 +40,6 @@ fun TabletCatalog(
     dispatcher: Dispatcher
 ) {
     Scaffold(
-        modifier = Modifier
-            .background(color = colorResource(R.color.color_primary_dark))
-            .statusBarsPadding(),
-        containerColor = MaterialTheme.colorScheme.background,
         topBar = { CatalogAppBar(state, dispatcher, isTablet = true) }
     ) { paddingValues ->
         Box(Modifier.padding(paddingValues)) {

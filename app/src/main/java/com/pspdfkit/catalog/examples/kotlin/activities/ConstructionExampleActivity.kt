@@ -129,7 +129,7 @@ class ConstructionExampleActivity :
             )
         val mainToolbarIconsColor = a.getColor(
             com.pspdfkit.R.styleable.pspdf__ActionBarIcons_pspdf__iconsColor,
-            ContextCompat.getColor(this, R.color.white)
+            ContextCompat.getColor(this, com.pspdfkit.R.color.pspdf__onPrimary)
         )
         a.recycle()
 

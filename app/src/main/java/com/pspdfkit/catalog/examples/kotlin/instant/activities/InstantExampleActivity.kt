@@ -50,7 +50,7 @@ class InstantExampleActivity : InstantPdfActivity(), ActionMenuListener {
         this.documentDescriptor = documentDescriptor
 
         val a = theme.obtainStyledAttributes(null, com.pspdfkit.R.styleable.pspdf__ActionBarIcons, com.pspdfkit.R.attr.pspdf__actionBarIconsStyle, com.pspdfkit.R.style.PSPDFKit_ActionBarIcons)
-        mainToolbarIconsColor = a.getColor(com.pspdfkit.R.styleable.pspdf__ActionBarIcons_pspdf__iconsColor, ContextCompat.getColor(this, R.color.white))
+        mainToolbarIconsColor = a.getColor(com.pspdfkit.R.styleable.pspdf__ActionBarIcons_pspdf__iconsColor, ContextCompat.getColor(this, com.pspdfkit.R.color.pspdf__onPrimary))
         a.recycle()
 
         initCollaborateMenu()

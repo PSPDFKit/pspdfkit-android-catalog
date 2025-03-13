@@ -105,6 +105,8 @@ class PersistentAnnotationSidebarActivity : AppCompatActivity() {
             }
         }
 
+        window.setBackgroundDrawableResource(R.color.primaryLight)
+
         // Finally we can setup our PDF fragment.
         obtainPdfFragment()
     }

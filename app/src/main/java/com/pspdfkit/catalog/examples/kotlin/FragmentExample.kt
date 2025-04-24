@@ -20,6 +20,7 @@ import android.view.MotionEvent
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.viewModels
 import androidx.annotation.IntRange
 import androidx.annotation.UiThread
 import androidx.appcompat.app.AppCompatActivity
@@ -87,6 +88,8 @@ class CustomFragmentActivity : AppCompatActivity(), DocumentListener, OnDocument
     private lateinit var thumbnailGrid: PdfThumbnailGrid
     private lateinit var highlighter: SearchResultHighlighter
     private lateinit var pdfOutlineView: PdfOutlineView
+
+    private val viewModel: AnnotationCreationViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -286,14 +289,16 @@ class CustomFragmentActivity : AppCompatActivity(), DocumentListener, OnDocument
      */
     @UiThread
     override fun onDocumentLoaded(document: PdfDocument) {
-        fragment.addDocumentListener(modularSearchView)
-        thumbnailBar.setDocument(document, configuration)
-        modularSearchView.setDocument(document, configuration)
-        pdfOutlineView.setDocument(document, configuration)
-        thumbnailGrid.setDocument(document, configuration)
+        viewModel.createObjects {
+            fragment.addDocumentListener(modularSearchView)
+            thumbnailBar.setDocument(document, configuration)
+            modularSearchView.setDocument(document, configuration)
+            pdfOutlineView.setDocument(document, configuration)
+            thumbnailGrid.setDocument(document, configuration)
 
-        // Adding note annotation to populate Annotation section in PdfOutlineView
-        createNoteAnnotation()
+            // Adding note annotation to populate Annotation section in PdfOutlineView
+            createNoteAnnotation()
+        }
     }
 
     override fun onDocumentLongPress(

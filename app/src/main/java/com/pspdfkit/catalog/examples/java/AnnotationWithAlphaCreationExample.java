@@ -15,7 +15,7 @@ import android.net.Uri;
 import androidx.annotation.NonNull;
 import com.pspdfkit.catalog.R;
 import com.pspdfkit.catalog.SdkExample;
-import com.pspdfkit.catalog.examples.java.activities.AnnotationWithAlphaCreationActivity;
+import com.pspdfkit.catalog.examples.kotlin.activities.AnnotationWithAlphaCreationActivity;
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration;
 import com.pspdfkit.preferences.PSPDFKitPreferences;
 import com.pspdfkit.ui.PdfActivityIntentBuilder;

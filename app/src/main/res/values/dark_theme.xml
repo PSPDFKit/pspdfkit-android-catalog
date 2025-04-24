@@ -10,7 +10,7 @@
     <style name="PSPDFCatalog.Theme.Dark" parent="PSPDFKit.Theme.Dark">
         <item name="colorPrimary">@color/primaryDark</item>
         <item name="colorPrimaryDark">@color/onPrimaryDark</item>
-        <item name="colorAccent">@color/onPrimaryContainerDark</item>
+        <item name="colorAccent">@color/primaryDark</item>
         <item name="colorSecondary">@color/secondaryDark</item>
         <item name="colorOnSecondary">@color/onSecondaryDark</item>
 
@@ -24,7 +24,7 @@
         <!-- Default background color of PSPDFKit Views. PDF view background is controlled by a separate property pspdf__backgroundColor -->
         <item name="android:colorBackground">@color/surfaceDark</item>
         <!-- Default foreground color of PSPDFKit Views. -->
-        <item name="android:colorForeground">@color/surfaceDark</item>
+        <item name="android:colorForeground">@color/onBackgroundDark</item>
 
         <item name="pspdf__contextualToolbarStyle">@style/PSPDFCatalog.ContextualToolbar.Dark</item>
         <item name="pspdf__actionBarIconsStyle">@style/PSPDFCatalog.ActionBarIcons.Dark</item>
@@ -32,7 +32,7 @@
         <item name="pspdf__settingsModePickerItemStyle">@style/PSPDFCatalog.Theme.SettingsModePickerItemStyle.Dark</item>
 
         <item name="pspdf__backgroundColor">@color/surfaceDark</item>
-        <item name="pspdf__navigationHistoryIconColor">@color/onPrimaryDark</item>
+        <item name="pspdf__navigationHistoryIconColor">@color/primaryDark</item>
         <item name="pspdf__inlineSearchStyle">@style/PSPDFCatalog.SearchViewInline.Dark</item>
         <item name="pspdf__modularSearchStyle">@style/PSPDFCatalog.SearchViewModular.Dark</item>
         <item name="pspdf__thumbnailBarStyle">@style/PSPDFCatalog.ThumbnailBar.Dark</item>
@@ -55,6 +55,7 @@
         <item name="pspdf__annotationNoteHinterStyle">@style/PSPDFCatalog.AnnotationNoteHinter.Dark</item>
         <item name="pspdf__tabBarStyle">@style/PSPDFCatalog.TabBar.Dark</item>
         <item name="pspdf__measurementToolsStyle">@style/PSPDFCatalog.MeasurementTools.Dark</item>
+        <item name="pspdf__noteEditorStyle">@style/PSPDFKit.NoteEditorView.Dark</item>
         <item name="pspdf__popupToolbarStyle">@style/PSPDFCatalog.PopupToolbar.Dark</item>
         <item name="pspdf__contentEditingStylingBarStyle">@style/PSPDFKit.ContentEditingStylingBar.Dark</item>
     </style>
@@ -177,10 +178,10 @@
     </style>
 
     <style name="PSPDFCatalog.AnnotationSelection.Dark" parent="PSPDFKit.AnnotationSelection">
-        <item name="pspdf__borderColor">@color/primaryContainerDark</item>
+        <item name="pspdf__borderColor">@color/primaryDark</item>
         <item name="pspdf__borderWidth">2dp</item>
-        <item name="pspdf__scaleHandleColor">@color/backgroundDark</item>
-        <item name="pspdf__editHandleColor">@color/backgroundDark</item>
+        <item name="pspdf__scaleHandleColor">@color/primaryDark</item>
+        <item name="pspdf__editHandleColor">@color/onPrimaryContainerDark</item>
         <item name="pspdf__padding">24dp</item>
     </style>
 
@@ -202,6 +203,7 @@
         <item name="pspdf__backgroundColor">@color/backgroundDark</item>
         <item name="pspdf__textColor">@color/primaryDark</item>
         <item name="pspdf__modalDialogStyle">@style/PSPDFCatalog.ModalDialog.Dark</item>
+        <item name="pspdf__progressBackgroundTint">@color/primaryContainerDark</item>
     </style>
 
     <style name="PSPDFCatalog.ActionMenu.Dark" parent="PSPDFKit.ActionMenu">
@@ -257,7 +259,7 @@
         <item name="android:colorForeground">@color/onBackgroundDark</item>
     </style>
 
-    <style name="PSPDFCatalog.NewPageDialog.Dark" parent="ThemeOverlay.AppCompat">
+    <style name="PSPDFCatalog.NewPageDialog.Dark" parent="PSPDFKit.NewPageDialog.Dark">
         <item name="android:colorForeground">@color/onBackgroundDark</item>
     </style>
 
@@ -280,7 +282,7 @@
     </style>
 
     <style name="PSPDFCatalog.AnnotationNoteHinter.Dark" parent="PSPDFKit.AnnotationNoteHinter">
-        <item name="pspdf__noteHinterColor">@color/onSurfaceDark</item>
+        <item name="pspdf__noteHinterColor">@color/errorContainerDark</item>
         <item name="pspdf__useNoteHinterIntrinsicSize">false</item>
         <item name="pspdf__noteHinterWidth">24dp</item>
         <item name="pspdf__noteHinterHeight">24dp</item>

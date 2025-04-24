@@ -11,11 +11,11 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.RectF
 import android.net.Uri
+import androidx.activity.viewModels
 import androidx.annotation.UiThread
 import com.pspdfkit.annotations.FileAnnotation
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
-import com.pspdfkit.catalog.examples.java.activities.FileAnnotationCreationActivity
 import com.pspdfkit.catalog.tasks.ExtractAssetTask
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.document.PdfDocument
@@ -48,70 +48,75 @@ class FileAnnotationCreationExample(context: Context) : SdkExample(
 }
 
 class FileAnnotationCreationActivity : PdfActivity() {
+
+    private val viewModel: AnnotationCreationViewModel by viewModels()
+
     @UiThread
     override fun onDocumentLoaded(document: PdfDocument) {
-        val pageIndex = 0
+        viewModel.createObjects {
+            val pageIndex = 0
 
-        // Create file annotation with embedded pdf file.
-        // File description and modification date is optional.
-        val fileAnotation = FileAnnotation(
-            pageIndex,
-            RectF(180f, 692f, 212f, 660f),
-            EmbeddedFileSource(
-                AssetDataProvider("Annotations.pdf"),
-                "Annotations.pdf",
-                null
-            )
-        ).apply {
-            iconName = FileAnnotation.GRAPH
-            color = Color.GREEN
-        }
-        requirePdfFragment().addAnnotationToPage(fileAnotation, false)
+            // Create file annotation with embedded pdf file.
+            // File description and modification date is optional.
+            val fileAnotation = FileAnnotation(
+                pageIndex,
+                RectF(180f, 692f, 212f, 660f),
+                EmbeddedFileSource(
+                    AssetDataProvider("Annotations.pdf"),
+                    "Annotations.pdf",
+                    null
+                )
+            ).apply {
+                iconName = FileAnnotation.GRAPH
+                color = Color.GREEN
+            }
+            requirePdfFragment().addAnnotationToPage(fileAnotation, false)
 
-        // Create file annotation with embedded image file.
-        val imageFileAnnotation = FileAnnotation(
-            pageIndex,
-            RectF(244f, 692f, 276f, 660f),
-            EmbeddedFileSource(
-                AssetDataProvider("images/android.png"),
-                "android.png",
-                null
-            )
-        ).apply {
-            iconName = FileAnnotation.PAPERCLIP
-            color = Color.BLUE
-        }
-        requirePdfFragment().addAnnotationToPage(imageFileAnnotation, false)
+            // Create file annotation with embedded image file.
+            val imageFileAnnotation = FileAnnotation(
+                pageIndex,
+                RectF(244f, 692f, 276f, 660f),
+                EmbeddedFileSource(
+                    AssetDataProvider("images/android.png"),
+                    "android.png",
+                    null
+                )
+            ).apply {
+                iconName = FileAnnotation.PAPERCLIP
+                color = Color.BLUE
+            }
+            requirePdfFragment().addAnnotationToPage(imageFileAnnotation, false)
 
-        // Create file annotation with embedded video file.
-        val videoFileAnnotation = FileAnnotation(
-            pageIndex,
-            RectF(308f, 692f, 340f, 660f),
-            EmbeddedFileSource(
-                AssetDataProvider("media/videos/small.mp4"),
-                "small.mp4",
-                "Example of an annotation with embedded video file."
-            )
-        ).apply {
-            iconName = FileAnnotation.PUSH_PIN
-            color = Color.RED
-        }
-        requirePdfFragment().addAnnotationToPage(videoFileAnnotation, false)
+            // Create file annotation with embedded video file.
+            val videoFileAnnotation = FileAnnotation(
+                pageIndex,
+                RectF(308f, 692f, 340f, 660f),
+                EmbeddedFileSource(
+                    AssetDataProvider("media/videos/small.mp4"),
+                    "small.mp4",
+                    "Example of an annotation with embedded video file."
+                )
+            ).apply {
+                iconName = FileAnnotation.PUSH_PIN
+                color = Color.RED
+            }
+            requirePdfFragment().addAnnotationToPage(videoFileAnnotation, false)
 
-        // File source can also be directly specified as byte array with file's data.
-        // In this case we create file annotation from UTF-8 encoded string.
-        val textFileAnnotation = FileAnnotation(
-            pageIndex,
-            RectF(372f, 692f, 404f, 660f),
-            EmbeddedFileSource(
-                "Plain text data".toByteArray(),
-                "note.txt",
-                "Example of an annotation with embedded plain-text file."
-            )
-        ).apply {
-            iconName = FileAnnotation.TAG
-            color = Color.YELLOW
+            // File source can also be directly specified as byte array with file's data.
+            // In this case we create file annotation from UTF-8 encoded string.
+            val textFileAnnotation = FileAnnotation(
+                pageIndex,
+                RectF(372f, 692f, 404f, 660f),
+                EmbeddedFileSource(
+                    "Plain text data".toByteArray(),
+                    "note.txt",
+                    "Example of an annotation with embedded plain-text file."
+                )
+            ).apply {
+                iconName = FileAnnotation.TAG
+                color = Color.YELLOW
+            }
+            requirePdfFragment().addAnnotationToPage(textFileAnnotation, false)
         }
-        requirePdfFragment().addAnnotationToPage(textFileAnnotation, false)
     }
 }

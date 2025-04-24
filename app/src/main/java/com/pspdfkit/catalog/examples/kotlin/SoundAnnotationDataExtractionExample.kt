@@ -14,6 +14,7 @@ import android.net.Uri
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.annotation.UiThread
 import com.pspdfkit.annotations.SoundAnnotation
 import com.pspdfkit.annotations.sound.AudioExtractor
@@ -74,9 +75,13 @@ class SoundAnnotationDataExtractionExample(context: Context) : SdkExample(
  */
 class SoundAnnotationDataExtractionActivity : PdfActivity() {
 
+    private val viewModel: AnnotationCreationViewModel by viewModels()
+
     @UiThread
     override fun onDocumentLoaded(document: PdfDocument) {
-        createSoundAnnotation()
+        viewModel.createObjects {
+            createSoundAnnotation()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

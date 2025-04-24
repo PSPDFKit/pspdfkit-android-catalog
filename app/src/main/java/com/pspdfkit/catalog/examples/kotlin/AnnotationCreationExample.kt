@@ -14,6 +14,7 @@ import android.graphics.PointF
 import android.graphics.RectF
 import android.net.Uri
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.annotation.ColorInt
 import androidx.annotation.IntRange
 import androidx.annotation.UiThread
@@ -104,42 +105,46 @@ class AnnotationCreationExample(context: Context) : SdkExample(context, R.string
  */
 class AnnotationCreationActivity : PdfActivity() {
 
+    private val viewModel: AnnotationCreationViewModel by viewModels()
+
     @UiThread
     override fun onDocumentLoaded(document: PdfDocument) {
-        // We'll create all annotations on the first page of the document.
-        val pageIndex = 0
+        viewModel.createObjects {
+            // We'll create all annotations on the first page of the document.
+            val pageIndex = 0
 
-        // Highlight annotations can be used to highlight page text.
-        createHighlightAnnotation(pageIndex, "Nutrient", Color.YELLOW)
-        createHighlightAnnotation(pageIndex, "Welcome", Color.GREEN)
+            // Highlight annotations can be used to highlight page text.
+            createHighlightAnnotation(pageIndex, "Nutrient", Color.YELLOW)
+            createHighlightAnnotation(pageIndex, "Welcome", Color.GREEN)
 
-        // Notes are also supported. These come in 2 variants:
-        // Note annotations represent single textual stick it notes represented by an icon displayed on the page.
-        createNoteAnnotation(pageIndex)
-        // Compared to free-text annotation which text is displayed as part of the page.
-        createFreeTextAnnotation(pageIndex)
-        // Free-text annotations can also be accompanied with line pointing to content. PDF specification calls these callouts.
-        createFreeTextCallout(pageIndex)
+            // Notes are also supported. These come in 2 variants:
+            // Note annotations represent single textual stick it notes represented by an icon displayed on the page.
+            createNoteAnnotation(pageIndex)
+            // Compared to free-text annotation which text is displayed as part of the page.
+            createFreeTextAnnotation(pageIndex)
+            // Free-text annotations can also be accompanied with line pointing to content. PDF specification calls these callouts.
+            createFreeTextCallout(pageIndex)
 
-        // Ink annotations represent freehand drawing composed of multiple bezier lines.
-        // Note that editing of ink annotations is disabled inside the AnnotationCreationExample class.
-        // To edit ink annotations, add it to the list of editable types.
-        createInkAnnotation(pageIndex)
+            // Ink annotations represent freehand drawing composed of multiple bezier lines.
+            // Note that editing of ink annotations is disabled inside the AnnotationCreationExample class.
+            // To edit ink annotations, add it to the list of editable types.
+            createInkAnnotation(pageIndex)
 
-        // Annotations representing primitive shapes are also supported.
-        // These include lines, rectangles (square annotation), ellipses (circle annotation), polylines and polygons.
-        createCloudySquareAnnotation(pageIndex)
+            // Annotations representing primitive shapes are also supported.
+            // These include lines, rectangles (square annotation), ellipses (circle annotation), polylines and polygons.
+            createCloudySquareAnnotation(pageIndex)
 
-        // Stamp annotations are simple rectangular annotations.
-        createStamp(pageIndex)
+            // Stamp annotations are simple rectangular annotations.
+            createStamp(pageIndex)
 
-        // You can define custom appearance (AP stream) that should be used for the
-        // specific annotation instead of their default appearance.
-        createStampAnnotationWithCustomApStream(pageIndex)
+            // You can define custom appearance (AP stream) that should be used for the
+            // specific annotation instead of their default appearance.
+            createStampAnnotationWithCustomApStream(pageIndex)
 
-        // There are also multiple annotation types that can be used to embed more complex data
-        // to documents such as sound notes or embedded files.
-        createSoundAnnotation(pageIndex)
+            // There are also multiple annotation types that can be used to embed more complex data
+            // to documents such as sound notes or embedded files.
+            createSoundAnnotation(pageIndex)
+        }
     }
 
     private fun createHighlightAnnotation(

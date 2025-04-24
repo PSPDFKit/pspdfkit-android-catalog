@@ -14,6 +14,7 @@ import android.graphics.BitmapFactory
 import android.graphics.RectF
 import android.net.Uri
 import android.util.Log
+import androidx.activity.viewModels
 import com.pspdfkit.annotations.actions.UriAction
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
@@ -108,15 +109,18 @@ class FormCreationExample(context: Context) :
 
 class FormCreationActivity : PdfActivity() {
 
+    private val viewModel: AnnotationCreationViewModel by viewModels()
     private var getFormElementsDisposable: Disposable? = null
 
     override fun onDocumentLoaded(document: PdfDocument) {
         super.onDocumentLoaded(document)
 
-        // Retrieve existing form elements and create form fields only when there are no forms.
-        getFormElementsDisposable = document.formProvider.formElementsAsync.subscribe { formElements ->
-            if (formElements.isNotEmpty()) return@subscribe
-            createForms()
+        viewModel.createObjects {
+            // Retrieve existing form elements and create form fields only when there are no forms.
+            getFormElementsDisposable = document.formProvider.formElementsAsync.subscribe { formElements ->
+                if (formElements.isNotEmpty()) return@subscribe
+                createForms()
+            }
         }
     }
 

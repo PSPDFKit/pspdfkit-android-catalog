@@ -8,6 +8,7 @@
 package com.pspdfkit.catalog.examples.kotlin.ai
 
 import JwtGenerator
+import android.content.Context
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -20,12 +21,19 @@ import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -39,7 +47,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample.Companion.WELCOME_DOC
 import com.pspdfkit.catalog.ui.theming.CatalogTheme
@@ -56,18 +69,29 @@ import io.nutrient.data.models.AiAssistantConfiguration
 import io.nutrient.domain.ai.standaloneAiAssistant
 
 class AiAssistantComposeActivity : AppCompatActivity() {
-    private val ipAddress = "192.168.178.31" // ip address of the server running the AI Assistant
     private val sessionId = "my-test-session-id-1"
-
-    val assetProvider = AssetDataProvider(WELCOME_DOC)
+    private val assetProvider = AssetDataProvider(WELCOME_DOC)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
+        val preferences = getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
+        val ipAddressValue = preferences.getString(PREF_AI_IP_ADDRESS, "") ?: ""
+
         setContent {
             var enabled by remember { mutableStateOf(false) }
             var toolbarVisibility by remember { mutableStateOf(true) }
+
+            var ipAddress by remember {
+                // ip address of the server running the AI Assistant
+                mutableStateOf(ipAddressValue)
+            }
+
+            var isIpAddressDialogVisible by remember {
+                mutableStateOf(true)
+            }
+
             CatalogTheme {
                 val activityConfiguration = PdfActivityConfiguration.Builder(LocalContext.current)
                     .setAiAssistantEnabled(true)
@@ -78,29 +102,61 @@ class AiAssistantComposeActivity : AppCompatActivity() {
 
                 val documentState = rememberDocumentState(assetProvider, activityConfiguration)
 
-                Box(modifier = Modifier.fillMaxSize()) {
-                    DocumentView(
-                        documentState = documentState,
-                        documentManager = getDefaultDocumentManager(
-                            documentListener = DefaultListeners.documentListeners(
-                                onDocumentLoaded = {
-                                    it.setAiAssistant(createAiAssistant(it))
-                                    enabled = true
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .navigationBarsPadding()
+                ) {
+                    AnimatedVisibility(visible = isIpAddressDialogVisible) {
+                        IpAddressDialog(
+                            ipAddress = ipAddress,
+                            onIpAddressChanged = {
+                                if (it.isNotEmpty()) {
+                                    ipAddress = it
                                 }
-                            ),
-                            uiListener = DefaultListeners.uiListeners(
-                                onImmersiveModeEnabled = { toolbarVisibility = it }
+                            },
+                            onConfirm = {
+                                preferences.edit().putString(PREF_AI_IP_ADDRESS, ipAddress).apply()
+                                isIpAddressDialogVisible = false
+                            },
+                            onDismissRequest = {
+                                isIpAddressDialogVisible = false
+                            }
+                        )
+                    }
+                    AnimatedVisibility(visible = isIpAddressDialogVisible.not()) {
+                        DocumentView(
+                            documentState = documentState,
+                            documentManager = getDefaultDocumentManager(
+                                documentListener = DefaultListeners.documentListeners(
+                                    onDocumentLoaded = {
+                                        println("AIA onDocumentLoaded createAiAssistant")
+                                        it.setAiAssistant(
+                                            createAiAssistant(
+                                                pdfDocument = it,
+                                                ipAddress = ipAddress
+                                            )
+                                        )
+                                        enabled = true
+                                    }
+                                ),
+                                uiListener = DefaultListeners.uiListeners(
+                                    onImmersiveModeEnabled = { toolbarVisibility = it }
+                                )
                             )
                         )
-                    )
-                    CustomToolbar(documentState, enabled, toolbarVisibility)
+                        CustomToolbar(documentState, enabled, toolbarVisibility)
+                    }
                 }
             }
         }
     }
 
     @OptIn(ExperimentalStdlibApi::class)
-    fun createAiAssistant(pdfDocument: PdfDocument) = standaloneAiAssistant(
+    fun createAiAssistant(
+        pdfDocument: PdfDocument,
+        ipAddress: String
+    ) = standaloneAiAssistant(
         this@AiAssistantComposeActivity,
         AiAssistantConfiguration(
             "http://$ipAddress:4000",
@@ -118,6 +174,8 @@ class AiAssistantComposeActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_URI = "JetpackComposeImageActivity.DocumentUri"
+        const val PREFERENCES_NAME = "Nutrient.AiAssistant"
+        const val PREF_AI_IP_ADDRESS = "ai_ip_address"
     }
 }
 
@@ -186,6 +244,55 @@ fun CustomToolbar(
                 containerColor = MaterialTheme.colorScheme.primary,
                 titleContentColor = MaterialTheme.colorScheme.onPrimary
             )
+        )
+    }
+}
+
+@Composable
+fun IpAddressDialog(
+    modifier: Modifier = Modifier,
+    ipAddress: String,
+    onIpAddressChanged: (String) -> Unit,
+    onConfirm: () -> Unit,
+    onDismissRequest: () -> Unit
+) {
+    Box(modifier = modifier.fillMaxSize()) {
+        AlertDialog(
+            onDismissRequest = onDismissRequest,
+            confirmButton = {
+                TextButton(onClick = {
+                    onConfirm()
+                }) {
+                    Text(stringResource(R.string.ai_assistant_dialog_confirm_button))
+                }
+            },
+            text = {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Text(
+                        modifier = Modifier.padding(vertical = 10.dp),
+                        textAlign = TextAlign.Center,
+                        text = stringResource(R.string.ai_assistant_dialog_text),
+                        style = TextStyle(
+                            fontWeight = FontWeight.W500,
+                            fontSize = 17.sp
+                        )
+                    )
+
+                    TextField(
+                        modifier = Modifier.fillMaxWidth(),
+                        value = ipAddress,
+                        placeholder = {
+                            Text(
+                                text = stringResource(R.string.ai_assistant_dialog_textfield_placeholder)
+                            )
+                        },
+                        onValueChange = onIpAddressChanged
+                    )
+                }
+            }
         )
     }
 }

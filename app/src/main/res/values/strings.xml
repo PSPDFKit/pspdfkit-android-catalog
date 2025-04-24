@@ -397,5 +397,9 @@
     <string name="digitalSignatureTypePAdES">PAdES</string>
     <string name="signatureDialogDescription">Select the level of signature for the document.\nBasic = CMS standard digital signature\nPAdES = ETSI compliant advanced digital signature</string>
 
+    <!-- AIA example -->
+    <string name="ai_assistant_dialog_textfield_placeholder">Enter IP address here…</string>
+    <string name="ai_assistant_dialog_text">Please enter IP address of the server running AI Assistant</string>
+    <string name="ai_assistant_dialog_confirm_button">Continue</string>
 
 </resources>

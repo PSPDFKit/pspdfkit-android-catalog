@@ -51,6 +51,7 @@
         <item name="pspdf__searchResultHighlighterStyle">@style/PSPDFKit.SearchResultHighlighter</item>
         <item name="pspdf__annotationStyle">@style/PSPDFKit.Annotation</item>
         <item name="pspdf__annotationSelectionStyle">@style/PSPDFKit.AnnotationSelection</item>
+        <item name="pspdf__noteEditorStyle">@style/PSPDFKit.NoteEditorView</item>
         <item name="pspdf__annotationCreationToolbarIconsStyle">@style/PSPDFKit.AnnotationCreationToolbarIcons</item>
         <item name="pspdf__annotationEditingToolbarIconsStyle">@style/PSPDFKit.AnnotationEditingToolbarIcons</item>
         <item name="pspdf__textSelectionToolbarIconsStyle">@style/PSPDFKit.TextSelectionToolbarIcons</item>

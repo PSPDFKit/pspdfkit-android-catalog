@@ -10,7 +10,9 @@ package com.pspdfkit.catalog.examples.kotlin.activities
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.RectF
+import androidx.activity.viewModels
 import com.pspdfkit.annotations.StampAnnotation
+import com.pspdfkit.catalog.examples.kotlin.AnnotationCreationViewModel
 import com.pspdfkit.document.PdfDocument
 import com.pspdfkit.document.providers.InputStreamDataProvider
 import com.pspdfkit.ui.PdfActivity
@@ -26,46 +28,51 @@ import java.io.InputStream
  */
 class InstantJsonAttachmentExampleActivity : PdfActivity() {
 
+    private val viewModel: AnnotationCreationViewModel by viewModels()
+
     override fun onDocumentLoaded(document: PdfDocument) {
         super.onDocumentLoaded(document)
-        // Create a stamp annotation from an image bitmap.
-        val annotationBitmap = getBitmapFromAsset()
-        val stampAnnotation = StampAnnotation(
-            0,
-            RectF(100f, (annotationBitmap.height / 2) + 100f, (annotationBitmap.width / 2) + 100f, 100f),
-            annotationBitmap
-        )
 
-        // Add the stamp annotation to the document.
-        document.annotationProvider.addAnnotationToPage(stampAnnotation)
+        viewModel.createObjects {
+            // Create a stamp annotation from an image bitmap.
+            val annotationBitmap = getBitmapFromAsset()
+            val stampAnnotation = StampAnnotation(
+                0,
+                RectF(100f, (annotationBitmap.height / 2) + 100f, (annotationBitmap.width / 2) + 100f, 100f),
+                annotationBitmap
+            )
 
-        // Export START.
+            // Add the stamp annotation to the document.
+            document.annotationProvider.addAnnotationToPage(stampAnnotation)
 
-        // Convert annotation to instant JSON.
-        val jsonData = stampAnnotation.toInstantJson()
+            // Export START.
 
-        // Prepare a file to store the image attachment.
-        val tempBinaryAttachmentJsonFile = File.createTempFile("tmp_", "stampAnnotationBinaryJsonAttachment.jpeg")
-        val outputStream = FileOutputStream(tempBinaryAttachmentJsonFile)
+            // Convert annotation to instant JSON.
+            val jsonData = stampAnnotation.toInstantJson()
 
-        // Write the Instant JSON attachment data to the file.
-        if (stampAnnotation.hasBinaryInstantJsonAttachment()) {
-            stampAnnotation.fetchBinaryInstantJsonAttachment(outputStream)
+            // Prepare a file to store the image attachment.
+            val tempBinaryAttachmentJsonFile = File.createTempFile("tmp_", "stampAnnotationBinaryJsonAttachment.jpeg")
+            val outputStream = FileOutputStream(tempBinaryAttachmentJsonFile)
+
+            // Write the Instant JSON attachment data to the file.
+            if (stampAnnotation.hasBinaryInstantJsonAttachment()) {
+                stampAnnotation.fetchBinaryInstantJsonAttachment(outputStream)
+            }
+
+            // Save the JSON data in a file.
+            val tempJsonFile = File.createTempFile("tmp_", "stampAnnotationJson.txt")
+            FileWriter(tempJsonFile).use { w -> w.write(jsonData) }
+            // Export END.
+
+            // Let's remove the annotation to try the import feature.
+            document.annotationProvider.removeAnnotationFromPage(stampAnnotation)
+
+            // Import START.
+            val anotherStampAnnotation = document.annotationProvider.createAnnotationFromInstantJson(jsonData)
+
+            anotherStampAnnotation.attachBinaryInstantJsonAttachment(FileDataProvider(tempBinaryAttachmentJsonFile), "image/jpeg")
+            // Import END.
         }
-
-        // Save the JSON data in a file.
-        val tempJsonFile = File.createTempFile("tmp_", "stampAnnotationJson.txt")
-        FileWriter(tempJsonFile).use { w -> w.write(jsonData) }
-        // Export END.
-
-        // Let's remove the annotation to try the import feature.
-        document.annotationProvider.removeAnnotationFromPage(stampAnnotation)
-
-        // Import START.
-        val anotherStampAnnotation = document.annotationProvider.createAnnotationFromInstantJson(jsonData)
-
-        anotherStampAnnotation.attachBinaryInstantJsonAttachment(FileDataProvider(tempBinaryAttachmentJsonFile), "image/jpeg")
-        // Import END.
     }
 
     /** Decodes bitmap from application's assets. */

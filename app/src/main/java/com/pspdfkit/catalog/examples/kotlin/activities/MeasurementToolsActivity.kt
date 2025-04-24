@@ -11,6 +11,7 @@ import android.graphics.Color
 import android.graphics.PointF
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.annotation.UiThread
 import com.pspdfkit.annotations.Annotation
 import com.pspdfkit.annotations.AnnotationProvider
@@ -18,6 +19,7 @@ import com.pspdfkit.annotations.LineAnnotation
 import com.pspdfkit.annotations.measurements.MeasurementPrecision
 import com.pspdfkit.annotations.measurements.MeasurementValueConfiguration
 import com.pspdfkit.annotations.measurements.Scale
+import com.pspdfkit.catalog.examples.kotlin.AnnotationCreationViewModel
 import com.pspdfkit.document.PdfDocument
 import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.utils.PdfLog
@@ -27,6 +29,9 @@ import com.pspdfkit.utils.PdfLog
  * document when it's loaded.
  */
 class MeasurementToolsActivity : PdfActivity(), AnnotationProvider.OnAnnotationUpdatedListener {
+
+    private val viewModel: AnnotationCreationViewModel by viewModels()
+
     /** We hold a list of all the measurements created for this activity. */
     private val measurements: MutableList<Annotation> = mutableListOf()
 
@@ -39,44 +44,46 @@ class MeasurementToolsActivity : PdfActivity(), AnnotationProvider.OnAnnotationU
 
     @UiThread
     override fun onDocumentLoaded(document: PdfDocument) {
-        // If we know the scale of the page, we can create it programmatically.
-        val pageScale = Scale(1f, Scale.UnitFrom.CM, 1f, Scale.UnitTo.CM)
+        viewModel.createObjects {
+            // If we know the scale of the page, we can create it programmatically.
+            val pageScale = Scale(1f, Scale.UnitFrom.CM, 1f, Scale.UnitTo.CM)
 
-        // We can add a new measurement config with new scale and floating point precision of the document pages used by the measurement
-        // tool annotations using the measurementValueConfigurationEditor#add API.
-        // This will set the scale and precision for future measurements.
-        val measurementValueConfiguration = MeasurementValueConfiguration("Custom Scale", pageScale, MeasurementPrecision.EIGHTHS_INCH)
-        pdfFragment?.measurementValueConfigurationEditor?.add(measurementValueConfiguration, false)
+            // We can add a new measurement config with new scale and floating point precision of the document pages used by the measurement
+            // tool annotations using the measurementValueConfigurationEditor#add API.
+            // This will set the scale and precision for future measurements.
+            val measurementValueConfiguration = MeasurementValueConfiguration("Custom Scale", pageScale, MeasurementPrecision.EIGHTHS_INCH)
+            pdfFragment?.measurementValueConfigurationEditor?.add(measurementValueConfiguration, false)
 
-        // We can also make sure the new config is the selected one.
-        pdfFragment?.setSelectedMeasurementValueConfiguration(measurementValueConfiguration)
+            // We can also make sure the new config is the selected one.
+            pdfFragment?.setSelectedMeasurementValueConfiguration(measurementValueConfiguration)
 
-        // All the above work can be done by selecting the fab, when measurement tool is selected in the UI.
+            // All the above work can be done by selecting the fab, when measurement tool is selected in the UI.
 
-        // All the measurement configuration can be retrieved dynamically as well with
-        // measurementValueConfigurationEditor#measurementValueConfigurations API.
-        listAllMeasurementConfigurations(pdfFragment?.measurementValueConfigurationEditor?.configurations)
+            // All the measurement configuration can be retrieved dynamically as well with
+            // measurementValueConfigurationEditor#measurementValueConfigurations API.
+            listAllMeasurementConfigurations(pdfFragment?.measurementValueConfigurationEditor?.configurations)
 
-        // Similarly you can remove any configuration as well using
-        // measurementValueConfigurationEditor#remove API.
+            // Similarly you can remove any configuration as well using
+            // measurementValueConfigurationEditor#remove API.
 
-        // We can read the annotations to see if there are any measurements that we need to process...
-        for (page in 0 until document.pageCount) {
-            measurements.addAll(document.annotationProvider.getAnnotations(page).filter { it.isMeasurement })
+            // We can read the annotations to see if there are any measurements that we need to process...
+            for (page in 0 until document.pageCount) {
+                measurements.addAll(document.annotationProvider.getAnnotations(page).filter { it.isMeasurement })
+            }
+            // ... and process them.
+            processAllMeasurements()
+
+            // Let's create a distance measurement annotation programmatically.
+            val distanceMeasurement = LineAnnotation(
+                0, // Page number
+                PointF(56.693f, 460f), // Start point.
+                PointF(150f, 460f), // End point.
+                pageScale, // We can specify the scale. Let's use the same one set on the document.
+                MeasurementPrecision.THREE_DP // We can use a different precision for this measurement.
+            )
+            distanceMeasurement.color = Color.BLUE
+            pdfFragment?.addAnnotationToPage(distanceMeasurement, false)
         }
-        // ... and process them.
-        processAllMeasurements()
-
-        // Let's create a distance measurement annotation programmatically.
-        val distanceMeasurement = LineAnnotation(
-            0, // Page number
-            PointF(56.693f, 460f), // Start point.
-            PointF(150f, 460f), // End point.
-            pageScale, // We can specify the scale. Let's use the same one set on the document.
-            MeasurementPrecision.THREE_DP // We can use a different precision for this measurement.
-        )
-        distanceMeasurement.color = Color.BLUE
-        pdfFragment?.addAnnotationToPage(distanceMeasurement, false)
     }
 
     /** List up all measurement configurations in document. */

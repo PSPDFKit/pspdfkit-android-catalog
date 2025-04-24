@@ -232,12 +232,12 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.java.activities.AnnotationWithAlphaCreationActivity"
+            android:name=".examples.kotlin.activities.AnnotationWithAlphaCreationActivity"
             android:label="@string/annotationWithAlphaCreationExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.java.activities.FileAnnotationCreationActivity"
+            android:name=".examples.kotlin.FileAnnotationCreationActivity"
             android:label="@string/fileAnnotationCreationExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 

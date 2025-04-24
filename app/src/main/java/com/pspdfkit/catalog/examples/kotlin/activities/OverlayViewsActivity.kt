@@ -19,8 +19,10 @@ import android.view.MotionEvent
 import android.view.View
 import android.webkit.WebView
 import android.widget.TextView
+import androidx.activity.viewModels
 import com.pspdfkit.annotations.Annotation
 import com.pspdfkit.annotations.FreeTextAnnotation
+import com.pspdfkit.catalog.examples.kotlin.AnnotationCreationViewModel
 import com.pspdfkit.document.PdfDocument
 import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfFragment
@@ -29,6 +31,8 @@ import com.pspdfkit.ui.overlay.OverlayViewProvider
 
 // Suppress warnings about experimental classes.
 class OverlayViewsActivity : PdfActivity() {
+
+    private val viewModel: AnnotationCreationViewModel by viewModels()
 
     private lateinit var viewProvider: MyViewProvider
 
@@ -43,15 +47,17 @@ class OverlayViewsActivity : PdfActivity() {
     override fun onDocumentLoaded(document: PdfDocument) {
         super.onDocumentLoaded(document)
 
-        // We add a simple annotation to explain to users what to do.
-        val clickHereAnnotation = FreeTextAnnotation(
-            0,
-            RectF(50f, 900f, 350f, 700f),
-            "Tap Anywhere on The Page"
-        )
-        clickHereAnnotation.textSize = 48f
+        viewModel.createObjects {
+            // We add a simple annotation to explain to users what to do.
+            val clickHereAnnotation = FreeTextAnnotation(
+                0,
+                RectF(50f, 900f, 350f, 700f),
+                "Tap Anywhere on The Page"
+            )
+            clickHereAnnotation.textSize = 48f
 
-        document.annotationProvider.addAnnotationToPage(clickHereAnnotation)
+            document.annotationProvider.addAnnotationToPage(clickHereAnnotation)
+        }
     }
 
     override fun onPageClick(document: PdfDocument, pageIndex: Int, event: MotionEvent?, pagePosition: PointF?, clickedAnnotation: Annotation?): Boolean {

@@ -11,6 +11,7 @@ import android.content.Context
 import android.net.Uri
 import android.view.Menu
 import android.view.MenuItem
+import androidx.activity.viewModels
 import androidx.annotation.UiThread
 import com.pspdfkit.annotations.Annotation
 import com.pspdfkit.annotations.AnnotationType
@@ -71,16 +72,20 @@ class ZoomExampleActivity : PdfActivity() {
 
     private var annotationLoadingDisposable: Disposable? = null
 
+    private val viewModel: AnnotationCreationViewModel by viewModels()
+
     /**
      * Once the document is loaded, we extract all the annotations and put them into our list.
      * That way we can easily move forth and back between the annotations.
      */
     @UiThread
     override fun onDocumentLoaded(document: PdfDocument) {
-        annotationLoadingDisposable = document.annotationProvider
-            .getAllAnnotationsOfTypeAsync(EnumSet.allOf(AnnotationType::class.java))
-            .toList()
-            .subscribe { annotations -> documentAnnotations.addAll(annotations) }
+        viewModel.createObjects {
+            annotationLoadingDisposable = document.annotationProvider
+                .getAllAnnotationsOfTypeAsync(EnumSet.allOf(AnnotationType::class.java))
+                .toList()
+                .subscribe { annotations -> documentAnnotations.addAll(annotations) }
+        }
     }
 
     override fun onDestroy() {

@@ -9,9 +9,11 @@ package com.pspdfkit.catalog.examples.java.activities
 
 import android.graphics.RectF
 import android.net.Uri
+import androidx.activity.viewModels
 import com.pspdfkit.annotations.LinkAnnotation
 import com.pspdfkit.annotations.actions.UriAction
 import com.pspdfkit.catalog.examples.java.DynamicMultimediaAnnotationExample
+import com.pspdfkit.catalog.examples.kotlin.AnnotationCreationViewModel
 import com.pspdfkit.document.PdfDocument
 import com.pspdfkit.ui.PdfActivity
 import org.intellij.lang.annotations.Language
@@ -21,6 +23,9 @@ import java.io.File
  * This activity is part of the [DynamicMultimediaAnnotationExample] and shows how to dynamically add multimedia annotations to a PDF document.
  */
 class MultimediaAnnotationsActivity : PdfActivity() {
+
+    private val viewModel: AnnotationCreationViewModel by viewModels()
+
     companion object {
         /** This is the filesystem path of a video file we're going to dynamically add to the PDF document. */
         const val EXTRA_VIDEO_PATH = "videoPath"
@@ -29,11 +34,13 @@ class MultimediaAnnotationsActivity : PdfActivity() {
     override fun onDocumentLoaded(document: PdfDocument) {
         super.onDocumentLoaded(document)
 
-        // We add a video link to the first page.
-        addVideoAnnotation()
+        viewModel.createObjects {
+            // We add a video link to the first page.
+            addVideoAnnotation()
 
-        // We add a gallery link to the second page.
-        addGalleryAnnotation()
+            // We add a gallery link to the second page.
+            addGalleryAnnotation()
+        }
     }
 
     /**

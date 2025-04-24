@@ -13,6 +13,9 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentOnAttachListener
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.tasks.ExtractAssetTask.extract
@@ -29,6 +32,7 @@ import com.pspdfkit.signatures.getPrivateKeyEntryFromP12Stream
 import com.pspdfkit.signatures.listeners.OnSignaturePickedListener
 import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
+import com.pspdfkit.ui.PdfFragment
 import com.pspdfkit.ui.signatures.ElectronicSignatureFragment
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import java.io.File
@@ -73,13 +77,16 @@ class CombineElectronicSignaturesWithDigitalSigningExample(context: Context) :
  */
 class CombineElectronicSignaturesWithDigitalSigningActivity :
     PdfActivity(),
-    OnSignaturePickedListener {
+    OnSignaturePickedListener,
+    FragmentOnAttachListener {
 
     /** Name of the previously clicked signature form field (if any). Used to access it after a configuration change.  */
     private var signatureFormFieldName: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        supportFragmentManager.addFragmentOnAttachListener(this)
 
         // In case this activity is being recreated (e.g. during a configuration change), reattach
         // the activity as listener to the existing dialog. Calling restore() is safe, and won't do
@@ -93,6 +100,38 @@ class CombineElectronicSignaturesWithDigitalSigningActivity :
         }
     }
 
+    /**
+     * Intercept clicks on form elements so we can customize showing the signature picker.
+     *
+     * @param fragmentManager FragmentManager the fragment is now attached to. This will
+     * be the same FragmentManager that is returned by
+     * [Fragment.getParentFragmentManager].
+     * @param fragment Fragment that just received a callback to [Fragment.onAttach]
+     */
+    override fun onAttachFragment(
+        fragmentManager: FragmentManager,
+        fragment: Fragment
+    ) {
+        if (fragment is PdfFragment) {
+            fragment.addOnFormElementClickedListener { formElement ->
+                when (formElement.type) {
+                    FormType.SIGNATURE -> {
+                        val signatureFormElement = formElement as SignatureFormElement
+                        if (!signatureFormElement.isSigned) {
+                            onSignatureFormElementClicked(formElement)
+                            // By returning true, you intercept the event and prevent Nutrient from showing the signature picker itself.
+                            true
+                        } else {
+                            false
+                        }
+                    }
+                    // This click event is not interesting for us. Return false to let Nutrient handle this event.
+                    else -> false
+                }
+            }
+        }
+    }
+
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
 
@@ -100,27 +139,11 @@ class CombineElectronicSignaturesWithDigitalSigningActivity :
         outState.putString(STATE_FORM_FIELD_NAME, signatureFormFieldName)
     }
 
-    override fun onStart() {
-        super.onStart()
-
-        // We need to keep track of the form field name so we can retrieve it when digitally signing after the signature has been created
-        // in the Electronic Signature Dialog. The dialog is opened by Nutrient automatically when the signature form element is clicked.
-        // This behaviour can also be overridden here if required.
-        requirePdfFragment().addOnFormElementClickedListener { formElement ->
-            when (formElement.type) {
-                FormType.SIGNATURE -> {
-                    onSignatureFormElementClicked(formElement as SignatureFormElement)
-                    // By returning true, you intercept the event and prevent Nutrient from showing the signature picker itself.
-                    true
-                }
-                // This click event is not interesting for us. Return false to let Nutrient handle this event.
-                else -> false
-            }
-        }
-    }
-
     /**
-     * This callback handles showing the signature picker whenever a signature form element is clicked by the user.
+     * This callback handles showing the signature picker whenever an unsigned signature form element is clicked by the user.
+     * We need to keep track of the form field name so we can retrieve it when digitally signing after the signature has been created
+     * in the Electronic Signature Dialog. The dialog is opened by Nutrient automatically when the signature form element is clicked.
+     * This behaviour can also be overridden here if required.
      */
     private fun onSignatureFormElementClicked(formElement: SignatureFormElement) {
         // Keep reference of the stored signature form element so we can later on access it.

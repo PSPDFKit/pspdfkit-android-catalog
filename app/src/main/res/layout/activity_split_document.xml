@@ -11,7 +11,8 @@
               android:baselineAligned="false"
               android:divider="?dividerVertical"
               android:orientation="horizontal"
-              android:showDividers="middle">
+              android:showDividers="middle"
+              android:fitsSystemWindows="true">
 
     <FrameLayout
             android:id="@+id/fragmentContainer1"

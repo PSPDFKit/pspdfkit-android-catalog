@@ -9,7 +9,7 @@
 
     <style name="PSPDFCatalog.Theme.Dark" parent="PSPDFKit.Theme.Dark">
         <item name="colorPrimary">@color/primaryDark</item>
-        <item name="colorPrimaryDark">@color/onPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/surfaceDark</item>
         <item name="colorAccent">@color/primaryDark</item>
         <item name="colorSecondary">@color/secondaryDark</item>
         <item name="colorOnSecondary">@color/onSecondaryDark</item>
@@ -138,7 +138,7 @@
     <style name="PSPDFCatalog.OutlineView.Dark" parent="PSPDFKit.OutlineView">
         <item name="pspdf__backgroundColor">@color/surfaceDark</item>
         <item name="pspdf__defaultTextColor">@color/primaryContainerDark</item>
-        <item name="pspdf__bookmarksBarIconColor">@color/primaryContainerDark</item>
+        <item name="pspdf__bookmarksBarIconColor">@color/onPrimaryLight</item>
         <item name="pspdf__bookmarksGroupIndicatorIconColor">@color/primaryContainerDark</item>
         <item name="pspdf__navigationTabIconsColor">@color/primaryContainerDark</item>
         <item name="pspdf__navigationTabIconsColorSelected">@color/onPrimaryContainerDark</item>
@@ -149,7 +149,7 @@
         <item name="pspdf__documentInfoItemValueHintTextColor">@color/outlineDark</item>
         <item name="pspdf__documentInfoGroupIconColor">@color/primaryContainerDark</item>
         <item name="pspdf__documentInfoFabBackgroundColor">@color/onPrimaryDark</item>
-        <item name="pspdf__documentInfoFabIconColor">@color/primaryDark</item>
+        <item name="pspdf__documentInfoFabIconColor">@android:color/white</item>
         <item name="pspdf__annotationsDeleteIconColor">@android:color/white</item>
         <item name="pspdf__annotationsBarBackgroundColor">@color/onPrimaryContainerDark</item>
         <item name="pspdf__bookmarksBarBackgroundColor">@color/onPrimaryContainerDark</item>

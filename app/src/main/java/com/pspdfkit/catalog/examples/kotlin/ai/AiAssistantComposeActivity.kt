@@ -69,7 +69,7 @@ import io.nutrient.data.models.AiAssistantConfiguration
 import io.nutrient.domain.ai.standaloneAiAssistant
 
 class AiAssistantComposeActivity : AppCompatActivity() {
-    private val sessionId = "my-test-session-id-1"
+    private val sessionId = "my-test-session-id"
     private val assetProvider = AssetDataProvider(WELCOME_DOC)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -165,7 +165,7 @@ class AiAssistantComposeActivity : AppCompatActivity() {
                 claims = mapOf(
                     "document_ids" to listOf(pdfDocument.permanentId?.toHexString()),
                     "session_ids" to listOf(sessionId),
-                    "request_limit" to mapOf("requests" to 30, "time_period_s" to 1000 * 60)
+                    "request_limit" to mapOf("requests" to 160, "time_period_s" to 1000 * 60)
                 )
             ),
             sessionId

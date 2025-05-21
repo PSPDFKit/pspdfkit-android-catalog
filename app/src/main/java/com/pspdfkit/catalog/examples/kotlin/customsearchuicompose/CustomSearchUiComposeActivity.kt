@@ -12,14 +12,18 @@ import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.ui.Modifier
+import com.pspdfkit.catalog.ui.theming.CatalogTheme
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.configuration.activity.UserInterfaceViewMode
 import com.pspdfkit.jetpack.compose.interactors.DefaultListeners
@@ -43,43 +47,47 @@ class CustomSearchUiComposeActivity : AppCompatActivity() {
         highlighter = SearchResultHighlighter(this)
 
         setContent {
-            val searchQuery = viewModel.searchQuery
+            CatalogTheme {
+                val searchQuery = viewModel.searchQuery
 
-            Scaffold(
-                topBar = {
-                    TextField(
-                        value = searchQuery,
-                        onValueChange = viewModel::performSearch,
-                        modifier = Modifier.fillMaxWidth(),
-                        placeholder = { Text(text = "Search") }
-                    )
-                }
-            ) { paddingValues ->
+                Scaffold(
+                    modifier = Modifier.background(color = MaterialTheme.colorScheme.onPrimary)
+                        .statusBarsPadding(),
+                    topBar = {
+                        TextField(
+                            value = searchQuery,
+                            onValueChange = viewModel::performSearch,
+                            modifier = Modifier.fillMaxWidth(),
+                            placeholder = { Text(text = "Search") }
+                        )
+                    }
+                ) { paddingValues ->
 
-                val pdfActivityConfiguration = PdfActivityConfiguration
-                    .Builder(this)
-                    .setUserInterfaceViewMode(UserInterfaceViewMode.USER_INTERFACE_VIEW_MODE_HIDDEN)
-                    .build()
+                    val pdfActivityConfiguration = PdfActivityConfiguration
+                        .Builder(this)
+                        .setUserInterfaceViewMode(UserInterfaceViewMode.USER_INTERFACE_VIEW_MODE_HIDDEN)
+                        .build()
 
-                val documentState = rememberDocumentState(uri, pdfActivityConfiguration)
+                    val documentState = rememberDocumentState(uri, pdfActivityConfiguration)
 
-                Box(Modifier.padding(paddingValues)) {
-                    DocumentView(
-                        documentState = documentState,
-                        modifier = Modifier.fillMaxSize(),
-                        documentManager = getDefaultDocumentManager(
-                            documentListener = DefaultListeners.documentListeners(
-                                onDocumentLoaded = { document ->
-                                    viewModel.onDocumentLoaded(
-                                        document,
-                                        pdfActivityConfiguration.configuration,
-                                        documentState,
-                                        highlighter
-                                    )
-                                }
+                    Box(Modifier.padding(paddingValues)) {
+                        DocumentView(
+                            documentState = documentState,
+                            modifier = Modifier.fillMaxSize(),
+                            documentManager = getDefaultDocumentManager(
+                                documentListener = DefaultListeners.documentListeners(
+                                    onDocumentLoaded = { document ->
+                                        viewModel.onDocumentLoaded(
+                                            document,
+                                            pdfActivityConfiguration.configuration,
+                                            documentState,
+                                            highlighter
+                                        )
+                                    }
+                                )
                             )
                         )
-                    )
+                    }
                 }
             }
         }

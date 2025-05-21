@@ -12,21 +12,26 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.Button
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import com.pspdfkit.catalog.ui.theming.CatalogTheme
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.configuration.activity.UserInterfaceViewMode
 import com.pspdfkit.jetpack.compose.interactors.DefaultListeners
@@ -48,93 +53,108 @@ class JetpackComposeActivity : AppCompatActivity() {
         val uri = intent.getSupportParcelableExtra(EXTRA_URI, Uri::class.java)!!
 
         setContent {
-            val pdfActivityConfiguration = PdfActivityConfiguration
-                .Builder(this)
-                .setUserInterfaceViewMode(UserInterfaceViewMode.USER_INTERFACE_VIEW_MODE_HIDDEN)
-                .build()
+            CatalogTheme {
+                val pdfActivityConfiguration = PdfActivityConfiguration
+                    .Builder(this)
+                    .setUserInterfaceViewMode(UserInterfaceViewMode.USER_INTERFACE_VIEW_MODE_HIDDEN)
+                    .build()
 
-            val documentState = rememberDocumentState(uri, pdfActivityConfiguration)
+                val documentState = rememberDocumentState(uri, pdfActivityConfiguration)
 
-            var currentPage = pdfActivityConfiguration.page
+                var currentPage = pdfActivityConfiguration.page
 
-            Scaffold(
-                floatingActionButton = {
-                    FloatingActionButton(
-                        onClick = {
-                            documentState.documentConnection.save()
-                        }
-                    ) {
-                        Icon(imageVector = Icons.Default.Save, contentDescription = "save")
-                    }
-                },
-                bottomBar = {
-                    Row(
-                        horizontalArrangement = Arrangement.SpaceAround
-                    ) {
-                        Button(
+                Scaffold(
+                    modifier = Modifier
+                        .background(color = MaterialTheme.colorScheme.onPrimary)
+                        .statusBarsPadding()
+                        .navigationBarsPadding(),
+                    floatingActionButton = {
+                        FloatingActionButton(
                             onClick = {
-                                documentState.documentConnection.setPageIndex(
-                                    (currentPage - 1).coerceAtLeast(
-                                        0
-                                    )
-                                )
-                            },
-                            modifier = Modifier.padding(8.dp)
+                                documentState.documentConnection.save()
+                            }
                         ) {
-                            Text("Previous page")
+                            Icon(imageVector = Icons.Default.Save, contentDescription = "save")
                         }
-
-                        Spacer(modifier = Modifier.weight(1f))
-
-                        Button(
-                            onClick = {
-                                documentState.documentConnection.setPageIndex(
-                                    (currentPage + 1).coerceAtMost(
-                                        17
-                                    )
-                                )
-                            },
-                            modifier = Modifier.padding(8.dp)
+                    },
+                    bottomBar = {
+                        Row(
+                            horizontalArrangement = Arrangement.SpaceAround
                         ) {
-                            Text("Next page")
+                            Button(
+                                onClick = {
+                                    documentState.documentConnection.setPageIndex(
+                                        (currentPage - 1).coerceAtLeast(
+                                            0
+                                        )
+                                    )
+                                },
+                                modifier = Modifier.padding(8.dp)
+                            ) {
+                                Text("Previous page")
+                            }
+
+                            Spacer(modifier = Modifier.weight(1f))
+
+                            Button(
+                                onClick = {
+                                    documentState.documentConnection.setPageIndex(
+                                        (currentPage + 1).coerceAtMost(
+                                            17
+                                        )
+                                    )
+                                },
+                                modifier = Modifier.padding(8.dp)
+                            ) {
+                                Text("Next page")
+                            }
                         }
                     }
-                }
-            ) { paddingValues ->
-                Box(Modifier.padding(paddingValues)) {
-                    DocumentView(
-                        documentState = documentState,
-                        modifier = Modifier.fillMaxSize(),
-                        documentManager = getDefaultDocumentManager(
-                            documentListener = DefaultListeners.documentListeners(
-                                onDocumentLoaded = {
-                                    Log.e(TAG, "onDocumentLoaded ${it.title}")
-                                },
-                                onPageChanged = { document, page ->
-                                    currentPage = page
-                                    Log.e(TAG, "onPageChanged: ${document.title} - $page")
-                                },
-                                onDocumentSave = { document, _ ->
-                                    Log.e(TAG, "onDocumentSave ${document.title}")
-                                    true
-                                },
-                                onDocumentSaved = {
-                                    Log.e(TAG, "onDocumentSaved ${it.title}")
-                                },
-                                onDocumentZoomed = { document, pageIndex, scaleFactor ->
-                                    Log.e(TAG, "onDocumentZoomed: ${document.title}  $pageIndex $scaleFactor")
-                                }
-                            ),
-                            annotationListener = DefaultListeners.annotationListeners(
-                                onAnnotationSelected = { annotation, created ->
-                                    Log.e(TAG, "onAnnotationSelected: ${annotation.type.name} $created")
-                                },
-                                onAnnotationDeselected = { annotation, created ->
-                                    Log.e(TAG, "onAnnotationDeselected: ${annotation.type.name} $created")
-                                }
+                ) { paddingValues ->
+                    Box(Modifier.padding(paddingValues)) {
+                        DocumentView(
+                            documentState = documentState,
+                            modifier = Modifier.fillMaxSize(),
+                            documentManager = getDefaultDocumentManager(
+                                documentListener = DefaultListeners.documentListeners(
+                                    onDocumentLoaded = {
+                                        Log.e(TAG, "onDocumentLoaded ${it.title}")
+                                    },
+                                    onPageChanged = { document, page ->
+                                        currentPage = page
+                                        Log.e(TAG, "onPageChanged: ${document.title} - $page")
+                                    },
+                                    onDocumentSave = { document, _ ->
+                                        Log.e(TAG, "onDocumentSave ${document.title}")
+                                        true
+                                    },
+                                    onDocumentSaved = {
+                                        Log.e(TAG, "onDocumentSaved ${it.title}")
+                                    },
+                                    onDocumentZoomed = { document, pageIndex, scaleFactor ->
+                                        Log.e(
+                                            TAG,
+                                            "onDocumentZoomed: ${document.title}  $pageIndex $scaleFactor"
+                                        )
+                                    }
+                                ),
+                                annotationListener = DefaultListeners.annotationListeners(
+                                    onAnnotationSelected = { annotation, created ->
+                                        Log.e(
+                                            TAG,
+                                            "onAnnotationSelected: ${annotation.type.name} $created"
+                                        )
+                                    },
+                                    onAnnotationDeselected = { annotation, created ->
+                                        Log.e(
+                                            TAG,
+                                            "onAnnotationDeselected: ${annotation.type.name} $created"
+                                        )
+                                    }
+                                )
                             )
                         )
-                    )
+                    }
                 }
             }
         }

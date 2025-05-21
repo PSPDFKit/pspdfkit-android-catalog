@@ -112,7 +112,7 @@ class InstantExampleConnectionActivity : AppCompatActivity() {
         connectionDisposable?.dispose()
         connectionDisposable = apiClient.createNewDocument()
             .observeOn(AndroidSchedulers.mainThread())
-            .doOnError { progressDialog.dismiss() }
+            .doFinally { progressDialog.dismiss() }
             .subscribe({ documentDescriptor ->
                 showInstantDocument(documentDescriptor)
             }, { throwable: Throwable? ->

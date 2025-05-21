@@ -9,7 +9,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/drawerLayout"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
 
     <!-- Here, we simply include the default activity layout provided by PSPDFKit -->
     <include layout="@layout/pspdf__pdf_activity"/>

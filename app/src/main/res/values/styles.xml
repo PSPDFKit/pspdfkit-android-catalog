@@ -10,6 +10,7 @@
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
         <item name="windowSplashScreenBackground">@color/ic_launcher_background</item>
         <item name="postSplashScreenTheme">@style/PSPDFCatalog.Theme.Light</item>
+        <item name="android:colorBackground">@color/onPrimaryContainerLight</item>
     </style>
 
     <!--
@@ -31,7 +32,7 @@
         <item name="colorAccent">@color/onPrimaryContainerLight</item>
         <item name="colorSecondary">@color/secondaryLight</item>
         <item name="colorOnSecondary">@color/onSecondaryLight</item>
-
+        <item name="android:windowBackground">@color/onPrimaryContainerLight</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="windowActionModeOverlay">true</item>

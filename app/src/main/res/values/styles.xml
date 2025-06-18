@@ -58,7 +58,7 @@
         <item name="pspdf__textSelectionToolbarIconsStyle">@style/PSPDFKit.TextSelectionToolbarIcons</item>
         <item name="pspdf__documentEditingToolbarIconsStyle">@style/PSPDFKit.DocumentEditingToolbarIcons</item>
         <item name="pspdf__toolbarCoordinatorLayoutStyle">@style/PSPDFKit.ToolbarCoordinatorLayout</item>
-        <item name="pspdf__signatureLayoutStyle">@style/PSPDFKit.SignatureLayout</item>
+        <item name="pspdf__signatureLayoutStyle">@style/PSPDFCatalog.SignatureLayout</item>
         <item name="pspdf__passwordViewStyle">@style/PSPDFKit.PasswordView</item>
         <item name="pspdf__propertyInspectorStyle">@style/PSPDFKit.PropertyInspector</item>
         <item name="pspdf__actionMenuStyle">@style/PSPDFKit.ActionMenu</item>
@@ -73,6 +73,8 @@
     </style>
 
     <style name="PSPDFCatalog.SettingsDialog" parent="PSPDFKit.SettingsDialog" />
+
+    <style name="PSPDFCatalog.SignatureLayout" parent="PSPDFKit.SignatureLayout" />
 
     <style name="PSPDFCatalog.Theme.ToolbarPopupTheme" parent="@style/PSPDFKit.ToolbarPopupTheme">
         <item name="android:colorBackground">@color/primaryLight</item>

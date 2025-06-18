@@ -13,7 +13,6 @@ import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.examples.java.AnnotationFlagsExample
 import com.pspdfkit.catalog.examples.java.AnnotationOverlayExample
 import com.pspdfkit.catalog.examples.java.AnnotationSelectionCustomizationExample
-import com.pspdfkit.catalog.examples.java.AnnotationWithAlphaCreationExample
 import com.pspdfkit.catalog.examples.java.CustomAnnotationCreationToolbarExample
 import com.pspdfkit.catalog.examples.java.CustomAnnotationInspectorExample
 import com.pspdfkit.catalog.examples.java.CustomDocumentDownloadExample
@@ -43,10 +42,12 @@ import com.pspdfkit.catalog.examples.java.ToolbarsInFragmentExample
 import com.pspdfkit.catalog.examples.java.VerticalScrollbarExample
 import com.pspdfkit.catalog.examples.java.XfdfExample
 import com.pspdfkit.catalog.examples.java.decryption.AesEncryptedFileExample
+import com.pspdfkit.catalog.examples.kotlin.AiAssistantComposeExample
 import com.pspdfkit.catalog.examples.kotlin.AnnotationConfigurationExample
 import com.pspdfkit.catalog.examples.kotlin.AnnotationCreationExample
 import com.pspdfkit.catalog.examples.kotlin.AnnotationRenderingExample
 import com.pspdfkit.catalog.examples.kotlin.AnnotationSelectionViewStylingExample
+import com.pspdfkit.catalog.examples.kotlin.AnnotationWithAlphaCreationExample
 import com.pspdfkit.catalog.examples.kotlin.BookmarkHighlightingExample
 import com.pspdfkit.catalog.examples.kotlin.CombineElectronicSignaturesWithDigitalSigningExample
 import com.pspdfkit.catalog.examples.kotlin.ComposeExampleApp
@@ -58,6 +59,8 @@ import com.pspdfkit.catalog.examples.kotlin.CustomApplicationPolicyExample
 import com.pspdfkit.catalog.examples.kotlin.CustomDataProviderExample
 import com.pspdfkit.catalog.examples.kotlin.CustomFragmentRuntimeConfigurationExample
 import com.pspdfkit.catalog.examples.kotlin.CustomLayoutExample
+import com.pspdfkit.catalog.examples.kotlin.CustomSearchUiComposeExample
+import com.pspdfkit.catalog.examples.kotlin.CustomSignatureParseExample
 import com.pspdfkit.catalog.examples.kotlin.DarkThemeExample
 import com.pspdfkit.catalog.examples.kotlin.DefaultExample
 import com.pspdfkit.catalog.examples.kotlin.DigitalSignatureExample
@@ -117,8 +120,6 @@ import com.pspdfkit.catalog.examples.kotlin.UserInterfaceViewModesExample
 import com.pspdfkit.catalog.examples.kotlin.ViewPager2Example
 import com.pspdfkit.catalog.examples.kotlin.WatermarkExample
 import com.pspdfkit.catalog.examples.kotlin.ZoomExample
-import com.pspdfkit.catalog.examples.kotlin.ai.AiAssistantComposeExample
-import com.pspdfkit.catalog.examples.kotlin.customsearchuicompose.CustomSearchUiComposeExample
 import com.pspdfkit.catalog.examples.kotlin.instant.InstantExample
 
 fun getSectionsWithExamples(context: Context) = listOf(
@@ -215,7 +216,8 @@ fun getSectionsWithExamples(context: Context) = listOf(
         R.drawable.ic_signing,
         CombineElectronicSignaturesWithDigitalSigningExample(context),
         CustomElectronicSignatureExample(context),
-        SignatureStorageDatabaseExample(context)
+        SignatureStorageDatabaseExample(context),
+        CustomSignatureParseExample(context)
     ),
 
     SdkExample.Section(

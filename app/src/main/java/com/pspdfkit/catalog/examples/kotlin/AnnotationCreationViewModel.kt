@@ -13,7 +13,6 @@ import androidx.lifecycle.ViewModel
  * The purpose of this viewmodel is mainly to allow creating annotation only once upon configuration
  * change in onDocumentLoaded method.
  * This should be used in any place where we create/add annotations to page in onDocumentLoaded method to avoid duplicates
- * More context see https://pspdfkit.atlassian.net/browse/ANDR-920
  */
 class AnnotationCreationViewModel : ViewModel() {
 

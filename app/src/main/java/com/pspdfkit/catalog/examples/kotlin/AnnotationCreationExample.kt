@@ -324,12 +324,6 @@ class AnnotationCreationActivity : PdfActivity() {
      * Add the annotation to the document, and update the annotation in the UI.
      */
     private fun addAnnotationToDocument(annotation: Annotation) {
-        // You can add annotation to document and notify PdfFragment to refresh the UI.
-        // getDocument().getAnnotationProvider()
-        //     .addAnnotationToPageAsync(annotation)
-        //     .subscribe(() -> getPdfFragment().notifyAnnotationHasChanged(annotation));
-
-        // Or use the convenience method for adding annotations to page in PdfFragment:
-        requirePdfFragment().addAnnotationToPage(annotation, false)
+        document?.getAnnotationProvider()?.addAnnotationToPage(annotation)
     }
 }

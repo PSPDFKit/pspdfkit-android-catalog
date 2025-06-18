@@ -45,7 +45,7 @@
         <item name="pspdf__propertyInspectorStyle">@style/PSPDFCatalog.PropertyInspector.Dark</item>
         <item name="pspdf__actionMenuStyle">@style/PSPDFCatalog.ActionMenu.Dark</item>
         <item name="pspdf__stampPickerStyle">@style/PSPDFCatalog.StampPicker.Dark</item>
-        <item name="pspdf__signatureLayoutStyle">@style/PSPDFCatalog.SignatureLayout.Dark</item><!-- Should we remove that? -->
+        <item name="pspdf__signatureLayoutStyle">@style/PSPDFCatalog.SignatureLayout.Dark</item>
         <item name="pspdf__documentViewStyle">@style/PSPDFCatalog.DocumentViewStyle.Dark</item>
         <item name="pspdf__sharingDialogStyle">@style/PSPDFCatalog.SharingDialog.Dark</item>
         <item name="pspdf__newPageDialogStyle">@style/PSPDFCatalog.NewPageDialog.Dark</item>
@@ -219,6 +219,9 @@
         <item name="pspdf__addSignatureIcon">@drawable/pspdf__ic_add</item>
         <item name="pspdf__addSignatureIconColor">@color/onBackgroundDark</item>
         <item name="pspdf__addSignatureIconBackgroundColor">?colorAccent</item>
+        <item name="pspdf__selectImageTextColor">?colorAccent</item>
+        <item name="pspdf__replaceImageTextColor">?colorAccent</item>
+        <item name="pspdf__clearSignatureTextColor">?colorAccent</item>
         <item name="pspdf__acceptSignatureIcon">@drawable/pspdf__ic_done</item>
         <item name="pspdf__acceptSignatureIconColor">@color/onBackgroundDark</item>
         <item name="pspdf__acceptSignatureIconBackgroundColor">@color/secondaryContainerDark</item>
@@ -233,6 +236,9 @@
         <item name="pspdf__signatureInkColorTertiary">@color/tertiaryContainerDark</item>
         <item name="pspdf__textColor">@color/outlineDark</item>
         <item name="android:listDivider">@drawable/pspdf_list_divider_light</item>
+        <item name="pspdf__selectedTabIndicatorColor">@color/primaryContainerDark</item>
+        <item name="pspdf__typeSignatureFontColor">@color/primaryDark</item>
+        <item name="pspdf__circleButtonBorderColor">@color/primaryDark</item>
     </style>
 
     <style name="PSPDFCatalog.StampPicker.Dark" parent="PSPDFKit.StampPicker.Dark"/>

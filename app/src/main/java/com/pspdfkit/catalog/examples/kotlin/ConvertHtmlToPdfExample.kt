@@ -17,11 +17,15 @@ package com.pspdfkit.catalog.examples.kotlin
 import android.app.ProgressDialog
 import android.content.Context
 import android.net.Uri
+import android.webkit.WebSettings
 import android.widget.Toast
+import androidx.core.net.toUri
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.document.html.HtmlToPdfConverter
+import com.pspdfkit.document.html.WebViewSecurityPolicy
+import com.pspdfkit.document.html.WebViewSettingsCustomizer
 import com.pspdfkit.document.processor.NewPage
 import com.pspdfkit.ui.PdfActivityIntentBuilder
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
@@ -39,8 +43,16 @@ class ConvertHtmlToPdfExample(context: Context) : SdkExample(
         val progressDialog = createProgressDialog(context)
         progressDialog.show()
 
+        // Note, to convert files outside of assets, you need to override `setAllowFileAccess` to `true`:
+        WebViewSecurityPolicy.webViewSettingsCustomizer = object : WebViewSettingsCustomizer {
+            override fun customize(settings: WebSettings) {
+                // Setting file access to true here is a security risk, hence we do not do it inside the SDK.
+                settings.allowFileAccess = true
+            }
+        }
+
         // Perform the conversion. We'll use an HTML document from the assets in this example.
-        val subscription = HtmlToPdfConverter.fromUri(context, Uri.parse("file:///android_asset/html-conversion/invoice.html"), true)
+        val subscription = HtmlToPdfConverter.fromUri(context, "file:///android_asset/html-conversion/invoice.html".toUri())
             // Alternatively, you can also pass your HTML as a string via:
             // HtmlToPdfConverter.fromHTMLString(context, "<html>....</html>")
             // Use A4 page size.
@@ -53,9 +65,6 @@ class ConvertHtmlToPdfExample(context: Context) : SdkExample(
             .subscribe(
                 { outputFile ->
                     // Open the converted document in PdfActivity.
-
-                    configuration.setWebViewFileAccessAllowed(true)
-
                     val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(outputFile))
                         .configuration(configuration.build())
                         .build()

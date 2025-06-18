@@ -17,6 +17,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.pspdfkit.catalog.R;
 import com.pspdfkit.configuration.PdfConfiguration;
 import com.pspdfkit.ui.PdfFragment;
+import com.pspdfkit.ui.annotations.OnAnnotationCreationModeChangeListener;
+import com.pspdfkit.ui.annotations.OnAnnotationEditingModeChangeListener;
 import com.pspdfkit.ui.inspector.PropertyInspectorCoordinatorLayout;
 import com.pspdfkit.ui.inspector.annotation.AnnotationCreationInspectorController;
 import com.pspdfkit.ui.inspector.annotation.AnnotationEditingInspectorController;
@@ -25,7 +27,6 @@ import com.pspdfkit.ui.inspector.annotation.DefaultAnnotationEditingInspectorCon
 import com.pspdfkit.ui.special_mode.controller.AnnotationCreationController;
 import com.pspdfkit.ui.special_mode.controller.AnnotationEditingController;
 import com.pspdfkit.ui.special_mode.controller.TextSelectionController;
-import com.pspdfkit.ui.special_mode.manager.AnnotationManager;
 import com.pspdfkit.ui.special_mode.manager.TextSelectionManager;
 import com.pspdfkit.ui.toolbar.AnnotationCreationToolbar;
 import com.pspdfkit.ui.toolbar.AnnotationEditingToolbar;
@@ -39,8 +40,8 @@ import com.pspdfkit.ui.toolbar.ToolbarCoordinatorLayout;
  * ToolbarCoordinatorLayout}.
  */
 public class ToolbarsInFragmentActivity extends AppCompatActivity
-        implements AnnotationManager.OnAnnotationCreationModeChangeListener,
-                AnnotationManager.OnAnnotationEditingModeChangeListener,
+        implements OnAnnotationCreationModeChangeListener,
+                OnAnnotationEditingModeChangeListener,
                 TextSelectionManager.OnTextSelectionModeChangeListener {
 
     public static final String EXTRA_URI = "ToolbarsInFragmentActivity.DocumentUri";

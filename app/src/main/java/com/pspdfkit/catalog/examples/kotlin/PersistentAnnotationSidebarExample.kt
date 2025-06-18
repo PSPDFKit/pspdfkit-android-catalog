@@ -137,7 +137,7 @@ class PersistentAnnotationSidebarActivity : AppCompatActivity() {
                 annotationRecyclerAdapter.currentDocument = document
 
                 // We need to be aware of any change to the annotations so we can keep our list updated.
-                document.annotationProvider.addOnAnnotationUpdatedListener(object : AnnotationProvider.OnAnnotationUpdatedListener {
+                pdfUiFragment.pdfFragment?.addOnAnnotationUpdatedListener(object : AnnotationProvider.OnAnnotationUpdatedListener {
                     override fun onAnnotationCreated(annotation: Annotation) {
                         annotationRecyclerAdapter.refreshAnnotationsForPage(annotation.pageIndex)
                     }

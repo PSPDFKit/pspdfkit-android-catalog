@@ -14,7 +14,11 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collection.MutableVector
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -89,7 +93,12 @@ fun <Item, Section : List<Item>, Key> ExpandableList(
                         openSectionsWithChildrenAmount[sectionIndex] = 0
                     }
 
-                    var currentHeaderIndex = lazyListState.layoutInfo.visibleItemsInfo[0].index - 1
+                    var currentHeaderIndex by remember { mutableIntStateOf(0) }
+
+                    LaunchedEffect(lazyListState) {
+                        snapshotFlow { lazyListState.layoutInfo }
+                            .collect { currentHeaderIndex = it.visibleItemsInfo[0].index - 1 }
+                    }
 
                     for (i in 0 until sectionIndex) {
                         currentHeaderIndex -= openSectionsWithChildrenAmount[i]

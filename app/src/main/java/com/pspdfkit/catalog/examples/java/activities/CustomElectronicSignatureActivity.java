@@ -32,10 +32,10 @@ import com.pspdfkit.signatures.Signature;
 import com.pspdfkit.signatures.listeners.OnSignaturePickedListener;
 import com.pspdfkit.signatures.storage.DatabaseSignatureStorage;
 import com.pspdfkit.ui.PdfFragment;
+import com.pspdfkit.ui.annotations.OnAnnotationEditingModeChangeListener;
 import com.pspdfkit.ui.signatures.ElectronicSignatureFragment;
 import com.pspdfkit.ui.signatures.ElectronicSignatureOptions;
 import com.pspdfkit.ui.special_mode.controller.AnnotationEditingController;
-import com.pspdfkit.ui.special_mode.manager.AnnotationManager;
 import com.pspdfkit.ui.special_mode.manager.FormManager;
 import com.pspdfkit.ui.toolbar.AnnotationEditingToolbar;
 import com.pspdfkit.ui.toolbar.ToolbarCoordinatorLayout;
@@ -49,7 +49,7 @@ import java.util.Arrays;
  * element.
  */
 public class CustomElectronicSignatureActivity extends AppCompatActivity
-        implements AnnotationManager.OnAnnotationEditingModeChangeListener, OnSignaturePickedListener {
+        implements OnAnnotationEditingModeChangeListener, OnSignaturePickedListener {
 
     public static final String EXTRA_URI = "CustomElectronicSignatureActivity.DocumentUri";
 

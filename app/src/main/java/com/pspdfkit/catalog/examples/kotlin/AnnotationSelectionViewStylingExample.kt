@@ -22,8 +22,8 @@ import com.pspdfkit.configuration.theming.AnnotationSelectionViewThemeConfigurat
 import com.pspdfkit.document.PdfDocument
 import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
+import com.pspdfkit.ui.annotations.OnAnnotationSelectedListener
 import com.pspdfkit.ui.special_mode.controller.AnnotationSelectionController
-import com.pspdfkit.ui.special_mode.manager.AnnotationManager.OnAnnotationSelectedListener
 
 /**
  * This example shows how to customize the annotation selection layout.

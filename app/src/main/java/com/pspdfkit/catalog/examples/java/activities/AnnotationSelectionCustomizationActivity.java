@@ -11,12 +11,11 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import com.pspdfkit.annotations.Annotation;
 import com.pspdfkit.ui.PdfActivity;
+import com.pspdfkit.ui.annotations.OnAnnotationSelectedListener;
 import com.pspdfkit.ui.special_mode.controller.AnnotationSelectionController;
-import com.pspdfkit.ui.special_mode.manager.AnnotationManager;
 
 /** Shows how to use {@link AnnotationSelectionController} to control annotation selection. */
-public class AnnotationSelectionCustomizationActivity extends PdfActivity
-        implements AnnotationManager.OnAnnotationSelectedListener {
+public class AnnotationSelectionCustomizationActivity extends PdfActivity implements OnAnnotationSelectedListener {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

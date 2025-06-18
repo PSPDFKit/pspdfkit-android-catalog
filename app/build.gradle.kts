@@ -10,6 +10,7 @@
 plugins {
     id("com.android.application")
     id("kotlin-android")
+    id("org.jetbrains.kotlin.plugin.parcelize")
     id("org.jetbrains.kotlin.plugin.compose")
 }
 
@@ -22,8 +23,8 @@ android {
         minSdk = 26
         targetSdk = compileSdk
 
-        versionName = "10.3.0"
-        versionCode = 142923
+        versionName = "10.4.0"
+        versionCode = 143423
 
         vectorDrawables {
             useSupportLibrary = true
@@ -69,11 +70,11 @@ dependencies {
 
     // Nutrient is integrated from the Nutrient Maven repository. See the `repositories` block at the beginning
     // of this file, which shows how to set up the repository in your app.
-    implementation("io.nutrient:nutrient:10.3.0")
+    implementation("io.nutrient:nutrient:10.4.0")
 
     // OCR library + English language pack.
-    implementation("io.nutrient:nutrient-ocr:10.3.0")
-    implementation("io.nutrient:nutrient-ocr-english:10.3.0")
+    implementation("io.nutrient:nutrient-ocr:10.4.0")
+    implementation("io.nutrient:nutrient-ocr-english:10.4.0")
 
 
     // Androidx
@@ -84,7 +85,7 @@ dependencies {
     implementation("androidx.core:core-splashscreen:1.0.1")
 
     // Compose
-    implementation(platform("androidx.compose:compose-bom:2025.01.01"))
+    implementation(platform("androidx.compose:compose-bom:2025.05.01"))
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")

@@ -25,7 +25,6 @@ class ReaderViewExample(context: Context) : AssetExample(context, R.string.reade
 
             // We disable additional features which are enabled by default. This just keeps the example simpler.
             annotationEditingEnabled(false)
-            setWebViewFileAccessAllowed(true)
             annotationListEnabled(false)
             bookmarkListEnabled(false)
             outlineEnabled(false)

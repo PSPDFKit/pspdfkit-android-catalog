@@ -25,7 +25,8 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalWindowInfo
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.pspdfkit.Nutrient
@@ -63,6 +64,24 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
+        Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
+            // Log the error to the console.
+            throwable.printStackTrace()
+
+            if (throwable is OutOfMemoryError) {
+                AlertDialog.Builder(this)
+                    .setTitle("Out of memory")
+                    .setMessage("Please free up some RAM on the device and try again.")
+                    .setNeutralButton("OK") { dialog, _ -> dialog.dismiss() }
+                    .setOnDismissListener { finish() }
+                    .setCancelable(false)
+                    .show()
+                return@setDefaultUncaughtExceptionHandler
+            } else {
+                finish()
+            }
+        }
+
         storagePermissionLauncher = activityResultRegistry.register(
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
             ActivityResultContracts.RequestPermission(),
@@ -71,8 +90,12 @@ class MainActivity : AppCompatActivity() {
 
         setContent {
             CatalogTheme {
-                val configuration = LocalConfiguration.current
-                val isTablet = configuration.screenWidthDp > Dimens.tabletWidthCutout.value
+                val screenWidthDp =
+                    with(LocalDensity.current) {
+                        LocalWindowInfo.current.containerSize.width.toDp()
+                    }
+
+                val isTablet = screenWidthDp > Dimens.tabletWidthCutout
 
                 val state by viewModel.state.collectAsState(State())
 

@@ -23,8 +23,8 @@ android {
         minSdk = 26
         targetSdk = compileSdk
 
-        versionName = "10.4.0"
-        versionCode = 143423
+        versionName = "10.4.1"
+        versionCode = 143427
 
         vectorDrawables {
             useSupportLibrary = true
@@ -70,11 +70,11 @@ dependencies {
 
     // Nutrient is integrated from the Nutrient Maven repository. See the `repositories` block at the beginning
     // of this file, which shows how to set up the repository in your app.
-    implementation("io.nutrient:nutrient:10.4.0")
+    implementation("io.nutrient:nutrient:10.4.1")
 
     // OCR library + English language pack.
-    implementation("io.nutrient:nutrient-ocr:10.4.0")
-    implementation("io.nutrient:nutrient-ocr-english:10.4.0")
+    implementation("io.nutrient:nutrient-ocr:10.4.1")
+    implementation("io.nutrient:nutrient-ocr-english:10.4.1")
 
 
     // Androidx

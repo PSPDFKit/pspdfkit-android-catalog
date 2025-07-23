@@ -10,7 +10,6 @@ package com.pspdfkit.catalog.examples.kotlin
 import android.content.Context
 import android.content.Intent
 import android.graphics.RectF
-import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.compose.setContent
@@ -119,7 +118,7 @@ fun ScreenOne(path: String, navigate: () -> Unit) {
                 .build()
         }
 
-        val documentState = rememberDocumentState(documentUri = Uri.parse(path), configuration = pdfActivityConfiguration)
+        val documentState = rememberDocumentState(documentUri = path.toUri(), configuration = pdfActivityConfiguration)
         DocumentView(
             documentState = documentState,
             documentManager = getDefaultDocumentManager(
@@ -165,7 +164,7 @@ fun ScreenTwo(path: String, navigate: () -> Unit) {
                 .build()
         }
 
-        val documentState = rememberDocumentState(documentUri = Uri.parse(path), configuration = pdfActivityConfiguration)
+        val documentState = rememberDocumentState(documentUri = path.toUri(), configuration = pdfActivityConfiguration)
         DocumentView(
             documentState = documentState,
             documentManager = getDefaultDocumentManager(

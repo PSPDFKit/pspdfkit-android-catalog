@@ -15,6 +15,7 @@
     android:isScrollContainer="true">
 
     <View
+        android:id="@+id/view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:focusable="true"
@@ -52,10 +53,34 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/instant_description"
+                android:layout_marginBottom="16dp"
                 android:autoLink="web"
-                android:layout_marginBottom="32dp"
-                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"/>
+                android:text="@string/instant_description"
+                android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="?android:attr/listDivider" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/switch_use_compose"
+                style="@style/Widget.AppCompat.CompoundButton.Switch"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:checked="false"
+                android:drawableStart="@drawable/ic_jetpack_compose"
+                android:drawablePadding="4dp"
+                android:text="@string/useComposeForInstantExample"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.Switch" />
+
+            <View
+                android:id="@+id/divider2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="16dp"
+                android:background="?android:attr/listDivider" />
 
             <androidx.appcompat.widget.AppCompatButton
                 android:id="@+id/button_new_document"

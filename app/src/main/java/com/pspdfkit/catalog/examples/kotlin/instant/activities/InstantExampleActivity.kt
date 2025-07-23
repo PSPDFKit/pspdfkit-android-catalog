@@ -8,13 +8,13 @@
 package com.pspdfkit.catalog.examples.kotlin.instant.activities
 
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
+import androidx.core.net.toUri
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.examples.kotlin.instant.api.InstantExampleDocumentDescriptor
 import com.pspdfkit.document.sharing.DocumentSharingIntentHelper
@@ -29,7 +29,7 @@ import com.pspdfkit.utils.getSupportParcelableExtra
 /**
  * Extends [InstantPdfActivity] with the ability to share the Instant document with other users.
  */
-class InstantExampleActivity : InstantPdfActivity(), ActionMenuListener {
+open class InstantExampleActivity : InstantPdfActivity(), ActionMenuListener {
     /** Descriptor for the displayed document.  */
     private lateinit var documentDescriptor: InstantExampleDocumentDescriptor
 
@@ -43,7 +43,7 @@ class InstantExampleActivity : InstantPdfActivity(), ActionMenuListener {
         super.onCreate(savedInstanceState)
 
         val documentDescriptor: InstantExampleDocumentDescriptor? = intent.getSupportParcelableExtra(
-            DOCUMENT_DESCRIPTOR,
+            InstantExampleExtras.DOCUMENT_DESCRIPTOR,
             InstantExampleDocumentDescriptor::class.java
         )
         checkNotNull(documentDescriptor) { "InstantExampleActivity was not initialized with proper arguments: Missing document descriptor extra!" }
@@ -123,14 +123,13 @@ class InstantExampleActivity : InstantPdfActivity(), ActionMenuListener {
     }
 
     private fun showOpenInBrowserMenu() {
-        val shareIntent = Intent(Intent.ACTION_VIEW, Uri.parse(documentDescriptor.webUrl))
+        val shareIntent = Intent(Intent.ACTION_VIEW, documentDescriptor.webUrl.toUri())
         val sharingMenu = SharingMenu(
-            this,
-            SharingMenu.SharingMenuListener { shareTarget ->
-                shareIntent.setPackage(shareTarget.packageName)
-                startActivity(shareIntent)
-            }
-        )
+            this
+        ) { shareTarget ->
+            shareIntent.setPackage(shareTarget.packageName)
+            startActivity(shareIntent)
+        }
         sharingMenu.setTitle(R.string.instant_open_in_browser)
         sharingMenu.setShareIntents(listOf(shareIntent))
 
@@ -141,21 +140,15 @@ class InstantExampleActivity : InstantPdfActivity(), ActionMenuListener {
     private fun showShareTextMenu(@StringRes titleRes: Int, textToShare: String) {
         val shareIntent = DocumentSharingIntentHelper.getShareTextIntent(textToShare)
         val sharingMenu = SharingMenu(
-            this,
-            SharingMenu.SharingMenuListener { shareTarget ->
-                shareIntent.setPackage(shareTarget.packageName)
-                startActivity(shareIntent)
-            }
-        )
+            this
+        ) { shareTarget ->
+            shareIntent.setPackage(shareTarget.packageName)
+            startActivity(shareIntent)
+        }
         sharingMenu.setTitle(titleRes)
         sharingMenu.setShareIntents(listOf(shareIntent))
 
         collaborateMenu.dismiss()
         sharingMenu.show()
-    }
-
-    companion object {
-        /** Name of the extra holding [InstantExampleDocumentDescriptor] of the displayed document.  */
-        const val DOCUMENT_DESCRIPTOR = "InstantExampleActivity.DocumentDescriptor"
     }
 }

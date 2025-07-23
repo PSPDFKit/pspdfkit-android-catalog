@@ -16,6 +16,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.UiThread
+import androidx.core.net.toUri
 import com.pspdfkit.annotations.SoundAnnotation
 import com.pspdfkit.annotations.sound.AudioExtractor
 import com.pspdfkit.annotations.sound.WavWriter
@@ -108,7 +109,7 @@ class SoundAnnotationDataExtractionActivity : PdfActivity() {
         try {
             // Extract first audio track from sample in assets.
             // Audio extractor supports decoding audio tracks from all media formats that are supported by Android's `MediaExtractor`.
-            val audioExtractor = AudioExtractor(this, Uri.parse("file:///android_asset/media/audioLoop.wav"))
+            val audioExtractor = AudioExtractor(this, "file:///android_asset/media/audioLoop.wav".toUri())
             audioExtractor.selectAudioTrack(0)
             audioExtractor.extractAudioTrackAsync().subscribe { embeddedAudioSource ->
                 // Create new sound annotation from the extracted audio track.

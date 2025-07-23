@@ -17,7 +17,9 @@ import com.pspdfkit.ui.special_mode.controller.AnnotationTool
 import java.util.EnumSet
 
 /**
- * Connects to example Instant Server (Nutrient Document Engine) at [nutrient.io/demo](https://nutrient.io/demo)
+ * Starts the InstantExampleConnectionActivity, which connects to the example Instant Server
+ * (Nutrient Document Engine) at [nutrient.io/demo](https://nutrient.io/demo)
+ * and displays the Instant document.
  */
 class InstantExample(context: Context) : SdkExample(context, R.string.tryInstantExampleTitle, R.string.tryInstantExampleDescription) {
 

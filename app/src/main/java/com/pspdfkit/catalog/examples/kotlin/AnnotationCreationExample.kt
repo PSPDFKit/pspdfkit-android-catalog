@@ -18,6 +18,7 @@ import androidx.activity.viewModels
 import androidx.annotation.ColorInt
 import androidx.annotation.IntRange
 import androidx.annotation.UiThread
+import androidx.core.net.toUri
 import com.pspdfkit.annotations.Annotation
 import com.pspdfkit.annotations.AnnotationType
 import com.pspdfkit.annotations.BorderEffect
@@ -308,7 +309,7 @@ class AnnotationCreationActivity : PdfActivity() {
         try {
             // Extract first audio track from sample video in assets.
             // Audio extractor supports decoding audio tracks from all media formats that are supported by Android's `MediaExtractor`.
-            val audioExtractor = AudioExtractor(this, Uri.parse("file:///android_asset/media/videos/small.mp4"))
+            val audioExtractor = AudioExtractor(this, "file:///android_asset/media/videos/small.mp4".toUri())
             audioExtractor.selectAudioTrack(0)
             audioExtractor.extractAudioTrackAsync().subscribe { embeddedAudioSource ->
                 // Create new sound annotation from the extracted audio track.

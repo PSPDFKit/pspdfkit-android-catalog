@@ -17,6 +17,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
+import android.widget.CompoundButton
 import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -41,7 +42,7 @@ import java.net.UnknownHostException
 /**
  * Allows to connect to the example Instant Server (Nutrient Document Engine).
  */
-class InstantExampleConnectionActivity : AppCompatActivity() {
+open class InstantExampleConnectionActivity : AppCompatActivity() {
     /** Configuration that will be passed to created [InstantExampleActivity].  */
     private var configuration: PdfActivityConfiguration? = null
 
@@ -108,7 +109,8 @@ class InstantExampleConnectionActivity : AppCompatActivity() {
     }
 
     private fun createNewDocument() {
-        val progressDialog = ProgressDialog.show(this, null, getString(R.string.instant_creating), true, false)
+        val progressDialog =
+            ProgressDialog.show(this, null, getString(R.string.instant_creating), true, false)
         connectionDisposable?.dispose()
         connectionDisposable = apiClient.createNewDocument()
             .observeOn(AndroidSchedulers.mainThread())
@@ -123,7 +125,8 @@ class InstantExampleConnectionActivity : AppCompatActivity() {
     }
 
     private fun editDocument(url: String) {
-        val progressDialog = ProgressDialog.show(this, null, getString(R.string.instant_connecting), true, false)
+        val progressDialog =
+            ProgressDialog.show(this, null, getString(R.string.instant_connecting), true, false)
         connectionDisposable?.dispose()
         connectionDisposable = apiClient.getDocument(url)
             .observeOn(AndroidSchedulers.mainThread())
@@ -139,7 +142,10 @@ class InstantExampleConnectionActivity : AppCompatActivity() {
             })
     }
 
-    private fun handleHttpException(exception: Throwable, url: String): Single<InstantExampleDocumentDescriptor> {
+    private fun handleHttpException(
+        exception: Throwable,
+        url: String
+    ): Single<InstantExampleDocumentDescriptor> {
         if (exception is HttpException) {
             if (exception.code() == 401) {
                 // We need a basic auth request here.
@@ -156,14 +162,18 @@ class InstantExampleConnectionActivity : AppCompatActivity() {
     @SuppressLint("InflateParams")
     private fun performBasicAuth(): Completable {
         return Completable.create { emitter: CompletableEmitter ->
-            val basicAuthView = LayoutInflater.from(this).inflate(R.layout.dialog_basic_auth, null, false)
+            val basicAuthView =
+                LayoutInflater.from(this).inflate(R.layout.dialog_basic_auth, null, false)
             val username = basicAuthView.findViewById<EditText>(R.id.username)
             val password = basicAuthView.findViewById<EditText>(R.id.password)
             AlertDialog.Builder(this)
                 .setTitle(R.string.instant_authentication_required)
                 .setView(basicAuthView)
                 .setPositiveButton(R.string.instant_login) { _, _ ->
-                    apiClient.setBasicAuthCredentials(username.text.toString(), password.text.toString())
+                    apiClient.setBasicAuthCredentials(
+                        username.text.toString(),
+                        password.text.toString()
+                    )
                     emitter.onComplete()
                 }
                 .setOnCancelListener { emitter.onError(Exception("User cancelled basic auth.")) }
@@ -173,25 +183,39 @@ class InstantExampleConnectionActivity : AppCompatActivity() {
 
     private fun showInstantDocument(descriptor: InstantExampleDocumentDescriptor) {
         // Clear the Instant client cache first.
-        InstantClient.create(this@InstantExampleConnectionActivity, descriptor.serverUrl).removeLocalStorage()
+        InstantClient.create(this@InstantExampleConnectionActivity, descriptor.serverUrl)
+            .removeLocalStorage()
 
-        // Build the activity intent.
-        val builder = InstantPdfActivityIntentBuilder.fromInstantDocument(
-            this@InstantExampleConnectionActivity,
-            descriptor.serverUrl,
-            descriptor.jwt
-        )
-        val intent = builder
-            .configuration(configuration)
-            .activityClass(InstantExampleActivity::class.java)
-            .build()
+        val intent = createIntentForInstantDocumentActivity(descriptor)
 
         // Put the Instant document descriptor to extras.
-        intent.putExtra(InstantExampleActivity.DOCUMENT_DESCRIPTOR, descriptor)
+        intent.putExtra(InstantExampleExtras.DOCUMENT_DESCRIPTOR, descriptor)
 
         // Finally start the InstantExampleActivity and finish the current activity.
         startActivity(intent)
+
         finish()
+    }
+
+    protected open fun createIntentForInstantDocumentActivity(descriptor: InstantExampleDocumentDescriptor): Intent {
+        val useCompose = findViewById<CompoundButton>(R.id.switch_use_compose)?.isChecked ?: false
+
+        val intent = if (useCompose) {
+            Intent(this, InstantComposeExampleActivity::class.java).apply {
+                putExtra(InstantComposeExampleActivity.DOCUMENT_DESCRIPTOR, descriptor)
+                putExtra(InstantComposeExampleActivity.CONFIGURATION, configuration)
+            }
+        } else {
+            InstantPdfActivityIntentBuilder.fromInstantDocument(
+                this,
+                descriptor.serverUrl,
+                descriptor.jwt
+            ).configuration(configuration)
+                .activityClass(InstantExampleActivity::class.java)
+                .build()
+        }
+
+        return intent
     }
 
     private fun handleError(throwable: Throwable) {

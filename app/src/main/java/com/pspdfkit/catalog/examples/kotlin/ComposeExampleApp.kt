@@ -9,8 +9,8 @@ package com.pspdfkit.catalog.examples.kotlin
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import androidx.core.content.ContextCompat.startActivity
+import androidx.core.net.toUri
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
@@ -22,7 +22,7 @@ class ComposeExampleApp(context: Context) : SdkExample(context, R.string.compose
         startActivity(
             context,
             Intent(Intent.ACTION_VIEW).apply {
-                data = Uri.parse(COMPOSE_EXAMPLE_LINK)
+                data = COMPOSE_EXAMPLE_LINK.toUri()
             },
             null
         )

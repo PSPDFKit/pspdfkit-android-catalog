@@ -13,6 +13,7 @@ import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
+import androidx.core.graphics.createBitmap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentOnAttachListener
@@ -198,7 +199,7 @@ class CombineElectronicSignaturesWithDigitalSigningActivity :
 
                 val w = kotlin.math.abs(signatureAnnotation.boundingBox.width().toInt())
                 val h = kotlin.math.abs(signatureAnnotation.boundingBox.height().toInt())
-                val signatureBitmap = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
+                val signatureBitmap = createBitmap(w, h, Bitmap.Config.ARGB_8888)
                 signatureAnnotation.renderToBitmap(signatureBitmap)
 
                 // Now we've made the bitmap, we can remove the annotation from the document, as it will appear on the digital

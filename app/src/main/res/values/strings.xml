@@ -203,12 +203,12 @@
     <string name="documentComparisonExampleDescription">Compare PDFs using a different stroke color for each document.</string>
     <string name="emptyActivityExampleTitle">Empty Activity</string>
     <string name="emptyActivityExampleDescription">Shows how to start a PdfActivity without any document loaded.</string>
-    <string name="pdfUiFragmentExampleTitle">Experimental: PdfUiFragment Example</string>
+    <string name="pdfUiFragmentExampleTitle">PdfUiFragment Example</string>
     <string name="pdfUiFragmentExampleDescription">Shows how to use the PdfUiFragment to display documents.</string>
     <string name="outlineProviderExample">Custom Outline Provider</string>
     <string name="outlineProviderExampleDescription">This example shows how to use an outline provider to display a custom document outline.</string>
     <string name="overlayViewsExample">Overlay View</string>
-    <string name="overlayViewsExampleDescription">Experimental: This example shows you how to overlay views on the document.</string>
+    <string name="overlayViewsExampleDescription">This example shows you how to overlay views on the document.</string>
     <string name="bookmarkHighlightingExampleTitle">Bookmark Highlighting</string>
     <string name="bookmarkHighlightingExampleDescription">Shows how to use the drawable API to put a indicator on all bookmarked pages in the thumbnail bar and thumbnail grid.</string>
     <string name="annotationSidebarExampleTitle">Persistent Annotation Sidebar</string>
@@ -230,6 +230,7 @@
 
     <string name="tryInstantExampleTitle">Try Instant</string>
     <string name="tryInstantExampleDescription">Downloads a document for collaborative editing.</string>
+    <string name="useComposeForInstantExample">Use Jetpack Compose</string>
 
     <string name="externalDocumentExamplePermissionExplanation">The file you selected is on the local device. Granting direct file access will allow Nutrient to use optimized file system reading, which yields much higher throughput.</string>
     <string name="grantAccess">Grant access</string>

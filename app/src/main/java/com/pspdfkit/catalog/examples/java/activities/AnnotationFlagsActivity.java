@@ -117,7 +117,6 @@ public class AnnotationFlagsActivity extends PdfActivity
         final int itemId = item.getItemId();
         if (itemId == R.id.reset_all_flags) {
             annotation.setFlags(EnumSet.of(AnnotationFlags.PRINT, AnnotationFlags.NOZOOM));
-            getPdfFragment().notifyAnnotationHasChanged(annotation);
             return true;
         } else if (itemId == R.id.toggle_read_only_flag) {
             toggleAnnotationFlag(annotation, AnnotationFlags.READONLY);
@@ -202,7 +201,6 @@ public class AnnotationFlagsActivity extends PdfActivity
             flags.remove(flag);
         }
         annotation.setFlags(flags);
-        getPdfFragment().notifyAnnotationHasChanged(annotation);
     }
 
     /** Set flags on all annotations in document. */
@@ -212,7 +210,6 @@ public class AnnotationFlagsActivity extends PdfActivity
                 .getAllAnnotationsOfTypeAsync(EnumSet.allOf(AnnotationType.class))
                 .subscribe(annotation -> {
                     annotation.setFlags(flags);
-                    getPdfFragment().notifyAnnotationHasChanged(annotation);
                 });
     }
 

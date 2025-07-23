@@ -188,7 +188,7 @@ class TabsPreferences(private val preferences: SharedPreferences) {
      * Sets index of currently visible document in the list of stored document descriptors.
      */
     fun setVisibleDocumentIndex(visibleDocumentIndex: Int) {
-        preferences.edit().putInt(PREF_VISIBLE_DOCUMENT_INDEX, visibleDocumentIndex).apply()
+        preferences.edit { putInt(PREF_VISIBLE_DOCUMENT_INDEX, visibleDocumentIndex) }
     }
 
     /**

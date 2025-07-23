@@ -90,7 +90,7 @@ class FormInterceptActivity : AppCompatActivity() {
                                 }
                             ),
                             formListener = DefaultListeners.formListeners(
-                                addOnFormElementClickedListener = { formElement ->
+                                onFormElementClickedListener = { formElement ->
                                     Toast.makeText(
                                         context,
                                         "Clicked form of type ${formElement.type}",
@@ -98,39 +98,39 @@ class FormInterceptActivity : AppCompatActivity() {
                                     ).show()
                                     true
                                 },
-                                addOnFormElementViewUpdatedListener = { formElement ->
+                                onFormElementViewUpdatedListener = { formElement ->
                                     println("Form click addOnFormElementViewUpdatedListener formElement ${formElement.type}")
                                     true
                                 },
-                                addOnFormElementValidationSuccess = { formElement ->
+                                onFormElementValidationSuccess = { formElement ->
                                     println("Form click addOnFormElementValidationSuccess formElement ${formElement.type}")
                                     true
                                 },
-                                addOnFormElementValidationFailed = { formElement, error ->
+                                onFormElementValidationFailed = { formElement, error ->
                                     println("Form click addOnFormElementValidationFailed formElement ${formElement.type} error $error")
                                     true
                                 },
-                                addOnEnterFormElementEditingMode = {
+                                onEnterFormElementEditingMode = {
                                     println("Form click addOnEnterFormElementEditingMode")
                                     true
                                 },
-                                addOnChangeFormElementEditingMode = {
+                                onChangeFormElementEditingMode = {
                                     println("Form click addOnChangeFormElementEditingMode")
                                     true
                                 },
-                                addOnExitFormElementEditingMode = {
+                                onExitFormElementEditingMode = {
                                     println("Form click addOnExitFormElementEditingMode")
                                     true
                                 },
-                                addOnFormElementUpdatedListener = { formElement ->
+                                onFormElementUpdatedListener = { formElement ->
                                     println("Form click addOnFormElementUpdatedListener formElement ${formElement.type}")
                                     true
                                 },
-                                addOnFormElementSelectedListener = { formElement ->
+                                onFormElementSelectedListener = { formElement ->
                                     println("Form click addOnFormElementSelectedListener formElement ${formElement.type}")
                                     true
                                 },
-                                addOnFormElementDeselectedListener = { formElement, _ ->
+                                onFormElementDeselectedListener = { formElement, _ ->
                                     println("Form click addOnFormElementDeselectedListener formElement ${formElement.type}")
                                     true
                                 }

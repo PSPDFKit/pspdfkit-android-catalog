@@ -9,9 +9,9 @@ package com.pspdfkit.catalog.examples.kotlin
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.net.toUri
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayoutMediator
@@ -63,7 +63,7 @@ class PdfFragmentAdapter(activity: ViewPager2Activity) : FragmentStateAdapter(ac
 
     override fun getItemCount(): Int = 4
 
-    override fun createFragment(position: Int) = PdfFragment.newInstance(Uri.parse(getPdfPath(position)), PdfConfiguration.Builder().build())
+    override fun createFragment(position: Int) = PdfFragment.newInstance(getPdfPath(position).toUri(), PdfConfiguration.Builder().build())
 
     // Load PDFs from assets.
     private fun getPdfPath(position: Int) = "file:///android_asset/${when (position) {

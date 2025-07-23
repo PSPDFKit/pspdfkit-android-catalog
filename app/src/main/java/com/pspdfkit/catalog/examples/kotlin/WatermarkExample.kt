@@ -20,6 +20,7 @@ import android.graphics.RectF
 import android.os.Bundle
 import androidx.annotation.IntRange
 import androidx.annotation.UiThread
+import androidx.core.graphics.withRotation
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
@@ -214,16 +215,14 @@ private class WatermarkDrawable(private val text: String, startingPoint: PointF)
      */
     override fun draw(canvas: Canvas) {
         val bounds = bounds.toRectF()
-        canvas.save()
 
-        // Rotate canvas by 45 degrees.
-        canvas.rotate(-45f, bounds.left, bounds.bottom)
-        // Recalculate text size to much new bounds.
-        setTextSizeForWidth(redPaint, bounds.width(), text)
-        // Draw the text on rotated canvas.
-        canvas.drawText(text, bounds.left, bounds.bottom, redPaint)
-
-        canvas.restore()
+        // Rotate canvas by 45 degrees and draw the text.
+        canvas.withRotation(-45f, bounds.left, bounds.bottom) {
+            // Recalculate text size to much new bounds.
+            setTextSizeForWidth(redPaint, bounds.width(), text)
+            // Draw the text on rotated canvas.
+            drawText(text, bounds.left, bounds.bottom, redPaint)
+        }
     }
 
     private fun setTextSizeForWidth(

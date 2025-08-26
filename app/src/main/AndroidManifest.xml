@@ -32,13 +32,6 @@
         android:required="false" />
 
 
-    <!-- Required for the `InlineMediaExample` to play the Youtube videos when clicking on the videos in the document. -->
-    <queries>
-        <intent>
-            <action android:name="com.google.android.youtube.api.service.START" />
-        </intent>
-    </queries>
-
     <application
         android:allowBackup="true"
         android:label="@string/app_name"
@@ -51,14 +44,6 @@
         <meta-data
             android:name="nutrient_license_key"
             android:value="@string/NUTRIENT_LICENSE_KEY" />
-
-        <!--
-          In order to enable inline YouTube integration for your PDFs you need to provide a valid
-          API key.
-          -->
-        <meta-data
-            android:name="youtube_api_key"
-            android:value="@string/YOUTUBE_API_KEY" />
 
         <meta-data
             android:name="nutrient_font_path"
@@ -137,11 +122,6 @@
             android:name="com.pspdfkit.ui.PdfMediaDialog"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:theme="@style/PSPDFCatalog.Theme.MediaView" />
-
-        <activity
-            android:name="com.pspdfkit.ui.PdfYouTubeActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
-            android:theme="@style/Theme.AppCompat.DialogWhenLarge" />
 
         <!-- Examples -->
 
@@ -368,6 +348,21 @@
         <activity
             android:name=".examples.kotlin.AiAssistantComposeActivity"
             android:label="@string/jetpackAiAssistantExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.AiAssistantDocumentTabsActivity"
+            android:label="@string/aiAssistantTabbedDocumentExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.AiAssistantViewPagerActivity"
+            android:label="@string/aiAssistantViewPagerExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.AiAssistantMultiDocComposeActivity"
+            android:label="@string/jetpackAiAssistantMultiDocExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity

@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
+import com.pspdfkit.catalog.SdkExample.Companion.TAG
 import com.pspdfkit.catalog.tasks.ExtractAssetTask
 import com.pspdfkit.catalog.ui.theming.CatalogTheme
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
@@ -63,7 +64,6 @@ class JetpackComposeExample(context: Context) : SdkExample(context, R.string.jet
 /**
  * This example shows you how to use the [PdfUiFragment] to display PDFs in your activities.
  */
-private const val TAG = "JetpackComposeActivity"
 class JetpackComposeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

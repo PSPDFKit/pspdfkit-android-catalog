@@ -17,6 +17,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
+import com.pspdfkit.catalog.SdkExample.Companion.TAG
 import com.pspdfkit.catalog.tasks.ExtractAssetTask
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.configuration.sharing.ShareFeatures
@@ -139,7 +140,7 @@ class DocumentJsonExampleActivity : PdfActivity() {
             contentResolver.openOutputStream(uri)
         } catch (e: Throwable) {
             Toast.makeText(this, "Error while opening '$uri' for export. See logcat for more info.", Toast.LENGTH_LONG).show()
-            Log.e(LOG_TAG, "Error while opening '$uri' for export", e)
+            Log.e(TAG, "Error while opening '$uri' for export", e)
             return
         } ?: run {
             Toast.makeText(this, "Error while opening '$uri' for export.", Toast.LENGTH_LONG).show()
@@ -155,7 +156,7 @@ class DocumentJsonExampleActivity : PdfActivity() {
                 },
                 { throwable ->
                     showToast("Error while exporting document JSON. See logcat for more info.")
-                    Log.e(LOG_TAG, "Error while exporting document JSON", throwable)
+                    Log.e(TAG, "Error while exporting document JSON", throwable)
                 }
             )
         disposables.add(exportDocumentDisposable)
@@ -173,7 +174,7 @@ class DocumentJsonExampleActivity : PdfActivity() {
                 },
                 { throwable ->
                     showToast("Error while importing document JSON. See logcat for more info.")
-                    Log.e(LOG_TAG, "Error while importing document JSON", throwable)
+                    Log.e(TAG, "Error while importing document JSON", throwable)
                 }
             )
         disposables.add(importDocumentDisposable)
@@ -191,7 +192,5 @@ class DocumentJsonExampleActivity : PdfActivity() {
     companion object {
         private const val PICK_EXPORT_FILE_RESULT = 1
         private const val PICK_IMPORT_FILE_RESULT = 2
-
-        private const val LOG_TAG = "DocumentJsonExample"
     }
 }

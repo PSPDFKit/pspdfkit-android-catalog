@@ -23,15 +23,14 @@ android {
         minSdk = 26
         targetSdk = compileSdk
 
-        versionName = "10.5.0"
-        versionCode = 143714
+        versionName = "10.6.0"
+        versionCode = 144001
 
         vectorDrawables {
             useSupportLibrary = true
         }
 
         resValue("string", "NUTRIENT_LICENSE_KEY", "\"LICENSE_KEY_GOES_HERE\"")
-        resValue("string", "YOUTUBE_API_KEY", "\"YOUTUBE_API_KEY_GOES_HERE\"")
     }
 
     compileOptions {
@@ -70,11 +69,11 @@ dependencies {
 
     // Nutrient is integrated from the Nutrient Maven repository. See the `repositories` block at the beginning
     // of this file, which shows how to set up the repository in your app.
-    implementation("io.nutrient:nutrient:10.5.0")
+    implementation("io.nutrient:nutrient:10.6.0")
 
     // OCR library + English language pack.
-    implementation("io.nutrient:nutrient-ocr:10.5.0")
-    implementation("io.nutrient:nutrient-ocr-english:10.5.0")
+    implementation("io.nutrient:nutrient-ocr:10.6.0")
+    implementation("io.nutrient:nutrient-ocr-english:10.6.0")
 
 
     // Androidx
@@ -116,9 +115,6 @@ dependencies {
 
     // Compose navigation
     implementation("androidx.navigation:navigation-compose:2.5.3")
-
-    // YouTube player (inline videos).
-    implementation(files("libs/YouTubeAndroidPlayerApi.jar"))
 
     // Markwon (Markdown rendering).
     implementation("io.noties.markwon:core:4.6.2")

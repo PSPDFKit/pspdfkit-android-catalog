@@ -29,8 +29,6 @@ public class DynamicMultimediaAnnotationExample extends SdkExample {
 
     @Override
     public void launchExample(@NonNull Context context, @NonNull PdfActivityConfiguration.Builder configuration) {
-        configuration.videoPlaybackEnabled(true);
-
         // Before launching the example, we extract one video file to the private app folder. This
         // file will be used to dynamically add
         // another link annotation to the document at runtime.

@@ -18,7 +18,6 @@ object PreferenceKeys {
     val FitPageToWidth = booleanPreferencesKey("fit_page_to_width")
     val FirstPageAsSingle = booleanPreferencesKey("first_page_as_single")
     val ShowGapBetweenPages = booleanPreferencesKey("show_gap_between_pages")
-    val ImmersiveMode = booleanPreferencesKey("immersive_mode")
     val SystemUserInterfaceMode = stringPreferencesKey("user_interface_view_mode")
     val HideUiWhenCreatingAnnotations = booleanPreferencesKey("hide_ui_when_creating_annotations")
     val ShowSearchAction = booleanPreferencesKey("show_search_action")

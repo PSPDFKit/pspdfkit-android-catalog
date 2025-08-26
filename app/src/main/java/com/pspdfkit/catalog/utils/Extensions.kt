@@ -19,12 +19,19 @@ fun String.firstCharacterUpperCase(): String {
         .replaceFirstChar { char -> char.uppercase() }
 }
 
-fun SdkExample.isDigitalSignatureExample(context: Context, yes: () -> Unit, no: () -> Unit) = when (this.title) {
+fun SdkExample.isDigitalSignatureExample(context: Context) = when (this.title) {
     context.getString(R.string.digitalSignatureExampleTitle),
     context.getString(R.string.manualSigningExampleTitle),
     context.getString(R.string.twoStepSigningExampleTitle),
-    context.getString(R.string.thirdPartySigningExampleTitle) -> yes.invoke()
-    else -> no.invoke()
+    context.getString(R.string.thirdPartySigningExampleTitle) -> true
+    else -> false
+}
+fun SdkExample.isAiAssistantExample(context: Context) = when (this.title) {
+    context.getString(R.string.aiAssistantViewPagerExampleTitle),
+    context.getString(R.string.aiAssistantTabbedDocumentExampleTitle),
+    context.getString(R.string.jetpackAiAssistantMultiDocExampleTitle),
+    context.getString(R.string.jetpackAiAssistantExampleTitle) -> true
+    else -> false
 }
 
 fun Context.getColorThemeRes(@AttrRes id: Int): Int {

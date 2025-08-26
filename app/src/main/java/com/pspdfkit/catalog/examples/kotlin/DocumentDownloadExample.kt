@@ -14,6 +14,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.FragmentActivity
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
+import com.pspdfkit.catalog.SdkExample.Companion.TAG
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.document.download.DownloadJob
 import com.pspdfkit.document.download.DownloadProgressFragment
@@ -39,7 +40,7 @@ class DocumentDownloadExample(context: Context) : SdkExample(context, R.string.d
             // Try to parse the URL pointing to the PDF document. If an error occurs, log it and leave the example.
             WebDownloadSource(URL("https://nutrient.io/downloads/case-study-box.pdf"))
         } catch (e: MalformedURLException) {
-            Log.e(LOG_TAG, "Error while trying to parse the PDF Download URL.", e)
+            Log.e(TAG, "Error while trying to parse the PDF Download URL.", e)
             return
         }
 
@@ -103,7 +104,7 @@ private class WebDownloadSource constructor(private val documentURL: URL) : Down
                 length = contentLength.toLong()
             }
         } catch (e: IOException) {
-            Log.e(LOG_TAG, "Error while trying to parse the PDF Download URL.", e)
+            Log.e(TAG, "Error while trying to parse the PDF Download URL.", e)
         } finally {
             (urlConnection as? HttpURLConnection)?.disconnect()
         }
@@ -114,5 +115,3 @@ private class WebDownloadSource constructor(private val documentURL: URL) : Down
         return "WebDownloadSource{documentURL=$documentURL}"
     }
 }
-
-private const val LOG_TAG = "DocumentDownloadExample"

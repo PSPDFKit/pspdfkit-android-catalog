@@ -59,6 +59,12 @@
     <string name="jetpackImageExampleDescription">Example of how to load an image using Nutrient in a Jetpack compose application.</string>
     <string name="jetpackAiAssistantExampleTitle">AI Assistant Compose</string>
     <string name="jetpackAiAssistantExampleDescription">AI chat for intelligent document analysis and interaction using our Jetpack Compose API. You must also run the AI Assistant demo server on your Machine.</string>
+    <string name="jetpackAiAssistantMultiDocExampleTitle">AI Assistant Multiple Documents: Compose HorizontalPager</string>
+    <string name="jetpackAiAssistantMultiDocExampleDescription">AI chat for intelligent document analysis and interaction with multiple documents using HorizontalPager in Jetpack Compose. You must also run the AI Assistant demo server on your Machine.</string>
+    <string name="aiAssistantTabbedDocumentExampleTitle">AI Assistant Multiple Documents: DocumentCoordinator</string>
+    <string name="aiAssistantTabbedDocumentExampleDescription">Example demonstrating AI chat for multiple documents analysis and interaction using DocumentCoordinator. You must also run the AI Assistant demo server on your Machine.</string>
+    <string name="aiAssistantViewPagerExampleTitle">AI Assistant Multiple Documents: ViewPager</string>
+    <string name="aiAssistantViewPagerExampleDescription">Example demonstrating AI chat for multiple documents analysis and interaction using ViewPager. You must also run the AI Assistant demo server on your Machine.</string>
     <string name="splitDocumentExampleTitle">Document Split-view</string>
     <string name="splitDocumentExampleDescription">Usage example for two PdfFragment instances sitting side-by-side in a single activity.</string>
     <string name="memoryDataProviderExampleTitle">MemoryDataProvider</string>
@@ -347,7 +353,6 @@
     <string name="preference_section_forms">Forms</string>
     <string name="preference_section_actions">Actions</string>
     <string name="preference_section_customization">Customization</string>
-    <string name="preference_section_activity">Activity</string>
     <string name="preference_section_other">Other</string>
 
     <!-- Preference names -->
@@ -379,7 +384,6 @@
     <string name="checkbox_preference_grayscale">Grayscale</string>
     <string name="checkbox_preference_enable_text_selection">Enable text selection</string>
     <string name="checkbox_preference_enable_volume_buttons_navigation">Enable volume buttons navigation</string>
-    <string name="checkbox_preference_immersive_mode">Immersive mode</string>
     <string name="checkbox_preference_multithreaded_rendering">Multithreaded rendering</string>
     <string name="checkbox_preference_enable_leakcanary">Enable LeakCanary</string>
     <string name="integer_preference_start_page">Start page</string>

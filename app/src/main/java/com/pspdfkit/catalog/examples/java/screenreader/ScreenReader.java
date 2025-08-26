@@ -8,6 +8,7 @@
 package com.pspdfkit.catalog.examples.java.screenreader;
 
 import android.content.Context;
+import android.graphics.BlendMode;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
@@ -18,6 +19,7 @@ import android.graphics.PorterDuff;
 import android.graphics.PorterDuffXfermode;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.os.Build;
 import android.speech.tts.TextToSpeech;
 import android.speech.tts.UtteranceProgressListener;
 import androidx.annotation.IntRange;
@@ -363,8 +365,11 @@ public class ScreenReader {
             // highlighted text.
             paint.setColor(Color.parseColor("#FDF4B9"));
             paint.setStyle(Paint.Style.FILL);
-            paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.MULTIPLY));
-
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                paint.setBlendMode(BlendMode.MULTIPLY);
+            } else {
+                paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.MULTIPLY));
+            }
             alpha = 0;
             paint.setAlpha(0);
         }

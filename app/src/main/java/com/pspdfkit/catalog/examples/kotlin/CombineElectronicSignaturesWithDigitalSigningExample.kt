@@ -30,6 +30,7 @@ import com.pspdfkit.signatures.SignatureGraphic
 import com.pspdfkit.signatures.SignerOptions
 import com.pspdfkit.signatures.SigningManager
 import com.pspdfkit.signatures.getPrivateKeyEntryFromP12Stream
+import com.pspdfkit.signatures.getX509Certificates
 import com.pspdfkit.signatures.listeners.OnSignaturePickedListener
 import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
@@ -227,7 +228,7 @@ class CombineElectronicSignaturesWithDigitalSigningActivity :
         val signedDocumentUri = Uri.fromFile(outputFile)
         val signerOptions = SignerOptions.Builder(formElement.formField, signedDocumentUri).setSignatureMetadata(
             DigitalSignatureMetadata(signatureAppearance = signatureAppearance)
-        ).setPrivateKey(key).build()
+        ).setPrivateKey(key.privateKey).setCertificates(key.getX509Certificates()).build()
 
         // handles the signing process
         SigningManager.signDocument(

@@ -18,7 +18,7 @@ import com.pspdfkit.document.PdfDocumentLoader
 import com.pspdfkit.document.providers.AssetDataProvider
 import com.pspdfkit.signatures.SignerOptions
 import com.pspdfkit.signatures.SigningManager
-import com.pspdfkit.signatures.getPrivateKeyFromPemFile
+import com.pspdfkit.signatures.getPrivateKeyFromFile
 import com.pspdfkit.signatures.loadCertificateFromStream
 import com.pspdfkit.ui.PdfActivityIntentBuilder
 import com.pspdfkit.utils.PdfLog
@@ -84,6 +84,6 @@ class LongTermValidationExample(context: Context) : SdkExample(context, R.string
      * Loads the [PrivateKey] that will be used by our [SigningManager].
      */
     private fun getPrivateKey(context: Context): PrivateKey {
-        return getPrivateKeyFromPemFile(context.assets.open("digital-signatures/ltv/Signer.key"))
+        return getPrivateKeyFromFile(context.assets.open("digital-signatures/ltv/Signer.key"))
     }
 }

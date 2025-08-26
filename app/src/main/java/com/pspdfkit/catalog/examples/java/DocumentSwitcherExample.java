@@ -33,10 +33,8 @@ public class DocumentSwitcherExample extends SdkExample {
     @Override
     public void launchExample(
             @NonNull final Context context, @NonNull final PdfActivityConfiguration.Builder configuration) {
-        // Use a custom activity and a custom PdfActivity subclass. To keep this example simple, we
-        // turn off immersive mode.
+        // Use a custom activity and a custom PdfActivity subclass.
         configuration
-                .useImmersiveMode(false)
                 .hideUserInterfaceWhenCreatingAnnotations(false)
                 // Disable tab bar - example displays list of documents in a drawer instead.
                 .setTabBarHidingMode(TabBarHidingMode.HIDE)

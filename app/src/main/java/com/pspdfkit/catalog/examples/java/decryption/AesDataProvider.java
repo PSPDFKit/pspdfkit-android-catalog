@@ -7,6 +7,8 @@
 
 package com.pspdfkit.catalog.examples.java.decryption;
 
+import static com.pspdfkit.catalog.SdkExample.TAG;
+
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Base64;
@@ -52,7 +54,6 @@ public class AesDataProvider implements WritableDataProvider, Parcelable {
             return new AesDataProvider[size];
         }
     };
-    private static final String LOG_TAG = "AesProvider";
     private static final int AES_BLOCK_SIZE = 16;
     private static final int IV_SIZE = 16;
     private static final int FILE_SIZE_NOT_SET = -1;
@@ -144,7 +145,7 @@ public class AesDataProvider implements WritableDataProvider, Parcelable {
                 }
             }
 
-            Log.i(LOG_TAG, "Opened encrypted file " + encryptedFile.getAbsolutePath() + " size " + decryptedFileSize);
+            Log.i(TAG, "Opened encrypted file " + encryptedFile.getAbsolutePath() + " size " + decryptedFileSize);
             openFileHandles.put(Thread.currentThread(), file);
             return file;
         }
@@ -209,10 +210,10 @@ public class AesDataProvider implements WritableDataProvider, Parcelable {
             input.readFully(decryptedData);
             return decryptedData;
         } catch (GeneralSecurityException | IOException e) {
-            Log.e(LOG_TAG, "Crypto exception: " + e.getMessage(), e);
+            Log.e(TAG, "Crypto exception: " + e.getMessage(), e);
             return new byte[0];
         } catch (Exception e) {
-            Log.e(LOG_TAG, "Exception: " + e.getMessage(), e);
+            Log.e(TAG, "Exception: " + e.getMessage(), e);
             return new byte[0];
         }
     }
@@ -249,7 +250,7 @@ public class AesDataProvider implements WritableDataProvider, Parcelable {
     @Override
     public void release() {
         try {
-            Log.e(LOG_TAG, "Closing file " + encryptedFile.getAbsolutePath());
+            Log.e(TAG, "Closing file " + encryptedFile.getAbsolutePath());
             closeFiles();
         } catch (IOException ignored) {
         }
@@ -301,12 +302,12 @@ public class AesDataProvider implements WritableDataProvider, Parcelable {
             c.init(Cipher.ENCRYPT_MODE, outputKey, ivSpec);
             cos = new CipherOutputStream(fos, c);
         } catch (IOException | GeneralSecurityException e) {
-            Log.e(LOG_TAG, "Failed to open file for writing - " + e.getMessage(), e);
+            Log.e(TAG, "Failed to open file for writing - " + e.getMessage(), e);
             return false;
         }
 
         Log.i(
-                LOG_TAG,
+                TAG,
                 "Writing changes to "
                         + encryptedFile.getName()
                         + " to temporary file "
@@ -319,7 +320,7 @@ public class AesDataProvider implements WritableDataProvider, Parcelable {
         try {
             cos.write(data);
         } catch (IOException e) {
-            Log.e(LOG_TAG, "Failed to write encrypted file - " + e.getMessage(), e);
+            Log.e(TAG, "Failed to write encrypted file - " + e.getMessage(), e);
             return false;
         }
 
@@ -345,7 +346,7 @@ public class AesDataProvider implements WritableDataProvider, Parcelable {
 
         for (Throwable e : closeErrors) {
             if (e != null) {
-                Log.e(LOG_TAG, "Error while closing output streams - " + e.getMessage(), e);
+                Log.e(TAG, "Error while closing output streams - " + e.getMessage(), e);
                 success = false;
             }
         }
@@ -366,7 +367,7 @@ public class AesDataProvider implements WritableDataProvider, Parcelable {
 
         // We need to update the stored file size now as well.
         decryptedFileSize = encryptedFile.length() - IV_SIZE;
-        Log.i(LOG_TAG, "Writing complete, replaced original file with new file of size " + decryptedFileSize);
+        Log.i(TAG, "Writing complete, replaced original file with new file of size " + decryptedFileSize);
         return true;
     }
 

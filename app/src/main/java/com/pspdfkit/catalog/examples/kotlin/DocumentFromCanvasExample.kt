@@ -15,6 +15,7 @@ import android.net.Uri
 import android.util.Log
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
+import com.pspdfkit.catalog.SdkExample.Companion.TAG
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.document.processor.NewPage
 import com.pspdfkit.document.processor.PdfProcessor
@@ -82,7 +83,6 @@ class DocumentFromCanvasExample(context: Context) : SdkExample(context, R.string
     }
 
     companion object {
-        private const val TAG = "DocumentFromCanvas"
         private const val PSPDFKIT_DIRECTORY_NAME = "catalog-pspdfkit"
 
         @Throws(IOException::class)

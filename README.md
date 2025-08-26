@@ -13,7 +13,7 @@ Follow the steps below to clone, open, and run the Catalog app locally.
 
 1. Clone the repository
 
-You can clone the project into any directory of your choice. Here’s an example using the ~/Downloads folder:
+You can clone the project into any directory of your choice. Here’s an example using the `~/Downloads` folder:
 
 ```sh
 cd ~/Downloads
@@ -31,7 +31,7 @@ cd pspdfkit-android-catalog
 
 - Select the `app` run configuration.
 - Connect a physical Android device or use an emulator.
-- Click Run ‘app’ button in Android Studio.
+- Click the **app** and **run** buttons in Android Studio.
 
 Alternatively, you can install the app directly through the command line as demonstrated below:
 
@@ -51,6 +51,6 @@ This software is licensed under a [modified BSD license](LICENSE).
 
 ## Additional resources
 
-- Nutrient Android SDK guides: https://nutrient.io/guides/android/current/
+- Nutrient Android SDK guides: https://nutrient.io/guides/android/
 - Nutrient Android SDK API reference: https://nutrient.io/api/android/kdoc/
 - Nutrient customer support: https://nutrient.io/support/request/

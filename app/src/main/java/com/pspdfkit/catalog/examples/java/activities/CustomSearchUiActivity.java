@@ -7,6 +7,8 @@
 
 package com.pspdfkit.catalog.examples.java.activities;
 
+import static com.pspdfkit.catalog.SdkExample.TAG;
+
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
@@ -79,7 +81,6 @@ import java.util.Map;
 public class CustomSearchUiActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     public static final String EXTRA_URI = "CustomSearchUiExample.DocumentUri";
-    private static final String TAG = "CustomSearchUiExample";
     private static final PdfConfiguration config = new PdfConfiguration.Builder().build();
 
     private PdfFragment fragment;

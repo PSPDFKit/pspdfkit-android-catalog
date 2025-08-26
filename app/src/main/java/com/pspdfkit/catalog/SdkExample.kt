@@ -87,6 +87,8 @@ abstract class SdkExample(
     open fun onDestroy() {}
 
     companion object {
+        const val TAG = "Example"
+
         // Documents used in our examples.
         const val WELCOME_DOC: String = "Nutrient welcome.pdf"
         const val ANNOTATIONS_EXAMPLE: String = "Annotations.pdf"

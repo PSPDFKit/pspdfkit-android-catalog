@@ -18,6 +18,7 @@ import androidx.activity.viewModels
 import com.pspdfkit.annotations.actions.UriAction
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
+import com.pspdfkit.catalog.SdkExample.Companion.TAG
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.document.PdfDocument
 import com.pspdfkit.document.processor.NewPage
@@ -102,7 +103,6 @@ class FormCreationExample(context: Context) :
     }
 
     companion object {
-        private const val TAG = "FormCreationExample"
         private const val PSPDFKIT_DIRECTORY_NAME = "catalog-pspdfkit"
     }
 }

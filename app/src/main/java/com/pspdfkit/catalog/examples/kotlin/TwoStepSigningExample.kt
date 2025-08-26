@@ -12,6 +12,7 @@ import android.net.Uri
 import android.util.Log
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
+import com.pspdfkit.catalog.SdkExample.Companion.TAG
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.document.DocumentSource
 import com.pspdfkit.document.PdfDocumentLoader
@@ -19,6 +20,7 @@ import com.pspdfkit.document.providers.AssetDataProvider
 import com.pspdfkit.signatures.SignerOptions
 import com.pspdfkit.signatures.SigningManager
 import com.pspdfkit.signatures.getPrivateKeyEntryFromP12Stream
+import com.pspdfkit.signatures.getX509Certificates
 import com.pspdfkit.ui.PdfActivityIntentBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -36,7 +38,6 @@ import java.security.Signature
  * */
 class TwoStepSigningExample(context: Context) : SdkExample(context, R.string.twoStepSigningExampleTitle, R.string.twoStepSigningExampleDescription) {
 
-    private val TAG = "SigningManager"
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         val assetName = "Form_example.pdf"
 
@@ -49,7 +50,8 @@ class TwoStepSigningExample(context: Context) : SdkExample(context, R.string.two
 
         /** [SignerOptions] contains all the required configuration for [SigningManager]*/
         val signerOptions = SignerOptions.Builder(signatureFormFields[0], Uri.fromFile(outputFile))
-            .setPrivateKey(keyEntryWithCertificates)
+            .setPrivateKey(privateKey)
+            .setCertificates(keyEntryWithCertificates.getX509Certificates())
             .setType(digitalSignatureType)
         CoroutineScope(Dispatchers.Main).launch {
             SigningManager.getDataToSign(context, signerOptions.build()).onSuccess { unsignedData ->

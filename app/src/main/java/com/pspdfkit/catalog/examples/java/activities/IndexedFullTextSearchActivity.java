@@ -7,6 +7,8 @@
 
 package com.pspdfkit.catalog.examples.java.activities;
 
+import static com.pspdfkit.catalog.SdkExample.TAG;
+
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
@@ -62,8 +64,6 @@ import java.util.Set;
  * searchable.
  */
 public class IndexedFullTextSearchActivity extends AppCompatActivity {
-
-    private static final String TAG = "IndexedFullTextSearch";
 
     /** Name of the Full-text search library file. */
     private static final String FTS_SEARCH_LIBRARY_NAME = "fts-library.db";

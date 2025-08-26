@@ -27,6 +27,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.collection.LruCache
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
+import com.pspdfkit.catalog.SdkExample.Companion.TAG
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.document.DocumentSource
 import com.pspdfkit.document.PdfDocument
@@ -269,6 +270,5 @@ class KioskActivity : AppCompatActivity() {
 
     companion object {
         const val CONFIGURATION_ARG = "configuration"
-        private const val TAG = "Kiosk"
     }
 }

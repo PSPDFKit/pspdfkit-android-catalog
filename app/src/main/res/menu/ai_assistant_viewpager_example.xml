@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~   Copyright © 2025 PSPDFKit GmbH. All rights reserved.
+  ~
+  ~   The PSPDFKit Sample applications are licensed with a modified BSD license.
+  ~   Please see License for details. This notice may not be removed from this file.
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/pspdf__menu_option_ai_assistant"
+        android:icon="@drawable/ic_ai_assistant"
+        android:title="@string/pspdf__ai_assistant_title"
+        app:iconTint="@color/onPrimaryLight"
+        app:showAsAction="always" />
+</menu>

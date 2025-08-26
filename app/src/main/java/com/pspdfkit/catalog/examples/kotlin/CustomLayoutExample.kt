@@ -66,10 +66,9 @@ class CustomLayoutExample(context: Context) : SdkExample(context, R.string.custo
         // Hide tab bar as it's not used by the custom layout.
         configuration.setTabBarHidingMode(TabBarHidingMode.HIDE)
 
-        // We keep things simple, and use inline search and deactivate immersive mode for this example.
+        // We keep things simple, and use inline search for this example.
         configuration.apply {
             setSearchType(SearchType.INLINE)
-            useImmersiveMode(false)
         }
 
         // We use a custom utility class to extract the example document from the assets.

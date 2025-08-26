@@ -57,7 +57,6 @@ data class State(
         Pair(PreferenceKeys.FitPageToWidth, true),
         Pair(PreferenceKeys.FirstPageAsSingle, false),
         Pair(PreferenceKeys.ShowGapBetweenPages, false),
-        Pair(PreferenceKeys.ImmersiveMode, true),
         Pair(PreferenceKeys.SystemUserInterfaceMode, UserInterfaceViewMode.USER_INTERFACE_VIEW_MODE_AUTOMATIC.name),
         Pair(PreferenceKeys.HideUiWhenCreatingAnnotations, true),
         Pair(PreferenceKeys.ShowSearchAction, true),
@@ -108,7 +107,6 @@ fun State.getPdfActivityConfigurationBuilder(context: Context): PdfActivityConfi
         .setThumbnailBarMode(ThumbnailBarMode.valueOf(thumbnailBarMode))
         .annotationReplyFeatures(AnnotationReplyFeatures.valueOf(annotationReplies))
         .page(startPage)
-        .useImmersiveMode(enableImmersiveMode)
         .setMultithreadedRenderingEnabled(enableMultithreadingRendering)
 
     configuration.searchEnabled(showSearchAction)
@@ -245,10 +243,6 @@ val State.enableTextSelection: Boolean
 val State.enableVolumeButtonNavigation: Boolean
     get() =
         preferences[PreferenceKeys.EnableVolumeButtonsNavigation] as Boolean
-
-val State.enableImmersiveMode: Boolean
-    get() =
-        preferences[PreferenceKeys.ImmersiveMode] as Boolean
 
 val State.startPage: Int
     get() =

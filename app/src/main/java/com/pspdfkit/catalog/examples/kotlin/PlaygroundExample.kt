@@ -14,6 +14,7 @@ import android.view.MenuItem
 import android.widget.Toast
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
+import com.pspdfkit.catalog.SdkExample.Companion.TAG
 import com.pspdfkit.catalog.tasks.ExtractAssetTask
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.document.PdfDocument
@@ -62,7 +63,7 @@ class PlaygroundActivity : PdfActivity() {
 
     override fun onDocumentLoaded(document: PdfDocument) {
         super.onDocumentLoaded(document)
-        Log.d(LOG_TAG, "Document loaded.")
+        Log.d(TAG, "Document loaded.")
         // Do your magic here...
     }
 
@@ -72,6 +73,5 @@ class PlaygroundActivity : PdfActivity() {
 
     companion object {
         private const val CUSTOM_MENU_ITEM_ID = 1
-        private const val LOG_TAG = "PlaygroundActivity"
     }
 }

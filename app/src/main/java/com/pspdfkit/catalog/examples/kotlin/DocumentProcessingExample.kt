@@ -23,6 +23,7 @@ import android.view.MenuItem
 import com.pspdfkit.annotations.AnnotationType
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
+import com.pspdfkit.catalog.SdkExample.Companion.TAG
 import com.pspdfkit.catalog.tasks.ExtractAssetTask
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.document.processor.NewPage
@@ -224,7 +225,7 @@ class DocumentProcessingExampleActivity : PdfActivity() {
                 1
             )
         } catch (e: IOException) {
-            Log.e(LOG_TAG, "Could not read page image.")
+            Log.e(TAG, "Could not read page image.")
         }
 
         // The third page is cloned from the last page of the document, but rotated by 90°.
@@ -297,6 +298,5 @@ class DocumentProcessingExampleActivity : PdfActivity() {
     }
 
     companion object {
-        private const val LOG_TAG = "DocumentProcessing"
     }
 }

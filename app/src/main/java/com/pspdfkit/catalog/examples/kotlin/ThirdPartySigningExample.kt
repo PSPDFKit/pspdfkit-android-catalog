@@ -12,14 +12,17 @@ import android.net.Uri
 import android.util.Log
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
+import com.pspdfkit.catalog.SdkExample.Companion.TAG
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.document.DocumentSource
 import com.pspdfkit.document.PdfDocumentLoader
 import com.pspdfkit.document.providers.AssetDataProvider
 import com.pspdfkit.signatures.DigitalSignatureType
 import com.pspdfkit.signatures.SignerOptions
+import com.pspdfkit.signatures.SigningConfiguration
 import com.pspdfkit.signatures.SigningManager
 import com.pspdfkit.signatures.getPrivateKeyEntryFromP12Stream
+import com.pspdfkit.signatures.getX509Certificates
 import com.pspdfkit.ui.PdfActivityIntentBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -34,7 +37,6 @@ import java.security.KeyStore
  * */
 class ThirdPartySigningExample(context: Context) : SdkExample(context, R.string.thirdPartySigningExampleTitle, R.string.thirdPartySigningExampleDescription) {
 
-    private val TAG = "SigningManager"
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         val assetName = "Form_example.pdf"
 
@@ -46,21 +48,24 @@ class ThirdPartySigningExample(context: Context) : SdkExample(context, R.string.
 
         /** [SignerOptions] contains all the required configuration for [SigningManager]*/
         val signerOptions = SignerOptions.Builder(signatureFormFields[0], Uri.fromFile(outputFile))
-            .setType(digitalSignatureType)
+            .setType(digitalSignatureType).build()
         CoroutineScope(Dispatchers.Main).launch {
-            SigningManager.getDataToSign(context, signerOptions.build()).onSuccess {
+            SigningManager.getDataToSign(context, signerOptions).onSuccess { unsignedData ->
                 // ---  Start  --- //
                 // This code can be replaced by a third party signing service that signs the data in PKCS@7 format.
-                val newSignerOptions = signerOptions.setPrivateKey(keyEntryWithCertificates).build()
-                val signing = if (digitalSignatureType == DigitalSignatureType.BASIC) {
-                    SigningManager.signWithBasicSignature(context, newSignerOptions, it.first, it.second)
+                val signingConfiguration = SigningConfiguration(
+                    privateKey = keyEntryWithCertificates.privateKey,
+                    certificates = keyEntryWithCertificates.getX509Certificates()
+                )
+                val signResponse = if (digitalSignatureType == DigitalSignatureType.BASIC) {
+                    SigningManager.signWithBasicSignature(context, signingConfiguration, unsignedData.first, unsignedData.second)
                 } else {
-                    SigningManager.signWithCAdESSignature(context, newSignerOptions, it.first, it.second)
+                    SigningManager.signWithCAdESSignature(context, signingConfiguration, unsignedData.first, unsignedData.second)
                 }
                 // ---  End  --- //
 
-                signing.onSuccess {
-                    SigningManager.embedPKCS7Signature(context, signerOptions.build(), it).onSuccessEmpty {
+                signResponse.onSuccess { signedData ->
+                    SigningManager.embedPKCS7Signature(context, signerOptions, signedData).onSuccessEmpty {
                         val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(outputFile))
                             .configuration(configuration.build())
                             .build()

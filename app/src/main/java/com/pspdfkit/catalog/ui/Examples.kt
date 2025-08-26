@@ -54,6 +54,7 @@ import com.pspdfkit.catalog.ui.theming.Animations
 import com.pspdfkit.catalog.ui.theming.Dimens
 import com.pspdfkit.catalog.utils.filterBySearchState
 import com.pspdfkit.catalog.utils.firstCharacterUpperCase
+import com.pspdfkit.catalog.utils.isAiAssistantExample
 import com.pspdfkit.catalog.utils.isDigitalSignatureExample
 
 @Composable
@@ -63,9 +64,9 @@ fun Examples(state: State, dispatcher: Dispatcher) {
     val context = LocalContext.current
 
     var filteredExamplesInSections by remember { mutableStateOf(listOf<SdkExample.Section>()) }
-    var dialogVisibility by remember { mutableStateOf(false) }
+    var signatureDialogVisibility by remember { mutableStateOf(false) }
+    var aiAssistantDialogVisibility by remember { mutableStateOf(false) }
     var selectedClass by remember { mutableStateOf<SdkExample?>(null) }
-
     // I'm using a LaunchedEffect here to filter the list in a background thread
     LaunchedEffect(state.examples, state.searchState) {
         filteredExamplesInSections = state.examples.filterBySearchState(state.searchState, filteredExamplesInSections) { section, examples ->
@@ -73,8 +74,12 @@ fun Examples(state: State, dispatcher: Dispatcher) {
         }
     }
 
-    SelectSignatureTypeDialog(dialogVisibility, { dialogVisibility = false }) {
+    SelectSignatureTypeDialog(signatureDialogVisibility, { signatureDialogVisibility = false }) {
         selectedClass?.apply { digitalSignatureType = it }?.launchExample(context, state.getPdfActivityConfigurationBuilder(context))
+    }
+
+    IpAddressDialog(aiAssistantDialogVisibility, { aiAssistantDialogVisibility = false }) {
+        selectedClass?.launchExample(context, state.getPdfActivityConfigurationBuilder(context))
     }
 
     ExpandableList(
@@ -116,15 +121,24 @@ fun Examples(state: State, dispatcher: Dispatcher) {
             val psExample = example as SdkExample
             Box(
                 modifier = Modifier.clickable {
-                    psExample.isDigitalSignatureExample(context, {
+                    if (psExample.isDigitalSignatureExample(context)) {
+                        // If the example is a digital signature example, we want to show the dialog first.
                         selectedClass = psExample
-                        dialogVisibility = true
-                    }) {
-                        psExample.launchExample(
-                            context,
-                            state.getPdfActivityConfigurationBuilder(context)
-                        )
+                        signatureDialogVisibility = true
+                        return@clickable
                     }
+                    if (psExample.isAiAssistantExample(context)) {
+                        // If the example is an AI Assistant example, we want to show the IP address dialog first.
+                        selectedClass = psExample
+                        aiAssistantDialogVisibility = true
+                        return@clickable
+                    }
+
+                    // Otherwise, we can just launch the example directly.
+                    psExample.launchExample(
+                        context,
+                        state.getPdfActivityConfigurationBuilder(context)
+                    )
                 }
             ) {
                 ExampleListItem(

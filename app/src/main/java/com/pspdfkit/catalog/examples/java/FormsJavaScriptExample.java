@@ -7,6 +7,8 @@
 
 package com.pspdfkit.catalog.examples.java;
 
+import static com.pspdfkit.catalog.SdkExample.TAG;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -29,7 +31,6 @@ import java.io.IOException;
 /** This example showcases forms JavaScript functionality. */
 public class FormsJavaScriptExample extends SdkExample {
 
-    private static final String LOG_TAG = "FormsJavaScriptExample";
     private static final String PSPDFKIT_DIRECTORY_NAME = "catalog-pspdfkit";
 
     public FormsJavaScriptExample(@NonNull Context context) {
@@ -78,7 +79,7 @@ public class FormsJavaScriptExample extends SdkExample {
 
                             context.startActivity(intent);
                         },
-                        throwable -> Log.e(LOG_TAG, "Error while trying to create PDF document.", throwable));
+                        throwable -> Log.e(TAG, "Error while trying to create PDF document.", throwable));
     }
 
     @NonNull

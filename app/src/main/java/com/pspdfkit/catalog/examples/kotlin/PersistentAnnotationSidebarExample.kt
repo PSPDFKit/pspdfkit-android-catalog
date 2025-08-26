@@ -56,8 +56,6 @@ class PersistentAnnotationSidebarExample(context: Context) : SdkExample(
         configuration.setEnabledShareFeatures(EnumSet.noneOf(ShareFeatures::class.java))
         configuration.printingEnabled(false)
 
-        configuration.useImmersiveMode(false)
-
         ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
             val intent = Intent(context, PersistentAnnotationSidebarActivity::class.java)
             intent.putExtra(EXTRA_URI, Uri.fromFile(documentFile))

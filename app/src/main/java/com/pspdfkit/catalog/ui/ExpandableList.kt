@@ -22,6 +22,7 @@ import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
+import kotlinx.coroutines.delay
 
 /**
  * A list that takes items organized in sections and lays them out inside a LazyColumn.
@@ -64,6 +65,43 @@ fun <Item, Section : List<Item>, Key> ExpandableList(
         }
     }
 
+    // Auto-scroll when sections are expanded
+    LaunchedEffect(expandedSectionsState) {
+        delay(100) // Small delay to let the layout settle
+        val layoutInfo = lazyListState.layoutInfo
+        val visibleItemsInfo = layoutInfo.visibleItemsInfo
+        val viewportHeight = layoutInfo.viewportEndOffset - layoutInfo.viewportStartOffset
+
+        if (visibleItemsInfo.isNotEmpty()) {
+            var itemIndex = 1 // Start after top header
+
+            itemsInSections.forEachIndexed { sectionIndex, section ->
+                val sectionKey = sectionKey(section)
+                val sectionIsOpen = searchQuery.isNotBlank() || expandedSectionsState.contains(sectionKey)
+
+                // Check if this section header is visible and near the bottom
+                val headerItemInfo = visibleItemsInfo.find { it.index == itemIndex }
+                if (headerItemInfo != null && sectionIsOpen) {
+                    val headerBottomOffset = headerItemInfo.offset + headerItemInfo.size
+                    val availableSpace = viewportHeight - headerBottomOffset
+
+                    // If the header is in the bottom third of the screen and there's not much space below
+                    if (headerBottomOffset > viewportHeight * 0.67f && availableSpace < viewportHeight * 0.3f && section.isNotEmpty()) {
+                        // Scroll to show the first few items of the expanded section
+                        val targetItemIndex = itemIndex + minOf(2, section.size) // Show up to 2 items
+                        lazyListState.animateScrollToItem(targetItemIndex)
+                    }
+                }
+
+                itemIndex++ // Section header
+                if (sectionIsOpen) {
+                    itemIndex += section.size // Items in section
+                    itemIndex++ // Section footer
+                }
+            }
+        }
+    }
+
     // To know which headers are currently active and stickied, we remember a vector where each index holds the current number of
     // children for each section. This is needed because all of the indexes update when a header expands and adds its children to the list.
     // Using a Vector as it's not guaranteed that the list of sections will be properly initialized by the first time this is Composed.
@@ -97,7 +135,11 @@ fun <Item, Section : List<Item>, Key> ExpandableList(
 
                     LaunchedEffect(lazyListState) {
                         snapshotFlow { lazyListState.layoutInfo }
-                            .collect { currentHeaderIndex = it.visibleItemsInfo[0].index - 1 }
+                            .collect { layoutInfo ->
+                                if (layoutInfo.visibleItemsInfo.isNotEmpty()) {
+                                    currentHeaderIndex = layoutInfo.visibleItemsInfo[0].index - 1
+                                }
+                            }
                     }
 
                     for (i in 0 until sectionIndex) {

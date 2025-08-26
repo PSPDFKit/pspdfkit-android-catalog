@@ -18,13 +18,13 @@ import com.pspdfkit.document.PdfDocumentLoader
 import com.pspdfkit.document.providers.AssetDataProvider
 import com.pspdfkit.signatures.SignerOptions
 import com.pspdfkit.signatures.SigningManager
-import com.pspdfkit.signatures.getPrivateKeyEntryFromP12Stream
+import com.pspdfkit.signatures.getPrivateKeyFromFile
+import com.pspdfkit.signatures.loadCertificateFromStream
 import com.pspdfkit.ui.PdfActivityIntentBuilder
 import com.pspdfkit.utils.PdfLog
 import java.io.File
-import java.io.IOException
-import java.security.GeneralSecurityException
-import java.security.KeyStore
+import java.security.PrivateKey
+import java.security.cert.X509Certificate
 
 /**
  * An example that shows how to digitally sign a PDF document using [SigningManager].
@@ -36,12 +36,14 @@ class DigitalSignatureExample(context: Context) : SdkExample(context, R.string.d
         val assetName = "Form_example.pdf"
 
         val unsignedDocument = PdfDocumentLoader.openDocument(context, DocumentSource(AssetDataProvider(assetName)))
-        val keyEntryWithCertificates = getPrivateKeyEntry(context)
+        val privateKey = getPrivateKey(context)
+        val certificate = getCertificate(context)
         val signatureFormFields = unsignedDocument.documentSignatureInfo.signatureFormFields
         val outputFile = File(context.filesDir, "signedDocument.pdf")
         outputFile.delete() // make sure output is deleted from previous runs.
         val signerOptions = SignerOptions.Builder(signatureFormFields[0], Uri.fromFile(outputFile))
-            .setPrivateKey(keyEntryWithCertificates)
+            .setPrivateKey(privateKey)
+            .setCertificates(listOf(certificate))
             .setType(digitalSignatureType)
             .build()
 
@@ -63,13 +65,12 @@ class DigitalSignatureExample(context: Context) : SdkExample(context, R.string.d
         }
     }
 
-    /**
-     * Loads the [KeyStore.PrivateKeyEntry] that will be used by our [SigningManager].
-     */
-    @Throws(IOException::class, GeneralSecurityException::class)
-    private fun getPrivateKeyEntry(context: Context): KeyStore.PrivateKeyEntry {
-        // Inside a p12 we have both the certificate (or certificate chain to the root CA) and private key used for signing.
-        val keystoreFile = context.assets.open("digital-signatures/ExampleSigner.p12")
-        return getPrivateKeyEntryFromP12Stream(keystoreFile, "test")
+    private fun getPrivateKey(context: Context): PrivateKey {
+        val privateKeyFile = context.assets.open("digital-signatures/self-signed/demo.pkcs8")
+        return getPrivateKeyFromFile(privateKeyFile)
+    }
+    private fun getCertificate(context: Context): X509Certificate {
+        val certificateFile = context.assets.open("digital-signatures/self-signed/demo.cer")
+        return loadCertificateFromStream(certificateFile)
     }
 }

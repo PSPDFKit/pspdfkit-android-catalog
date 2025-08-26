@@ -27,7 +27,6 @@ import com.pspdfkit.catalog.utils.CatalogPreferences.enableAnnotationList
 import com.pspdfkit.catalog.utils.CatalogPreferences.enableAnnotationRotation
 import com.pspdfkit.catalog.utils.CatalogPreferences.enableDocumentOutline
 import com.pspdfkit.catalog.utils.CatalogPreferences.enableFormEditing
-import com.pspdfkit.catalog.utils.CatalogPreferences.enableImmersiveMode
 import com.pspdfkit.catalog.utils.CatalogPreferences.enableLeakCanary
 import com.pspdfkit.catalog.utils.CatalogPreferences.enableMultithreadingRendering
 import com.pspdfkit.catalog.utils.CatalogPreferences.enableTextSelection
@@ -209,11 +208,6 @@ object CatalogPreferences {
         key = PreferenceKeys.EnableVolumeButtonsNavigation
     )
 
-    fun enableImmersiveMode(context: Context) = CheckboxPreference(
-        title = context.getString(R.string.checkbox_preference_immersive_mode),
-        key = PreferenceKeys.ImmersiveMode
-    )
-
     fun startPage(context: Context) = IntegerPreference(
         title = context.getString(R.string.integer_preference_start_page),
         key = PreferenceKeys.StartPage,
@@ -321,13 +315,6 @@ fun preferenceSections(context: Context): List<PreferencesSection> =
                     grayscale(context),
                     enableTextSelection(context),
                     enableVolumeButtonNavigation(context)
-                )
-            ),
-
-            PreferencesSection(
-                title = context.getString(R.string.preference_section_activity),
-                preferences = arrayOf(
-                    enableImmersiveMode(context)
                 )
             ),
 

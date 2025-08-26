@@ -12,6 +12,7 @@ import android.graphics.Color
 import android.net.Uri
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
+import com.pspdfkit.catalog.SdkExample.Companion.TAG
 import com.pspdfkit.catalog.tasks.ExtractAssetTask
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.configuration.page.PageScrollDirection
@@ -105,7 +106,7 @@ class DocumentScrollActivity : PdfActivity() {
 
                 val scrollRange = maxScroll - extend
                 if (currentScroll == scrollRange) {
-                    PdfLog.d(LOG_TAG, "Document end: Current scroll : $currentScroll Scroll range: $scrollRange")
+                    PdfLog.d(TAG, "Document end: Current scroll : $currentScroll Scroll range: $scrollRange")
                     addNewPageToDocument(document)
                 }
             }
@@ -132,12 +133,11 @@ class DocumentScrollActivity : PdfActivity() {
                     documentCoordinator.setDocument(documentDescriptor)
                 },
                 { e ->
-                    PdfLog.e(LOG_TAG, e, "Document couldn't be saved.")
+                    PdfLog.e(TAG, e, "Document couldn't be saved.")
                 }
             )
     }
 
     companion object {
-        private const val LOG_TAG = "DocumentScrollActivity"
     }
 }

@@ -23,6 +23,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
+import com.pspdfkit.catalog.SdkExample.Companion.TAG
 import com.pspdfkit.catalog.tasks.ExtractAssetTask
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.configuration.activity.UserInterfaceViewMode
@@ -43,7 +44,6 @@ class FormClickInterceptExample(context: Context) : SdkExample(context, R.string
     }
 }
 
-private const val TAG = "FormInterceptActivity"
 class FormInterceptActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

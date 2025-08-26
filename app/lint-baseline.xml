@@ -663,6 +663,17 @@
 
     <issue
         id="PrivateResource"
+        message="The resource `@string/pspdf__ai_assistant_title` is marked as private in android:sdk-nutrient:unspecified"
+        errorLine1="        android:title=&quot;@string/pspdf__ai_assistant_title&quot;"
+        errorLine2="                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
+        <location
+            file="src/main/res/menu/ai_assistant_viewpager_example.xml"
+            line="13"
+            column="24"/>
+    </issue>
+
+    <issue
+        id="PrivateResource"
         message="The resource `@color/pspdf__outlineDark` is marked as private in android:sdk-nutrient:unspecified"
         errorLine1="        &lt;item name=&quot;pspdf__fontButtonsTintColorChecked&quot;>@color/pspdf__outlineDark&lt;/item>"
         errorLine2="                                                        ~~~~~~~~~~~~~~~~~~~~~~~~~">
@@ -965,7 +976,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="64"
+            line="72"
             column="13"/>
     </issue>
 
@@ -976,7 +987,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="65"
+            line="73"
             column="13"/>
     </issue>
 
@@ -987,7 +998,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="254"
+            line="263"
             column="13"/>
     </issue>
 
@@ -998,7 +1009,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="301"
+            line="310"
             column="13"/>
     </issue>
 
@@ -1009,7 +1020,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="302"
+            line="311"
             column="13"/>
     </issue>
 
@@ -1020,7 +1031,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="303"
+            line="312"
             column="13"/>
     </issue>
 
@@ -1031,7 +1042,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="374"
+            line="383"
             column="13"/>
     </issue>
 

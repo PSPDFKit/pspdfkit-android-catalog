@@ -43,6 +43,9 @@ import com.pspdfkit.catalog.examples.java.VerticalScrollbarExample
 import com.pspdfkit.catalog.examples.java.XfdfExample
 import com.pspdfkit.catalog.examples.java.decryption.AesEncryptedFileExample
 import com.pspdfkit.catalog.examples.kotlin.AiAssistantComposeExample
+import com.pspdfkit.catalog.examples.kotlin.AiAssistantDocumentTabsExample
+import com.pspdfkit.catalog.examples.kotlin.AiAssistantMultiDocComposeExample
+import com.pspdfkit.catalog.examples.kotlin.AiAssistantViewPagerExample
 import com.pspdfkit.catalog.examples.kotlin.AnnotationConfigurationExample
 import com.pspdfkit.catalog.examples.kotlin.AnnotationCreationExample
 import com.pspdfkit.catalog.examples.kotlin.AnnotationRenderingExample
@@ -223,7 +226,10 @@ fun getSectionsWithExamples(context: Context) = listOf(
     SdkExample.Section(
         context.getString(R.string.example_section_ai_assistant),
         R.drawable.ic_ai_assistant,
-        AiAssistantComposeExample(context)
+        AiAssistantComposeExample(context),
+        AiAssistantDocumentTabsExample(context),
+        AiAssistantViewPagerExample(context),
+        AiAssistantMultiDocComposeExample(context)
     ),
 
     SdkExample.Section(

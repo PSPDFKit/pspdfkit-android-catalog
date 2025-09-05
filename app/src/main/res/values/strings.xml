@@ -87,6 +87,8 @@
     <string name="viewPager2ExampleDescription">Demonstrates using multiple documents in a Viewpager2</string>
     <string name="formFillingExampleTitle">Form Filling</string>
     <string name="formFillingExampleDescription">Shows how to fill forms programmatically.</string>
+    <string name="formTextFieldSuggestionsExampleTitle">Form text field suggestions</string>
+    <string name="formTextFieldSuggestionsExampleDescription">Demonstrates how to add suggestions to form text fields.</string>
     <string name="formFillingJavaScriptExampleTitle">JavaScript Form Filling</string>
     <string name="formFillingJavaScriptExampleDescription">Shows how to fill forms with JavaScript.</string>
     <string name="javaScriptFormsExampleTitle">Forms JavaScript</string>

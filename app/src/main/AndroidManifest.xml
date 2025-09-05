@@ -196,6 +196,11 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
+            android:name=".examples.kotlin.FormTextFieldSuggestionsActivity"
+            android:label="@string/formFillingJavaScriptExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
             android:name=".examples.kotlin.AnnotationWithAlphaCreationActivity"
             android:label="@string/annotationWithAlphaCreationExampleTitle"
             android:windowSoftInputMode="adjustNothing" />

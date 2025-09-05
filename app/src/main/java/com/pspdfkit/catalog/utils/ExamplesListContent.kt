@@ -82,6 +82,7 @@ import com.pspdfkit.catalog.examples.kotlin.FileAnnotationCreationExample
 import com.pspdfkit.catalog.examples.kotlin.FormClickInterceptExample
 import com.pspdfkit.catalog.examples.kotlin.FormCreationExample
 import com.pspdfkit.catalog.examples.kotlin.FormFillingExample
+import com.pspdfkit.catalog.examples.kotlin.FormTextFieldSuggestionExample
 import com.pspdfkit.catalog.examples.kotlin.FragmentExample
 import com.pspdfkit.catalog.examples.kotlin.GenerateReportExample
 import com.pspdfkit.catalog.examples.kotlin.HideRevealAnnotationsCreationExample
@@ -199,7 +200,8 @@ fun getSectionsWithExamples(context: Context) = listOf(
         FormFillingExample(context),
         FormCreationExample(context),
         FormClickInterceptExample(context),
-        CustomFormHighlightColorExample(context)
+        CustomFormHighlightColorExample(context),
+        FormTextFieldSuggestionExample(context)
     ),
 
     SdkExample.Section(

@@ -10,6 +10,7 @@ package com.pspdfkit.catalog.examples.kotlin
 import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
+import android.net.Uri
 import android.os.Bundle
 import android.util.SparseArray
 import android.widget.TextView
@@ -33,14 +34,14 @@ import com.pspdfkit.configuration.page.PageScrollMode
 import com.pspdfkit.document.PdfDocument
 import com.pspdfkit.listeners.DocumentListener
 import com.pspdfkit.ui.PdfFragment
+import com.pspdfkit.ui.PdfUiFragment
+import com.pspdfkit.ui.PdfUiFragmentBuilder
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import java.io.File
 
 private const val DOCUMENT_LOAD_DELAY_MS = 400L // Delay to ensure document is fully loaded before restoring state
-private const val BUFFER_SIZE = 8192 // Buffer size for file copying operations
 
 /**
  * An example demonstrating how to use multiple [PdfFragment]s within a [ViewPager2].
@@ -75,15 +76,7 @@ class ViewPager2Activity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        // Generate list of PDF filenames for positions 0-4
-        val files = (0..4).map { getFiles(it) }
-
-        // Copy PDF files from assets to local storage asynchronously
-        // This ensures files are available before initializing the UI
-        copyFilesFromAssetsToLocalStorage(this, files) {
-            initialise()
-        }
+        initialise()
     }
 
     /**
@@ -98,7 +91,7 @@ class ViewPager2Activity : AppCompatActivity() {
 
         // Create a new adapter when initializing to ensure it uses the current theme
         // The callback restores fragment state after document loading
-        adapter = PdfFragmentAdapter(this) { position ->
+        adapter = PdfFragmentAdapter(this, true) { position ->
             scope.launch {
                 // Small delay to ensure document is fully loaded before restoring state
                 delay(DOCUMENT_LOAD_DELAY_MS)
@@ -195,42 +188,70 @@ class ViewPager2Activity : AppCompatActivity() {
  */
 class PdfFragmentAdapter(
     private val context: FragmentActivity,
+    private val usePdfFragment: Boolean = true,
     private val onDocLoaded: (position: Int) -> Unit
 ) : FragmentStateAdapter(context) {
 
     /** Returns the total number of pages/fragments */
-    override fun getItemCount(): Int = 4
+    override fun getItemCount(): Int = FileRepo.size
 
     /**
      * Creates a new PdfFragment for the specified position.
      * @param position The position in the ViewPager2 (0-3)
      * @return A configured PdfFragment with the appropriate PDF document and theme
      */
-    override fun createFragment(position: Int): Fragment = PdfFragment.newInstance(
-        "file:///android_asset/${getFiles(position)}.pdf".toUri(),
-        if (isDarkModeActive(context = context)) themeDark else themeLight
-    ).apply {
-        // Add listener to handle document loading completion
-        addDocumentListener(object : DocumentListener {
-            override fun onDocumentLoaded(document: PdfDocument) {
-                super.onDocumentLoaded(document)
-                // Notify that this document has loaded so state can be restored
-                onDocLoaded.invoke(position)
+    override fun createFragment(position: Int): Fragment {
+        PdfUiFragmentWrapper.callback = onDocLoaded
+        val path = FileRepo.getPdfPath(position)
+
+        return if (usePdfFragment) {
+            PdfFragment.newInstance(
+                path.toUri(),
+                if (isDarkModeActive(context = context)) themeDark else themeLight
+            ).apply {
+                // Add listener to handle document loading completion
+                addDocumentListener(object : DocumentListener {
+                    override fun onDocumentLoaded(document: PdfDocument) {
+                        super.onDocumentLoaded(document)
+                        // Notify that this document has loaded so state can be restored
+                        onDocLoaded.invoke(position)
+                    }
+                })
             }
-        })
+        } else {
+            PdfUiFragmentWrapper.paths[path] = position
+            PdfUiFragmentBuilder.fromUri(
+                context,
+                path.toUri()
+            )
+                .configuration(
+                    PdfActivityConfiguration.Builder(context)
+                        .configuration(if (isDarkModeActive(context = context)) themeDark else themeLight)
+                        .build()
+                )
+                .fragmentClass(PdfUiFragmentWrapper::class.java)
+                .build()
+        }
     }
 }
 
-/**
- * Maps a ViewPager2 position to the corresponding PDF filename (without extension).
- * @param position The position in the ViewPager2 (0-based index)
- * @return The filename of the PDF document for this position
- */
-private fun getFiles(position: Int) = when (position) {
-    0 -> WELCOME_DOC.removeSuffix(".pdf")
-    1 -> "Scientific-paper"
-    2 -> "Teacher"
-    else -> "The-Cosmic-Context-for-Life"
+class PdfUiFragmentWrapper : PdfUiFragment() {
+    override fun onDocumentLoaded(document: PdfDocument) {
+        super.onDocumentLoaded(document)
+        callback?.let { callback ->
+            val position = extractPositionFromUri(document.documentSource.fileUri)
+            callback(position)
+        }
+    }
+
+    private fun extractPositionFromUri(uri: Uri?): Int {
+        return paths[uri!!.path!!] ?: return 0
+    }
+
+    companion object {
+        var callback: ((Int) -> Unit)? = null
+        var paths = HashMap<String, Int>()
+    }
 }
 
 /**
@@ -285,23 +306,29 @@ val themeLight = baseConfig.invertColors(false).build()
  * @param position The position index of the fragment
  * @return The PdfFragment if found, null otherwise
  */
-fun AppCompatActivity.findFragment(position: Int): PdfFragment? {
-    return supportFragmentManager.findFragmentByTag("f$position")?.let {
-        it as? PdfFragment
+fun AppCompatActivity.findFragment(position: Int): PdfFragment? =
+    supportFragmentManager.findFragmentByTag("f$position")?.let {
+        when (it) {
+            is PdfFragment -> it
+            is PdfUiFragment -> it.pdfFragment
+            else -> null
+        }
     }
-}
 
 /**
- * Extension function to remove all PDF fragments from the activity's FragmentManager.
+ * Extension function to remove all Pdf(Ui) fragments from the activity's FragmentManager.
  * This is useful for cleanup operations or when resetting the ViewPager state.
  */
 fun AppCompatActivity.clearFragments() {
-    // Remove all fragments from the FragmentManager
     val fragmentManager = supportFragmentManager
-    fragmentManager.fragments.forEach { fragment ->
-        if (fragment is PdfFragment) {
-            fragmentManager.beginTransaction().remove(fragment).commitNow()
-        }
+    val pdfUiPredicate: (Fragment) -> Boolean = { it is PdfUiFragment }
+    val pdfPredicate: (Fragment) -> Boolean = { it is PdfFragment }
+
+    // check if we have any PdfUiFragments, if so, we want to remove those instead of PdfFragments
+    val filterPredicate = if (fragmentManager.fragments.any(pdfUiPredicate)) pdfUiPredicate else pdfPredicate
+
+    fragmentManager.fragments.filter(filterPredicate).forEach { fragment ->
+        fragmentManager.beginTransaction().remove(fragment).commitNow()
     }
 }
 
@@ -370,32 +397,21 @@ fun isDarkModeActive(context: Context): Boolean {
 }
 
 /**
- * Copies PDF files from the app's assets to local storage if they don't already exist.
- * This ensures PDF files are available for the PdfFragment to load.
- * @param context The application context for accessing assets and file directory
- * @param list List of filenames (without .pdf extension) to copy
- * @param finish Callback invoked after all files have been processed
+ * Repository object that manages the list of PDF files used in the ViewPager2 example.
+ * Provides methods to retrieve file names and their corresponding paths.
  */
-fun copyFilesFromAssetsToLocalStorage(
-    context: Context,
-    list: List<String>,
-    finish: () -> Unit = {}
-) {
-    // Process each filename in the list
-    list.forEach { fileName ->
-        val copiedFile = File(context.filesDir, "$fileName.pdf")
+object FileRepo {
+    private val fileNames = listOf(
+        WELCOME_DOC,
+        "Scientific-paper.pdf",
+        "Teacher.pdf",
+        "The-Cosmic-Context-for-Life.pdf"
+    )
 
-        // Only copy if the file doesn't already exist in local storage
-        if (!copiedFile.exists()) {
-            context.assets.open("$fileName.pdf").use { input ->
-                copiedFile.outputStream().use { output ->
-                    // Copy with 8KB buffer for efficient file transfer
-                    input.copyTo(output, BUFFER_SIZE)
-                }
-            }
-        }
-    }
+    val size get() = fileNames.size
 
-    // Invoke completion callback
-    finish.invoke()
+    fun getFileName(position: Int) = fileNames[position]
+
+    fun getPdfPath(position: Int): String =
+        "file:///android_asset/${getFileName(position)}"
 }

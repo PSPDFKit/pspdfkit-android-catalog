@@ -30,7 +30,7 @@
         errorLine2="        ^">
         <location
             file="src/main/java/com/pspdfkit/catalog/examples/java/activities/CustomSearchUiActivity.java"
-            line="353"
+            line="354"
             column="9"/>
     </issue>
 
@@ -52,7 +52,7 @@
         errorLine2="        ^">
         <location
             file="src/main/java/com/pspdfkit/catalog/examples/java/FormsJavaScriptExample.java"
-            line="68"
+            line="69"
             column="9"/>
     </issue>
 
@@ -63,7 +63,7 @@
         errorLine2="            ^">
         <location
             file="src/main/java/com/pspdfkit/catalog/examples/java/screenreader/ScreenReader.java"
-            line="130"
+            line="132"
             column="13"/>
     </issue>
 
@@ -651,39 +651,6 @@
     </issue>
 
     <issue
-        id="PrivateResource"
-        message="The resource `@drawable/pspdf__ic_align` is marked as private in android:sdk-nutrient:unspecified"
-        errorLine1="        app:icon=&quot;@drawable/pspdf__ic_align&quot; />"
-        errorLine2="                  ~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/activity_document_comparison.xml"
-            line="23"
-            column="19"/>
-    </issue>
-
-    <issue
-        id="PrivateResource"
-        message="The resource `@string/pspdf__ai_assistant_title` is marked as private in android:sdk-nutrient:unspecified"
-        errorLine1="        android:title=&quot;@string/pspdf__ai_assistant_title&quot;"
-        errorLine2="                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/menu/ai_assistant_viewpager_example.xml"
-            line="13"
-            column="24"/>
-    </issue>
-
-    <issue
-        id="PrivateResource"
-        message="The resource `@color/pspdf__outlineDark` is marked as private in android:sdk-nutrient:unspecified"
-        errorLine1="        &lt;item name=&quot;pspdf__fontButtonsTintColorChecked&quot;>@color/pspdf__outlineDark&lt;/item>"
-        errorLine2="                                                        ~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/dark_theme.xml"
-            line="68"
-            column="57"/>
-    </issue>
-
-    <issue
         id="UseCompoundDrawables"
         message="This tag and its children can be replaced by one `&lt;TextView/>` and a compound drawable"
         errorLine1="&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
@@ -976,7 +943,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="72"
+            line="70"
             column="13"/>
     </issue>
 
@@ -987,7 +954,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="73"
+            line="71"
             column="13"/>
     </issue>
 
@@ -1042,7 +1009,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="383"
+            line="382"
             column="13"/>
     </issue>
 

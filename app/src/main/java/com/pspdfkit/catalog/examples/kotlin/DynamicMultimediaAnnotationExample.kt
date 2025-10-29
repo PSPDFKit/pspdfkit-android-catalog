@@ -4,20 +4,53 @@
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
  */
+package com.pspdfkit.catalog.examples.kotlin
 
-package com.pspdfkit.catalog.examples.java.activities
-
+import android.content.Context
 import android.graphics.RectF
 import android.net.Uri
 import androidx.activity.viewModels
 import com.pspdfkit.annotations.LinkAnnotation
 import com.pspdfkit.annotations.actions.UriAction
-import com.pspdfkit.catalog.examples.java.DynamicMultimediaAnnotationExample
-import com.pspdfkit.catalog.examples.kotlin.AnnotationCreationViewModel
+import com.pspdfkit.catalog.R
+import com.pspdfkit.catalog.SdkExample
+import com.pspdfkit.catalog.tasks.ExtractAssetTask
+import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.document.PdfDocument
 import com.pspdfkit.ui.PdfActivity
+import com.pspdfkit.ui.PdfActivityIntentBuilder
 import org.intellij.lang.annotations.Language
 import java.io.File
+import kotlin.getValue
+
+/** This example showcases how to dynamically add multimedia content to a PDF document.  */
+class DynamicMultimediaAnnotationExample(context: Context) : SdkExample(
+    context.getString(R.string.dynamicMultimediaExampleTitle),
+    context.getString(R.string.dynamicMultimediaExampleDescription)
+) {
+    override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
+        // Before launching the example, we extract one video file to the private app folder. This
+        // file will be used to dynamically add
+        // another link annotation to the document at runtime.
+        ExtractAssetTask.extract("media/videos/small.mp4", title, context, false, "mp4") { videoFile: File? ->
+            // Next extract the demo document and launch it.
+            ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile: File? ->
+                // For normal multimedia content playback, it is not necessary to subclass PdfActivity as no custom code is required (only
+                // annotations using the pspdfkit:// scheme have to be present). However, if you want to dynamically add multimedia annotations
+                // to a document, it is preferable to do this using a custom activity class (as done by this example).
+                val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
+                    .configuration(configuration.build())
+                    .activityClass(MultimediaAnnotationsActivity::class.java)
+                    .build()
+
+                // Pass the file system path to our video file to the activity. The activity will use the path to dynamically add a multimedia link
+                // annotation to the PDF for opening the extracted video.
+                intent.putExtra(MultimediaAnnotationsActivity.EXTRA_VIDEO_PATH, videoFile!!.getAbsolutePath())
+                context.startActivity(intent)
+            }
+        }
+    }
+}
 
 /**
  * This activity is part of the [DynamicMultimediaAnnotationExample] and shows how to dynamically add multimedia annotations to a PDF document.

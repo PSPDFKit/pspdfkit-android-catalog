@@ -28,11 +28,9 @@ import com.pspdfkit.catalog.examples.java.CustomToolbarIconGroupingExample
 import com.pspdfkit.catalog.examples.java.DisabledAnnotationPropertyExample
 import com.pspdfkit.catalog.examples.java.DocumentSharingExample
 import com.pspdfkit.catalog.examples.java.DocumentSwitcherExample
-import com.pspdfkit.catalog.examples.java.DynamicMultimediaAnnotationExample
 import com.pspdfkit.catalog.examples.java.FilterableThumbnailGridExample
 import com.pspdfkit.catalog.examples.java.FormEditingInFragmentExample
 import com.pspdfkit.catalog.examples.java.FormsJavaScriptExample
-import com.pspdfkit.catalog.examples.java.IndexedFullTextSearchExample
 import com.pspdfkit.catalog.examples.java.JavaScriptActionsExample
 import com.pspdfkit.catalog.examples.java.JavaScriptFormFillingExample
 import com.pspdfkit.catalog.examples.java.RandomDocumentReplacementExample
@@ -75,6 +73,7 @@ import com.pspdfkit.catalog.examples.kotlin.DocumentPagerExample
 import com.pspdfkit.catalog.examples.kotlin.DocumentProcessingExample
 import com.pspdfkit.catalog.examples.kotlin.DocumentScrollExample
 import com.pspdfkit.catalog.examples.kotlin.DocumentTabsExample
+import com.pspdfkit.catalog.examples.kotlin.DynamicMultimediaAnnotationExample
 import com.pspdfkit.catalog.examples.kotlin.ELearningExample
 import com.pspdfkit.catalog.examples.kotlin.EmptyActivityExample
 import com.pspdfkit.catalog.examples.kotlin.ExternalDocumentExample
@@ -87,6 +86,8 @@ import com.pspdfkit.catalog.examples.kotlin.FragmentExample
 import com.pspdfkit.catalog.examples.kotlin.GenerateReportExample
 import com.pspdfkit.catalog.examples.kotlin.HideRevealAnnotationsCreationExample
 import com.pspdfkit.catalog.examples.kotlin.ImageDocumentExample
+import com.pspdfkit.catalog.examples.kotlin.IndexedFullTextSearchExample
+import com.pspdfkit.catalog.examples.kotlin.IndexedFullTextSearchLegacyExample
 import com.pspdfkit.catalog.examples.kotlin.InlineMediaExample
 import com.pspdfkit.catalog.examples.kotlin.InstantJsonAttachmentExample
 import com.pspdfkit.catalog.examples.kotlin.JavaScriptCalculatorExample
@@ -287,10 +288,17 @@ fun getSectionsWithExamples(context: Context) = listOf(
         CustomActionsExample(context),
         CustomToolbarIconGroupingExample(context),
         CustomAnnotationCreationToolbarExample(context),
-        CustomInlineSearchExample(context),
-        CustomSearchUiExample(context),
         DisabledAnnotationPropertyExample(context),
         TextHighlightPopupCustomisationExample(context)
+    ),
+
+    SdkExample.Section(
+        context.getString(R.string.example_section_search),
+        R.drawable.ic_topbar_search,
+        CustomInlineSearchExample(context),
+        CustomSearchUiExample(context),
+        IndexedFullTextSearchExample(context),
+        IndexedFullTextSearchLegacyExample(context)
     ),
 
     SdkExample.Section(
@@ -320,7 +328,6 @@ fun getSectionsWithExamples(context: Context) = listOf(
         PersistentTabsExample(context),
         FilterableThumbnailGridExample(context),
         ScreenReaderExample(context),
-        IndexedFullTextSearchExample(context),
         InlineMediaExample(context),
         DynamicMultimediaAnnotationExample(context),
         RandomDocumentReplacementExample(context),

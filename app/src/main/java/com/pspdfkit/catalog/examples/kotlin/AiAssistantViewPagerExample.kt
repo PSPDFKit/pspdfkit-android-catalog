@@ -111,7 +111,7 @@ class AiAssistantViewPagerActivity : AppCompatActivity(), AiAssistantProvider {
         return com.pspdfkit.ai.createAiAssistant(
             context = this,
             documentsDescriptors = documentDescriptors,
-            ipAddress = ipAddressValue,
+            serverUrl = "http://$ipAddressValue:4000",
             sessionId = sessionId,
             jwtToken = { documentIds ->
                 JwtGenerator.generateJwtToken(

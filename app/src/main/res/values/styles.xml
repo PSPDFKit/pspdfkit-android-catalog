@@ -30,8 +30,8 @@
         <item name="colorPrimary">@color/primaryLight</item>
         <item name="colorPrimaryDark">@color/onPrimaryContainerLight</item>
         <item name="colorAccent">@color/onPrimaryContainerLight</item>
-        <item name="colorSecondary">@color/secondaryLight</item>
-        <item name="colorOnSecondary">@color/onSecondaryLight</item>
+        <item name="colorSecondary">@color/secondaryContainerDark</item>
+        <item name="colorOnSecondary">@color/onSecondaryDark</item>
         <item name="android:windowBackground">@color/onPrimaryContainerLight</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -48,11 +48,12 @@
         <item name="pspdf__inlineSearchStyle">@style/PSPDFKit.SearchViewInline</item>
         <item name="pspdf__modularSearchStyle">@style/PSPDFKit.SearchViewModular</item>
         <item name="pspdf__thumbnailBarStyle">@style/PSPDFKit.ThumbnailBar</item>
-        <item name="pspdf__thumbnailGridStyle">@style/PSPDFKit.ThumbnailGrid</item>
+        <item name="pspdf__thumbnailGridStyle">@style/PSPDFCatalog.ThumbnailGrid</item>
         <item name="pspdf__searchResultHighlighterStyle">@style/PSPDFKit.SearchResultHighlighter</item>
         <item name="pspdf__annotationStyle">@style/PSPDFKit.Annotation</item>
-        <item name="pspdf__annotationSelectionStyle">@style/PSPDFKit.AnnotationSelection</item>
+        <item name="pspdf__annotationSelectionStyle">@style/PSPDFCatalog.AnnotationSelection</item>
         <item name="pspdf__noteEditorStyle">@style/PSPDFKit.NoteEditorView</item>
+        <item name="pspdf__textSelectionStyle">@style/PSPDFCatalog.TextSelection</item>
         <item name="pspdf__annotationCreationToolbarIconsStyle">@style/PSPDFKit.AnnotationCreationToolbarIcons</item>
         <item name="pspdf__annotationEditingToolbarIconsStyle">@style/PSPDFKit.AnnotationEditingToolbarIcons</item>
         <item name="pspdf__textSelectionToolbarIconsStyle">@style/PSPDFKit.TextSelectionToolbarIcons</item>
@@ -70,11 +71,36 @@
         <item name="pspdf__formSelectionStyle">@style/PSPDFKit.FormSelection</item>
         <item name="pspdf__formEditingBarStyle">@style/PSPDFKit.FormEditingBar</item>
         <item name="pspdf__tabBarStyle">@style/PSPDFCatalog.TabBar</item>
+        <item name="pspdf__breadCrumbsViewStyle">@style/PSPDFCatalog.BreadCrumbsView</item>
+    </style>
+
+    <style name="PSPDFCatalog.TextSelection" parent="PSPDFKit.TextSelection">
+        <item name="pspdf__highlightColor">@color/secondaryDark</item>
+        <item name="pspdf__leftHandleColor">?colorSecondary</item>
+        <item name="pspdf__rightHandleColor">?colorSecondary</item>
+    </style>
+    <style name="PSPDFCatalog.ThumbnailGrid" parent="PSPDFKit.ThumbnailGrid">
+        <item name="pspdf__itemRippleBackgroundColor">@color/primaryLight</item>
+    </style>
+
+    <style name="PSPDFCatalog.AnnotationSelection" parent="PSPDFKit.AnnotationSelection">
+        <item name="pspdf__borderColor">@color/secondaryContainerLight</item>
+        <item name="pspdf__scaleHandleColor">@color/secondaryContainerLight</item>
+        <item name="pspdf__editHandleColor">@color/secondaryDark</item>
+    </style>
+
+    <style name="PSPDFCatalog.BreadCrumbsView" parent="PSPDFKit.BreadCrumbsView">
+        <item name="pspdf__titleColor">@color/primaryContainerLight</item>
+        <item name="pspdf__dividerColor">@color/primaryDark</item>
     </style>
 
     <style name="PSPDFCatalog.SettingsDialog" parent="PSPDFKit.SettingsDialog" />
 
-    <style name="PSPDFCatalog.SignatureLayout" parent="PSPDFKit.SignatureLayout" />
+    <style name="PSPDFCatalog.SignatureLayout" parent="PSPDFKit.SignatureLayout">
+        <item name="pspdf__selectedTabIndicatorColor">@color/primaryContainerLight</item>
+        <item name="pspdf__signatureListSelectedItemBackground">@color/pixel_mist</item>
+        <item name="pspdf__signatureListItemBackground">@android:color/transparent</item>
+    </style>
 
     <style name="PSPDFCatalog.Theme.ToolbarPopupTheme" parent="@style/PSPDFKit.ToolbarPopupTheme">
         <item name="android:colorBackground">@color/primaryLight</item>
@@ -86,10 +112,7 @@
         <item name="pspdf__tabIconColorSelected">@color/onPrimaryLight</item>
     </style>
 
-    <style name="PSPDFCatalog.Theme.MainToolbarStyle">
-        <item name="pspdf__backgroundColor">?colorPrimary</item>
-        <item name="pspdf__textColor">@color/onPrimaryLight</item>
-
+    <style name="PSPDFCatalog.Theme.MainToolbarStyle" parent="PSPDFKit.MainToolbar">
         <item name="pspdf__toolbarTheme">@style/ThemeOverlay.AppCompat.ActionBar</item>
         <item name="pspdf__toolbarPopupTheme">@style/PSPDFCatalog.Theme.ToolbarPopupTheme</item>
     </style>
@@ -169,6 +192,7 @@
     <style name="PSPDFKit.AnnotationCreationToolbarIcons.ConstructionExample" parent="PSPDFKit.AnnotationCreationToolbarIcons">
         <item name="pspdf__stampIcon">@drawable/ic_pin_drop</item>
     </style>
+
     <style name="PSPDFCatalog.Theme.ConstructionExample">
         <item name="pspdf__annotationCreationToolbarIconsStyle">@style/PSPDFKit.AnnotationCreationToolbarIcons.ConstructionExample</item>
     </style>

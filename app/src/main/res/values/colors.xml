@@ -5,35 +5,89 @@
   ~   Please see License for details. This notice may not be removed from this file.
   -->
 
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="UnusedResources">
+    <!-- Nutrient brand colors -->
+    <color name="disk_pink">#FFDE9DCC</color>
+    <color name="code_coral">#FFF25E45</color>
+    <color name="data_green">#FF6EB579</color>
+    <color name="digital_pollen">#FFF0C968</color>
+
+    <color name="off_white">#FFEFEBE7</color>
+    <color name="pixel_mist">#FFE2DBD9</color>
+    <color name="soft_grey">#FFC2B8AE</color>
+    <color name="warm_grey">#FF67594B</color>
+
+    <!-- theme colors created from the above brand colors using https://material-foundation.github.io/material-theme-builder/ -->
     <color name="primaryLight">#FF834C76</color>
-    <color name="onPrimaryLight">#FFFFFFFF</color>
-    <color name="primaryContainerLight">#FFDE9DCC</color>
+    <color name="onPrimaryLight">@color/pspdf__color_white</color>
+    <color name="primaryContainerLight">@color/disk_pink</color>
     <color name="onPrimaryContainerLight">#FF65325A</color>
     <color name="secondaryLight">#FF256B38</color>
     <color name="onSecondaryLight">#FFFFFFFF</color>
+    <color name="secondaryContainerLight">@color/data_green</color>
+    <color name="onSecondaryContainerLight">#FF00451B</color>
+    <color name="tertiaryLight">#FF765A00</color>
+    <color name="onTertiaryLight">#FFFFFFFF</color>
+    <color name="tertiaryContainerLight">@color/digital_pollen</color>
+    <color name="onTertiaryContainerLight">#FF6D5300</color>
+    <color name="errorLight">#FFAC2C19</color>
+    <color name="onErrorLight">#FFFFFFFF</color>
+    <color name="errorContainerLight">#FFCE452E</color>
+    <color name="onErrorContainerLight">#FFFFFBFF</color>
     <color name="backgroundLight">#FFFFF7F9</color>
+    <color name="onBackgroundLight">#FF1F1A1D</color>
     <color name="surfaceLight">#FFFDF8F7</color>
+    <color name="onSurfaceLight">#FF1C1B1B</color>
+    <color name="surfaceVariantLight">#FFEBE1D7</color>
+    <color name="onSurfaceVariantLight">#FF4C463F</color>
+    <color name="outlineLight">#FF7D766E</color>
     <color name="outlineVariantLight">#FFCEC5BC</color>
-
+    <color name="scrimLight">#FF000000</color>
+    <color name="inverseSurfaceLight">#FF313030</color>
+    <color name="inverseOnSurfaceLight">#FFF4F0EF</color>
+    <color name="inversePrimaryLight">#FFF5B2E2</color>
+    <color name="surfaceDimLight">#FFDDD9D8</color>
+    <color name="surfaceBrightLight">#FFFDF8F7</color>
+    <color name="surfaceContainerLowestLight">#FFFFFFFF</color>
+    <color name="surfaceContainerLowLight">#FFF7F3F2</color>
+    <color name="surfaceContainerLight">#FFF1EDEC</color>
+    <color name="surfaceContainerHighLight">#FFEBE7E6</color>
+    <color name="surfaceContainerHighestLight">#FFE5E2E1</color>
 
     <color name="primaryDark">#FFFCB8E8</color>
     <color name="onPrimaryDark">#FF4E1E45</color>
-    <color name="primaryContainerDark">#FFDE9DCC</color>
+    <color name="primaryContainerDark">@color/disk_pink</color>
     <color name="onPrimaryContainerDark">#FF65325A</color>
     <color name="secondaryDark">#FF8ED798</color>
+    <color name="secondaryDark_translucent">#998ED798</color>
     <color name="onSecondaryDark">#FF003915</color>
-    <color name="secondaryContainerDark">#FF6EB579</color>
-    <color name="tertiaryContainerDark">#FFF0C968</color>
+    <color name="secondaryContainerDark">@color/data_green</color>
+    <color name="onSecondaryContainerDark">#FF00451B</color>
+    <color name="tertiaryDark">#FFFFE7B5</color>
+    <color name="onTertiaryDark">#FF3E2E00</color>
+    <color name="tertiaryContainerDark">@color/digital_pollen</color>
+    <color name="onTertiaryContainerDark">#FF6D5300</color>
     <color name="errorDark">#FFFFB4A6</color>
     <color name="onErrorDark">#FF660700</color>
     <color name="errorContainerDark">#FFF56047</color>
+    <color name="onErrorContainerDark">#FF560500</color>
     <color name="backgroundDark">#FF171215</color>
     <color name="onBackgroundDark">#FFEAE0E4</color>
     <color name="surfaceDark">#FF141313</color>
     <color name="onSurfaceDark">#FFE5E2E1</color>
+    <color name="surfaceVariantDark">#FF4C463F</color>
     <color name="onSurfaceVariantDark">#FFCEC5BC</color>
     <color name="outlineDark">#FF988F87</color>
+    <color name="outlineVariantDark">#FF4C463F</color>
+    <color name="scrimDark">#FF000000</color>
+    <color name="inverseSurfaceDark">#FFE5E2E1</color>
     <color name="inverseOnSurfaceDark">#FF313030</color>
+    <color name="inversePrimaryDark">#FF834C76</color>
+    <color name="surfaceDimDark">#FF141313</color>
     <color name="surfaceBrightDark">#FF3A3938</color>
+    <color name="surfaceContainerLowestDark">#FF0E0E0E</color>
+    <color name="surfaceContainerLowDark">#FF1C1B1B</color>
+    <color name="surfaceContainerDark">#FF201F1F</color>
+    <color name="surfaceContainerHighDark">#FF2B2A29</color>
+    <color name="surfaceContainerHighestDark">#FF363434</color>
 </resources>

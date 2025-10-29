@@ -10,7 +10,7 @@
     <item
         android:id="@+id/pspdf__menu_option_ai_assistant"
         android:icon="@drawable/ic_ai_assistant"
-        android:title="@string/pspdf__ai_assistant_title"
+        android:title="@string/ai_assistant_title"
         app:iconTint="@color/onPrimaryLight"
         app:showAsAction="always" />
 </menu>

@@ -20,6 +20,6 @@
         android:layout_alignParentBottom="true"
         android:layout_margin="16dp"
         android:text="@string/pspdf__align"
-        app:icon="@drawable/pspdf__ic_align" />
+        app:icon="@drawable/ic_align" />
 
 </RelativeLayout>

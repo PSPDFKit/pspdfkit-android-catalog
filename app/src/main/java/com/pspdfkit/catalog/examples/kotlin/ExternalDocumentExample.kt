@@ -39,6 +39,9 @@ class ExternalDocumentExample(context: Context) :
     SdkExample(context, R.string.externalDocumentExampleTitle, R.string.externalDocumentExampleDescription) {
 
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
+        // Let's not save any changes to the opened file system documents in this example.
+        configuration.autosaveEnabled(false)
+
         val intent = Intent(context, ExternalExampleActivity::class.java)
         intent.putExtra(ExternalExampleActivity.EXTRA_CONFIGURATION, configuration.build())
         context.startActivity(intent)

@@ -256,9 +256,15 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.java.activities.IndexedFullTextSearchActivity"
-            android:label="@string/fullTextSearchIndexingExampleTitle"
+            android:name=".examples.kotlin.IndexedFullTextSearchLegacyActivity"
+            android:label="@string/indexedFtsLegacyExampleTitle"
             android:theme="@style/Theme.AppCompat.Light" />
+
+
+        <activity
+            android:name=".examples.kotlin.IndexedFullTextSearchActivity"
+            android:label="@string/indexedFtsExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
 
         <activity
             android:name=".examples.java.activities.CustomInlineSearchExampleActivity"
@@ -326,7 +332,7 @@
         <activity android:name=".examples.kotlin.instant.activities.EnterDocumentLinkActivity" />
 
         <activity
-            android:name=".examples.java.activities.MultimediaAnnotationsActivity"
+            android:name=".examples.kotlin.MultimediaAnnotationsActivity"
             android:label="@string/inlineMultimediaExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 

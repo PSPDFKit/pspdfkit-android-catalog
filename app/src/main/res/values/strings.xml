@@ -135,8 +135,6 @@
     <string name="documentSharingExampleDescription">How to implement custom sharing actions.</string>
     <string name="documentSharingMenuExampleTitle">Custom Document Sharing Menu</string>
     <string name="documentSharingMenuExampleDescription">Showcases how to build a custom share menu action.</string>
-    <string name="fullTextSearchIndexingExampleTitle">FTS Indexing Example</string>
-    <string name="fullTextSearchIndexingExampleDescription">Index all documents of the catalog app and make them searchable.</string>
     <string name="customSearchUiExampleTitle">Custom Search UI</string>
     <string name="customSearchUiExampleDescription">Showcases how to build a custom search view on top of the search API.</string>
     <string name="customSearchUiComposeExampleTitle">Custom Search UI Compose</string>
@@ -342,6 +340,7 @@
     <string name="example_section_document_processing">Document Processing</string>
     <string name="example_section_layout_customization">Layout Customization</string>
     <string name="example_section_toolbar_customization">Toolbar Customization</string>
+    <string name="example_section_search">Search</string>
     <string name="example_section_sharing">Sharing</string>
     <string name="example_section_jc_examples">Jetpack Compose</string>
     <string name="example_section_misc_examples">Misc. Examples</string>
@@ -408,9 +407,16 @@
     <string name="ai_assistant_dialog_textfield_placeholder">Enter IP address here…</string>
     <string name="ai_assistant_dialog_text">Please enter IP address of the server running AI Assistant</string>
     <string name="ai_assistant_dialog_confirm_button">Continue</string>
+    <string name="ai_assistant_title">AI Assistant</string>
 
     <!-- Customer signature creation and parsing -->
     <string name="customSignatureParseExampleTitle">Stamp signature parcelize</string>
     <string name="customSignatureParseExampleBody">Shows how to create stamp signature and verify it has been parsed correctly upon passing between activities.</string>
+
+    <!-- Indexed Full text search example -->
+    <string name="indexedFtsExampleTitle">FTS Indexing Example</string>
+    <string name="indexedFtsExampleDescription">Index PDF assets and search through them using PdfLibrary and LibraryFileSystemDataSource.</string>
+    <string name="indexedFtsLegacyExampleTitle">FTS Indexing Example (legacy)</string>
+    <string name="indexedFtsLegacyExampleDescription">Index all documents of the catalog app and make them searchable. Uses an older API. For a modern example with directory support, see the non-legacy example.</string>
 
 </resources>

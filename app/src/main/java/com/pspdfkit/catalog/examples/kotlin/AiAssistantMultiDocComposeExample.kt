@@ -186,7 +186,7 @@ class AiAssistantMultiDocComposeActivity : AppCompatActivity(), AiAssistantProvi
             createAiAssistant(
                 context = this@AiAssistantMultiDocComposeActivity,
                 documentsDescriptors = documentDescriptors,
-                ipAddress = ipAddressValue.orEmpty(),
+                serverUrl = "http://$ipAddressValue:4000",
                 sessionId = sessionId,
                 jwtToken = { documentIds ->
                     JwtGenerator.generateJwtToken(

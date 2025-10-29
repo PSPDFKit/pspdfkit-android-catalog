@@ -89,7 +89,7 @@ class AiAssistantDocumentTabsActivity : PdfActivity(), AiAssistantProvider {
     fun getAiAssistantInstance() = com.pspdfkit.ai.createAiAssistant(
         context = this,
         documentsDescriptors = documentCoordinator.documents,
-        ipAddress = ipAddressValue,
+        serverUrl = "http://$ipAddressValue:4000",
         sessionId = sessionId,
         jwtToken = { documentIds ->
             JwtGenerator.generateJwtToken(

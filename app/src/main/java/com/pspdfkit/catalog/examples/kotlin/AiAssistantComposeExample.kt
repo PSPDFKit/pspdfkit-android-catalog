@@ -133,7 +133,7 @@ class AiAssistantComposeActivity : AppCompatActivity(), AiAssistantProvider {
             createAiAssistant(
                 context = this@AiAssistantComposeActivity,
                 documentsDescriptors = listOf(documentDescriptor),
-                ipAddress = ipAddressValue.orEmpty(),
+                serverUrl = "http://$ipAddressValue:4000",
                 sessionId = sessionId,
                 jwtToken = { documentIds ->
                     JwtGenerator.generateJwtToken(
@@ -149,6 +149,9 @@ class AiAssistantComposeActivity : AppCompatActivity(), AiAssistantProvider {
                     )
                 }
             ).also {
+                // Enable/disable text selection in AI Assistant chat messages
+                // false = disable, true = enable (default)
+                // it.enableTextSelection(false)
                 assistant = it
             }
         }

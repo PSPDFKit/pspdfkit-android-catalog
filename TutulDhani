@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Link Saya</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: linear-gradient(to right, #f9e7fe, #ffe6e6);
+    }
+    .btn {
+      display: block;
+      margin: 20px auto;
+      padding: 15px;
+      width: 80%;
+      max-width: 300px;
+      font-size: 18px;
+      color: white;
+      background: blue;
+      border-radius: 12px;
+      box-shadow: 3px 3px 0 red;
+      text-decoration: none;
+    }
+    .btn:hover {
+      opacity: 0.9;
+    }
+  </style>
+</head>
+<body>
+  <h2>Selamat Datang!</h2>
+  <a href="https://link1.com" class="btn">▶ Ketuk untuk Melihat</a>
+  <a href="https://link2.com" class="btn">🔇 Lihat Lebih Banyak</a>
+</body>
+</html>

@@ -12,14 +12,12 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
@@ -56,32 +54,28 @@ class JetpackComposeImageActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
+        enableEdgeToEdge()
         val uri = intent.getSupportParcelableExtra(EXTRA_URI, Uri::class.java)!!
 
         setContent {
             CatalogTheme {
-                Scaffold(
+                Surface(
                     modifier = Modifier.background(color = MaterialTheme.colorScheme.onPrimaryContainer)
-                        .statusBarsPadding()
-                ) { paddingValues ->
+                ) {
                     val imageDocumentConfiguration =
                         ImageDocumentLoader.getDefaultImageDocumentActivityConfiguration(this)
 
                     val documentState = rememberImageDocumentState(uri, imageDocumentConfiguration)
+                    ImageDocumentView(
+                        documentState = documentState,
+                        modifier = Modifier.fillMaxSize()
+                    )
 
-                    Box(Modifier.padding(paddingValues)) {
-                        ImageDocumentView(
-                            documentState = documentState,
-                            modifier = Modifier.fillMaxSize()
-                        )
-
-                        // Loading via uri is also supported, and the default pdfActivityConfiguration is being used
-                        // ImageDocumentView(
-                        //     imageUri = uri,
-                        //     modifier = Modifier.fillMaxSize()
-                        // )
-                    }
+                    // Loading via uri is also supported, and the default pdfActivityConfiguration is being used
+                    // ImageDocumentView(
+                    //     imageUri = uri,
+                    //     modifier = Modifier.fillMaxSize()
+                    // )
                 }
             }
         }

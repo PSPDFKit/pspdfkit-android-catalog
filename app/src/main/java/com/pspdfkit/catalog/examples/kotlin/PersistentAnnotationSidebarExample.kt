@@ -150,8 +150,8 @@ class PersistentAnnotationSidebarActivity : AppCompatActivity() {
 
                     override fun onAnnotationZOrderChanged(
                         pageIndex: Int,
-                        oldOrder: MutableList<Annotation>,
-                        newOrder: MutableList<Annotation>
+                        oldOrder: List<Annotation>,
+                        newOrder: List<Annotation>
                     ) {
                         annotationRecyclerAdapter.refreshAnnotationsForPage(pageIndex)
                     }

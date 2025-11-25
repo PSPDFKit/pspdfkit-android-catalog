@@ -22,6 +22,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.shrinkVertically
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -45,6 +46,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -64,6 +66,7 @@ import com.pspdfkit.compose.theme.MainToolbarColors
 import com.pspdfkit.compose.theme.ToolbarPopupColors
 import com.pspdfkit.compose.theme.getUiColors
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
+import com.pspdfkit.configuration.page.PageFitMode
 import com.pspdfkit.configuration.page.PageLayoutMode
 import com.pspdfkit.configuration.page.PageScrollDirection
 import com.pspdfkit.configuration.page.PageScrollMode
@@ -149,8 +152,10 @@ class DocumentStateManager(
 
         // Create a new state with different configuration based on document index
         val context = LocalContext.current
+        val commonConfig = PdfActivityConfiguration.Builder(context)
+            .defaultToolbarEnabled(false).fitMode(PageFitMode.FIT_TO_WIDTH)
         val uri = getFileUri(files[index])
-        val configuration = createConfigurationForIndex(index, context)
+        val configuration = createConfigurationForIndex(index, commonConfig)
         val newState = rememberDocumentState(uri, configuration)
 
         // Store weak reference and return the new state
@@ -161,14 +166,10 @@ class DocumentStateManager(
     /**
      * Creates a specific configuration based on the document index
      */
-    private fun createConfigurationForIndex(index: Int, context: Context): PdfActivityConfiguration {
-        val config = PdfActivityConfiguration.Builder(context)
-            .defaultToolbarEnabled(false)
-        return when (index) {
-            0 -> config.scrollMode(PageScrollMode.PER_PAGE).build()
-            1 -> config.scrollDirection(PageScrollDirection.VERTICAL).build()
-            else -> config.layoutMode(PageLayoutMode.DOUBLE).build()
-        }
+    private fun createConfigurationForIndex(index: Int, commonConfig: PdfActivityConfiguration.Builder) = when (index) {
+        0 -> commonConfig.scrollMode(PageScrollMode.PER_PAGE).build()
+        1 -> commonConfig.scrollDirection(PageScrollDirection.VERTICAL).build()
+        else -> commonConfig.layoutMode(PageLayoutMode.DOUBLE).build()
     }
 }
 
@@ -190,20 +191,29 @@ fun PdfViewerPager(
 
     val pagerState = rememberPagerState(pageCount = { files.size })
     val coroutineScope = rememberCoroutineScope()
+    var hideTopBar by remember { mutableStateOf(true) }
 
     Column(modifier = Modifier.fillMaxSize()) {
         Scaffold(
             topBar = {
-                // Tab row for document selection
-                PdfTabRow(
-                    files = files,
-                    currentPage = pagerState.currentPage,
-                    onTabSelected = { index ->
-                        coroutineScope.launch {
-                            pagerState.animateScrollToPage(index)
+                AnimatedVisibility(
+                    visible = hideTopBar,
+                    enter = slideInVertically { with(localDensity) { -40.dp.roundToPx() } } +
+                        expandVertically(expandFrom = Alignment.Top) +
+                        fadeIn(initialAlpha = 0.3f),
+                    exit = slideOutVertically() + shrinkVertically() + fadeOut()
+                ) {
+                    // Tab row for document selection
+                    PdfTabRow(
+                        files = files,
+                        currentPage = pagerState.currentPage,
+                        onTabSelected = { index ->
+                            coroutineScope.launch {
+                                pagerState.animateScrollToPage(index)
+                            }
                         }
-                    }
-                )
+                    )
+                }
             }
         ) { paddingValues ->
             // Horizontal pager for PDF documents
@@ -212,12 +222,16 @@ fun PdfViewerPager(
                 state = pagerState,
                 modifier = Modifier.weight(1f)
             ) { page ->
-                PdfDocumentPage(
-                    page = page,
-                    documentStateManager = documentStateManager,
-                    paddingValues = paddingValues,
-                    localDensity = localDensity
-                )
+                key(page) {
+                    PdfDocumentPage(
+                        page = page,
+                        documentStateManager = documentStateManager,
+                        paddingValues = paddingValues,
+                        localDensity = localDensity
+                    ) {
+                        hideTopBar = it
+                    }
+                }
             }
         }
     }
@@ -236,7 +250,7 @@ private fun PdfTabRow(
     PrimaryTabRow(
         selectedTabIndex = currentPage,
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxWidth().background(MaterialTheme.colorScheme.background)
             .statusBarsPadding()
     ) {
         files.forEachIndexed { index, title ->
@@ -270,7 +284,8 @@ private fun PdfDocumentPage(
     page: Int,
     documentStateManager: DocumentStateManager,
     paddingValues: PaddingValues,
-    localDensity: Density
+    localDensity: Density,
+    updateTopBarVisibility: (Boolean) -> Unit
 ) {
     val context = LocalContext.current
     val documentState = documentStateManager.getOrCreateDocumentState(page)
@@ -286,19 +301,19 @@ private fun PdfDocumentPage(
     }
 
     Box(
-        modifier = Modifier.padding(paddingValues),
         contentAlignment = Alignment.TopCenter
     ) {
         Column {
             // Spacer to prevent content from being covered by toolbar
-            Box(modifier = Modifier.height(viewSpacerHeight))
+            Box(modifier = Modifier.height(viewSpacerHeight).padding(top = paddingValues.calculateTopPadding()))
 
             // PDF Document View
             DocumentView(
                 documentState = documentState,
                 modifier = Modifier.weight(1f),
                 documentManager = createDocumentManager(context) {
-                    toolbarVisibility = it
+                    toolbarVisibility = !it
+                    updateTopBarVisibility.invoke(!it)
                 }
             )
         }
@@ -313,6 +328,7 @@ private fun PdfDocumentPage(
         ) {
             // Common toolbar for all pages
             MainToolbar(
+                modifier = Modifier.padding(top = paddingValues.calculateTopPadding()),
                 documentState = documentState,
                 windowInsets = WindowInsets.captionBar,
                 colorScheme = createCustomUiColors(),

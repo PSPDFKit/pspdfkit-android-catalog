@@ -115,7 +115,7 @@ class AiAssistantComposeActivity : AppCompatActivity(), AiAssistantProvider {
                                 }
                             ),
                             uiListener = DefaultListeners.uiListeners(
-                                onImmersiveModeEnabled = { toolbarVisibility = it }
+                                onImmersiveModeEnabled = { toolbarVisibility = !it }
                             )
                         )
                     )

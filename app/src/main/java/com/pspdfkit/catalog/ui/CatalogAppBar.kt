@@ -199,7 +199,7 @@ private fun SearchToolbar(
             horizontalArrangement = Arrangement.SpaceBetween
         ) {
             val keyboardController = LocalSoftwareKeyboardController.current
-            val focusRequester = FocusRequester()
+            val focusRequester = remember { FocusRequester() }
 
             // Invalidate the current text field contents only when it's hidding/showing
             // This is to prevent a feedback loop a single input turns into a repetition of itself.

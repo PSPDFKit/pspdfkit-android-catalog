@@ -6,7 +6,7 @@
   -->
 
 <resources>
-    <style name="Theme.Catalog.SplashScreen" parent="Theme.AppCompat.NoActionBar">
+    <style name="Theme.Catalog.SplashScreen" parent="PSPDFKit.Theme.Default">
         <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
         <item name="windowSplashScreenBackground">@color/ic_launcher_background</item>
         <item name="postSplashScreenTheme">@style/PSPDFCatalog.Theme.Light</item>

@@ -217,7 +217,7 @@ class MeasurementToolsActivity : PdfActivity(), AnnotationProvider.OnAnnotationU
         PdfLog.i("MeasurementExample", "Removed ${annotation.type} measurement annotation.")
     }
 
-    override fun onAnnotationZOrderChanged(pageIndex: Int, oldOrder: MutableList<Annotation>, newOrder: MutableList<Annotation>) {
+    override fun onAnnotationZOrderChanged(pageIndex: Int, oldOrder: List<Annotation>, newOrder: List<Annotation>) {
         // Nothing to do in this example.
     }
 }

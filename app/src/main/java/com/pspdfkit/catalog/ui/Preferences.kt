@@ -49,6 +49,7 @@ import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalResources
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
@@ -425,7 +426,7 @@ fun RadioSetting(
     onValueChanged: (Preferences.Key<String>, String) -> Unit
 ) {
     val context = LocalContext.current
-    val resources = LocalContext.current.resources
+    val resources = LocalResources.current
     val selectedOption = getRadioOptionStringFromEnumName(state.preferences[preference.key] as String, context)
 
     val possibleOptions = remember(preference.possibleValuesResource) {

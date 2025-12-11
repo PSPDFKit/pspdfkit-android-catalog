@@ -26,8 +26,9 @@ import com.pspdfkit.ui.PdfActivityIntentBuilder;
 public class DisabledAnnotationPropertyExample extends SdkExample {
     public DisabledAnnotationPropertyExample(@NonNull final Context context) {
         super(
-                context.getString(R.string.disabledAnnotationPropertyExampleTitle),
-                context.getString(R.string.disabledAnnotationPropertyExampleDescription));
+                context,
+                R.string.disabledAnnotationPropertyExampleTitle,
+                R.string.disabledAnnotationPropertyExampleDescription);
     }
 
     @Override

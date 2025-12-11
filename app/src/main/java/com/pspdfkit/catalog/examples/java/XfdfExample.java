@@ -23,7 +23,7 @@ import com.pspdfkit.ui.PdfActivityIntentBuilder;
 public class XfdfExample extends SdkExample {
 
     public XfdfExample(@NonNull final Context context) {
-        super(context.getString(R.string.xfdfExampleTitle), context.getString(R.string.xfdfExampleDescription));
+        super(context, R.string.xfdfExampleTitle, R.string.xfdfExampleDescription);
     }
 
     @Override

@@ -28,6 +28,7 @@ import com.pspdfkit.ui.PdfActivityIntentBuilder
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import java.util.EnumSet
 
 /**
  * This example shows how annotation changes can be exported to the Instant Document JSON format,
@@ -50,7 +51,7 @@ class DocumentJsonExample(context: Context) : SdkExample(context, R.string.docum
             .documentEditorEnabled(false)
             .outlineEnabled(false)
             .printingEnabled(false)
-            .setEnabledShareFeatures(ShareFeatures.none())
+            .setEnabledShareFeatures(EnumSet.noneOf(ShareFeatures::class.java))
             .searchEnabled(false)
 
         // Load and show the a custom activity for importing and exporting document JSON.

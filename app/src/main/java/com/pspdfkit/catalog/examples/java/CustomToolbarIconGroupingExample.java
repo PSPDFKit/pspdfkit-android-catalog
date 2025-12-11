@@ -27,8 +27,9 @@ public class CustomToolbarIconGroupingExample extends SdkExample {
 
     public CustomToolbarIconGroupingExample(@NonNull Context context) {
         super(
-                context.getString(R.string.customToolbarItemGroupingExampleTitle),
-                context.getString(R.string.customToolbarItemGroupingExampleDescription));
+                context,
+                R.string.customToolbarItemGroupingExampleTitle,
+                R.string.customToolbarItemGroupingExampleDescription);
     }
 
     @Override

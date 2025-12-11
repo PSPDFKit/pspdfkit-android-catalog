@@ -33,6 +33,7 @@ import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
 import com.pspdfkit.ui.special_mode.controller.AnnotationTool
 import com.pspdfkit.utils.PdfLog
+import java.util.EnumSet
 import kotlin.collections.forEach
 import kotlin.getValue
 
@@ -76,7 +77,7 @@ class MeasurementToolsExample(context: Context) :
             .documentInfoViewEnabled(false)
             .searchEnabled(false)
             .contentEditingEnabled(false)
-            .setEnabledShareFeatures(ShareFeatures.none())
+            .setEnabledShareFeatures(EnumSet.noneOf(ShareFeatures::class.java))
             .printingEnabled(false)
             .thumbnailGridEnabled(false)
             .setRedactionUiEnabled(false)

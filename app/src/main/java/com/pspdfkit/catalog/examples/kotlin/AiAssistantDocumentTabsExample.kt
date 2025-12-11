@@ -7,7 +7,6 @@
 
 package com.pspdfkit.catalog.examples.kotlin
 
-import JwtGenerator
 import android.content.Context
 import android.graphics.RectF
 import android.net.Uri
@@ -18,6 +17,7 @@ import com.pspdfkit.catalog.SdkExample.Companion.WELCOME_DOC
 import com.pspdfkit.catalog.examples.kotlin.AiAssistantComposeActivity.Companion.PREFERENCES_NAME
 import com.pspdfkit.catalog.examples.kotlin.AiAssistantComposeActivity.Companion.PREF_AI_IP_ADDRESS
 import com.pspdfkit.catalog.tasks.ExtractAssetTask.extractAsync
+import com.pspdfkit.catalog.utils.JwtGenerator
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.ui.DocumentDescriptor
 import com.pspdfkit.ui.PdfActivity

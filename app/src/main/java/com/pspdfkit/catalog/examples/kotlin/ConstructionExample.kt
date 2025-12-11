@@ -36,7 +36,6 @@ import com.pspdfkit.ui.toolbar.ContextualToolbar
 import com.pspdfkit.ui.toolbar.ToolbarCoordinatorLayout
 import com.pspdfkit.ui.toolbar.grouping.presets.MenuItem
 import com.pspdfkit.ui.toolbar.grouping.presets.PresetMenuItemGroupingRule
-import java.util.EnumSet
 
 class ConstructionExample(context: Context) : AssetExample(
     context,
@@ -80,7 +79,7 @@ class ConstructionExampleActivity :
     OnAnnotationEditingModeChangeListener {
 
     var annotationsHidden = false
-    val desiredAnnotationTypes = EnumSet.allOf(AnnotationType::class.java).apply {
+    val desiredAnnotationTypes = AnnotationType.entries.toMutableSet().apply {
         // ignore LINK annotations
         remove(AnnotationType.LINK)
     }

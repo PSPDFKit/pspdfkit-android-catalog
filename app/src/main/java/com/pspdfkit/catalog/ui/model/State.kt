@@ -22,6 +22,7 @@ import com.pspdfkit.configuration.page.PageScrollMode
 import com.pspdfkit.configuration.search.SearchType
 import com.pspdfkit.configuration.sharing.ShareFeatures
 import com.pspdfkit.configuration.theming.ThemeMode
+import java.util.EnumSet
 import java.util.Locale
 
 sealed class SearchState {
@@ -124,9 +125,9 @@ fun State.getPdfActivityConfigurationBuilder(context: Context): PdfActivityConfi
     configuration.toGrayscale(grayscale)
     configuration.invertColors(invertPageColors || themeMode == ThemeMode.NIGHT.name)
     if (showShareAction) {
-        configuration.setEnabledShareFeatures(ShareFeatures.all())
+        configuration.setEnabledShareFeatures(EnumSet.copyOf(ShareFeatures.entries))
     } else {
-        configuration.setEnabledShareFeatures(ShareFeatures.none())
+        configuration.setEnabledShareFeatures(EnumSet.noneOf(ShareFeatures::class.java))
     }
 
     return configuration

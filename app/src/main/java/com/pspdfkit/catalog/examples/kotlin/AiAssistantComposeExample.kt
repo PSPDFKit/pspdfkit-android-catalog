@@ -48,6 +48,7 @@ import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.SdkExample.Companion.WELCOME_DOC
 import com.pspdfkit.catalog.ui.theming.CatalogTheme
+import com.pspdfkit.catalog.utils.JwtGenerator
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.document.providers.AssetDataProvider
 import com.pspdfkit.jetpack.compose.interactors.DefaultListeners

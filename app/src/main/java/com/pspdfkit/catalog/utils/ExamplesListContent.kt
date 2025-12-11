@@ -30,9 +30,6 @@ import com.pspdfkit.catalog.examples.java.DocumentSharingExample
 import com.pspdfkit.catalog.examples.java.DocumentSwitcherExample
 import com.pspdfkit.catalog.examples.java.FilterableThumbnailGridExample
 import com.pspdfkit.catalog.examples.java.FormEditingInFragmentExample
-import com.pspdfkit.catalog.examples.java.FormsJavaScriptExample
-import com.pspdfkit.catalog.examples.java.JavaScriptActionsExample
-import com.pspdfkit.catalog.examples.java.JavaScriptFormFillingExample
 import com.pspdfkit.catalog.examples.java.RandomDocumentReplacementExample
 import com.pspdfkit.catalog.examples.java.ScreenReaderExample
 import com.pspdfkit.catalog.examples.java.SplitDocumentExample
@@ -82,6 +79,7 @@ import com.pspdfkit.catalog.examples.kotlin.FormClickInterceptExample
 import com.pspdfkit.catalog.examples.kotlin.FormCreationExample
 import com.pspdfkit.catalog.examples.kotlin.FormFillingExample
 import com.pspdfkit.catalog.examples.kotlin.FormTextFieldSuggestionExample
+import com.pspdfkit.catalog.examples.kotlin.FormsJavaScriptExample
 import com.pspdfkit.catalog.examples.kotlin.FragmentExample
 import com.pspdfkit.catalog.examples.kotlin.GenerateReportExample
 import com.pspdfkit.catalog.examples.kotlin.HideRevealAnnotationsCreationExample
@@ -90,7 +88,9 @@ import com.pspdfkit.catalog.examples.kotlin.IndexedFullTextSearchExample
 import com.pspdfkit.catalog.examples.kotlin.IndexedFullTextSearchLegacyExample
 import com.pspdfkit.catalog.examples.kotlin.InlineMediaExample
 import com.pspdfkit.catalog.examples.kotlin.InstantJsonAttachmentExample
+import com.pspdfkit.catalog.examples.kotlin.JavaScriptActionsExample
 import com.pspdfkit.catalog.examples.kotlin.JavaScriptCalculatorExample
+import com.pspdfkit.catalog.examples.kotlin.JavaScriptFormFillingExample
 import com.pspdfkit.catalog.examples.kotlin.JetpackComposeExample
 import com.pspdfkit.catalog.examples.kotlin.JetpackComposeImageExample
 import com.pspdfkit.catalog.examples.kotlin.KioskExample

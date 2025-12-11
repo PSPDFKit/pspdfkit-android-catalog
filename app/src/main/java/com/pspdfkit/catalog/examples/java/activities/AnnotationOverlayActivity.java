@@ -25,7 +25,6 @@ import com.pspdfkit.ui.toolbar.AnnotationEditingToolbar;
 import com.pspdfkit.ui.toolbar.ContextualToolbar;
 import com.pspdfkit.ui.toolbar.ContextualToolbarMenuItem;
 import com.pspdfkit.ui.toolbar.ToolbarCoordinatorLayout;
-import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
@@ -33,9 +32,9 @@ import java.util.List;
 public class AnnotationOverlayActivity extends PdfActivity
         implements ToolbarCoordinatorLayout.OnContextualToolbarLifecycleListener {
 
-    /** Holds list of annotations that should be extracted to overlay. */
+    /** Holds annotation types that should be rendered in overlay while overlay is disabled. */
     @NonNull
-    private final List<Annotation> overlaidAnnotations = new ArrayList<>();
+    private final EnumSet<AnnotationType> manuallyOverlaidAnnotationTypes = EnumSet.noneOf(AnnotationType.class);
 
     /** Current strategy used for rendering annotations in overlay. */
     @NonNull
@@ -89,14 +88,20 @@ public class AnnotationOverlayActivity extends PdfActivity
     }
 
     private void disableOverlayForAllAnnotationTypes() {
-        requirePdfFragment().setOverlaidAnnotationTypes(EnumSet.noneOf(AnnotationType.class));
         annotationOverlayEnabled = false;
+        applyManuallyOverlaidAnnotationTypes();
     }
 
     private void enableOverlayForSupportedAnnotationTypes() {
         // Passing all annotation types enables overlay mode for all types that support overlay.
         requirePdfFragment().setOverlaidAnnotationTypes(EnumSet.allOf(AnnotationType.class));
         annotationOverlayEnabled = true;
+    }
+
+    private void applyManuallyOverlaidAnnotationTypes() {
+        final EnumSet<AnnotationType> overlayTypes = EnumSet.noneOf(AnnotationType.class);
+        overlayTypes.addAll(manuallyOverlaidAnnotationTypes);
+        requirePdfFragment().setOverlaidAnnotationTypes(overlayTypes);
     }
 
     @Override
@@ -138,7 +143,8 @@ public class AnnotationOverlayActivity extends PdfActivity
         List<Annotation> selectedAnnotations = requirePdfFragment().getSelectedAnnotations();
         if (selectedAnnotations.size() != 1) return;
 
-        if (overlaidAnnotations.contains(selectedAnnotations.get(0))) {
+        final AnnotationType annotationType = selectedAnnotations.get(0).getType();
+        if (manuallyOverlaidAnnotationTypes.contains(annotationType)) {
             menu.add(0, R.id.toggle_annotation_overlay, 0, "Disable overlay");
         } else {
             menu.add(0, R.id.toggle_annotation_overlay, 0, "Enable overlay");
@@ -152,16 +158,16 @@ public class AnnotationOverlayActivity extends PdfActivity
         }
         final Annotation annotation =
                 requirePdfFragment().getSelectedAnnotations().get(0);
+        final AnnotationType annotationType = annotation.getType();
 
         final int itemId = item.getItemId();
         if (itemId == R.id.toggle_annotation_overlay) {
-            if (overlaidAnnotations.contains(annotation)) {
-                overlaidAnnotations.remove(annotation);
-                requirePdfFragment().setOverlaidAnnotations(overlaidAnnotations);
+            if (manuallyOverlaidAnnotationTypes.contains(annotationType)) {
+                manuallyOverlaidAnnotationTypes.remove(annotationType);
             } else {
-                overlaidAnnotations.add(annotation);
-                requirePdfFragment().setOverlaidAnnotations(overlaidAnnotations);
+                manuallyOverlaidAnnotationTypes.add(annotationType);
             }
+            applyManuallyOverlaidAnnotationTypes();
             return true;
         }
         return super.onContextItemSelected(item);

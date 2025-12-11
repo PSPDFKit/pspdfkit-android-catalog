@@ -14,6 +14,7 @@ import com.pspdfkit.configuration.activity.ThumbnailBarMode
 import com.pspdfkit.configuration.activity.UserInterfaceViewMode
 import com.pspdfkit.configuration.page.PageFitMode
 import com.pspdfkit.configuration.sharing.ShareFeatures
+import java.util.EnumSet
 
 /**
  * Opens the JavaScript Calculator example from assets.
@@ -37,7 +38,7 @@ class JavaScriptCalculatorExample(context: Context) : AssetExample(context, R.st
             .documentTitleOverlayEnabled(false)
             .pageNumberOverlayEnabled(false)
             .thumbnailGridEnabled(false)
-            .setEnabledShareFeatures(ShareFeatures.none())
+            .setEnabledShareFeatures(EnumSet.noneOf(ShareFeatures::class.java))
             .printingEnabled(false)
             .settingsMenuEnabled(false)
             // Force toolbar visibility.

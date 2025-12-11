@@ -24,10 +24,7 @@ import java.io.File
 import kotlin.getValue
 
 /** This example showcases how to dynamically add multimedia content to a PDF document.  */
-class DynamicMultimediaAnnotationExample(context: Context) : SdkExample(
-    context.getString(R.string.dynamicMultimediaExampleTitle),
-    context.getString(R.string.dynamicMultimediaExampleDescription)
-) {
+class DynamicMultimediaAnnotationExample(context: Context) : SdkExample(context, R.string.dynamicMultimediaExampleTitle, R.string.dynamicMultimediaExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // Before launching the example, we extract one video file to the private app folder. This
         // file will be used to dynamically add

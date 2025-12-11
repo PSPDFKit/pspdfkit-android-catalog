@@ -59,7 +59,7 @@ class ELearningExample(context: Context) :
             .annotationListEnabled(false)
             .searchEnabled(false)
             .settingsMenuEnabled(false)
-            .setEnabledShareFeatures(ShareFeatures.none())
+            .setEnabledShareFeatures(EnumSet.noneOf(ShareFeatures::class.java))
             .printingEnabled(false)
             .thumbnailGridEnabled(false)
             .setRedactionUiEnabled(false)
@@ -218,7 +218,7 @@ class ELearningActivity : PdfActivity() {
         // Fetch all annotations, serialize them, and collect them in a list. We keep them around in
         // memory, and will add them to the other document once it is loaded.
         val serializeAnnotations = document.annotationProvider
-            .getAllAnnotationsOfTypeAsync(EnumSet.allOf(AnnotationType::class.java))
+            .getAllAnnotationsOfTypeAsync(AnnotationType.entries.toSet())
             .doOnSubscribe { serializedAnnotationsToTransfer.clear() }
             .map(Annotation::toInstantJson)
             // For some unsupported annotation types (like popup annotations) we don't offer serialization.

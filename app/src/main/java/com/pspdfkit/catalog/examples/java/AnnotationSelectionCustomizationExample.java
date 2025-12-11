@@ -27,8 +27,9 @@ public class AnnotationSelectionCustomizationExample extends SdkExample {
 
     public AnnotationSelectionCustomizationExample(@NonNull final Context context) {
         super(
-                context.getString(R.string.annotationSelectionControllerExampleTitle),
-                context.getString(R.string.annotationSelectionControllerExampleDescription));
+                context,
+                R.string.annotationSelectionControllerExampleTitle,
+                R.string.annotationSelectionControllerExampleDescription);
     }
 
     @Override

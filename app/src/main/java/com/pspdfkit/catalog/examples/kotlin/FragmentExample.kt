@@ -36,7 +36,6 @@ import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.tasks.ExtractAssetTask
 import com.pspdfkit.configuration.PdfConfiguration
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
-import com.pspdfkit.document.DocumentSaveOptions
 import com.pspdfkit.document.PdfDocument
 import com.pspdfkit.document.search.SearchResult
 import com.pspdfkit.listeners.DocumentListener
@@ -321,33 +320,6 @@ class CustomFragmentActivity : AppCompatActivity(), DocumentListener, OnDocument
         }
         return false
     }
-
-    // Rest of the `DocumentListener` methods are unused.
-    override fun onDocumentLoadFailed(exception: Throwable) = Unit
-
-    override fun onDocumentSave(document: PdfDocument, saveOptions: DocumentSaveOptions): Boolean = true
-
-    override fun onDocumentSaved(document: PdfDocument) = Unit
-
-    override fun onDocumentSaveFailed(document: PdfDocument, exception: Throwable) = Unit
-
-    override fun onDocumentSaveCancelled(document: PdfDocument) = Unit
-
-    override fun onPageClick(
-        document: PdfDocument,
-        @IntRange(from = 0) pageIndex: Int,
-        event: MotionEvent?,
-        pagePosition: PointF?,
-        clickedAnnotation: Annotation?
-    ): Boolean = false
-
-    override fun onDocumentClick(): Boolean = false
-
-    override fun onPageChanged(document: PdfDocument, @IntRange(from = 0) pageIndex: Int) = Unit
-
-    override fun onDocumentZoomed(document: PdfDocument, @IntRange(from = 0) pageIndex: Int, scaleFactor: Float) = Unit
-
-    override fun onPageUpdated(document: PdfDocument, @IntRange(from = 0) pageIndex: Int) = Unit
 
     /**
      * Applies the `tint` color to the given `drawable`.

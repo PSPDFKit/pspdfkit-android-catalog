@@ -25,8 +25,9 @@ public class FilterableThumbnailGridExample extends SdkExample {
 
     public FilterableThumbnailGridExample(@NonNull Context context) {
         super(
-                context.getString(R.string.filterableThumbnailGridExampleTitle),
-                context.getString(R.string.filterableThumbnailGridExampleDescription));
+                context,
+                R.string.filterableThumbnailGridExampleTitle,
+                R.string.filterableThumbnailGridExampleDescription);
     }
 
     @Override

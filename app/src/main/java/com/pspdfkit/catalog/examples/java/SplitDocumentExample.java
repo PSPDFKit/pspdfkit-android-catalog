@@ -22,9 +22,7 @@ import com.pspdfkit.ui.PdfFragment;
 public class SplitDocumentExample extends SdkExample {
 
     public SplitDocumentExample(final Context context) {
-        super(
-                context.getString(R.string.splitDocumentExampleTitle),
-                context.getString(R.string.splitDocumentExampleDescription));
+        super(context, R.string.splitDocumentExampleTitle, R.string.splitDocumentExampleDescription);
     }
 
     @Override

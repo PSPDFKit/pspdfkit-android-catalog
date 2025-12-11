@@ -6,7 +6,7 @@
  *   UNAUTHORIZED REPRODUCTION OR DISTRIBUTION IS SUBJECT TO CIVIL AND CRIMINAL PENALTIES.
  *   This notice may not be removed from this file.
  */
-
+package com.pspdfkit.catalog.utils
 import android.content.Context
 import android.util.Base64
 import io.jsonwebtoken.Jwts

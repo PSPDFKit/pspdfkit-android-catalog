@@ -24,6 +24,7 @@ import com.pspdfkit.catalog.SdkExample.Companion.WELCOME_DOC
 import com.pspdfkit.catalog.examples.kotlin.AiAssistantComposeActivity.Companion.PREFERENCES_NAME
 import com.pspdfkit.catalog.examples.kotlin.AiAssistantComposeActivity.Companion.PREF_AI_IP_ADDRESS
 import com.pspdfkit.catalog.examples.kotlin.AiAssistantViewPagerActivity.Companion.EXTRA_CONFIGURATION
+import com.pspdfkit.catalog.utils.JwtGenerator
 import com.pspdfkit.configuration.PdfConfiguration
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.document.providers.AssetDataProvider

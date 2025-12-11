@@ -31,7 +31,7 @@ import com.pspdfkit.catalog.tasks.ExtractAssetTask
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.configuration.sharing.ShareFeatures
 import com.pspdfkit.document.PdfDocument
-import com.pspdfkit.listeners.SimpleDocumentListener
+import com.pspdfkit.listeners.DocumentListener
 import com.pspdfkit.ui.PdfUiFragment
 import com.pspdfkit.ui.PdfUiFragmentBuilder
 import com.pspdfkit.utils.getSupportParcelable
@@ -39,10 +39,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
 import java.util.EnumSet
 
-class PersistentAnnotationSidebarExample(context: Context) : SdkExample(
-    context.getString(R.string.annotationSidebarExampleTitle),
-    context.getString(R.string.annotationSidebarExampleDescription)
-) {
+class PersistentAnnotationSidebarExample(context: Context) : SdkExample(context, R.string.annotationSidebarExampleTitle, R.string.annotationSidebarExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // We don't need to show it in the outline since we will build our own UI for this.
         configuration.annotationListEnabled(false)
@@ -126,7 +123,7 @@ class PersistentAnnotationSidebarActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         // We need to be notified when the document was loaded.
-        pdfUiFragment.pdfFragment?.addDocumentListener(object : SimpleDocumentListener() {
+        pdfUiFragment.pdfFragment?.addDocumentListener(object : DocumentListener {
             override fun onDocumentLoaded(document: PdfDocument) {
                 // When the document is loaded clear the previous annotations.
                 annotationRecyclerAdapter.clear()
@@ -195,7 +192,7 @@ class AnnotationRecyclerAdapter(private val context: Context) : RecyclerView.Ada
     var annotationRecyclerAdapterListener: AnnotationRecyclerAdapterListener? = null
 
     // We only list certain annotation types.
-    private val listedAnnotationTypes = EnumSet.allOf(AnnotationType::class.java).apply {
+    private val listedAnnotationTypes = AnnotationType.entries.toMutableSet().apply {
         // We don't want to clutter the list with widget or link annotations.
         remove(AnnotationType.WIDGET)
         remove(AnnotationType.LINK)

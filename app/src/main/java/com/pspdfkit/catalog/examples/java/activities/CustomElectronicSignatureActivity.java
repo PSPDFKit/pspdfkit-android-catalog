@@ -27,7 +27,7 @@ import com.pspdfkit.configuration.signatures.SignatureSavingStrategy;
 import com.pspdfkit.document.PdfDocument;
 import com.pspdfkit.forms.FormElement;
 import com.pspdfkit.forms.FormType;
-import com.pspdfkit.listeners.SimpleDocumentListener;
+import com.pspdfkit.listeners.DocumentListener;
 import com.pspdfkit.signatures.Signature;
 import com.pspdfkit.signatures.listeners.OnSignaturePickedListener;
 import com.pspdfkit.signatures.storage.DatabaseSignatureStorage;
@@ -62,7 +62,7 @@ public class CustomElectronicSignatureActivity extends AppCompatActivity
 
     private AnnotationEditingToolbar annotationEditingToolbar;
 
-    private SimpleDocumentListener documentListener;
+    private DocumentListener documentListener;
 
     private boolean annotationSignatureCreationActive;
     private PointF touchedPoint;
@@ -113,7 +113,7 @@ public class CustomElectronicSignatureActivity extends AppCompatActivity
 
         // In this example we show how to create ink signatures by tapping on the page.
         // For this to work we need to handle page clicks in document listener.
-        documentListener = new SimpleDocumentListener() {
+        documentListener = new DocumentListener() {
             @Override
             public boolean onPageClick(
                     @NonNull PdfDocument document,

@@ -55,7 +55,7 @@ import com.pspdfkit.document.PdfDocument;
 import com.pspdfkit.document.search.SearchOptions;
 import com.pspdfkit.document.search.SearchResult;
 import com.pspdfkit.document.search.TextSearch;
-import com.pspdfkit.listeners.SimpleDocumentListener;
+import com.pspdfkit.listeners.DocumentListener;
 import com.pspdfkit.ui.PdfFragment;
 import com.pspdfkit.ui.search.SearchResultHighlighter;
 import com.pspdfkit.utils.Size;
@@ -153,7 +153,7 @@ public class CustomSearchUiActivity extends AppCompatActivity implements Adapter
 
         // Register a listener to retrieve the document as soon as it was loaded, or show an dialog
         // if an error occurred.
-        fragment.addDocumentListener(new SimpleDocumentListener() {
+        fragment.addDocumentListener(new DocumentListener() {
             @UiThread
             @Override
             public void onDocumentLoaded(@NonNull PdfDocument loadedDocument) {

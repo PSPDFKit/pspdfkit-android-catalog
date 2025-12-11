@@ -187,7 +187,7 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.java.activities.JavaScriptFormFillingActivity"
+            android:name=".examples.kotlin.JavaScriptFormFillingActivity"
             android:label="@string/formFillingJavaScriptExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
@@ -309,12 +309,12 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.java.activities.JavaScriptActionsActivity"
+            android:name=".examples.kotlin.JavaScriptActionsActivity"
             android:label="@string/javaScriptActionExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.java.activities.FormsJavaScriptActivity"
+            android:name=".examples.kotlin.FormsJavaScriptActivity"
             android:label="@string/javaScriptFormsExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 

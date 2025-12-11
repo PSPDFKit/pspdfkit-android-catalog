@@ -24,7 +24,6 @@ import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
 import com.pspdfkit.ui.PdfFragment
 import io.reactivex.rxjava3.disposables.Disposable
-import java.util.EnumSet
 import kotlin.math.max
 import kotlin.math.min
 
@@ -82,7 +81,7 @@ class ZoomExampleActivity : PdfActivity() {
     override fun onDocumentLoaded(document: PdfDocument) {
         viewModel.createObjects {
             annotationLoadingDisposable = document.annotationProvider
-                .getAllAnnotationsOfTypeAsync(EnumSet.allOf(AnnotationType::class.java))
+                .getAllAnnotationsOfTypeAsync(AnnotationType.entries.toSet())
                 .toList()
                 .subscribe { annotations -> documentAnnotations.addAll(annotations) }
         }

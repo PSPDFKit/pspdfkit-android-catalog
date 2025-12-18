@@ -12,4 +12,8 @@
     <dimen name="kiosk_grid_column_width">146dp</dimen>
     <dimen name="kiosk_previewimage_width">130dp</dimen>
     <dimen name="kiosk_previewimage_height">185dp</dimen>
+
+    <!-- OutlineView width for devices with available width >= 540dp
+         (tablets in any orientation, phones in landscape) -->
+    <dimen name="pspdf__outline_view_width">480dp</dimen>
 </resources>

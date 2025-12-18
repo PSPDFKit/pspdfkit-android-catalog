@@ -23,7 +23,9 @@ import com.pspdfkit.ui.PdfActivityIntentBuilder;
 public class CustomShareDialogExample extends SdkExample {
 
     public CustomShareDialogExample(Context context) {
-        super(context, R.string.customShareDialogExampleTitle, R.string.customShareDialogExampleDescription);
+        super(
+                context.getString(R.string.customShareDialogExampleTitle),
+                context.getString(R.string.customShareDialogExampleDescription));
     }
 
     @Override

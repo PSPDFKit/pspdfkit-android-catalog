@@ -21,7 +21,9 @@ import com.pspdfkit.ui.PdfActivityIntentBuilder;
 
 public class CustomPageTemplatesExample extends SdkExample {
     public CustomPageTemplatesExample(Context context) {
-        super(context, R.string.customPageTemplateExampleTitle, R.string.customPageTemplateExampleDescription);
+        super(
+                context.getString(R.string.customPageTemplateExampleTitle),
+                context.getString(R.string.customPageTemplateExampleDescription));
     }
 
     @Override

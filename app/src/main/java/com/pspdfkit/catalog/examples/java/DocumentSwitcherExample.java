@@ -25,7 +25,9 @@ import com.pspdfkit.ui.PdfActivityIntentBuilder;
 public class DocumentSwitcherExample extends SdkExample {
 
     public DocumentSwitcherExample(Context context) {
-        super(context, R.string.documentSwitcherExampleTitle, R.string.documentSwitcherExampleDescription);
+        super(
+                context.getString(R.string.documentSwitcherExampleTitle),
+                context.getString(R.string.documentSwitcherExampleDescription));
     }
 
     @Override

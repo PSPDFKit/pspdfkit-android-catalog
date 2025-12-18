@@ -23,9 +23,8 @@ public class RandomDocumentReplacementExample extends SdkExample {
 
     public RandomDocumentReplacementExample(Context context) {
         super(
-                context,
-                R.string.randomDocumentReplacementExampleTitle,
-                R.string.randomDocumentReplacementExampleDescription);
+                context.getString(R.string.randomDocumentReplacementExampleTitle),
+                context.getString(R.string.randomDocumentReplacementExampleDescription));
     }
 
     @Override

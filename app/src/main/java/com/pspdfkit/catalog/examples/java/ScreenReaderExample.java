@@ -25,7 +25,9 @@ import com.pspdfkit.ui.PdfActivityIntentBuilder;
 public class ScreenReaderExample extends SdkExample {
 
     public ScreenReaderExample(@NonNull Context context) {
-        super(context, R.string.screenReaderExampleTitle, R.string.screenReaderExampleDescription);
+        super(
+                context.getString(R.string.screenReaderExampleTitle),
+                context.getString(R.string.screenReaderExampleDescription));
     }
 
     @Override

@@ -36,10 +36,11 @@ class BarcodeActivity : ComponentActivity() {
             val state = vm.scanStateStateFlow.collectAsState()
 
             state.value.qrValue?.let { handleResult(it) }
+            state.value.error?.message.equals("Failed to scan code.").let { handleResult(null) }
         }
     }
 
-    private fun handleResult(value: String) {
+    private fun handleResult(value: String?) {
         val returnIntent = Intent()
         returnIntent.putExtra(BARCODE_ENCODED_KEY, value)
         setResult(RESULT_OK, returnIntent)

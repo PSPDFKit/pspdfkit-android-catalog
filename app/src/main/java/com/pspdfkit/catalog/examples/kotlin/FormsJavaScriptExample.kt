@@ -39,7 +39,10 @@ import kotlin.collections.component2
 import kotlin.collections.forEach
 
 /** This example showcases forms JavaScript functionality. */
-class FormsJavaScriptExample(context: Context) : SdkExample(context, R.string.javaScriptFormsExampleTitle, R.string.javaScriptFormsExampleDescription) {
+class FormsJavaScriptExample(context: Context) : SdkExample(
+    context.getString(R.string.javaScriptFormsExampleTitle),
+    context.getString(R.string.javaScriptFormsExampleDescription)
+) {
 
     @SuppressLint("SetJavaScriptEnabled", "CheckResult")
     override fun launchExample(

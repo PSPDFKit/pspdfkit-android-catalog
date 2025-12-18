@@ -28,9 +28,8 @@ import com.pspdfkit.ui.signatures.ElectronicSignatureFragment;
 public class CustomElectronicSignatureExample extends SdkExample {
     public CustomElectronicSignatureExample(@NonNull final Context context) {
         super(
-                context,
-                R.string.customElectronicSignatureExampleTitle,
-                R.string.customElectronicSignatureExampleDescription);
+                context.getString(R.string.customElectronicSignatureExampleTitle),
+                context.getString(R.string.customElectronicSignatureExampleDescription));
     }
 
     @Override

@@ -26,7 +26,9 @@ import com.pspdfkit.ui.toolbar.ContextualToolbar;
 public class ToolbarsInFragmentExample extends SdkExample {
 
     public ToolbarsInFragmentExample(@NonNull Context context) {
-        super(context, R.string.toolbarsInFragmentExampleTitle, R.string.toolbarsInFragmentExampleDescription);
+        super(
+                context.getString(R.string.toolbarsInFragmentExampleTitle),
+                context.getString(R.string.toolbarsInFragmentExampleDescription));
     }
 
     @Override

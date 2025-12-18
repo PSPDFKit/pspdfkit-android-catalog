@@ -33,4 +33,7 @@
 
     <!--overriding the value of pspdf__max_image_memory_ratio to 0.35-->
     <item tools:override="true" name="pspdf__max_image_memory_ratio" format="float" type="dimen" >0.35</item>
+
+    <!-- OutlineView width: -1dp indicates use full parent width (default for narrow screens) -->
+    <dimen name="pspdf__outline_view_width">-1dp</dimen>
 </resources>

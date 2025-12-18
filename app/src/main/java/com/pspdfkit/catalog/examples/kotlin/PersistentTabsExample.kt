@@ -41,7 +41,7 @@ import java.io.File
 /**
  * This example shows how to persist list of opened documents/tabs between activity instances.
  */
-class PersistentTabsExample(context: Context) : SdkExample(context, R.string.persistentTabsExampleTitle, R.string.persistentTabsExampleDescription) {
+class PersistentTabsExample(context: Context) : SdkExample(context.getString(R.string.persistentTabsExampleTitle), context.getString(R.string.persistentTabsExampleDescription)) {
 
     @SuppressLint("CheckResult")
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {

@@ -27,7 +27,7 @@ public class AesEncryptedFileExample extends SdkExample {
     private static final String BASE64_ENCRYPTION_KEY = "EQQlw3SNbBwbxkSi1jwwib4B4XqesCVDZv9LftsmE1U=";
 
     public AesEncryptedFileExample(@NonNull Context context) {
-        super(context, R.string.aesExampleTitle, R.string.aesExampleDescription);
+        super(context.getString(R.string.aesExampleTitle), context.getString(R.string.aesExampleDescription));
     }
 
     @Override

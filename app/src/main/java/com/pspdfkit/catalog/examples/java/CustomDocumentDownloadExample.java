@@ -101,7 +101,9 @@ public class CustomDocumentDownloadExample extends SdkExample {
     }
 
     public CustomDocumentDownloadExample(@NonNull final Context context) {
-        super(context, R.string.customDownloadDialogExampleTitle, R.string.customDownloadDialogExampleDescription);
+        super(
+                context.getString(R.string.customDownloadDialogExampleTitle),
+                context.getString(R.string.customDownloadDialogExampleDescription));
     }
 
     @Override

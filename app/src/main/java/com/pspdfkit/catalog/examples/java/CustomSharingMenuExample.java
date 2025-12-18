@@ -22,7 +22,9 @@ import com.pspdfkit.ui.PdfActivityIntentBuilder;
 public class CustomSharingMenuExample extends SdkExample {
 
     public CustomSharingMenuExample(Context context) {
-        super(context, R.string.documentSharingMenuExampleTitle, R.string.documentSharingMenuExampleDescription);
+        super(
+                context.getString(R.string.documentSharingMenuExampleTitle),
+                context.getString(R.string.documentSharingMenuExampleDescription));
     }
 
     @Override

@@ -25,7 +25,9 @@ import com.pspdfkit.ui.PdfActivityIntentBuilder;
 public class AnnotationFlagsExample extends SdkExample {
 
     public AnnotationFlagsExample(@NonNull final Context context) {
-        super(context, R.string.annotationFlagsExampleTitle, R.string.annotationFlagsExampleDescription);
+        super(
+                context.getString(R.string.annotationFlagsExampleTitle),
+                context.getString(R.string.annotationFlagsExampleDescription));
     }
 
     @Override

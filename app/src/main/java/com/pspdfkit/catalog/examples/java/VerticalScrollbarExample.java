@@ -30,7 +30,9 @@ import com.pspdfkit.ui.scrollbar.VerticalScrollBar;
 public class VerticalScrollbarExample extends SdkExample {
 
     public VerticalScrollbarExample(@NonNull final Context context) {
-        super(context, R.string.verticalScrollbarExampleTitle, R.string.verticalScrollbarExampleDescription);
+        super(
+                context.getString(R.string.verticalScrollbarExampleTitle),
+                context.getString(R.string.verticalScrollbarExampleDescription));
     }
 
     @Override

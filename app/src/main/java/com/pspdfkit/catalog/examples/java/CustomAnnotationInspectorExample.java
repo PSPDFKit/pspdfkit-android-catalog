@@ -23,9 +23,8 @@ public class CustomAnnotationInspectorExample extends SdkExample {
 
     public CustomAnnotationInspectorExample(@NonNull final Context context) {
         super(
-                context,
-                R.string.annotationCustomInspectorExampleTitle,
-                R.string.annotationCustomInspectorExampleDescription);
+                context.getString(R.string.annotationCustomInspectorExampleTitle),
+                context.getString(R.string.annotationCustomInspectorExampleDescription));
     }
 
     @Override

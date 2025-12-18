@@ -44,7 +44,7 @@
         <item name="pspdf__settingsModePickerItemStyle">@style/PSPDFCatalog.Theme.SettingsModePickerItemStyle</item>
 
         <item name="pspdf__backgroundColor">@color/surfaceLight</item>
-        <item name="pspdf__outlineViewStyle">@style/PSPDFKit.OutlineView</item>
+        <item name="pspdf__outlineViewStyle">@style/PSPDFCatalog.OutlineView</item>
         <item name="pspdf__inlineSearchStyle">@style/PSPDFKit.SearchViewInline</item>
         <item name="pspdf__modularSearchStyle">@style/PSPDFKit.SearchViewModular</item>
         <item name="pspdf__thumbnailBarStyle">@style/PSPDFKit.ThumbnailBar</item>
@@ -81,6 +81,10 @@
     </style>
     <style name="PSPDFCatalog.ThumbnailGrid" parent="PSPDFKit.ThumbnailGrid">
         <item name="pspdf__itemRippleBackgroundColor">@color/primaryLight</item>
+    </style>
+
+    <style name="PSPDFCatalog.OutlineView" parent="PSPDFKit.OutlineView">
+        <item name="pspdf__width">@dimen/pspdf__outline_view_width</item>
     </style>
 
     <style name="PSPDFCatalog.AnnotationSelection" parent="PSPDFKit.AnnotationSelection">

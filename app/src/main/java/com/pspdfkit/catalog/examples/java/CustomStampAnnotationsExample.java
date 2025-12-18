@@ -25,9 +25,8 @@ public class CustomStampAnnotationsExample extends SdkExample {
 
     public CustomStampAnnotationsExample(@NonNull final Context context) {
         super(
-                context,
-                R.string.annotationCustomStampAnnotationExampleTitle,
-                R.string.annotationCustomStampAnnotationExampleDescription);
+                context.getString(R.string.annotationCustomStampAnnotationExampleTitle),
+                context.getString(R.string.annotationCustomStampAnnotationExampleDescription));
     }
 
     @Override

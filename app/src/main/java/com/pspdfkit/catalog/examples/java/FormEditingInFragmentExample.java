@@ -25,9 +25,7 @@ import com.pspdfkit.ui.PdfFragment;
 public class FormEditingInFragmentExample extends SdkExample {
 
     public FormEditingInFragmentExample(@NonNull Context context) {
-        super(
-                context.getString(R.string.formEditingInFragmentExampleTitle),
-                context.getString(R.string.formEditingInFragmentExampleDescription));
+        super(context, R.string.formEditingInFragmentExampleTitle, R.string.formEditingInFragmentExampleDescription);
     }
 
     @Override

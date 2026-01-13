@@ -22,9 +22,7 @@ import com.pspdfkit.ui.PdfActivityIntentBuilder;
 public class AnnotationOverlayExample extends SdkExample {
 
     public AnnotationOverlayExample(@NonNull final Context context) {
-        super(
-                context.getString(R.string.annotationOverlayExampleTitle),
-                context.getString(R.string.annotationOverlayExampleDescription));
+        super(context, R.string.annotationOverlayExampleTitle, R.string.annotationOverlayExampleDescription);
     }
 
     @Override

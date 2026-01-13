@@ -22,10 +22,7 @@ import com.pspdfkit.ui.PdfActivityIntentBuilder
 import java.io.File
 
 /** Shows how to fill forms via JavaScript.  */
-class JavaScriptFormFillingExample(context: Context) : SdkExample(
-    context.getString(R.string.formFillingJavaScriptExampleTitle),
-    context.getString(R.string.formFillingJavaScriptExampleDescription)
-) {
+class JavaScriptFormFillingExample(context: Context) : SdkExample(context, R.string.formFillingJavaScriptExampleTitle, R.string.formFillingJavaScriptExampleDescription) {
     override fun launchExample(
         context: Context,
         configuration: PdfActivityConfiguration.Builder

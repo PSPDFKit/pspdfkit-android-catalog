@@ -33,10 +33,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 /**
  * This example shows how to use [HtmlToPdfConverter] to convert simple HTML documents to PDF.
  */
-class ConvertHtmlToPdfExample(context: Context) : SdkExample(
-    context.getString(R.string.htmlToPdfConversionExampleTitle),
-    context.getString(R.string.htmlToPdfConversionExampleDescription)
-) {
+class ConvertHtmlToPdfExample(context: Context) : SdkExample(context, R.string.htmlToPdfConversionExampleTitle, R.string.htmlToPdfConversionExampleDescription) {
 
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // We'll show a progress dialog while generating the PDF document.

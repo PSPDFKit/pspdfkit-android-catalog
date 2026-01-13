@@ -29,9 +29,7 @@ import com.pspdfkit.ui.search.PdfSearchViewInline;
 public class CustomInlineSearchExample extends SdkExample {
 
     public CustomInlineSearchExample(@NonNull final Context context) {
-        super(
-                context.getString(R.string.customInlineSearchExampleTitle),
-                context.getString(R.string.customInlineSearchExampleDescription));
+        super(context, R.string.customInlineSearchExampleTitle, R.string.customInlineSearchExampleDescription);
     }
 
     @Override

@@ -16,18 +16,23 @@ import java.util.Locale
 
 /**
  * Abstract example class which provides [.launchExample] as a generic way of launching a catalog app example.
+ *
+ * Examples must use the constructor with Context and @StringRes parameters to ensure
+ * proper resource ID extraction for documentation generation.
  */
 abstract class SdkExample(
-    /** Short title of the example.  */
-    val title: String,
-    /** Full description of the example.  */
-    val description: String
+    context: Context,
+    /** String resource ID for the short title of the example. */
+    @StringRes titleRes: Int,
+    /** String resource ID for the full description of the example. */
+    @StringRes descriptionRes: Int
 ) : FuzzlyMatchable {
 
-    /**
-     * Convenience constructor. Examples can pass their `title` and `description` here.
-     */
-    constructor(context: Context, @StringRes title: Int, @StringRes description: Int) : this(context.getString(title), context.getString(description))
+    /** Short title of the example. */
+    val title: String = context.getString(titleRes)
+
+    /** Full description of the example. */
+    val description: String = context.getString(descriptionRes)
 
     /** Enum with all supported example languages.  */
     enum class ExampleLanguage {

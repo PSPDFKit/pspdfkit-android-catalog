@@ -36,8 +36,7 @@ import com.pspdfkit.ui.overlay.OverlayLayoutParams
 import com.pspdfkit.ui.overlay.OverlayViewProvider
 import kotlin.getValue
 
-class OverlayViewsExample(context: Context) :
-    SdkExample(context.getString(R.string.overlayViewsExample), context.getString(R.string.overlayViewsExampleDescription)) {
+class OverlayViewsExample(context: Context) : SdkExample(context, R.string.overlayViewsExample, R.string.overlayViewsExampleDescription) {
 
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // We use a custom utility class to extract the example document from the assets.

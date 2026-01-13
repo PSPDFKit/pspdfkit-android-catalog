@@ -217,6 +217,11 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
+            android:name=".examples.kotlin.AnnotationOverlayVisibilityActivity"
+            android:label="@string/annotationOverlayVisibilityExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
             android:name=".examples.java.activities.AnnotationFlagsActivity"
             android:label="@string/annotationFlagsExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
@@ -329,8 +334,6 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <activity android:name=".examples.kotlin.instant.activities.BarcodeActivity" />
-
-        <activity android:name=".examples.kotlin.instant.activities.EnterDocumentLinkActivity" />
 
         <activity
             android:name=".examples.kotlin.MultimediaAnnotationsActivity"

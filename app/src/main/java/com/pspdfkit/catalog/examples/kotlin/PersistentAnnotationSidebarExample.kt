@@ -39,10 +39,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
 import java.util.EnumSet
 
-class PersistentAnnotationSidebarExample(context: Context) : SdkExample(
-    context.getString(R.string.annotationSidebarExampleTitle),
-    context.getString(R.string.annotationSidebarExampleDescription)
-) {
+class PersistentAnnotationSidebarExample(context: Context) : SdkExample(context, R.string.annotationSidebarExampleTitle, R.string.annotationSidebarExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // We don't need to show it in the outline since we will build our own UI for this.
         configuration.annotationListEnabled(false)

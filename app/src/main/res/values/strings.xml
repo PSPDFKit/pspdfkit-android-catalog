@@ -113,6 +113,9 @@
     <string name="ocrExampleDescription">Performs optical character recognition (OCR) on the document.</string>
     <string name="annotationOverlayExampleTitle">Annotation Overlay</string>
     <string name="annotationOverlayExampleDescription">Shows annotations in overlay mode.</string>
+    <string name="annotationOverlayVisibilityExampleTitle">Annotation Overlay Visibility</string>
+    <string name="annotationOverlayVisibilityExampleDescription">Shows how to toggle annotation overlay visibility.</string>
+    <string name="toggleAnnotationOverlayVisibility">Toggle annotation overlay visibility</string>
     <string name="annotationConfigurationExampleTitle">Annotation Configuration</string>
     <string name="annotationConfigurationExampleDescription">Shows how to customize annotation configuration.</string>
     <string name="annotationSelectionViewStylingExampleTitle">Annotation Selection Layout</string>
@@ -237,6 +240,7 @@
     <string name="tryInstantExampleTitle">Try Instant</string>
     <string name="tryInstantExampleDescription">Downloads a document for collaborative editing.</string>
     <string name="useComposeForInstantExample">Use Jetpack Compose</string>
+    <string name="enableAiAssistantForInstantExample">Enable Ai Assistant</string>
 
     <string name="externalDocumentExamplePermissionExplanation">The file you selected is on the local device. Granting direct file access will allow Nutrient to use optimized file system reading, which yields much higher throughput.</string>
     <string name="grantAccess">Grant access</string>
@@ -279,12 +283,10 @@
 
     <string name="instant_create_new_document">Create New Document</string>
     <string name="instant_create_new_document_description">Get a new document code, then collaborate by opening the document link in a web browser or scanning its QR code in Nutrient Catalog on another device.</string>
-    <string name="instant_creating">Creating…</string>
 
     <string name="instant_scan_qr_code">Scan QR code</string>
     <string name="instant_edit_existing_document_description">Scan the QR code from nutrient.io/demo to connect to the document shown in your browser.\n\nAlternatively:</string>
     <string name="instant_enter_link_manually">Enter Link Manually …</string>
-    <string name="instant_connecting">Connecting…</string>
 
     <string name="instant_error_invalid_id">You entered an invalid code</string>
     <string name="instant_error_server_error">Something went wrong on our end</string>

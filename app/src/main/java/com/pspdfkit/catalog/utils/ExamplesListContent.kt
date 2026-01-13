@@ -43,6 +43,7 @@ import com.pspdfkit.catalog.examples.kotlin.AiAssistantMultiDocComposeExample
 import com.pspdfkit.catalog.examples.kotlin.AiAssistantViewPagerExample
 import com.pspdfkit.catalog.examples.kotlin.AnnotationConfigurationExample
 import com.pspdfkit.catalog.examples.kotlin.AnnotationCreationExample
+import com.pspdfkit.catalog.examples.kotlin.AnnotationOverlayVisibilityExample
 import com.pspdfkit.catalog.examples.kotlin.AnnotationRenderingExample
 import com.pspdfkit.catalog.examples.kotlin.AnnotationSelectionViewStylingExample
 import com.pspdfkit.catalog.examples.kotlin.AnnotationWithAlphaCreationExample
@@ -188,6 +189,7 @@ fun getSectionsWithExamples(context: Context) = listOf(
         CustomAnnotationInspectorExample(context),
         CustomStampAnnotationsExample(context),
         AnnotationOverlayExample(context),
+        AnnotationOverlayVisibilityExample(context),
         DocumentJsonExample(context),
         InstantJsonAttachmentExample(context),
         XfdfExample(context),

@@ -27,8 +27,9 @@ public class CustomAnnotationCreationToolbarExample extends SdkExample {
 
     public CustomAnnotationCreationToolbarExample(@NonNull Context context) {
         super(
-                context.getString(R.string.customAnnotationCreationToolbarExampleTitle),
-                context.getString(R.string.customAnnotationCreationToolbarExampleDescription));
+                context,
+                R.string.customAnnotationCreationToolbarExampleTitle,
+                R.string.customAnnotationCreationToolbarExampleDescription);
     }
 
     @Override

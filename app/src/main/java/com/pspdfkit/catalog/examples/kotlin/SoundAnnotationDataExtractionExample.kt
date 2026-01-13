@@ -36,12 +36,7 @@ import java.io.IOException
 /**
  * An example on how to create a sound annotation programmatically and extract the audio data from it.
  */
-class SoundAnnotationDataExtractionExample(context: Context) : SdkExample(
-    context,
-    R.string.soundAnnotationDataExtractionTitle,
-    R.string
-        .soundAnnotationDataExtractionDescription
-) {
+class SoundAnnotationDataExtractionExample(context: Context) : SdkExample(context, R.string.soundAnnotationDataExtractionTitle, R.string.soundAnnotationDataExtractionDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // Turn off saving, so we have the clean original document every time the example is launched.
         configuration.autosaveEnabled(false)

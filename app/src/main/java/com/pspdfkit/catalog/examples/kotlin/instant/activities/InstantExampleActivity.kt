@@ -8,6 +8,7 @@
 package com.pspdfkit.catalog.examples.kotlin.instant.activities
 
 import android.content.Intent
+import android.graphics.RectF
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -15,8 +16,10 @@ import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.net.toUri
+import com.pspdfkit.ai.createAiAssistantForInstant
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.examples.kotlin.instant.api.InstantExampleDocumentDescriptor
+import com.pspdfkit.catalog.utils.JwtGenerator
 import com.pspdfkit.document.sharing.DocumentSharingIntentHelper
 import com.pspdfkit.instant.ui.InstantPdfActivity
 import com.pspdfkit.ui.actionmenu.ActionMenu
@@ -25,13 +28,16 @@ import com.pspdfkit.ui.actionmenu.ActionMenuListener
 import com.pspdfkit.ui.actionmenu.FixedActionMenuItem
 import com.pspdfkit.ui.actionmenu.SharingMenu
 import com.pspdfkit.utils.getSupportParcelableExtra
+import io.nutrient.domain.ai.AiAssistant
+import io.nutrient.domain.ai.AiAssistantProvider
 
 /**
  * Extends [InstantPdfActivity] with the ability to share the Instant document with other users.
  */
-open class InstantExampleActivity : InstantPdfActivity(), ActionMenuListener {
+open class InstantExampleActivity : InstantPdfActivity(), ActionMenuListener, AiAssistantProvider {
     /** Descriptor for the displayed document.  */
     private lateinit var documentDescriptor: InstantExampleDocumentDescriptor
+    private lateinit var aiAssistantInstance: AiAssistant
 
     /** Menu with collaborate sharing actions.  */
     private lateinit var collaborateMenu: SharingMenu
@@ -52,7 +58,8 @@ open class InstantExampleActivity : InstantPdfActivity(), ActionMenuListener {
         val a = theme.obtainStyledAttributes(null, com.pspdfkit.R.styleable.pspdf__ActionBarIcons, com.pspdfkit.R.attr.pspdf__actionBarIconsStyle, com.pspdfkit.R.style.PSPDFKit_ActionBarIcons)
         mainToolbarIconsColor = a.getColor(com.pspdfkit.R.styleable.pspdf__ActionBarIcons_pspdf__iconsColor, ContextCompat.getColor(this, com.pspdfkit.R.color.pspdf__onPrimary))
         a.recycle()
-
+        // only initialise if AI Assistant is enabled
+        if (configuration.configuration.isAiAssistantEnabled) aiAssistantInstance = createAiAssistantInstance()
         initCollaborateMenu()
     }
 
@@ -150,5 +157,36 @@ open class InstantExampleActivity : InstantPdfActivity(), ActionMenuListener {
 
         collaborateMenu.dismiss()
         sharingMenu.show()
+    }
+    val sessionId = "my-session-id"
+
+    override fun getAiAssistant(): AiAssistant = aiAssistantInstance
+
+    fun createAiAssistantInstance() = createAiAssistantForInstant(
+        this,
+        documentDescriptor.serverUrl,
+        listOf(documentDescriptor.jwt),
+        "http://192.168.1.6:4000",
+        sessionId
+
+    ) { instantDocumentIds ->
+        JwtGenerator.generateJwtToken(
+            this@InstantExampleActivity,
+            claims = mapOf(
+                "document_ids" to instantDocumentIds,
+                "session_ids" to listOf(sessionId),
+                "request_limit" to mapOf(
+                    "requests" to 160,
+                    "time_period_s" to 1000 * 60 * 10
+                )
+            )
+        )
+    }
+
+    override fun navigateTo(documentRect: List<RectF>, pageIndex: Int, documentIndex: Int) {
+        getPdfFragment().apply {
+            setPageIndex(pageIndex)
+            highlight(this@InstantExampleActivity, documentRect, pageIndex)
+        }
     }
 }

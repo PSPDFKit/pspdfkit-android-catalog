@@ -57,10 +57,7 @@ import java.util.EnumSet
  * stroke color for each and blending these colored pages into a single document. Furthermore, it shows how to integrate the
  * {@link com.pspdfkit.document.processor.DocumentComparisonDialog} to align two documents for better comparison results.
  */
-class DocumentComparisonExample(context: Context) : SdkExample(
-    context.getString(R.string.documentComparisonExampleTitle),
-    context.getString(R.string.documentComparisonExampleDescription)
-) {
+class DocumentComparisonExample(context: Context) : SdkExample(context, R.string.documentComparisonExampleTitle, R.string.documentComparisonExampleDescription) {
     private val documentAIndex = 0 // Destination page index
     private val documentBIndex = 0 // Source page index
 

@@ -21,10 +21,7 @@ import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
 
 /** This example shows how to create and execute JavaScript actions programmatically. */
-class JavaScriptActionsExample(context: Context) : SdkExample(
-    context.getString(R.string.javaScriptActionExampleTitle),
-    context.getString(R.string.javaScriptActionExampleDescription)
-) {
+class JavaScriptActionsExample(context: Context) : SdkExample(context, R.string.javaScriptActionExampleTitle, R.string.javaScriptActionExampleDescription) {
 
     @SuppressLint("SetJavaScriptEnabled")
     override fun launchExample(

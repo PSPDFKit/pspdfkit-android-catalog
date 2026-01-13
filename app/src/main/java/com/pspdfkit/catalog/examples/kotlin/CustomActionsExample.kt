@@ -28,8 +28,7 @@ import com.pspdfkit.ui.PdfActivityIntentBuilder
  * This example shows how to use the Kotlin language to configure a custom [com.pspdfkit.ui.PdfActivity]. Kotlin is a JVM-compatible programming language and
  * the second by Google supported programming language for developing Android apps (see introduction: https://developer.android.com/kotlin/index.html).
  */
-class CustomActionsExample(context: Context) :
-    SdkExample(context.getString(R.string.customActionsExampleTitle), context.getString(R.string.customActionsExampleDescription)) {
+class CustomActionsExample(context: Context) : SdkExample(context, R.string.customActionsExampleTitle, R.string.customActionsExampleDescription) {
 
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // We use a custom utility class to extract the example document from the assets.

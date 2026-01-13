@@ -40,10 +40,7 @@ import com.pspdfkit.ui.PdfActivityIntentBuilder
 import java.io.File
 import kotlin.getValue
 
-class AnnotationWithAlphaCreationExample(context: Context) : SdkExample(
-    context.getString(R.string.annotationWithAlphaCreationExampleTitle),
-    context.getString(R.string.annotationWithAlphaCreationExampleDescription)
-) {
+class AnnotationWithAlphaCreationExample(context: Context) : SdkExample(context, R.string.annotationWithAlphaCreationExampleTitle, R.string.annotationWithAlphaCreationExampleDescription) {
     override fun launchExample(
         context: Context,
         configuration: PdfActivityConfiguration.Builder

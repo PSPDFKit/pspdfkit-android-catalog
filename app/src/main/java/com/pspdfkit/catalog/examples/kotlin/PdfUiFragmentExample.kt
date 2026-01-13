@@ -32,7 +32,7 @@ import com.pspdfkit.utils.getSupportParcelableExtra
 /**
  * This example shows how to use the [PdfUiFragment] to display PDFs.
  */
-class PdfUiFragmentExample(context: Context) : SdkExample(context.getString(R.string.pdfUiFragmentExampleTitle), context.getString(R.string.pdfUiFragmentExampleDescription)) {
+class PdfUiFragmentExample(context: Context) : SdkExample(context, R.string.pdfUiFragmentExampleTitle, R.string.pdfUiFragmentExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         extract(WELCOME_DOC, title, context) { documentFile ->
             val intent = Intent(context, PdfUiFragmentExampleActivity::class.java)

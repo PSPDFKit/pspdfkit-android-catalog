@@ -23,8 +23,9 @@ import com.pspdfkit.ui.PdfActivityIntentBuilder;
 public class CustomFormHighlightColorExample extends SdkExample {
     public CustomFormHighlightColorExample(@NonNull final Context context) {
         super(
-                context.getString(R.string.customFormHighlightColorExampleTitle),
-                context.getString(R.string.customFormHighlightColorExampleDescription));
+                context,
+                R.string.customFormHighlightColorExampleTitle,
+                R.string.customFormHighlightColorExampleDescription);
     }
 
     @Override

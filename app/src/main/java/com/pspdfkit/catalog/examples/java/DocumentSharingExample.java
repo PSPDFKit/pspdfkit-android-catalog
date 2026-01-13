@@ -22,9 +22,7 @@ import java.util.EnumSet;
 
 public class DocumentSharingExample extends SdkExample {
     public DocumentSharingExample(Context context) {
-        super(
-                context.getString(R.string.documentSharingExampleTitle),
-                context.getString(R.string.documentSharingExampleDescription));
+        super(context, R.string.documentSharingExampleTitle, R.string.documentSharingExampleDescription);
     }
 
     @Override

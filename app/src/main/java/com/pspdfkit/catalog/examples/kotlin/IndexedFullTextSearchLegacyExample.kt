@@ -57,10 +57,7 @@ import java.util.Locale
  * searchable.
  * This example uses the legacy [PdfLibrary] API. For a more modern approach, see
  */
-class IndexedFullTextSearchLegacyExample(context: Context) : SdkExample(
-    context.getString(R.string.indexedFtsLegacyExampleTitle),
-    context.getString(R.string.indexedFtsLegacyExampleDescription)
-) {
+class IndexedFullTextSearchLegacyExample(context: Context) : SdkExample(context, R.string.indexedFtsLegacyExampleTitle, R.string.indexedFtsLegacyExampleDescription) {
     override fun launchExample(
         context: Context,
         configuration: PdfActivityConfiguration.Builder

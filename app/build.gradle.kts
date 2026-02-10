@@ -24,7 +24,7 @@ android {
         targetSdk = compileSdk
 
         versionName = "11.0.0"
-        versionCode = 146156
+        versionCode = 146157
 
         vectorDrawables {
             useSupportLibrary = true

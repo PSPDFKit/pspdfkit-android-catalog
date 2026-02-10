@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2026 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -7,13 +7,14 @@
 
 package com.pspdfkit.catalog.examples.kotlin.instant.api
 
-import android.os.Parcel
 import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
 
 /**
  * Describes single Instant document on the web preview server.
  */
-class InstantExampleDocumentDescriptor(
+@Parcelize
+data class InstantExampleDocumentDescriptor(
     /** Instant Server (Nutrient Document Engine) url.  */
     val serverUrl: String,
     /** Instant document id.  */
@@ -26,35 +27,4 @@ class InstantExampleDocumentDescriptor(
     /** Web preview url.  */
     @com.google.gson.annotations.SerializedName("url")
     val webUrl: String
-) : Parcelable {
-
-    override fun describeContents(): Int {
-        return 0
-    }
-
-    override fun writeToParcel(dest: Parcel, flags: Int) {
-        dest.writeString(serverUrl)
-        dest.writeString(documentId)
-        dest.writeString(jwt)
-        dest.writeString(documentCode)
-        dest.writeString(webUrl)
-    }
-
-    private constructor (input: Parcel) : this(
-        input.readString()!!,
-        input.readString()!!,
-        input.readString()!!,
-        input.readString()!!,
-        input.readString()!!
-    )
-
-    companion object CREATOR : Parcelable.Creator<InstantExampleDocumentDescriptor> {
-        override fun createFromParcel(parcel: Parcel): InstantExampleDocumentDescriptor {
-            return InstantExampleDocumentDescriptor(parcel)
-        }
-
-        override fun newArray(size: Int): Array<InstantExampleDocumentDescriptor?> {
-            return arrayOfNulls(size)
-        }
-    }
-}
+) : Parcelable

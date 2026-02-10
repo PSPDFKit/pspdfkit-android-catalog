@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2026 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -50,7 +50,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.core.net.toUri
+import androidx.lifecycle.lifecycleScope
 import com.pspdfkit.catalog.R
+import com.pspdfkit.catalog.examples.kotlin.instant.api.ExampleServerClient
+import com.pspdfkit.catalog.examples.kotlin.instant.api.ExampleServerDocument
 import com.pspdfkit.catalog.examples.kotlin.instant.api.InstantExampleDocumentDescriptor
 import com.pspdfkit.catalog.examples.kotlin.instant.api.WebPreviewClient
 import com.pspdfkit.catalog.ui.BasicAuthDialog
@@ -61,16 +65,27 @@ import com.pspdfkit.instant.client.InstantClient
 import com.pspdfkit.instant.ui.InstantPdfActivity
 import com.pspdfkit.instant.ui.InstantPdfActivityIntentBuilder
 import com.pspdfkit.utils.PdfLog
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.CompletableEmitter
-import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.disposables.Disposable
+import kotlinx.coroutines.CancellableContinuation
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.suspendCancellableCoroutine
+import kotlinx.coroutines.withContext
+import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import retrofit2.HttpException
 import java.net.UnknownHostException
+import kotlin.coroutines.resume
+import kotlin.coroutines.resumeWithException
 
 /**
- * Allows to connect to the example Instant Server (Nutrient Document Engine).
+ * Entry screen for connecting to Instant examples.
+ *
+ * This flow is designed to work with the Nutrient example server implementation:
+ * https://github.com/PSPDFKit/pspdfkit-server-example-nodejs
+ *
+ * Flow:
+ * 1) Try web preview (if the URL is a web example link that returns a descriptor/JWT).
+ * 2) Fall back to the example server API (requires username via Basic auth).
  */
 open class InstantExampleConnectionActivity : AppCompatActivity() {
     /** Configuration that will be passed to created [InstantExampleActivity].  */
@@ -79,8 +94,8 @@ open class InstantExampleConnectionActivity : AppCompatActivity() {
     /** Client for connecting to Nutrient web example client.  */
     private val apiClient = WebPreviewClient()
 
-    /** Disposable for the web preview server connections.  */
-    private var connectionDisposable: Disposable? = null
+    /** Job for the web preview server connections.  */
+    private var connectionJob: Job? = null
 
     private lateinit var scanQrLauncher: ActivityResultLauncher<Intent>
 
@@ -90,7 +105,7 @@ open class InstantExampleConnectionActivity : AppCompatActivity() {
 
     // Basic auth dialog state
     private var showBasicAuthDialog = mutableStateOf(false)
-    private var basicAuthEmitter: CompletableEmitter? = null
+    private var basicAuthContinuation: CancellableContinuation<Unit>? = null
 
     // Enter document link bottom sheet state
     private var showEnterLinkBottomSheet = mutableStateOf(false)
@@ -109,7 +124,7 @@ open class InstantExampleConnectionActivity : AppCompatActivity() {
             if (result.resultCode == RESULT_OK) {
                 val url = result.data?.extras?.getString(BarcodeActivity.BARCODE_ENCODED_KEY)
                 if (url != null) {
-                    editDocument(url, currentUseCompose, currentEnableAssistant)
+                    editDocument(url, "", currentUseCompose, currentEnableAssistant)
                 }
             }
         }
@@ -137,14 +152,15 @@ open class InstantExampleConnectionActivity : AppCompatActivity() {
                     isVisible = showBasicAuthDialog.value,
                     onDismiss = {
                         showBasicAuthDialog.value = false
-                        basicAuthEmitter?.onError(Exception("User cancelled basic auth."))
-                        basicAuthEmitter = null
+                        basicAuthContinuation?.takeIf { it.isActive }
+                            ?.resumeWithException(Exception("User cancelled basic auth."))
+                        basicAuthContinuation = null
                     },
                     onConfirm = { username, password ->
                         showBasicAuthDialog.value = false
                         apiClient.setBasicAuthCredentials(username, password)
-                        basicAuthEmitter?.onComplete()
-                        basicAuthEmitter = null
+                        basicAuthContinuation?.takeIf { it.isActive }?.resume(Unit)
+                        basicAuthContinuation = null
                     }
                 )
 
@@ -154,9 +170,9 @@ open class InstantExampleConnectionActivity : AppCompatActivity() {
                     onDismiss = {
                         showEnterLinkBottomSheet.value = false
                     },
-                    onConfirm = { documentLink ->
+                    onConfirm = { documentLink, username ->
                         showEnterLinkBottomSheet.value = false
-                        editDocument(documentLink, currentUseCompose, currentEnableAssistant)
+                        editDocument(documentLink, username, currentUseCompose, currentEnableAssistant)
                     }
                 )
             }
@@ -165,58 +181,207 @@ open class InstantExampleConnectionActivity : AppCompatActivity() {
 
     override fun onStop() {
         super.onStop()
-        connectionDisposable?.dispose()
-        connectionDisposable = null
+        connectionJob?.cancel()
+        connectionJob = null
     }
 
     private fun createNewDocument(useCompose: Boolean, enableAssistant: Boolean) {
-        connectionDisposable?.dispose()
-        connectionDisposable = apiClient.createNewDocument()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ documentDescriptor ->
+        connectionJob?.cancel()
+        connectionJob = lifecycleScope.launch {
+            try {
+                val documentDescriptor = withContext(Dispatchers.IO) { apiClient.createNewDocument() }
                 showInstantDocument(documentDescriptor, useCompose, enableAssistant)
-            }, { throwable: Throwable? ->
-                if (throwable != null) {
-                    handleError(throwable)
-                }
-            })
+            } catch (throwable: Throwable) {
+                handleError(throwable)
+            }
+        }
     }
 
-    private fun editDocument(url: String, useCompose: Boolean = false, enableAssistant: Boolean = false) {
-        connectionDisposable?.dispose()
-        connectionDisposable = apiClient.getDocument(url)
-            .observeOn(AndroidSchedulers.mainThread())
-            .onErrorResumeNext { throwable -> handleHttpException(throwable, url) }
-            .subscribe({ documentDescriptor: InstantExampleDocumentDescriptor ->
-                showInstantDocument(documentDescriptor, useCompose, enableAssistant)
-            }, { throwable: Throwable? ->
-                if (throwable != null) {
-                    handleError(throwable)
+    private fun editDocument(
+        url: String,
+        username: String,
+        useCompose: Boolean = false,
+        enableAssistant: Boolean = false
+    ) {
+        connectionJob?.cancel()
+        connectionJob = lifecycleScope.launch {
+            try {
+                val trimmedUrl = url.trim()
+                val webPreviewDescriptor = runCatching {
+                    loadDocumentDescriptor(trimmedUrl)
+                }.getOrNull()
+                if (webPreviewDescriptor != null) {
+                    showInstantDocument(webPreviewDescriptor, useCompose, enableAssistant)
+                    return@launch
                 }
-            })
+
+                // Example servers require a username so we can call /api/document/:id or /api/documents.
+                if (username.isNotBlank()) {
+                    val exampleDescriptor = loadFromExampleServer(trimmedUrl, username.trim())
+                    if (exampleDescriptor != null) {
+                        showInstantDocument(exampleDescriptor, useCompose, enableAssistant)
+                        return@launch
+                    }
+                }
+
+                Toast.makeText(
+                    this@InstantExampleConnectionActivity,
+                    R.string.instant_error_missing_jwt,
+                    Toast.LENGTH_LONG
+                ).show()
+            } catch (throwable: Throwable) {
+                handleError(throwable)
+            }
+        }
     }
 
-    private fun handleHttpException(
+    private suspend fun loadDocumentDescriptor(url: String): InstantExampleDocumentDescriptor {
+        return try {
+            withContext(Dispatchers.IO) { apiClient.getDocument(url) }
+        } catch (exception: Throwable) {
+            handleHttpException(exception, url)
+        }
+    }
+
+    private suspend fun handleHttpException(
         exception: Throwable,
         url: String
-    ): Single<InstantExampleDocumentDescriptor> {
+    ): InstantExampleDocumentDescriptor {
         if (exception is HttpException) {
             if (exception.code() == 401) {
                 // We need a basic auth request here.
                 // Then we'll try the request again.
-                return performBasicAuth()
-                    .andThen(apiClient.getDocument(url))
-                    .observeOn(AndroidSchedulers.mainThread())
+                performBasicAuth()
+                return withContext(Dispatchers.IO) { apiClient.getDocument(url) }
             }
         }
-        return Single.error(exception)
+        throw exception
+    }
+
+    private fun extractServerUrl(url: String): String {
+        val uri = url.toUri()
+        val scheme = uri.scheme
+        val authority = uri.encodedAuthority
+        return if (!scheme.isNullOrBlank() && !authority.isNullOrBlank()) {
+            "$scheme://$authority"
+        } else {
+            url
+        }
+    }
+
+    /**
+     * Loads an Instant descriptor from the example server API using Basic auth.
+     *
+     * If the URL contains a document id, we call `/api/document/:id`. Otherwise we list
+     * documents and let the user pick one.
+     */
+    private suspend fun loadFromExampleServer(
+        url: String,
+        username: String
+    ): InstantExampleDocumentDescriptor? {
+        val serverUrl = extractServerUrl(url).trimEnd('/')
+        val documentId = extractExampleServerDocumentId(url)
+        val client = ExampleServerClient(serverUrl, username)
+
+        return if (documentId != null) {
+            val token = withContext(Dispatchers.IO) { client.getJwt(documentId) }
+            val webUrl = "$serverUrl/documents/$documentId"
+            InstantExampleDocumentDescriptor(
+                serverUrl = mapToInstantServerUrl(serverUrl),
+                documentId = documentId,
+                jwt = token,
+                documentCode = "",
+                webUrl = webUrl
+            )
+        } else {
+            val documents = withContext(Dispatchers.IO) { client.getDocuments() }
+            if (documents.isEmpty()) {
+                Toast.makeText(this, R.string.instant_error_invalid_id, Toast.LENGTH_LONG).show()
+                null
+            } else {
+                val selected = if (documents.size == 1) {
+                    documents.first()
+                } else {
+                    selectDocument(documents)
+                } ?: return null
+                val token = selected.tokens.firstOrNull().orEmpty()
+                if (token.isBlank()) return null
+                val webUrl = "$serverUrl/documents/${selected.id}"
+                InstantExampleDocumentDescriptor(
+                    serverUrl = mapToInstantServerUrl(serverUrl),
+                    documentId = selected.id,
+                    jwt = token,
+                    documentCode = "",
+                    webUrl = webUrl
+                )
+            }
+        }
+    }
+
+    private fun extractExampleServerDocumentId(url: String): String? {
+        val uri = url.toUri()
+        val segments = uri.pathSegments
+        // Supports the short link `/d/:id` used by the Node example server.
+        val shortLinkIndex = segments.indexOf("d")
+        if (shortLinkIndex >= 0 && segments.size > shortLinkIndex + 1) {
+            return segments[shortLinkIndex + 1]
+        }
+        val documentsIndex = segments.indexOf("documents")
+        if (documentsIndex >= 0 && segments.size > documentsIndex + 1) {
+            return segments[documentsIndex + 1]
+        }
+        val apiIndex = segments.indexOf("document")
+        if (apiIndex >= 0 && segments.size > apiIndex + 1) {
+            return segments[apiIndex + 1]
+        }
+        return null
+    }
+
+    /**
+     * Maps example server URLs to the Document Engine port used by the example docker setup.
+     */
+    private fun mapToInstantServerUrl(serverUrl: String): String {
+        val parsed = serverUrl.toHttpUrlOrNull() ?: return serverUrl
+        val port = parsed.port
+        val targetPort = if (port == ExampleServerClient.WEB_EXAMPLE_SERVER_PORT) {
+            ExampleServerClient.INSTANT_SERVER_PORT
+        } else {
+            port
+        }
+        return parsed.newBuilder().port(targetPort).build().toString().trimEnd('/')
+    }
+
+    /**
+     * Simple chooser for `/api/documents` results so we can re-use a single input field.
+     */
+    private suspend fun selectDocument(
+        documents: List<ExampleServerDocument>
+    ): ExampleServerDocument? = suspendCancellableCoroutine { continuation ->
+        val items = documents.map { it.title.ifBlank { it.id } }.toTypedArray()
+        val dialog = androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle(R.string.instant_select_document)
+            .setItems(items) { _, which ->
+                continuation.resume(documents[which])
+            }
+            .setOnCancelListener {
+                continuation.resume(null)
+            }
+            .show()
+        continuation.invokeOnCancellation { dialog.dismiss() }
     }
 
     /** Asks the user for basic auth credentials and sets them on the apiClient.  */
-    private fun performBasicAuth(): Completable {
-        return Completable.create { emitter: CompletableEmitter ->
-            basicAuthEmitter = emitter
+    private suspend fun performBasicAuth() {
+        return suspendCancellableCoroutine { continuation ->
+            basicAuthContinuation?.takeIf { it.isActive }
+                ?.resumeWithException(IllegalStateException("Basic auth already in progress."))
+            basicAuthContinuation = continuation
             showBasicAuthDialog.value = true
+            continuation.invokeOnCancellation {
+                if (basicAuthContinuation === continuation) {
+                    basicAuthContinuation = null
+                }
+            }
         }
     }
 

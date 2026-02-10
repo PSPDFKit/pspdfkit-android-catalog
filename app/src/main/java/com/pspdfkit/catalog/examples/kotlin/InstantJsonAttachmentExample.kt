@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2022-2025 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2022-2026 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -22,6 +22,7 @@ import com.pspdfkit.document.PdfDocument
 import com.pspdfkit.document.providers.InputStreamDataProvider
 import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
+import kotlinx.coroutines.runBlocking
 import java.io.File
 import java.io.FileOutputStream
 import java.io.FileWriter
@@ -76,7 +77,7 @@ class InstantJsonAttachmentExampleActivity : PdfActivity() {
             )
 
             // Add the stamp annotation to the document.
-            document.annotationProvider.addAnnotationToPage(stampAnnotation)
+            runBlocking { document.annotationProvider.addAnnotationToPage(stampAnnotation) }
 
             // Export START.
 
@@ -98,10 +99,10 @@ class InstantJsonAttachmentExampleActivity : PdfActivity() {
             // Export END.
 
             // Let's remove the annotation to try the import feature.
-            document.annotationProvider.removeAnnotationFromPage(stampAnnotation)
+            runBlocking { document.annotationProvider.removeAnnotationFromPage(stampAnnotation) }
 
             // Import START.
-            val anotherStampAnnotation = document.annotationProvider.createAnnotationFromInstantJson(jsonData)
+            val anotherStampAnnotation = runBlocking { document.annotationProvider.createAnnotationFromInstantJson(jsonData) }
 
             anotherStampAnnotation.attachBinaryInstantJsonAttachment(FileDataProvider(tempBinaryAttachmentJsonFile), "image/jpeg")
             // Import END.

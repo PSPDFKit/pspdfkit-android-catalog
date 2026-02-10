@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2019-2025 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2019-2026 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -24,6 +24,8 @@ import androidx.activity.viewModels
 import com.pspdfkit.annotations.Annotation
 import com.pspdfkit.annotations.AnnotationType
 import com.pspdfkit.annotations.FreeTextAnnotation
+import com.pspdfkit.annotations.StampAnnotation
+import com.pspdfkit.annotations.appearance.AssetAppearanceStreamGenerator
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.tasks.ExtractAssetTask
@@ -34,6 +36,7 @@ import com.pspdfkit.ui.PdfActivityIntentBuilder
 import com.pspdfkit.ui.PdfFragment
 import com.pspdfkit.ui.overlay.OverlayLayoutParams
 import com.pspdfkit.ui.overlay.OverlayViewProvider
+import kotlinx.coroutines.runBlocking
 import kotlin.getValue
 
 class OverlayViewsExample(context: Context) : SdkExample(context, R.string.overlayViewsExample, R.string.overlayViewsExampleDescription) {
@@ -79,19 +82,30 @@ class OverlayViewsActivity : PdfActivity() {
             // We add a simple annotation to explain to users what to do.
             val clickHereAnnotation = FreeTextAnnotation(
                 0,
-                RectF(50f, 900f, 350f, 700f),
+                RectF(50f, 600f, 350f, 400f),
                 "Tap Anywhere on The Page"
             )
             clickHereAnnotation.textSize = 48f
+            clickHereAnnotation.color = Color.RED
 
-            document.annotationProvider.addAnnotationToPage(clickHereAnnotation)
+            runBlocking { document.annotationProvider.addAnnotationToPage(clickHereAnnotation) }
+
+            // Add a stamp with a custom AP stream that overlaps the overlay view for z-order testing.
+            val stampAnnotation = StampAnnotation(
+                0,
+                RectF(320f, 460f, 520f, 300f),
+                "Overlay Order Stamp"
+            ).apply {
+                appearanceStreamGenerator = AssetAppearanceStreamGenerator("images/Nutrient_Logo.pdf")
+            }
+            runBlocking { document.annotationProvider.addAnnotationToPage(stampAnnotation) }
         }
     }
 
     override fun onPageClick(document: PdfDocument, pageIndex: Int, event: MotionEvent?, pagePosition: PointF?, clickedAnnotation: Annotation?): Boolean {
         if (pageIndex == 0) {
-            // User tapped on first page, add our overlay views.
-            viewProvider.areFirstPageViewsVisible = !viewProvider.areFirstPageViewsVisible
+            // User tapped on first page, toggle overlay ordering.
+            viewProvider.toggleAnnotationOverlayOrder()
             return true
         }
         if (pageIndex == 1) {
@@ -121,6 +135,7 @@ class MyViewProvider(
     companion object {
         private const val STATE_FIRST_PAGE_CLICKED = "MyOverlayProvider.FirstPageClicked"
         private const val STATE_SECOND_PAGE_CLICKED = "MyOverlayProvider.SecondPageClicked"
+        private const val STATE_ANNOTATION_OVERLAY_ON_TOP = "MyOverlayProvider.AnnotationOverlayOnTop"
 
         private const val TEXT_SIZE = 24f
     }
@@ -131,7 +146,7 @@ class MyViewProvider(
     private val pageToViewTransformation = Matrix()
 
     /** This indicates whether our other form views are visible or not. */
-    var areFirstPageViewsVisible = false
+    var areFirstPageViewsVisible = true
         set(value) {
             field = value
             notifyOverlayViewsChanged()
@@ -144,16 +159,27 @@ class MyViewProvider(
             notifyOverlayViewsChanged()
         }
 
+    private var isAnnotationOverlayAboveOverlayViews = false
+        set(value) {
+            field = value
+            pdfFragment.isAnnotationOverlayAboveOverlayViews = value
+            updateFirstPageText()
+            notifyOverlayViewsChanged()
+        }
+
     init {
         // If you need a static set of views pre creating them is the most efficient way to go.
         firstPageView = TextView(context)
-        firstPageView.text = "\uD83D\uDC4B I'm a custom overlay view!\nCheckout what happens when clicking on the second page."
+        updateFirstPageText()
         firstPageView.setBackgroundColor(Color.WHITE)
+        firstPageView.setOnClickListener {
+            isAnnotationOverlayAboveOverlayViews = !isAnnotationOverlayAboveOverlayViews
+        }
         // We put this view next to our freetext annotation.
 
         // The rect are the PDF coordinates on the page where our TextView should be.
         firstPageView.layoutParams = OverlayLayoutParams(
-            RectF(350f, 900f, 768f, 700f),
+            RectF(250f, 500f, 668f, 300f),
             // We use SizingMode.SCALING here, this has the effect that the view will only be measured once and then a scale will be applied to it.
             // This means that the text size will automatically scale up as the page is zoomed.
             OverlayLayoutParams.SizingMode.SCALING
@@ -175,6 +201,7 @@ class MyViewProvider(
             // If we have a saved state we restore it here.
             areFirstPageViewsVisible = savedInstanceState.getBoolean(STATE_FIRST_PAGE_CLICKED)
             areSecondPageViewsVisible = savedInstanceState.getBoolean(STATE_SECOND_PAGE_CLICKED)
+            isAnnotationOverlayAboveOverlayViews = savedInstanceState.getBoolean(STATE_ANNOTATION_OVERLAY_ON_TOP)
         }
     }
 
@@ -220,6 +247,20 @@ class MyViewProvider(
         // In our example we simply store whatever the user entered.
         outState.putBoolean(STATE_FIRST_PAGE_CLICKED, areFirstPageViewsVisible)
         outState.putBoolean(STATE_SECOND_PAGE_CLICKED, areSecondPageViewsVisible)
+        outState.putBoolean(STATE_ANNOTATION_OVERLAY_ON_TOP, isAnnotationOverlayAboveOverlayViews)
+    }
+
+    private fun updateFirstPageText() {
+        val orderLabel = if (isAnnotationOverlayAboveOverlayViews) {
+            "Annotation overlay above overlay views"
+        } else {
+            "Overlay views above annotation overlay"
+        }
+        firstPageView.text = "\uD83D\uDC4B I'm a custom overlay view!\nTap me or the page to toggle order.\nNow: $orderLabel"
+    }
+
+    fun toggleAnnotationOverlayOrder() {
+        isAnnotationOverlayAboveOverlayViews = !isAnnotationOverlayAboveOverlayViews
     }
 
     /** This method converts the given pdf points to pixels for use in our text size. */

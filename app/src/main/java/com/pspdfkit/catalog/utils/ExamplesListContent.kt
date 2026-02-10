@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2023-2025 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2023-2026 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -10,7 +10,7 @@ package com.pspdfkit.catalog.utils
 import android.content.Context
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
-import com.pspdfkit.catalog.examples.java.AnnotationFlagsExample
+import com.pspdfkit.catalog.examples.java.AesEncryptedFileExample
 import com.pspdfkit.catalog.examples.java.AnnotationOverlayExample
 import com.pspdfkit.catalog.examples.java.AnnotationSelectionCustomizationExample
 import com.pspdfkit.catalog.examples.java.CustomAnnotationCreationToolbarExample
@@ -28,21 +28,19 @@ import com.pspdfkit.catalog.examples.java.CustomToolbarIconGroupingExample
 import com.pspdfkit.catalog.examples.java.DisabledAnnotationPropertyExample
 import com.pspdfkit.catalog.examples.java.DocumentSharingExample
 import com.pspdfkit.catalog.examples.java.DocumentSwitcherExample
-import com.pspdfkit.catalog.examples.java.FilterableThumbnailGridExample
 import com.pspdfkit.catalog.examples.java.FormEditingInFragmentExample
 import com.pspdfkit.catalog.examples.java.RandomDocumentReplacementExample
 import com.pspdfkit.catalog.examples.java.ScreenReaderExample
 import com.pspdfkit.catalog.examples.java.SplitDocumentExample
 import com.pspdfkit.catalog.examples.java.ToolbarsInFragmentExample
 import com.pspdfkit.catalog.examples.java.VerticalScrollbarExample
-import com.pspdfkit.catalog.examples.java.XfdfExample
-import com.pspdfkit.catalog.examples.java.decryption.AesEncryptedFileExample
 import com.pspdfkit.catalog.examples.kotlin.AiAssistantComposeExample
 import com.pspdfkit.catalog.examples.kotlin.AiAssistantDocumentTabsExample
 import com.pspdfkit.catalog.examples.kotlin.AiAssistantMultiDocComposeExample
 import com.pspdfkit.catalog.examples.kotlin.AiAssistantViewPagerExample
 import com.pspdfkit.catalog.examples.kotlin.AnnotationConfigurationExample
 import com.pspdfkit.catalog.examples.kotlin.AnnotationCreationExample
+import com.pspdfkit.catalog.examples.kotlin.AnnotationFlagsExample
 import com.pspdfkit.catalog.examples.kotlin.AnnotationOverlayVisibilityExample
 import com.pspdfkit.catalog.examples.kotlin.AnnotationRenderingExample
 import com.pspdfkit.catalog.examples.kotlin.AnnotationSelectionViewStylingExample
@@ -76,6 +74,7 @@ import com.pspdfkit.catalog.examples.kotlin.ELearningExample
 import com.pspdfkit.catalog.examples.kotlin.EmptyActivityExample
 import com.pspdfkit.catalog.examples.kotlin.ExternalDocumentExample
 import com.pspdfkit.catalog.examples.kotlin.FileAnnotationCreationExample
+import com.pspdfkit.catalog.examples.kotlin.FilterableThumbnailGridExample
 import com.pspdfkit.catalog.examples.kotlin.FormClickInterceptExample
 import com.pspdfkit.catalog.examples.kotlin.FormCreationExample
 import com.pspdfkit.catalog.examples.kotlin.FormFillingExample
@@ -118,6 +117,7 @@ import com.pspdfkit.catalog.examples.kotlin.RuntimeConfigurationExample
 import com.pspdfkit.catalog.examples.kotlin.ScientificPaperExample
 import com.pspdfkit.catalog.examples.kotlin.SignatureStorageDatabaseExample
 import com.pspdfkit.catalog.examples.kotlin.SimpleFragmentExample
+import com.pspdfkit.catalog.examples.kotlin.SimplePdfViewPagerExample
 import com.pspdfkit.catalog.examples.kotlin.SoundAnnotationDataExtractionExample
 import com.pspdfkit.catalog.examples.kotlin.TextHighlightPopupCustomisationExample
 import com.pspdfkit.catalog.examples.kotlin.ThirdPartySigningExample
@@ -125,6 +125,7 @@ import com.pspdfkit.catalog.examples.kotlin.TwoStepSigningExample
 import com.pspdfkit.catalog.examples.kotlin.UserInterfaceViewModesExample
 import com.pspdfkit.catalog.examples.kotlin.ViewPager2Example
 import com.pspdfkit.catalog.examples.kotlin.WatermarkExample
+import com.pspdfkit.catalog.examples.kotlin.XfdfExample
 import com.pspdfkit.catalog.examples.kotlin.ZoomExample
 import com.pspdfkit.catalog.examples.kotlin.instant.InstantExample
 
@@ -334,6 +335,7 @@ fun getSectionsWithExamples(context: Context) = listOf(
         DynamicMultimediaAnnotationExample(context),
         RandomDocumentReplacementExample(context),
         DocumentPagerExample(context),
-        ViewPager2Example(context)
+        ViewPager2Example(context),
+        SimplePdfViewPagerExample(context)
     )
 )

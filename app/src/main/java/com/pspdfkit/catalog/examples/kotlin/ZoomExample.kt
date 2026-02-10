@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2026 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -8,22 +8,25 @@
 package com.pspdfkit.catalog.examples.kotlin
 
 import android.content.Context
-import android.net.Uri
+import android.content.Intent
 import android.view.Menu
 import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.annotation.UiThread
+import androidx.lifecycle.lifecycleScope
 import com.pspdfkit.annotations.Annotation
 import com.pspdfkit.annotations.AnnotationType
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
-import com.pspdfkit.catalog.tasks.ExtractAssetTask
+import com.pspdfkit.catalog.ui.DocumentPickerActivity
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.document.PdfDocument
 import com.pspdfkit.ui.PdfActivity
-import com.pspdfkit.ui.PdfActivityIntentBuilder
 import com.pspdfkit.ui.PdfFragment
-import io.reactivex.rxjava3.disposables.Disposable
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import kotlin.math.max
 import kotlin.math.min
 
@@ -39,17 +42,18 @@ class ZoomExample(context: Context) : SdkExample(context, R.string.zoomExampleTi
             .outlineEnabled(false)
             .thumbnailGridEnabled(false)
 
-        // Start the activity once the example document has been extracted from the app's assets.
-        ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .configuration(configuration.build())
-                .activityClass(ZoomExampleActivity::class)
-                .build()
-
-            // Start the ZoomExampleActivity for the extracted document.
-            context.startActivity(intent)
-        }
+        // Launch the picker activity to let users choose between default or custom document.
+        val intent = Intent(context, ZoomExamplePickerActivity::class.java)
+        intent.putExtra(DocumentPickerActivity.EXTRA_CONFIGURATION, configuration.build())
+        context.startActivity(intent)
     }
+}
+
+/**
+ * Activity that lets the user choose between picking a PDF and using the default document.
+ */
+class ZoomExamplePickerActivity : DocumentPickerActivity() {
+    override val targetActivityClass = ZoomExampleActivity::class.java
 }
 
 /**
@@ -69,7 +73,7 @@ class ZoomExampleActivity : PdfActivity() {
     /** This holds reference to the currently zoomed annotation. */
     private var currentAnnotation: Annotation? = null
 
-    private var annotationLoadingDisposable: Disposable? = null
+    private var annotationLoadingJob: Job? = null
 
     private val viewModel: AnnotationCreationViewModel by viewModels()
 
@@ -80,19 +84,23 @@ class ZoomExampleActivity : PdfActivity() {
     @UiThread
     override fun onDocumentLoaded(document: PdfDocument) {
         viewModel.createObjects {
-            annotationLoadingDisposable = document.annotationProvider
-                .getAllAnnotationsOfTypeAsync(AnnotationType.entries.toSet())
-                .toList()
-                .subscribe { annotations -> documentAnnotations.addAll(annotations) }
+            annotationLoadingJob = lifecycleScope.launch {
+                val annotations = withContext(Dispatchers.IO) {
+                    document.annotationProvider.getAllAnnotationsOfType(
+                        AnnotationType.entries.toSet()
+                    )
+                }
+                documentAnnotations.addAll(annotations)
+            }
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
 
-        // Dispose the annotation loading subscription.
-        annotationLoadingDisposable?.dispose()
-        annotationLoadingDisposable = null
+        // Cancel the annotation loading job.
+        annotationLoadingJob?.cancel()
+        annotationLoadingJob = null
     }
 
     /**

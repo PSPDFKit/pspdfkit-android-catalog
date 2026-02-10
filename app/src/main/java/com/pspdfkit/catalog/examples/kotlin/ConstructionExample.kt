@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2022-2025 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2022-2026 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -15,6 +15,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.graphics.drawable.toBitmap
+import androidx.lifecycle.lifecycleScope
 import com.pspdfkit.annotations.Annotation
 import com.pspdfkit.annotations.AnnotationFlags
 import com.pspdfkit.annotations.AnnotationType
@@ -36,6 +37,7 @@ import com.pspdfkit.ui.toolbar.ContextualToolbar
 import com.pspdfkit.ui.toolbar.ToolbarCoordinatorLayout
 import com.pspdfkit.ui.toolbar.grouping.presets.MenuItem
 import com.pspdfkit.ui.toolbar.grouping.presets.PresetMenuItemGroupingRule
+import kotlinx.coroutines.launch
 
 class ConstructionExample(context: Context) : AssetExample(
     context,
@@ -97,13 +99,16 @@ class ConstructionExampleActivity :
         super.onDocumentLoaded(document)
 
         // Check if we have any hidden annotation. If so, we should show the "show" item in the options menu
-        val hasHiddenAnnotations = document.annotationProvider.getAllAnnotationsOfType(desiredAnnotationTypes).firstOrNull {
-            it.hasFlag(AnnotationFlags.HIDDEN)
-        } != null
+        lifecycleScope.launch {
+            val hasHiddenAnnotations =
+                document.annotationProvider.getAllAnnotationsOfType(desiredAnnotationTypes).firstOrNull {
+                    it.hasFlag(AnnotationFlags.HIDDEN)
+                } != null
 
-        if (hasHiddenAnnotations != annotationsHidden) {
-            annotationsHidden = hasHiddenAnnotations
-            invalidateOptionsMenu()
+            if (hasHiddenAnnotations != annotationsHidden) {
+                annotationsHidden = hasHiddenAnnotations
+                invalidateOptionsMenu()
+            }
         }
 
         setupPinStamp()
@@ -229,11 +234,13 @@ class ConstructionExampleActivity :
     // add or remove the HIDDEN flag to the annotations to achieve the hide/show effect
     private fun setAnnotationVisibility(shouldHide: Boolean) {
         val doc = document ?: return
-        val annotations = doc
-            .annotationProvider
-            .getAllAnnotationsOfType(desiredAnnotationTypes)
+        lifecycleScope.launch {
+            val annotations = doc
+                .annotationProvider
+                .getAllAnnotationsOfType(desiredAnnotationTypes)
 
-        pdfFragment?.executeAction(HideAction(annotations, null, shouldHide))
+            pdfFragment?.executeAction(HideAction(annotations, null, shouldHide))
+        }
     }
 
     //region OnContextualToolbarLifecycleListener

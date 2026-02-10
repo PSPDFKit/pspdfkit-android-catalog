@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~   Copyright © 2014-2025 PSPDFKit GmbH. All rights reserved.
+  ~   Copyright © 2014-2026 PSPDFKit GmbH. All rights reserved.
   ~
   ~   The PSPDFKit Sample applications are licensed with a modified BSD license.
   ~   Please see License for details. This notice may not be removed from this file.
@@ -128,7 +128,7 @@
 
         <!-- This is the activity that provides "Copy to Clipboard" action for images shared from other apps. -->
         <activity
-            android:name=".examples.java.activities.CopyToClipboardActivity"
+            android:name=".examples.java.CopyToClipboardActivity"
             android:excludeFromRecents="true"
             android:label="@string/copy_to_clipboard_action"
             android:noHistory="true"
@@ -147,12 +147,17 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
+            android:name=".examples.kotlin.PlaygroundExamplePickerActivity"
+            android:label="@string/playgroundExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
             android:name=".examples.kotlin.CustomActionsActivity"
             android:label="@string/customActionsExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.java.activities.CustomAnnotationCreationToolbarActivity"
+            android:name=".examples.java.CustomAnnotationCreationToolbarExample$CustomAnnotationCreationToolbarActivity"
             android:label="@string/customAnnotationCreationToolbarExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
@@ -162,12 +167,12 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.java.activities.CustomElectronicSignatureActivity"
+            android:name=".examples.java.CustomElectronicSignatureExample$CustomElectronicSignatureActivity"
             android:label="@string/customElectronicSignatureExampleTitle"
             android:windowSoftInputMode="adjustNothing"/>
 
         <activity
-            android:name=".examples.java.activities.RandomDocumentReplacementActivity"
+            android:name=".examples.java.RandomDocumentReplacementExample$RandomDocumentReplacementActivity"
             android:label="@string/randomDocumentReplacementExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
@@ -177,12 +182,12 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.java.activities.SplitDocumentActivity"
+            android:name=".examples.java.SplitDocumentExample$SplitDocumentActivity"
             android:label="@string/splitDocumentExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.java.activities.DocumentSwitcherActivity"
+            android:name=".examples.java.DocumentSwitcherExample$DocumentSwitcherActivity"
             android:label="@string/documentSwitcherExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
@@ -192,7 +197,7 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.java.activities.CustomFormHighlightColorActivity"
+            android:name=".examples.java.CustomFormHighlightColorExample$CustomFormHighlightColorActivity"
             android:label="@string/customFormHighlightColorExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
@@ -212,7 +217,7 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.java.activities.AnnotationOverlayActivity"
+            android:name=".examples.java.AnnotationOverlayExample$AnnotationOverlayActivity"
             android:label="@string/annotationOverlayExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
@@ -222,42 +227,42 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.java.activities.AnnotationFlagsActivity"
+            android:name=".examples.kotlin.AnnotationFlagsActivity"
             android:label="@string/annotationFlagsExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.java.activities.CustomAnnotationInspectorActivity"
+            android:name=".examples.java.CustomAnnotationInspectorExample$CustomAnnotationInspectorActivity"
             android:label="@string/annotationCustomInspectorExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.java.activities.AnnotationSelectionCustomizationActivity"
+            android:name=".examples.java.AnnotationSelectionCustomizationExample$AnnotationSelectionCustomizationActivity"
             android:label="@string/annotationSelectionControllerExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.java.activities.CustomStampAnnotationsActivity"
+            android:name=".examples.java.CustomStampAnnotationsExample$CustomStampAnnotationsActivity"
             android:label="@string/annotationCustomStampAnnotationExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.java.activities.ToolbarsInFragmentActivity"
+            android:name=".examples.java.ToolbarsInFragmentExample$ToolbarsInFragmentActivity"
             android:label="@string/toolbarsInFragmentExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.java.activities.FormEditingInFragmentActivity"
+            android:name=".examples.java.FormEditingInFragmentExample$FormEditingInFragmentActivity"
             android:label="@string/formEditingInFragmentExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.java.activities.DocumentSharingExampleActivity"
+            android:name=".examples.java.DocumentSharingExample$DocumentSharingExampleActivity"
             android:label="@string/documentSharingExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.java.activities.CustomSharingMenuActivity"
+            android:name=".examples.java.CustomSharingMenuExample$CustomSharingMenuActivity"
             android:label="@string/documentSharingMenuExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
@@ -273,43 +278,43 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.java.activities.CustomInlineSearchExampleActivity"
+            android:name=".examples.java.CustomInlineSearchExample$CustomInlineSearchExampleActivity"
             android:label="@string/customInlineSearchExampleTitle" />
 
         <activity
-            android:name=".examples.java.activities.CustomSearchUiActivity"
+            android:name=".examples.java.CustomSearchUiExample$CustomSearchUiActivity"
             android:label="@string/customSearchUiExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.java.activities.DisabledAnnotationPropertyActivity"
+            android:name=".examples.java.DisabledAnnotationPropertyExample$DisabledAnnotationPropertyActivity"
             android:label="@string/disabledAnnotationPropertyExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.java.activities.CustomToolbarIconGroupingActivity"
+            android:name=".examples.java.CustomToolbarIconGroupingExample$CustomToolbarIconGroupingActivity"
             android:label="@string/customToolbarItemGroupingExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.java.activities.VerticalScrollbarExampleActivity"
+            android:name=".examples.java.VerticalScrollbarExample$VerticalScrollbarExampleActivity"
             android:label="@string/verticalScrollbarExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.java.activities.CustomShareDialogActivity"
+            android:name=".examples.java.CustomShareDialogExample$CustomShareDialogActivity"
             android:label="@string/customShareDialogExampleTitle" />
 
 
-        <activity android:name=".examples.java.activities.ScreenReaderExampleActivity" />
+        <activity android:name=".examples.java.ScreenReaderExample$ScreenReaderExampleActivity" />
 
         <activity
-            android:name=".examples.java.activities.FilterableThumbnailGridActivity"
+            android:name=".examples.kotlin.FilterableThumbnailGridActivity"
             android:label="@string/filterableThumbnailGridExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.java.activities.CustomPageTemplateActivity"
+            android:name=".examples.java.CustomPageTemplatesExample$CustomPageTemplateActivity"
             android:label="@string/customPageTemplateExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
@@ -324,7 +329,7 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.java.activities.XfdfExampleActivity"
+            android:name=".examples.kotlin.XfdfExampleActivity"
             android:label="@string/xfdfExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
@@ -432,6 +437,11 @@
 
         <activity
             android:name=".examples.kotlin.ZoomExampleActivity"
+            android:label="@string/zoomExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.ZoomExamplePickerActivity"
             android:label="@string/zoomExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
@@ -606,6 +616,11 @@
         <activity
             android:name=".examples.kotlin.ResultSignatureActivity"
             android:label="@string/customSignatureParseExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.SimplePdfViewPagerActivity"
+            android:label="@string/simplePdfViewPagerExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
     </application>

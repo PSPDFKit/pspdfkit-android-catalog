@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2026 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -54,7 +54,7 @@ class WatermarkExampleActivity : PdfActivity() {
      * Drawable provider that provides example watermarks.
      */
     private val customTestDrawableProvider: PdfDrawableProvider = object : PdfDrawableProvider() {
-        override fun getDrawablesForPage(context: Context, document: PdfDocument, @IntRange(from = 0) pageIndex: Int): List<PdfDrawable> {
+        override suspend fun getDrawablesForPage(context: Context, document: PdfDocument, @IntRange(from = 0) pageIndex: Int): List<PdfDrawable> {
             return listOf(
                 // Text watermark, tilted by 45 degrees with a bottom-left corner at (350, 350) in PDF coordinates.
                 WatermarkDrawable("Watermark", PointF(350f, 350f)),

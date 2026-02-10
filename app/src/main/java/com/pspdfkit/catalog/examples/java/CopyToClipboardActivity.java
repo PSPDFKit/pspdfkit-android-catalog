@@ -1,12 +1,13 @@
 /*
- *   Copyright © 2018-2025 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2018-2026 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
  */
 
-package com.pspdfkit.catalog.examples.java.activities;
+package com.pspdfkit.catalog.examples.java;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
@@ -55,6 +56,7 @@ public class CopyToClipboardActivity extends AppCompatActivity {
         }
     }
 
+    @SuppressLint("CheckResult")
     private void copySharedImageToSystemClipboard(@NonNull Intent intent) {
         // We support only image files at the moment.
         final String mimeType = intent.getType();

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~   Copyright © 2017-2025 PSPDFKit GmbH. All rights reserved.
+  ~   Copyright © 2017-2026 PSPDFKit GmbH. All rights reserved.
   ~
   ~   The PSPDFKit Sample applications are licensed with a modified BSD license.
   ~   Please see License for details. This notice may not be removed from this file.
@@ -14,6 +14,7 @@
     <item name="instant_collaborate" type="id"/>
     <item name="open_in_browser" type="id"/>
     <item name="share_document_link" type="id"/>
+    <item name="instant_reset_cache" type="id"/>
     <item name="share_document_code" type="id"/>
 
     <item name="toggle_annotation_overlay" type="id" />

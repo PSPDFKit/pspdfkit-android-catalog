@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2022-2025 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2022-2026 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -33,6 +33,7 @@ import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
 import com.pspdfkit.ui.special_mode.controller.AnnotationTool
 import com.pspdfkit.utils.PdfLog
+import kotlinx.coroutines.runBlocking
 import java.util.EnumSet
 import kotlin.collections.forEach
 import kotlin.getValue
@@ -149,7 +150,7 @@ class MeasurementToolsActivity : PdfActivity(), AnnotationProvider.OnAnnotationU
 
             // We can read the annotations to see if there are any measurements that we need to process...
             for (page in 0 until document.pageCount) {
-                measurements.addAll(document.annotationProvider.getAnnotations(page).filter { it.isMeasurement })
+                measurements.addAll(runBlocking { document.annotationProvider.getAnnotations(page) }.filter { it.isMeasurement })
             }
             // ... and process them.
             processAllMeasurements()

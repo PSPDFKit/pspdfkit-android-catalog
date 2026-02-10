@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2026 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -35,8 +35,12 @@ import com.pspdfkit.listeners.DocumentListener
 import com.pspdfkit.ui.PdfUiFragment
 import com.pspdfkit.ui.PdfUiFragmentBuilder
 import com.pspdfkit.utils.getSupportParcelable
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.disposables.Disposable
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.launch
 import java.util.EnumSet
 
 class PersistentAnnotationSidebarExample(context: Context) : SdkExample(context, R.string.annotationSidebarExampleTitle, R.string.annotationSidebarExampleDescription) {
@@ -185,8 +189,8 @@ class AnnotationRecyclerAdapter(private val context: Context) : RecyclerView.Ada
     /** We keep a list of annotations per page so we can update only single pages easily. */
     private val annotationsPerPage = mutableMapOf<Int, List<Annotation>>()
 
-    /** It's good practice to keep track of running RxJava operations so they can be disposed of when exiting the activity. */
-    private val loadingDisposables = mutableMapOf<Int, Disposable>()
+    private val adapterScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+    private val loadingJobs = mutableMapOf<Int, Job>()
 
     var currentDocument: PdfDocument? = null
     var annotationRecyclerAdapterListener: AnnotationRecyclerAdapterListener? = null
@@ -221,10 +225,9 @@ class AnnotationRecyclerAdapter(private val context: Context) : RecyclerView.Ada
     fun clear() {
         displayedItems.clear()
         annotationsPerPage.clear()
-        for (disposable in loadingDisposables.values) {
-            disposable.dispose()
-        }
-        loadingDisposables.clear()
+        loadingJobs.values.forEach { it.cancel() }
+        loadingJobs.clear()
+        adapterScope.coroutineContext.cancelChildren()
         currentDocument = null
     }
 
@@ -234,19 +237,15 @@ class AnnotationRecyclerAdapter(private val context: Context) : RecyclerView.Ada
         val document = currentDocument ?: return
 
         // Cancel any already running loading operation for this page.
-        loadingDisposables[pageIndex]?.dispose()
+        loadingJobs[pageIndex]?.cancel()
 
         // We grab the annotations for the current page index.
         // This operates on a background scheduler so we have to explicitly observe it on the main thread.
-        loadingDisposables[pageIndex] = document.annotationProvider.getAllAnnotationsOfTypeAsync(listedAnnotationTypes, pageIndex, 1)
-            .toList()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { annotations ->
-                // Now that we have the annotations we need to store them.
-                annotationsPerPage[pageIndex] = annotations
-                // Afterwards we update our final list for displaying.
-                refreshDisplayedItems()
-            }
+        loadingJobs[pageIndex] = adapterScope.launch {
+            val annotations = document.annotationProvider.getAllAnnotationsOfType(listedAnnotationTypes, pageIndex, 1)
+            annotationsPerPage[pageIndex] = annotations
+            refreshDisplayedItems()
+        }
     }
 
     @SuppressLint("NotifyDataSetChanged")

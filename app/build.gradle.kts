@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2019-2025 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2019-2026 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -23,8 +23,8 @@ android {
         minSdk = 26
         targetSdk = compileSdk
 
-        versionName = "10.10.1"
-        versionCode = 145300
+        versionName = "11.0.0"
+        versionCode = 146156
 
         vectorDrawables {
             useSupportLibrary = true
@@ -59,7 +59,7 @@ android {
         warningsAsErrors = true
         // The Catalog app is a demo app with only English strings.
         // ObsoleteLintCustomCheck can be enabled again when upgrading `AppCompat` to 1.7
-        disable += setOf("MissingTranslation", "ObsoleteLintCustomCheck")
+        disable += setOf("MissingTranslation", "ObsoleteLintCustomCheck", "AndroidGradlePluginVersion")
         // This needs to be a separate line for the lint dependency check script to work.
         disable.add("GradleDependency")
         baseline = file("lint-baseline.xml")
@@ -70,11 +70,11 @@ dependencies {
 
     // Nutrient is integrated from the Nutrient Maven repository. See the `repositories` block at the beginning
     // of this file, which shows how to set up the repository in your app.
-    implementation("io.nutrient:nutrient:10.10.1")
+    implementation("io.nutrient:nutrient:11.0.0")
 
     // OCR library + English language pack.
-    implementation("io.nutrient:nutrient-ocr:10.10.1")
-    implementation("io.nutrient:nutrient-ocr-english:10.10.1")
+    implementation("io.nutrient:nutrient-ocr:11.0.0")
+    implementation("io.nutrient:nutrient-ocr-english:11.0.0")
 
 
     // Androidx

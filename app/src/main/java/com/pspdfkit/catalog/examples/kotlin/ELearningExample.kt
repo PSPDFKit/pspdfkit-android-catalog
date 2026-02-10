@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2026 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -7,14 +7,13 @@
 
 package com.pspdfkit.catalog.examples.kotlin
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import androidx.annotation.UiThread
-import com.pspdfkit.annotations.Annotation
+import androidx.lifecycle.lifecycleScope
 import com.pspdfkit.annotations.AnnotationType
 import com.pspdfkit.bookmarks.Bookmark
 import com.pspdfkit.catalog.R
@@ -30,12 +29,10 @@ import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
 import com.pspdfkit.ui.special_mode.controller.AnnotationTool
 import com.pspdfkit.utils.getSupportParcelableExtra
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.BackpressureStrategy
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.disposables.Disposable
-import io.reactivex.rxjava3.functions.Action
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.EnumSet
 
 /**
@@ -102,11 +99,11 @@ class ELearningActivity : PdfActivity() {
     /** Teacher document URI. */
     private lateinit var teacherUri: Uri
 
-    /** Disposable in charge of switching the document. */
-    private var switchDocumentDisposable: Disposable? = null
+    /** Job in charge of switching the document. */
+    private var switchDocumentJob: Job? = null
 
-    /** Disposable in charge of loading the annotation to the new document. */
-    private var transferDataDisposable: Disposable? = null
+    /** Job in charge of loading the annotation to the new document. */
+    private var transferDataJob: Job? = null
 
     /** Fragment state containing current page, zoom, and scroll. */
     private var fragmentState: Bundle? = null
@@ -145,8 +142,8 @@ class ELearningActivity : PdfActivity() {
     }
 
     override fun onPause() {
-        switchDocumentDisposable.safelyDispose()
-        transferDataDisposable.safelyDispose()
+        switchDocumentJob?.cancel()
+        transferDataJob?.cancel()
         super.onPause()
     }
 
@@ -162,48 +159,41 @@ class ELearningActivity : PdfActivity() {
     }
 
     @UiThread
-    @SuppressLint("CheckResult")
     override fun onDocumentLoaded(document: PdfDocument) {
         // Take any serialized annotations that were stored upon switching, and add them to the loaded document.
-        val addAnnotations = Observable.fromIterable(serializedAnnotationsToTransfer)
-            .toFlowable(BackpressureStrategy.BUFFER)
-            // Create an annotation from the instant JSON and add it to the document.
-            .flatMapSingle(document.annotationProvider::createAnnotationFromInstantJsonAsync)
-            // Once all annotations are transferred, we can clear the list.
-            .doOnComplete(serializedAnnotationsToTransfer::clear)
-            .ignoreElements()
-
-        // Take any bookmarks that were stored upon switching, and add them to the loaded document.
-        val addBookmarks = Observable.fromIterable(bookmarksToTransfer)
-            .flatMapCompletable(document.bookmarkProvider::addBookmarkAsync)
-            // Once all bookmarks are transferred, we can clear the list.
-            .doOnComplete(bookmarksToTransfer::clear)
-
-        // Iterate through the annotation list.
-        transferDataDisposable = Completable
-            .mergeArray(
-                addAnnotations,
-                addBookmarks
-            )
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnComplete {
-                // Restore page index, scroll and zoom.
-                fragmentState?.let {
-                    requirePdfFragment().state = it
-                    fragmentState = null
+        transferDataJob = lifecycleScope.launch {
+            withContext(Dispatchers.IO) {
+                // Create annotations from instant JSON and add them to the document.
+                for (json in serializedAnnotationsToTransfer) {
+                    document.annotationProvider.createAnnotationFromInstantJson(json)
                 }
+                // Once all annotations are transferred, we can clear the list.
+                serializedAnnotationsToTransfer.clear()
 
-                // Make sure the outline view shows the changes from transferring bookmarks and annotations.
-                pspdfKitViews.outlineView?.setDocument(document, configuration.configuration)
-
-                // Restore bookmark list view visibility.
-                if (isBookmarkListDisplayed) {
-                    pspdfKitViews.outlineView?.show()
+                // Take any bookmarks that were stored upon switching, and add them to the loaded document.
+                bookmarksToTransfer.forEach { bookmark ->
+                    document.bookmarkProvider.addBookmarkAsync(bookmark).blockingAwait()
                 }
-
-                invalidateOptionsMenu()
+                // Once all bookmarks are transferred, we can clear the list.
+                bookmarksToTransfer.clear()
             }
-            .subscribe()
+
+            // Restore page index, scroll and zoom.
+            fragmentState?.let {
+                requirePdfFragment().state = it
+                fragmentState = null
+            }
+
+            // Make sure the outline view shows the changes from transferring bookmarks and annotations.
+            pspdfKitViews.outlineView?.setDocument(document, configuration.configuration)
+
+            // Restore bookmark list view visibility.
+            if (isBookmarkListDisplayed) {
+                pspdfKitViews.outlineView?.show()
+            }
+
+            invalidateOptionsMenu()
+        }
     }
 
     /**
@@ -215,67 +205,51 @@ class ELearningActivity : PdfActivity() {
     private fun switchDocument() {
         val document = document ?: return
 
-        // Fetch all annotations, serialize them, and collect them in a list. We keep them around in
-        // memory, and will add them to the other document once it is loaded.
-        val serializeAnnotations = document.annotationProvider
-            .getAllAnnotationsOfTypeAsync(AnnotationType.entries.toSet())
-            .doOnSubscribe { serializedAnnotationsToTransfer.clear() }
-            .map(Annotation::toInstantJson)
-            // For some unsupported annotation types (like popup annotations) we don't offer serialization.
-            // In these cases, `toInstantJson()` returns "null". We filter those from the serialized items.
-            // those annotations that are not supported.
-            .filter(::invalidInstantJson)
-            // Collect all JSON annotations.
-            .map(serializedAnnotationsToTransfer::add)
-            .ignoreElements()
-
-        // Fetch the bookmarks for synchronization and collect them in a list.
-        val fetchBookmarks = document.bookmarkProvider.bookmarksAsync
-            .doOnSubscribe { bookmarksToTransfer.clear() }
-            .map(bookmarksToTransfer::addAll)
-            .ignoreElements()
+        // While the document switching is in progress, we disable all document interaction to
+        // prevent changes to be made.
+        requirePdfFragment().isDocumentInteractionEnabled = false
 
         // Run the collection of annotations and bookmarks asynchronously.
-        switchDocumentDisposable = Completable
-            .mergeArray(
-                serializeAnnotations,
-                fetchBookmarks
-            )
-            // While the document switching is in progress, we disable all document interaction to
-            // prevent changes to be made.
-            .doOnSubscribe {
-                requirePdfFragment().isDocumentInteractionEnabled = false
-            }
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnComplete {
-                // Save current page index, scroll and zoom.
-                fragmentState = requirePdfFragment().state
+        switchDocumentJob = lifecycleScope.launch {
+            // Clear previous data
+            serializedAnnotationsToTransfer.clear()
+            bookmarksToTransfer.clear()
 
-                // Save bookmark list view visibility.
-                isBookmarkListDisplayed = pspdfKitViews.outlineView?.isDisplayed ?: false
+            withContext(Dispatchers.IO) {
+                // Fetch all annotations, serialize them, and collect them in a list. We keep them around in
+                // memory, and will add them to the other document once it is loaded.
+                val annotations = document.annotationProvider.getAllAnnotationsOfType(
+                    AnnotationType.entries.toSet()
+                )
 
-                // Swap out the current document to eather the teacher or student version.
-                if (document.documentSource.fileUri == teacherUri) {
-                    documentCoordinator.setDocument(DocumentDescriptor.fromUri(studentUri))
-                } else {
-                    documentCoordinator.setDocument(DocumentDescriptor.fromUri(teacherUri))
+                annotations.forEach { annotation ->
+                    val json = annotation.toInstantJson()
+                    // For some unsupported annotation types (like popup annotations) we don't offer serialization.
+                    // In these cases, `toInstantJson()` returns "null". We filter those from the serialized items.
+                    if (invalidInstantJson(json)) {
+                        serializedAnnotationsToTransfer.add(json)
+                    }
                 }
-                invalidateOptionsMenu()
-            }
-            .subscribe()
-    }
 
-    /**
-     * If `disposable` is non-null, it will be disposed upon calling this method. If `disposable` is null, this method is a no-op.
-     * This method will always return `null` which allows to null out any disposable reference in a single statement. If
-     * the disposable is disposed `onDispose()` will be called.
-     */
-    private fun Disposable?.safelyDispose(onDispose: Action? = null): Disposable? {
-        if (this != null && !isDisposed) {
-            dispose()
-            onDispose?.run()
+                // Fetch the bookmarks for synchronization and collect them in a list.
+                val bookmarks = document.bookmarkProvider.bookmarks
+                bookmarksToTransfer.addAll(bookmarks)
+            }
+
+            // Save current page index, scroll and zoom.
+            fragmentState = requirePdfFragment().state
+
+            // Save bookmark list view visibility.
+            isBookmarkListDisplayed = pspdfKitViews.outlineView?.isDisplayed ?: false
+
+            // Swap out the current document to either the teacher or student version.
+            if (document.documentSource.fileUri == teacherUri) {
+                documentCoordinator.setDocument(DocumentDescriptor.fromUri(studentUri))
+            } else {
+                documentCoordinator.setDocument(DocumentDescriptor.fromUri(teacherUri))
+            }
+            invalidateOptionsMenu()
         }
-        return null
     }
 
     companion object {

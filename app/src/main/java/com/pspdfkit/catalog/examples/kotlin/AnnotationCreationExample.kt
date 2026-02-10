@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2023-2025 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2023-2026 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -44,6 +44,7 @@ import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
 import com.pspdfkit.ui.special_mode.controller.AnnotationTool
 import com.pspdfkit.utils.EdgeInsets
+import kotlinx.coroutines.runBlocking
 import java.io.IOException
 
 /**
@@ -325,6 +326,8 @@ class AnnotationCreationActivity : PdfActivity() {
      * Add the annotation to the document, and update the annotation in the UI.
      */
     private fun addAnnotationToDocument(annotation: Annotation) {
-        document?.getAnnotationProvider()?.addAnnotationToPage(annotation)
+        document?.getAnnotationProvider()?.let { provider ->
+            runBlocking { provider.addAnnotationToPage(annotation) }
+        }
     }
 }

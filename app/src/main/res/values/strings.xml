@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?><!--
-  ~   Copyright © 2014-2025 PSPDFKit GmbH. All rights reserved.
+  ~   Copyright © 2014-2026 PSPDFKit GmbH. All rights reserved.
   ~
   ~   The PSPDFKit Sample applications are licensed with a modified BSD license.
   ~   Please see License for details. This notice may not be removed from this file.
@@ -85,6 +85,8 @@
     <string name="zoomExampleDescription">Zooming to certain page objects.</string>
     <string name="viewPager2ExampleTitle">ViewPager2 Example</string>
     <string name="viewPager2ExampleDescription">Demonstrates using multiple documents in a Viewpager2</string>
+    <string name="simplePdfViewPagerExampleTitle">Simple PDF ViewPager</string>
+    <string name="simplePdfViewPagerExampleDescription">Simple example showing PdfUiFragment with ViewPager2 and TabLayout - 4 PDFs in tabs</string>
     <string name="formFillingExampleTitle">Form Filling</string>
     <string name="formFillingExampleDescription">Shows how to fill forms programmatically.</string>
     <string name="formTextFieldSuggestionsExampleTitle">Form text field suggestions</string>
@@ -293,10 +295,17 @@
     <string name="instant_error_no_connection">There is no connection currently</string>
     <string name="instant_error_something_went_wrong">Something went wrong</string>
     <string name="instant_error_connection_failed">Connection failed: %1$s</string>
+    <string name="instant_error_missing_jwt">Enter a username for example server URLs.</string>
+    <string name="instant_select_document">Select Document</string>
 
     <string name="instant_collaborate">Collaborate</string>
     <string name="instant_open_in_browser">Open in Browser</string>
     <string name="instant_share_document_link">Share Document Link</string>
+    <string name="instant_reset_cache">Reset &amp; Reopen</string>
+    <string name="instant_reset_cache_title">Reset &amp; Reopen</string>
+    <string name="instant_reset_cache_message">This will clear the local Instant cache for this document and reopen it with a fresh token.</string>
+    <string name="instant_reset_cache_action">Reset &amp; Reopen</string>
+    <string name="instant_resetting_cache">Resetting cache…</string>
 
     <string name="instant_username">Username</string>
     <string name="instant_password">Password</string>

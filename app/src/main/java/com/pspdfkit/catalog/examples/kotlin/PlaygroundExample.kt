@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2026 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -7,7 +7,7 @@
 package com.pspdfkit.catalog.examples.kotlin
 
 import android.content.Context
-import android.net.Uri
+import android.content.Intent
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -15,11 +15,10 @@ import android.widget.Toast
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.SdkExample.Companion.TAG
-import com.pspdfkit.catalog.tasks.ExtractAssetTask
+import com.pspdfkit.catalog.ui.DocumentPickerActivity
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.document.PdfDocument
 import com.pspdfkit.ui.PdfActivity
-import com.pspdfkit.ui.PdfActivityIntentBuilder
 
 /**
  * Playground example that opens an activity extending the [PdfActivity] class.
@@ -27,16 +26,18 @@ import com.pspdfkit.ui.PdfActivityIntentBuilder
 class PlaygroundExample(context: Context) : SdkExample(context, R.string.playgroundExampleTitle, R.string.playgroundExampleDescription) {
 
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
-        // We use a custom utility class to extract the example document from the assets.
-        ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
-            // To start the `CustomLayoutActivity` create a launch intent using the builder.
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .configuration(configuration.build())
-                .activityClass(PlaygroundActivity::class)
-                .build()
-            context.startActivity(intent)
-        }
+        // Launch the picker activity to let users choose between default or custom document.
+        val intent = Intent(context, PlaygroundExamplePickerActivity::class.java)
+        intent.putExtra(DocumentPickerActivity.EXTRA_CONFIGURATION, configuration.build())
+        context.startActivity(intent)
     }
+}
+
+/**
+ * Activity that lets the user choose between picking a PDF and using the default document.
+ */
+class PlaygroundExamplePickerActivity : DocumentPickerActivity() {
+    override val targetActivityClass = PlaygroundActivity::class.java
 }
 
 /**

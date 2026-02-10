@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2025 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2025-2026 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -38,20 +38,21 @@ import kotlinx.coroutines.launch
  *
  * @param isVisible Whether the bottom sheet should be visible
  * @param onDismiss Callback invoked when the bottom sheet is dismissed/cancelled
- * @param onConfirm Callback invoked when the user confirms with the entered document link
+ * @param onConfirm Callback invoked when the user confirms with the entered document link and username
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EnterDocumentLinkBottomSheet(
     isVisible: Boolean,
     onDismiss: () -> Unit,
-    onConfirm: (documentLink: String) -> Unit
+    onConfirm: (documentLink: String, username: String) -> Unit
 ) {
     if (!isVisible) return
 
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     val scope = rememberCoroutineScope()
     var documentLink by remember { mutableStateOf("") }
+    var username by remember { mutableStateOf("") }
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
@@ -79,6 +80,15 @@ fun EnterDocumentLinkBottomSheet(
                 modifier = Modifier.fillMaxWidth()
             )
 
+            OutlinedTextField(
+                value = username,
+                onValueChange = { username = it },
+                label = { Text("Username (only required for example servers)") },
+                placeholder = { Text("Enter username for /api/document or /api/documents") },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth()
+            )
+
             Spacer(modifier = Modifier.height(8.dp))
 
             Row(
@@ -102,7 +112,7 @@ fun EnterDocumentLinkBottomSheet(
                     onClick = {
                         scope.launch {
                             sheetState.hide()
-                            onConfirm(documentLink)
+                            onConfirm(documentLink, username)
                         }
                     },
                     enabled = documentLink.isNotBlank()

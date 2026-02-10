@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2017-2025 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2017-2026 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -22,6 +22,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
+import androidx.activity.result.ActivityResultLauncher;
 import androidx.annotation.AttrRes;
 import androidx.annotation.ColorInt;
 import androidx.annotation.ColorRes;
@@ -82,6 +83,35 @@ public class Utils {
             }
         }
         return true;
+    }
+
+    /**
+     * Requests read and write permissions to external storage using modern Activity Result API.
+     *
+     * @param permissionLauncher Launcher for runtime permissions (Android 6-10).
+     * @param settingsLauncher Launcher for settings intent (Android 11+).
+     * @param context Context for building the settings intent.
+     */
+    public static void requestExternalStorageRwPermission(
+            @NonNull ActivityResultLauncher<String[]> permissionLauncher,
+            @NonNull ActivityResultLauncher<Intent> settingsLauncher,
+            @NonNull Context context) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            try {
+                Intent intent = new Intent(Settings.ACTION_MANAGE_APP_ALL_FILES_ACCESS_PERMISSION);
+                intent.addCategory("android.intent.category.DEFAULT");
+                intent.setData(Uri.parse(String.format("package:%s", context.getPackageName())));
+                settingsLauncher.launch(intent);
+            } catch (Exception e) {
+                Intent intent = new Intent();
+                intent.setAction(Settings.ACTION_MANAGE_ALL_FILES_ACCESS_PERMISSION);
+                settingsLauncher.launch(intent);
+            }
+        } else {
+            permissionLauncher.launch(
+                    new String[] {Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    });
+        }
     }
 
     /**

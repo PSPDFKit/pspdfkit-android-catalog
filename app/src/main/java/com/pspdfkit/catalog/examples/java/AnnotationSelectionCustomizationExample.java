@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2014-2025 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2014-2026 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -10,13 +10,16 @@ package com.pspdfkit.catalog.examples.java;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Bundle;
 import androidx.annotation.NonNull;
+import com.pspdfkit.annotations.Annotation;
 import com.pspdfkit.catalog.R;
 import com.pspdfkit.catalog.SdkExample;
-import com.pspdfkit.catalog.examples.java.activities.AnnotationSelectionCustomizationActivity;
 import com.pspdfkit.catalog.tasks.ExtractAssetTask;
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration;
+import com.pspdfkit.ui.PdfActivity;
 import com.pspdfkit.ui.PdfActivityIntentBuilder;
+import com.pspdfkit.ui.annotations.OnAnnotationSelectedListener;
 import com.pspdfkit.ui.special_mode.controller.AnnotationSelectionController;
 
 /**
@@ -46,5 +49,57 @@ public class AnnotationSelectionCustomizationExample extends SdkExample {
 
             context.startActivity(intent);
         });
+    }
+
+    /** Shows how to use {@link AnnotationSelectionController} to control annotation selection. */
+    public static class AnnotationSelectionCustomizationActivity extends PdfActivity
+            implements OnAnnotationSelectedListener {
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+
+            // Register annotation selection listener.
+            getPdfFragment().addOnAnnotationSelectedListener(this);
+        }
+
+        @Override
+        protected void onDestroy() {
+            super.onDestroy();
+            getPdfFragment().removeOnAnnotationSelectedListener(this);
+        }
+
+        @Override
+        public boolean onPrepareAnnotationSelection(
+                @NonNull AnnotationSelectionController controller,
+                @NonNull Annotation annotation,
+                boolean annotationCreated) {
+            switch (annotation.getType()) {
+                case STAMP:
+                    // Allow dragging and resizing stamp annotations only when being created. Afterwards
+                    // they are fixed in place.
+                    if (!annotationCreated) {
+                        // Disable resizing and dragging for selected stamp annotation.
+                        controller.setResizeEnabled(false);
+                        controller.setDraggingEnabled(false);
+                    }
+                    break;
+                case INK:
+                    // Keep aspect ratio when resizing ink annotations.
+                    controller.setKeepAspectRatioEnabled(true);
+                    break;
+                case FREETEXT:
+                    // Prevent selection for free-text annotations that are not being created.
+                    return annotationCreated;
+                default:
+            }
+            // Return true here to proceed with selection. Returning false will prevent the selection.
+            return true;
+        }
+
+        @Override
+        public void onAnnotationSelected(@NonNull Annotation annotation, boolean annotationCreated) {
+            // Nothing to do here.
+        }
     }
 }

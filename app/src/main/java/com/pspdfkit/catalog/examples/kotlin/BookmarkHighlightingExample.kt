@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2026 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -65,7 +65,7 @@ class BookmarkHighlightingActivity : PdfActivity() {
 
     /** Drawable provider that will put a bookmark icon on bookmarked pages. */
     private val drawableProvider = object : PdfDrawableProvider() {
-        override fun getDrawablesForPage(context: Context, document: PdfDocument, pageIndex: Int): List<PdfDrawable> {
+        override suspend fun getDrawablesForPage(context: Context, document: PdfDocument, pageIndex: Int): List<PdfDrawable> {
             if (currentBookmarks.any { it.pageIndex == pageIndex }) {
                 // If there's bookmark for the given page index, add our drawable.
                 return listOf(BookmarkDrawable(this@BookmarkHighlightingActivity))

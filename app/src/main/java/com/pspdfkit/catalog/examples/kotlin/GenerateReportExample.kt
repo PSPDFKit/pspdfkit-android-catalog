@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2026 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -42,6 +42,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.runBlocking
 import java.io.File
 import java.io.IOException
 import java.util.EnumSet
@@ -146,7 +147,7 @@ class GenerateReportExample(context: Context) : SdkExample(context, R.string.gen
         ).apply {
             textSize = 40f
 
-            pageDocument.annotationProvider.addAnnotationToPage(this)
+            runBlocking { pageDocument.annotationProvider.addAnnotationToPage(this@apply) }
         }
 
         // Create a vector stamp annotation.
@@ -158,7 +159,7 @@ class GenerateReportExample(context: Context) : SdkExample(context, R.string.gen
             // Set PDF from assets containing vector logo as annotation's appearance stream generator.
             appearanceStreamGenerator = AssetAppearanceStreamGenerator("images/Nutrient_Logo.pdf")
 
-            pageDocument.annotationProvider.addAnnotationToPage(this)
+            runBlocking { pageDocument.annotationProvider.addAnnotationToPage(this@apply) }
         }
 
         // Create a free-text annotation as a label of the vector stamp.
@@ -168,7 +169,7 @@ class GenerateReportExample(context: Context) : SdkExample(context, R.string.gen
             "The logo above is a vector stamp annotation."
         ).apply {
             textSize = 18f
-            pageDocument.annotationProvider.addAnnotationToPage(this)
+            runBlocking { pageDocument.annotationProvider.addAnnotationToPage(this@apply) }
         }
 
         // Create an image stamp annotation.
@@ -177,7 +178,7 @@ class GenerateReportExample(context: Context) : SdkExample(context, R.string.gen
             0,
             RectF(60f, 400f, (60 + image.width / 4).toFloat(), (400 - image.height / 4).toFloat()),
             image
-        ).let { pageDocument.annotationProvider.addAnnotationToPage(it) }
+        ).let { runBlocking { pageDocument.annotationProvider.addAnnotationToPage(it) } }
 
         // Create a free-text annotation as a label of the image stamp
         FreeTextAnnotation(
@@ -186,7 +187,7 @@ class GenerateReportExample(context: Context) : SdkExample(context, R.string.gen
             "The image above is an image stamp annotation."
         ).apply {
             textSize = 18f
-            pageDocument.annotationProvider.addAnnotationToPage(this)
+            runBlocking { pageDocument.annotationProvider.addAnnotationToPage(this@apply) }
         }
 
         // Flatten all annotations

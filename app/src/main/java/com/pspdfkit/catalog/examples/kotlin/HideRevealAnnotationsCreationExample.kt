@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2026 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -24,6 +24,7 @@ import android.view.MotionEvent
 import android.view.View
 import androidx.annotation.IntRange
 import androidx.annotation.UiThread
+import androidx.lifecycle.lifecycleScope
 import com.pspdfkit.annotations.Annotation
 import com.pspdfkit.annotations.AnnotationType
 import com.pspdfkit.annotations.SquareAnnotation
@@ -42,6 +43,8 @@ import com.pspdfkit.ui.toolbar.AnnotationEditingToolbar
 import com.pspdfkit.ui.toolbar.ContextualToolbar
 import com.pspdfkit.ui.toolbar.ToolbarCoordinatorLayout.OnContextualToolbarLifecycleListener
 import com.pspdfkit.utils.Size
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 import org.json.JSONObject
 import java.util.EnumSet
 
@@ -191,7 +194,7 @@ class HideRevealAnnotationsCreationActivity :
     private fun addRevealAreaDrawableProvider(revealArea: SquareAnnotation?) {
         if (revealArea != null) {
             revealAreaDrawableProvider = object : PdfDrawableProvider() {
-                override fun getDrawablesForPage(context: Context, document: PdfDocument, @IntRange(from = 0) pageIndex: Int): List<PdfDrawable> {
+                override suspend fun getDrawablesForPage(context: Context, document: PdfDocument, @IntRange(from = 0) pageIndex: Int): List<PdfDrawable> {
                     return mutableListOf<PdfDrawable>().apply {
                         if (pageIndex == revealArea.pageIndex) {
                             val drawable = RevealAreaDrawable(document.getPageSize(pageIndex), revealArea)
@@ -209,19 +212,21 @@ class HideRevealAnnotationsCreationActivity :
 
     @UiThread
     override fun onDocumentLoaded(document: PdfDocument) {
-        // Restore the state of previously added annotations if any.
-        if (hideArea == null) {
-            hideArea = getCustomAnnotationIfPresent(document, HIDE_AREA_KEY)
+        lifecycleScope.launch {
+            // Restore the state of previously added annotations if any.
+            if (hideArea == null) {
+                hideArea = getCustomAnnotationIfPresent(document, HIDE_AREA_KEY)
+            }
+            if (revealArea == null) {
+                revealArea = getCustomAnnotationIfPresent(document, REVEAL_AREA_KEY)
+                addRevealAreaDrawableProvider(revealArea)
+            }
+            invalidateOptionsMenu()
         }
-        if (revealArea == null) {
-            revealArea = getCustomAnnotationIfPresent(document, REVEAL_AREA_KEY)
-            addRevealAreaDrawableProvider(revealArea)
-        }
-        invalidateOptionsMenu()
     }
 
     /** Returns any annotation with the `customData` key set to `true`, or null if no such annotation exists. */
-    private fun getCustomAnnotationIfPresent(document: PdfDocument, customData: String): SquareAnnotation? {
+    private suspend fun getCustomAnnotationIfPresent(document: PdfDocument, customData: String): SquareAnnotation? {
         document.annotationProvider.getAllAnnotationsOfType(EnumSet.of(AnnotationType.SQUARE)).forEach {
             if (it.customData?.optBoolean(customData) == true) {
                 return it as SquareAnnotation
@@ -249,7 +254,7 @@ class HideRevealAnnotationsCreationActivity :
     private fun resetHideArea() {
         val document = document ?: return
         val hideArea = hideArea ?: return
-        document.annotationProvider.removeAnnotationFromPage(hideArea)
+        runBlocking { document.annotationProvider.removeAnnotationFromPage(hideArea) }
         this.hideArea = null
         invalidateOptionsMenu()
     }
@@ -279,7 +284,7 @@ class HideRevealAnnotationsCreationActivity :
             thumbnailGridView?.removeDrawableProvider(it)
             revealAreaDrawableProvider = null
         }
-        document.annotationProvider.removeAnnotationFromPage(revealArea)
+        runBlocking { document.annotationProvider.removeAnnotationFromPage(revealArea) }
         this.revealArea = null
         invalidateOptionsMenu()
     }

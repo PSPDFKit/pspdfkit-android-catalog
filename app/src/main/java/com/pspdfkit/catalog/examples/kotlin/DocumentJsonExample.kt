@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2026 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -15,6 +15,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.SdkExample.Companion.TAG
@@ -25,9 +26,9 @@ import com.pspdfkit.document.formatters.DocumentJsonFormatter
 import com.pspdfkit.document.providers.ContentResolverDataProvider
 import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.util.EnumSet
 
 /**
@@ -73,8 +74,6 @@ class DocumentJsonExample(context: Context) : SdkExample(context, R.string.docum
 // Issue: https://github.com/PSPDFKit/PSPDFKit/issues/31881
 @Suppress("DEPRECATION")
 class DocumentJsonExampleActivity : PdfActivity() {
-
-    private val disposables = CompositeDisposable()
 
     /** Adds import/export actions to the toolbar.  */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -148,46 +147,39 @@ class DocumentJsonExampleActivity : PdfActivity() {
             return
         }
 
-        val exportDocumentDisposable = DocumentJsonFormatter.exportDocumentJsonAsync(document, outputStream)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    showToast("Export successful!.")
-                },
-                { throwable ->
-                    showToast("Error while exporting document JSON. See logcat for more info.")
-                    Log.e(TAG, "Error while exporting document JSON", throwable)
+        lifecycleScope.launch {
+            try {
+                withContext(Dispatchers.IO) {
+                    outputStream.use {
+                        DocumentJsonFormatter.exportDocumentJson(document, it)
+                    }
                 }
-            )
-        disposables.add(exportDocumentDisposable)
+                showToast("Export successful!.")
+            } catch (throwable: Throwable) {
+                showToast("Error while exporting document JSON. See logcat for more info.")
+                Log.e(TAG, "Error while exporting document JSON", throwable)
+            }
+        }
     }
 
     private fun importDocumentJson(uri: Uri) {
         val document = document ?: return
 
-        val importDocumentDisposable = DocumentJsonFormatter.importDocumentJsonAsync(document, ContentResolverDataProvider(uri))
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    showToast("Import successful!")
-                },
-                { throwable ->
-                    showToast("Error while importing document JSON. See logcat for more info.")
-                    Log.e(TAG, "Error while importing document JSON", throwable)
+        lifecycleScope.launch {
+            try {
+                withContext(Dispatchers.IO) {
+                    DocumentJsonFormatter.importDocumentJson(document, ContentResolverDataProvider(uri))
                 }
-            )
-        disposables.add(importDocumentDisposable)
+                showToast("Import successful!")
+            } catch (throwable: Throwable) {
+                showToast("Error while importing document JSON. See logcat for more info.")
+                Log.e(TAG, "Error while importing document JSON", throwable)
+            }
+        }
     }
 
     private fun showToast(msg: String) {
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        disposables.clear()
     }
 
     companion object {

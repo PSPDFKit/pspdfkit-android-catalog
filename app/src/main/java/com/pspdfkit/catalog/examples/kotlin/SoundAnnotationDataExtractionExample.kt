@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2026 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -29,6 +29,7 @@ import com.pspdfkit.preferences.PSPDFKitPreferences
 import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
 import com.pspdfkit.ui.special_mode.controller.AnnotationTool
+import kotlinx.coroutines.runBlocking
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -117,7 +118,7 @@ class SoundAnnotationDataExtractionActivity : PdfActivity() {
     }
 
     private fun extractSoundData() {
-        val annotations = document?.annotationProvider?.getAnnotations(0) ?: return
+        val annotations = runBlocking { document?.annotationProvider?.getAnnotations(0) } ?: return
         val soundAnnotation = annotations[0] as SoundAnnotation
 
         val outputFile = File.createTempFile("tmp_", "sound.wav")

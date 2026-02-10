@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2020-2025 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2020-2026 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -7,15 +7,12 @@
 
 package com.pspdfkit.catalog.examples.kotlin.instant.api
 
-import io.reactivex.rxjava3.core.Single
-import io.reactivex.rxjava3.schedulers.Schedulers
 import okhttp3.Credentials
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -28,7 +25,7 @@ import java.util.concurrent.TimeUnit
  * Client for the Nutrient web preview server. In your own app, you would connect to your
  * own Document Engine (Previously Server) backend to get Instant document identifiers and authentication tokens.
  */
-class WebPreviewClient constructor(serverUrl: String = "https://web-examples.our.services.nutrient-powered.io/api/") {
+class WebPreviewClient(serverUrl: String = "https://web-examples.our.services.nutrient-powered.io/api/") {
     private val apiService: WebPreviewService
     private val basicAuthInterceptor: BasicAuthInterceptor = BasicAuthInterceptor()
 
@@ -44,7 +41,6 @@ class WebPreviewClient constructor(serverUrl: String = "https://web-examples.our
         val retrofit: Retrofit = Retrofit.Builder()
             .baseUrl(serverUrl)
             .client(okHttpClient)
-            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
         apiService = retrofit.create(WebPreviewService::class.java)
@@ -53,16 +49,12 @@ class WebPreviewClient constructor(serverUrl: String = "https://web-examples.our
     /**
      * Retrieves document descriptor for an existing group.
      */
-    fun getDocument(url: String): Single<InstantExampleDocumentDescriptor> {
-        return apiService.getDocument(url).subscribeOn(Schedulers.io())
-    }
+    suspend fun getDocument(url: String): InstantExampleDocumentDescriptor = apiService.getDocument(url)
 
     /**
      * Creates a new group on web example server. Returns document descriptor.
      */
-    fun createNewDocument(): Single<InstantExampleDocumentDescriptor> {
-        return apiService.createDocument().subscribeOn(Schedulers.io())
-    }
+    suspend fun createNewDocument(): InstantExampleDocumentDescriptor = apiService.createDocument()
 
     /** Sets the basic auth credentials to use when doing API requests. */
     fun setBasicAuthCredentials(username: String, password: String) {
@@ -76,10 +68,10 @@ class WebPreviewClient constructor(serverUrl: String = "https://web-examples.our
 private interface WebPreviewService {
     @Headers(ACCEPT_HEADER)
     @GET
-    fun getDocument(@Url url: String): Single<InstantExampleDocumentDescriptor>
+    suspend fun getDocument(@Url url: String): InstantExampleDocumentDescriptor
 
     @POST("instant-landing-page")
-    fun createDocument(): Single<InstantExampleDocumentDescriptor>
+    suspend fun createDocument(): InstantExampleDocumentDescriptor
 
     companion object {
         const val ACCEPT_HEADER = "Accept: application/vnd.instant-example+json"

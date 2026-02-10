@@ -1,5 +1,5 @@
 /*
- *   Copyright © 2018-2025 PSPDFKit GmbH. All rights reserved.
+ *   Copyright © 2018-2026 PSPDFKit GmbH. All rights reserved.
  *
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
@@ -37,6 +37,7 @@ import com.pspdfkit.ui.PdfActivityIntentBuilder
 import com.pspdfkit.ui.PdfFragment
 import com.pspdfkit.ui.signatures.ElectronicSignatureFragment
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import kotlinx.coroutines.runBlocking
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -196,7 +197,7 @@ class CombineElectronicSignaturesWithDigitalSigningActivity :
                 // in order to pass the render to the `SignatureAppearance` when digitally signing in the
                 // next step. We remove it once we have the render.
                 // Here, we use the synchronous `AnnotationProvider` method as the next steps need to wait for this to complete.
-                document.annotationProvider.addAnnotationToPage(signatureAnnotation)
+                runBlocking { document.annotationProvider.addAnnotationToPage(signatureAnnotation) }
 
                 val w = kotlin.math.abs(signatureAnnotation.boundingBox.width().toInt())
                 val h = kotlin.math.abs(signatureAnnotation.boundingBox.height().toInt())
@@ -205,7 +206,7 @@ class CombineElectronicSignaturesWithDigitalSigningActivity :
 
                 // Now we've made the bitmap, we can remove the annotation from the document, as it will appear on the digital
                 // signature when we digitally sign the document.
-                document.annotationProvider.removeAnnotationFromPage(signatureAnnotation)
+                runBlocking { document.annotationProvider.removeAnnotationFromPage(signatureAnnotation) }
 
                 // Now sign the document using the certificate added in the example class in `addCertificateAndSigner`.
                 signDocumentWithSignatureBitmap(clickedSignatureFormElement, signatureBitmap)

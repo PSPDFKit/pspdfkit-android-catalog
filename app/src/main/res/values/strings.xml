@@ -57,6 +57,8 @@
     <string name="jetpackExampleDescription">Example of how to integrate Nutrient in a Jetpack compose application.</string>
     <string name="jetpackImageExampleTitle">Image Example</string>
     <string name="jetpackImageExampleDescription">Example of how to load an image using Nutrient in a Jetpack compose application.</string>
+    <string name="thumbnailBarExampleTitle">Thumbnail Bar Example</string>
+    <string name="thumbnailBarExampleDescription">Demonstrates how to toggle between different thumbnail bar modes: Floating, Pinned, Scrollable, and None.</string>
     <string name="jetpackAiAssistantExampleTitle">AI Assistant Compose</string>
     <string name="jetpackAiAssistantExampleDescription">AI chat for intelligent document analysis and interaction using our Jetpack Compose API. You must also run the AI Assistant demo server on your Machine.</string>
     <string name="jetpackAiAssistantMultiDocExampleTitle">AI Assistant Multiple Documents: Compose HorizontalPager</string>
@@ -405,6 +407,8 @@
     <string name="button_preference_clear_app_data_description">This will reset all stored app settings. It kills the app, requiring a restart.</string>
     <string name="instantJsonAttachmentTitle">Instant JSON Attachment</string>
     <string name="instantJsonAttachmentDescription">Import and export Instant JSON Attachment binary data for an image stamp annotation.</string>
+    <string name="customMainToolbarExampleTitle">Custom Main Toolbar with Fragment</string>
+    <string name="customMainToolbarExampleDescription">Shows how to use PdfUiFragment in an AppCompatActivity with custom main toolbar menu options.</string>
     <string name="constructionExampleTitle">Construction</string>
     <string name="constructionExampleDescription">Shows how to configure Nutrient to display a building floor plan.</string>
 

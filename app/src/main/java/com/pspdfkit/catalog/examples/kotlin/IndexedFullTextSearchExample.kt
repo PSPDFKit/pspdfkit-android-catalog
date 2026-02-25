@@ -16,6 +16,7 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -23,6 +24,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Checkbox
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -37,7 +39,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.unit.dp
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
@@ -96,6 +101,7 @@ class IndexedFullTextSearchActivity : ComponentActivity() {
         var searchResults by remember { mutableStateOf<Map<String, Set<QueryPreviewResult>>>(emptyMap()) }
         var isIndexing by remember { mutableStateOf(true) }
         var indexingProgress by remember { mutableStateOf("Preparing to index...") }
+        var matchExactPhrases by remember { mutableStateOf(false) }
         var extractedDirectory by remember { mutableStateOf<File?>(null) }
 
         LaunchedEffect(Unit) {
@@ -115,9 +121,9 @@ class IndexedFullTextSearchActivity : ComponentActivity() {
             }
         }
 
-        LaunchedEffect(searchQuery, isIndexing) {
+        LaunchedEffect(searchQuery, isIndexing, matchExactPhrases) {
             if (searchQuery.isNotEmpty() && pdfLibrary != null && !isIndexing) {
-                performSearch(searchQuery) { results ->
+                performSearch(searchQuery, matchExactPhrases) { results ->
                     searchResults = results
                 }
             } else if (searchQuery.isEmpty()) {
@@ -148,6 +154,22 @@ class IndexedFullTextSearchActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxWidth(),
                     enabled = !isIndexing
                 )
+
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.padding(vertical = 4.dp)
+                ) {
+                    Checkbox(
+                        checked = matchExactPhrases,
+                        onCheckedChange = { matchExactPhrases = it },
+                        enabled = !isIndexing
+                    )
+                    Text(
+                        text = "Match exact phrases",
+                        style = MaterialTheme.typography.bodyMedium,
+                        modifier = Modifier.clickable { matchExactPhrases = !matchExactPhrases }
+                    )
+                }
 
                 if (isIndexing) {
                     Column(
@@ -220,8 +242,18 @@ class IndexedFullTextSearchActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                     modifier = Modifier.padding(bottom = 4.dp)
                 )
+                val previewText = result.previewText
+                val range = result.rangeInPreviewText
+                val highlightStart = range.startPosition.coerceIn(0, previewText.length)
+                val highlightEnd = (range.startPosition + range.length).coerceIn(highlightStart, previewText.length)
                 Text(
-                    text = result.previewText,
+                    text = buildAnnotatedString {
+                        append(previewText.substring(0, highlightStart))
+                        withStyle(SpanStyle(fontWeight = FontWeight.Bold, background = MaterialTheme.colorScheme.primaryContainer)) {
+                            append(previewText.substring(highlightStart, highlightEnd))
+                        }
+                        append(previewText.substring(highlightEnd))
+                    },
                     style = MaterialTheme.typography.bodyMedium,
                     modifier = Modifier.padding(top = 4.dp)
                 )
@@ -282,12 +314,14 @@ class IndexedFullTextSearchActivity : ComponentActivity() {
 
     private fun performSearch(
         query: String,
+        matchExactPhrases: Boolean,
         onResults: (Map<String, Set<QueryPreviewResult>>) -> Unit
     ) {
         val library = pdfLibrary ?: return
 
         val queryOptions = QueryOptions.Builder()
             .generateTextPreviews(true)
+            .matchExactPhrases(matchExactPhrases)
             .maximumPreviewResultsPerDocument(3)
             .maximumPreviewResultsTotal(20)
             .build()

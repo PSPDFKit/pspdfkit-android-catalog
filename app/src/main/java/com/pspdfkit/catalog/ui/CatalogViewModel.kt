@@ -95,9 +95,9 @@ class CatalogViewModel(
     private fun togglePreferenceSection(sectionTitle: String) {
         mutableState.mutate {
             if (expandedPreferenceSectionTitles.contains(sectionTitle)) {
-                copy(expandedPreferenceSectionTitles = expandedPreferenceSectionTitles - sectionTitle)
+                copy(expandedPreferenceSectionTitles = emptySet())
             } else {
-                copy(expandedPreferenceSectionTitles = expandedPreferenceSectionTitles + sectionTitle)
+                copy(expandedPreferenceSectionTitles = setOf(sectionTitle))
             }
         }
     }
@@ -105,9 +105,9 @@ class CatalogViewModel(
     private fun toggleExampleSection(sectionTitle: String) {
         mutableState.mutate {
             if (expandedExampleSectionTitles.contains(sectionTitle)) {
-                copy(expandedExampleSectionTitles = expandedExampleSectionTitles - sectionTitle)
+                copy(expandedExampleSectionTitles = emptySet())
             } else {
-                copy(expandedExampleSectionTitles = expandedExampleSectionTitles + sectionTitle)
+                copy(expandedExampleSectionTitles = setOf(sectionTitle))
             }
         }
     }

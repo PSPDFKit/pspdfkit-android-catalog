@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~   Copyright © 2017-2026 PSPDFKit GmbH. All rights reserved.
+  ~
+  ~   The PSPDFKit Sample applications are licensed with a modified BSD license.
+  ~   Please see License for details. This notice may not be removed from this file.
+  -->
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/thumbnail_bar_mode_floating"
+        android:title="@string/thumbnail_bar_mode_floating"
+        android:checkable="true"
+        app:showAsAction="never|withText"/>
+
+    <item
+        android:id="@+id/thumbnail_bar_mode_pinned"
+        android:title="@string/thumbnail_bar_mode_pinned"
+        android:checkable="true"
+        app:showAsAction="never|withText"/>
+
+    <item
+        android:id="@+id/thumbnail_bar_mode_scrollable"
+        android:title="@string/thumbnail_bar_mode_scrollable"
+        android:checkable="true"
+        app:showAsAction="never|withText"/>
+
+    <item
+        android:id="@+id/thumbnail_bar_mode_none"
+        android:title="@string/thumbnail_bar_mode_none"
+        android:checkable="true"
+        app:showAsAction="never|withText"/>
+</menu>

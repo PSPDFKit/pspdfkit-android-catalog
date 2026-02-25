@@ -56,6 +56,7 @@ import com.pspdfkit.catalog.examples.kotlin.CustomApplicationPolicyExample
 import com.pspdfkit.catalog.examples.kotlin.CustomDataProviderExample
 import com.pspdfkit.catalog.examples.kotlin.CustomFragmentRuntimeConfigurationExample
 import com.pspdfkit.catalog.examples.kotlin.CustomLayoutExample
+import com.pspdfkit.catalog.examples.kotlin.CustomMainToolbarExample
 import com.pspdfkit.catalog.examples.kotlin.CustomSearchUiComposeExample
 import com.pspdfkit.catalog.examples.kotlin.CustomSignatureParseExample
 import com.pspdfkit.catalog.examples.kotlin.DarkThemeExample
@@ -121,6 +122,7 @@ import com.pspdfkit.catalog.examples.kotlin.SimplePdfViewPagerExample
 import com.pspdfkit.catalog.examples.kotlin.SoundAnnotationDataExtractionExample
 import com.pspdfkit.catalog.examples.kotlin.TextHighlightPopupCustomisationExample
 import com.pspdfkit.catalog.examples.kotlin.ThirdPartySigningExample
+import com.pspdfkit.catalog.examples.kotlin.ThumbnailBarExample
 import com.pspdfkit.catalog.examples.kotlin.TwoStepSigningExample
 import com.pspdfkit.catalog.examples.kotlin.UserInterfaceViewModesExample
 import com.pspdfkit.catalog.examples.kotlin.ViewPager2Example
@@ -289,6 +291,7 @@ fun getSectionsWithExamples(context: Context) = listOf(
         context.getString(R.string.example_section_toolbar_customization),
         R.drawable.ic_toolbar_customization,
         CustomActionsExample(context),
+        CustomMainToolbarExample(context),
         CustomToolbarIconGroupingExample(context),
         CustomAnnotationCreationToolbarExample(context),
         DisabledAnnotationPropertyExample(context),
@@ -325,6 +328,7 @@ fun getSectionsWithExamples(context: Context) = listOf(
     SdkExample.Section(
         context.getString(R.string.example_section_misc_examples),
         R.drawable.ic_misc_examples,
+        ThumbnailBarExample(context),
         WatermarkExample(context),
         BookmarkHighlightingExample(context),
         OverlayViewsExample(context),

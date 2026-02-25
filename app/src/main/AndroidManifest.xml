@@ -391,6 +391,11 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
+            android:name=".examples.kotlin.CustomMainToolbarActivity"
+            android:label="@string/customMainToolbarExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
             android:name=".examples.kotlin.PersistentTabsActivity"
             android:label="@string/persistentTabsExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
@@ -616,6 +621,10 @@
         <activity
             android:name=".examples.kotlin.ResultSignatureActivity"
             android:label="@string/customSignatureParseExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity
+            android:name=".examples.kotlin.ThumbnailBarExampleActivity"
+            android:label="@string/thumbnailBarExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity

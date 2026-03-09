@@ -39,11 +39,12 @@ import com.pspdfkit.ui.drawable.PdfDrawableProvider
 /**
  * Shows how to create a custom annotation note hinter extending [PdfDrawableProvider].
  */
-class CustomAnnotationNoteHinterProviderExample(context: Context) : SdkExample(
-    context,
-    R.string.customAnnotationNoteHinterProviderExampleTitle,
-    R.string.customAnnotationNoteHinterProviderExampleDescription
-) {
+class CustomAnnotationNoteHinterProviderExample(context: Context) :
+    SdkExample(
+        context,
+        R.string.customAnnotationNoteHinterProviderExampleTitle,
+        R.string.customAnnotationNoteHinterProviderExampleDescription,
+    ) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // Disable default annotation hinter provider.
         configuration.setAnnotationNoteHintingEnabled(false)
@@ -51,10 +52,12 @@ class CustomAnnotationNoteHinterProviderExample(context: Context) : SdkExample(
         // We use a custom utility class to extract the example document from the assets.
         ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
             // To start the CustomAnnotationNoteHinterProviderActivity create a launch intent using the builder.
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .configuration(configuration.build())
-                .activityClass(CustomAnnotationNoteHinterProviderActivity::class)
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    .configuration(configuration.build())
+                    .activityClass(CustomAnnotationNoteHinterProviderActivity::class)
+                    .build()
 
             // Start the activity for the extracted document.
             context.startActivity(intent)
@@ -82,25 +85,29 @@ class CustomAnnotationNoteHinterProviderActivity : PdfActivity() {
 /**
  * A custom annotation note hinter provider that works only for ink annotations.
  */
-private class CustomAnnotationNoteHinter(private val pdfActivity: PdfActivity) : PdfDrawableProvider(), OnAnnotationUpdatedListener {
-    private val noteIcon: Drawable = ContextCompat.getDrawable(pdfActivity, R.drawable.ic_pin_drop)
-        ?: throw IllegalStateException("Can't retrieve note drawable from resources.")
+private class CustomAnnotationNoteHinter(private val pdfActivity: PdfActivity) :
+    PdfDrawableProvider(),
+    OnAnnotationUpdatedListener {
+    private val noteIcon: Drawable =
+        ContextCompat.getDrawable(pdfActivity, R.drawable.ic_pin_drop)
+            ?: throw IllegalStateException("Can't retrieve note drawable from resources.")
 
     override suspend fun getDrawablesForPage(
         context: Context,
         document: PdfDocument,
-        @IntRange(from = 0) pageIndex: Int
-    ): List<PdfDrawable> {
-        return document.annotationProvider.getAnnotations(pageIndex)
-            .asSequence()
-            .filter { it.type == AnnotationType.INK }
-            .map { NoteInkHinterDrawable(pdfActivity, noteIcon, it) }
-            .toList()
-    }
+        @IntRange(from = 0) pageIndex: Int,
+    ): List<PdfDrawable> = document.annotationProvider
+        .getAnnotations(pageIndex)
+        .asSequence()
+        .filter { it.type == AnnotationType.INK }
+        .map { NoteInkHinterDrawable(pdfActivity, noteIcon, it) }
+        .toList()
 
     // We notify change to provided drawables whenever any ink annotation changes (is created, updated or removed).
     override fun onAnnotationCreated(annotation: Annotation) = notifyDrawablesChangedIfSupported(annotation)
+
     override fun onAnnotationUpdated(annotation: Annotation) = notifyDrawablesChangedIfSupported(annotation)
+
     override fun onAnnotationRemoved(annotation: Annotation) = notifyDrawablesChangedIfSupported(annotation)
 
     private fun notifyDrawablesChangedIfSupported(annotation: Annotation) {
@@ -116,7 +123,7 @@ private class CustomAnnotationNoteHinter(private val pdfActivity: PdfActivity) :
 private class NoteInkHinterDrawable internal constructor(
     private val activity: PdfActivity,
     private val noteIcon: Drawable,
-    private val annotation: Annotation
+    private val annotation: Annotation,
 ) : PdfDrawable() {
     private val viewBoundingBoxRounded: Rect = Rect()
     private val pdfBoundingBox: RectF = RectF()
@@ -154,9 +161,7 @@ private class NoteInkHinterDrawable internal constructor(
     }
 
     @Deprecated("Deprecated in Java")
-    override fun getOpacity(): Int {
-        return PixelFormat.TRANSLUCENT
-    }
+    override fun getOpacity(): Int = PixelFormat.TRANSLUCENT
 
     override fun updatePdfToViewTransformation(matrix: Matrix) {
         super.updatePdfToViewTransformation(matrix)
@@ -170,7 +175,7 @@ private class NoteInkHinterDrawable internal constructor(
             viewPoint.x - halfWidthPx,
             viewPoint.y - halfHeightPx,
             viewPoint.x + halfWidthPx,
-            viewPoint.y + halfHeightPx
+            viewPoint.y + halfHeightPx,
         )
         viewBoundingBox.round(viewBoundingBoxRounded)
     }

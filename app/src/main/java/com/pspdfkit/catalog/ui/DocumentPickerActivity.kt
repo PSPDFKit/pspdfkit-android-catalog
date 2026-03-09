@@ -48,23 +48,23 @@ import kotlinx.coroutines.withContext
  * This is a Compose-based implementation of [DocumentPickerActivity].
  */
 abstract class DocumentPickerActivity : AppCompatActivity() {
-
     /** Subclasses must specify which PdfActivity to launch */
     abstract val targetActivityClass: Class<out PdfActivity>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val configuration = intent.getSupportParcelableExtra(
-            EXTRA_CONFIGURATION,
-            PdfActivityConfiguration::class.java
-        ) ?: throw IllegalStateException("Activity was started without a PdfActivityConfiguration.")
+        val configuration =
+            intent.getSupportParcelableExtra(
+                EXTRA_CONFIGURATION,
+                PdfActivityConfiguration::class.java,
+            ) ?: throw IllegalStateException("Activity was started without a PdfActivityConfiguration.")
 
         setContent {
             DocumentPickerScreen(
                 configuration = configuration,
                 targetActivityClass = targetActivityClass,
-                onFinish = { finish() }
+                onFinish = { finish() },
             )
         }
     }
@@ -78,7 +78,7 @@ abstract class DocumentPickerActivity : AppCompatActivity() {
 private fun DocumentPickerScreen(
     configuration: PdfActivityConfiguration,
     targetActivityClass: Class<out PdfActivity>,
-    onFinish: () -> Unit
+    onFinish: () -> Unit,
 ) {
     val context = LocalContext.current
     val coroutineScope = rememberCoroutineScope()
@@ -86,21 +86,22 @@ private fun DocumentPickerScreen(
     var showPermissionDialog by remember { mutableStateOf(false) }
 
     // For Android 8-10 runtime permissions
-    val permissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestMultiplePermissions()
-    ) { _ ->
-        showDialog = true
-    }
+    val permissionLauncher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.RequestMultiplePermissions(),
+        ) { _ ->
+            showDialog = true
+        }
 
     // For Android 11+ settings intent
     val settingsLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.StartActivityForResult()
+        contract = ActivityResultContracts.StartActivityForResult(),
     ) {
         showDialog = true
     }
 
     val documentPicker = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.OpenDocument()
+        contract = ActivityResultContracts.OpenDocument(),
     ) { uri: Uri? ->
         if (uri == null) {
             onFinish()
@@ -150,7 +151,7 @@ private fun DocumentPickerScreen(
                 }) {
                     Text(stringResource(R.string.continueWithout))
                 }
-            }
+            },
         )
     }
 
@@ -174,7 +175,7 @@ private fun DocumentPickerScreen(
                 }) {
                     Text("Pick from Device")
                 }
-            }
+            },
         )
     }
 }
@@ -183,7 +184,7 @@ private fun openDefaultDocument(
     context: Context,
     configuration: PdfActivityConfiguration,
     targetActivityClass: Class<out PdfActivity>,
-    onFinish: () -> Unit
+    onFinish: () -> Unit,
 ) {
     ExtractAssetTask.extract(WELCOME_DOC, "Document", context) { documentFile ->
         launchTargetActivity(context, Uri.fromFile(documentFile), configuration, targetActivityClass)
@@ -195,7 +196,7 @@ private fun launchTargetActivity(
     context: Context,
     uri: Uri,
     configuration: PdfActivityConfiguration,
-    targetActivityClass: Class<out PdfActivity>
+    targetActivityClass: Class<out PdfActivity>,
 ) {
     val isImageFile = ImageDocumentUtils.isImageUri(context, uri)
     launchTargetActivity(context, uri, configuration, targetActivityClass, isImageFile)
@@ -206,7 +207,7 @@ private fun launchTargetActivity(
     uri: Uri,
     configuration: PdfActivityConfiguration,
     targetActivityClass: Class<out PdfActivity>,
-    isImageFile: Boolean
+    isImageFile: Boolean,
 ) {
     val (intentBuilder, finalConfiguration) = if (isImageFile) {
         PdfActivityIntentBuilder.fromImageUri(context, uri) to
@@ -215,9 +216,10 @@ private fun launchTargetActivity(
         PdfActivityIntentBuilder.fromUri(context, uri) to configuration
     }
 
-    val intent = intentBuilder
-        .configuration(finalConfiguration)
-        .activityClass(targetActivityClass)
-        .build()
+    val intent =
+        intentBuilder
+            .configuration(finalConfiguration)
+            .activityClass(targetActivityClass)
+            .build()
     context.startActivity(intent)
 }

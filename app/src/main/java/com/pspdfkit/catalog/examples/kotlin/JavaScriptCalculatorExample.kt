@@ -19,8 +19,8 @@ import java.util.EnumSet
 /**
  * Opens the JavaScript Calculator example from assets.
  */
-class JavaScriptCalculatorExample(context: Context) : AssetExample(context, R.string.javaScriptCalculatorExampleTitle, R.string.javaScriptCalculatorExampleDescription) {
-
+class JavaScriptCalculatorExample(context: Context) :
+    AssetExample(context, R.string.javaScriptCalculatorExampleTitle, R.string.javaScriptCalculatorExampleDescription) {
     override val assetPath: String
         get() = "Calculator.pdf"
 

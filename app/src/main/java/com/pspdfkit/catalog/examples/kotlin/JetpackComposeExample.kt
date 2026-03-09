@@ -20,9 +20,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Save
 import androidx.compose.material3.Button
@@ -40,6 +38,7 @@ import com.pspdfkit.catalog.tasks.ExtractAssetTask
 import com.pspdfkit.catalog.ui.theming.CatalogTheme
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.configuration.activity.UserInterfaceViewMode
+import com.pspdfkit.configuration.page.PageFitMode
 import com.pspdfkit.jetpack.compose.interactors.DefaultListeners
 import com.pspdfkit.jetpack.compose.interactors.getDefaultDocumentManager
 import com.pspdfkit.jetpack.compose.interactors.rememberDocumentState
@@ -56,6 +55,7 @@ class JetpackComposeExample(context: Context) : SdkExample(context, R.string.jet
         ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
             val intent = Intent(context, JetpackComposeActivity::class.java)
             intent.putExtra(JetpackComposeActivity.EXTRA_URI, Uri.fromFile(documentFile))
+            intent.putExtra(JetpackComposeActivity.EXTRA_CONFIG, configuration.build())
             context.startActivity(intent)
         }
     }
@@ -65,50 +65,49 @@ class JetpackComposeExample(context: Context) : SdkExample(context, R.string.jet
  * This example shows you how to use the [PdfUiFragment] to display PDFs in your activities.
  */
 class JetpackComposeActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         val uri = intent.getSupportParcelableExtra(EXTRA_URI, Uri::class.java)!!
+        val pdfActivityConfiguration = intent.getSupportParcelableExtra(EXTRA_CONFIG, PdfActivityConfiguration::class.java)
+            ?: PdfActivityConfiguration
+                .Builder(this)
+                .setUserInterfaceViewMode(UserInterfaceViewMode.USER_INTERFACE_VIEW_MODE_AUTOMATIC)
+                .fitMode(PageFitMode.FIT_TO_WIDTH)
+                .build()
 
         setContent {
             CatalogTheme {
-                val pdfActivityConfiguration = PdfActivityConfiguration
-                    .Builder(this)
-                    .setUserInterfaceViewMode(UserInterfaceViewMode.USER_INTERFACE_VIEW_MODE_HIDDEN)
-                    .build()
-
                 val documentState = rememberDocumentState(uri, pdfActivityConfiguration)
 
                 var currentPage = pdfActivityConfiguration.page
 
                 Scaffold(
-                    modifier = Modifier
-                        .background(color = MaterialTheme.colorScheme.onPrimary)
-                        .statusBarsPadding()
-                        .navigationBarsPadding(),
+                    modifier =
+                    Modifier
+                        .background(color = MaterialTheme.colorScheme.onPrimary),
                     floatingActionButton = {
                         FloatingActionButton(
                             onClick = {
                                 documentState.documentConnection.save()
-                            }
+                            },
                         ) {
                             Icon(imageVector = Icons.Default.Save, contentDescription = "save")
                         }
                     },
                     bottomBar = {
                         Row(
-                            horizontalArrangement = Arrangement.SpaceAround
+                            horizontalArrangement = Arrangement.SpaceAround,
                         ) {
                             Button(
                                 onClick = {
                                     documentState.documentConnection.setPageIndex(
                                         (currentPage - 1).coerceAtLeast(
-                                            0
-                                        )
+                                            0,
+                                        ),
                                     )
                                 },
-                                modifier = Modifier.padding(8.dp)
+                                modifier = Modifier.padding(8.dp),
                             ) {
                                 Text("Previous page")
                             }
@@ -119,23 +118,25 @@ class JetpackComposeActivity : AppCompatActivity() {
                                 onClick = {
                                     documentState.documentConnection.setPageIndex(
                                         (currentPage + 1).coerceAtMost(
-                                            17
-                                        )
+                                            17,
+                                        ),
                                     )
                                 },
-                                modifier = Modifier.padding(8.dp)
+                                modifier = Modifier.padding(8.dp),
                             ) {
                                 Text("Next page")
                             }
                         }
-                    }
+                    },
                 ) { paddingValues ->
                     Box(Modifier.padding(paddingValues)) {
                         DocumentView(
                             documentState = documentState,
                             modifier = Modifier.fillMaxSize(),
-                            documentManager = getDefaultDocumentManager(
-                                documentListener = DefaultListeners.documentListeners(
+                            documentManager =
+                            getDefaultDocumentManager(
+                                documentListener =
+                                DefaultListeners.documentListeners(
                                     onDocumentLoaded = {
                                         Log.e(TAG, "onDocumentLoaded ${it.title}")
                                     },
@@ -153,25 +154,26 @@ class JetpackComposeActivity : AppCompatActivity() {
                                     onDocumentZoomed = { document, pageIndex, scaleFactor ->
                                         Log.e(
                                             TAG,
-                                            "onDocumentZoomed: ${document.title}  $pageIndex $scaleFactor"
+                                            "onDocumentZoomed: ${document.title}  $pageIndex $scaleFactor",
                                         )
-                                    }
+                                    },
                                 ),
-                                annotationListener = DefaultListeners.annotationListeners(
+                                annotationListener =
+                                DefaultListeners.annotationListeners(
                                     onAnnotationSelected = { annotation, created ->
                                         Log.e(
                                             TAG,
-                                            "onAnnotationSelected: ${annotation.type.name} $created"
+                                            "onAnnotationSelected: ${annotation.type.name} $created",
                                         )
                                     },
                                     onAnnotationDeselected = { annotation, created ->
                                         Log.e(
                                             TAG,
-                                            "onAnnotationDeselected: ${annotation.type.name} $created"
+                                            "onAnnotationDeselected: ${annotation.type.name} $created",
                                         )
-                                    }
-                                )
-                            )
+                                    },
+                                ),
+                            ),
                         )
                     }
                 }
@@ -181,5 +183,6 @@ class JetpackComposeActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_URI = "JetpackComposeActivity.DocumentUri"
+        const val EXTRA_CONFIG = "JetpackComposeActivity.Configuration"
     }
 }

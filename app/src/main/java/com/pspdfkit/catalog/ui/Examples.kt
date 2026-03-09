@@ -69,9 +69,10 @@ fun Examples(state: State, dispatcher: Dispatcher) {
     var selectedClass by remember { mutableStateOf<SdkExample?>(null) }
     // I'm using a LaunchedEffect here to filter the list in a background thread
     LaunchedEffect(state.examples, state.searchState) {
-        filteredExamplesInSections = state.examples.filterBySearchState(state.searchState, filteredExamplesInSections) { section, examples ->
-            SdkExample.Section(section.name, section.iconId, examples)
-        }
+        filteredExamplesInSections =
+            state.examples.filterBySearchState(state.searchState, filteredExamplesInSections) { section, examples ->
+                SdkExample.Section(section.name, section.iconId, examples)
+            }
     }
 
     SelectSignatureTypeDialog(signatureDialogVisibility, { signatureDialogVisibility = false }) {
@@ -89,7 +90,7 @@ fun Examples(state: State, dispatcher: Dispatcher) {
         sectionKey = { it.name },
         topHeaderLayout = {
             Box(
-                modifier = Modifier.zIndex(2f)
+                modifier = Modifier.zIndex(2f),
             ) {
                 SpacerExamplesHeader()
             }
@@ -114,13 +115,14 @@ fun Examples(state: State, dispatcher: Dispatcher) {
                 onExpandButtonClicked = {
                     val action = Action.ToggleExampleSection(section.name)
                     dispatcher(action)
-                }
+                },
             )
         },
         itemLayout = { example ->
             val psExample = example as SdkExample
             Box(
-                modifier = Modifier.clickable {
+                modifier =
+                Modifier.clickable {
                     if (psExample.isDigitalSignatureExample(context)) {
                         // If the example is a digital signature example, we want to show the dialog first.
                         selectedClass = psExample
@@ -137,17 +139,17 @@ fun Examples(state: State, dispatcher: Dispatcher) {
                     // Otherwise, we can just launch the example directly.
                     psExample.launchExample(
                         context,
-                        state.getPdfActivityConfigurationBuilder(context)
+                        state.getPdfActivityConfigurationBuilder(context),
                     )
-                }
+                },
             ) {
                 ExampleListItem(
                     title = psExample.title,
                     description = psExample.description,
-                    exampleLanguage = psExample.exampleLanguage
+                    exampleLanguage = psExample.exampleLanguage,
                 )
             }
-        }
+        },
     )
 }
 
@@ -158,7 +160,7 @@ fun ExampleHeader(
     isExpanded: Boolean,
     isPreviousSectionExpanded: Boolean,
     isCurrentHeader: Boolean,
-    onExpandButtonClicked: () -> Unit
+    onExpandButtonClicked: () -> Unit,
 ) {
     if (iconId == null) {
         // Should never be the case for the Compose UI, but the viewer Catalog needs it to be nullable.
@@ -175,17 +177,18 @@ fun ExampleHeader(
 
     Surface(
         shadowElevation = if (isExpanded) 2.dp else 0.dp,
-        modifier = Modifier
+        modifier =
+        Modifier
             .height(if (shouldHaveSpacerAbove) Dimens.listHeaderHeight + 8.dp else Dimens.listHeaderHeight)
             .zIndex(if (isExpanded) 0f else 1f)
             .fillMaxWidth()
             .clickable { onExpandButtonClicked() },
-        color = MaterialTheme.colorScheme.background
+        color = MaterialTheme.colorScheme.background,
     ) {
         Column {
             if (shouldHaveSpacerAbove) {
                 Row(
-                    modifier = Modifier.padding(bottom = 7.dp)
+                    modifier = Modifier.padding(bottom = 7.dp),
                 ) {
                     SpacerLine()
                 }
@@ -193,39 +196,40 @@ fun ExampleHeader(
 
             Row(
                 verticalAlignment = CenterVertically,
-                modifier = Modifier
+                modifier =
+                Modifier
                     .padding(Dimens.examplesListHeaderHorizontalPadding)
-                    .fillMaxHeight()
+                    .fillMaxHeight(),
             ) {
                 Icon(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .defaultMinSize(Dimens.iconSize)
                         .alpha(expandIconAlphaAnimation),
-
                     painter = painterResource(id = iconId),
                     contentDescription = stringResource(R.string.section_icon_content_desc, sectionTitle),
-                    tint = expandColorAnimation
+                    tint = expandColorAnimation,
                 )
 
                 Text(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .padding(start = 32.dp)
                         .alpha(expandTextAlphaAnimation),
-
                     text = sectionTitle,
                     style = MaterialTheme.typography.displayLarge,
-                    color = expandColorAnimation
+                    color = expandColorAnimation,
                 )
 
                 Column(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.End
+                    horizontalAlignment = Alignment.End,
                 ) {
                     ExpandSectionButton(
                         sectionTitle,
                         Dimens.iconSize,
                         isExpanded,
-                        onExpandButtonClicked
+                        onExpandButtonClicked,
                     )
                 }
             }
@@ -234,35 +238,32 @@ fun ExampleHeader(
 }
 
 @Composable
-fun ExampleListItem(
-    title: String,
-    description: String,
-    exampleLanguage: SdkExample.ExampleLanguage
-) {
+fun ExampleListItem(title: String, description: String, exampleLanguage: SdkExample.ExampleLanguage) {
     Row(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
             // This is needed so the shadow under the header doesn't show when it's not stickied.
             .background(color = MaterialTheme.colorScheme.background)
             .padding(Dimens.examplesListItemPadding),
-
         verticalAlignment = CenterVertically,
-        horizontalArrangement = SpaceBetween
+        horizontalArrangement = SpaceBetween,
     ) {
         Column(
-            modifier = Modifier.weight(weight = 0.75f)
+            modifier = Modifier.weight(weight = 0.75f),
         ) {
             Text(
-                modifier = Modifier.alpha(AlphaDefs.title),
+                modifier = Modifier.alpha(AlphaDefs.TITLE),
                 text = title,
-                style = MaterialTheme.typography.displayMedium
+                style = MaterialTheme.typography.displayMedium,
             )
             Text(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .padding(end = 32.dp)
-                    .alpha(AlphaDefs.half),
+                    .alpha(AlphaDefs.HALF),
                 text = description,
-                style = MaterialTheme.typography.titleSmall
+                style = MaterialTheme.typography.titleSmall,
             )
         }
 
@@ -270,10 +271,11 @@ fun ExampleListItem(
         // This doesn't work in release mode. Just hide it if so.
         if (BuildConfig.DEBUG) {
             Surface(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .align(CenterVertically),
                 shape = RoundedCornerShape(16.dp),
-                color = MaterialTheme.colorScheme.secondaryContainer
+                color = MaterialTheme.colorScheme.secondaryContainer,
             ) {
                 val languageName = exampleLanguage.name.firstCharacterUpperCase()
 
@@ -283,7 +285,7 @@ fun ExampleListItem(
                     text = languageName,
                     style = MaterialTheme.typography.titleMedium,
                     textAlign = TextAlign.Center,
-                    maxLines = 1
+                    maxLines = 1,
                 )
             }
         }

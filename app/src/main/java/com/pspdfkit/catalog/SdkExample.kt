@@ -25,9 +25,8 @@ abstract class SdkExample(
     /** String resource ID for the short title of the example. */
     @StringRes titleRes: Int,
     /** String resource ID for the full description of the example. */
-    @StringRes descriptionRes: Int
+    @StringRes descriptionRes: Int,
 ) : FuzzlyMatchable {
-
     /** Short title of the example. */
     val title: String = context.getString(titleRes)
 
@@ -37,15 +36,19 @@ abstract class SdkExample(
     /** Enum with all supported example languages.  */
     enum class ExampleLanguage {
         JAVA,
-        KOTLIN
+        KOTLIN,
     }
 
     /** DigitalSignatureType to for changing signature type in digital signature examples.  */
     var digitalSignatureType: DigitalSignatureType = DigitalSignatureType.CADES
 
     /** A section is a named list of examples grouped together (e.g. "Multimedia examples").  */
-    class Section(val name: String, val iconId: Int, examples: Collection<SdkExample>) : ArrayList<SdkExample>(examples), FuzzlyMatchable, GroupMatchable<SdkExample> {
+    class Section(val name: String, val iconId: Int, examples: Collection<SdkExample>) :
+        ArrayList<SdkExample>(examples),
+        FuzzlyMatchable,
+        GroupMatchable<SdkExample> {
         constructor(name: String, icon: Int, vararg examples: SdkExample) : this(name, icon, examples.toList())
+
         override val stringsToMatch by lazy { listOf(name.lowercase(Locale.getDefault())) }
         override val childMatchables: List<SdkExample> get() = this // this as the ArrayList we're inheriting from
     }
@@ -53,7 +56,7 @@ abstract class SdkExample(
     override val stringsToMatch by lazy {
         listOf(
             title.lowercase(Locale.getDefault()),
-            exampleName.lowercase(Locale.getDefault())
+            exampleName.lowercase(Locale.getDefault()),
         )
     }
 
@@ -64,25 +67,20 @@ abstract class SdkExample(
      * @param context       Context for launching examples.
      * @param configuration Default configuration as created by the preferences.
      */
-    abstract fun launchExample(
-        context: Context,
-        configuration: PdfActivityConfiguration.Builder
-    )
+    abstract fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder)
 
+    /**
+     * Returns the example simple class name as given in the source code.
+     */
     private val exampleName: String
-        /**
-         * Returns the example simple class name as given in the source code.
-         *
-         * @return the example simple class name.
-         */
         get() = javaClass.simpleName
 
+    /** Returns the language of this example. */
     val exampleLanguage: ExampleLanguage
-        /** Returns the language of this example.  */
         get() = if (isKotlin) ExampleLanguage.KOTLIN else ExampleLanguage.JAVA
 
+    /** Returns `true` when this example is written in Kotlin. */
     private val isKotlin: Boolean
-        /** Returns `true` when this example is written in Kotlin.  */
         get() = this::class.java.isAnnotationPresent(Metadata::class.java)
 
     /**

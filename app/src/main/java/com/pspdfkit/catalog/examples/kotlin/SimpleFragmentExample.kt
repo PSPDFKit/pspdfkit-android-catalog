@@ -26,7 +26,8 @@ import com.pspdfkit.utils.getSupportParcelableExtra
  * A very simple [PdfFragment] example with minimum configuration.
  * Adds a document listener to give access to the document.
  */
-class SimpleFragmentExample(context: Context) : SdkExample(context, R.string.simpleFragmentExampleTitle, R.string.simpleFragmentExampleDescription) {
+class SimpleFragmentExample(context: Context) :
+    SdkExample(context, R.string.simpleFragmentExampleTitle, R.string.simpleFragmentExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
             val intent = Intent(context, SimpleFragmentActivity::class.java)
@@ -37,7 +38,7 @@ class SimpleFragmentExample(context: Context) : SdkExample(context, R.string.sim
             // We pass the `PdfFragment` configuration via another extra.
             intent.putExtra(
                 SimpleFragmentActivity.EXTRA_CONFIGURATION,
-                configuration.build().configuration
+                configuration.build().configuration,
             )
 
             context.startActivity(intent)
@@ -45,7 +46,9 @@ class SimpleFragmentExample(context: Context) : SdkExample(context, R.string.sim
     }
 }
 
-class SimpleFragmentActivity : AppCompatActivity(), DocumentListener {
+class SimpleFragmentActivity :
+    AppCompatActivity(),
+    DocumentListener {
     private lateinit var fragment: PdfFragment
     private lateinit var configuration: PdfConfiguration
 
@@ -54,15 +57,17 @@ class SimpleFragmentActivity : AppCompatActivity(), DocumentListener {
         setContentView(R.layout.activity_simple_fragment)
 
         // Get the Uri provided when launching the activity.
-        val documentUri = intent.getSupportParcelableExtra(EXTRA_URI, Uri::class.java)
-            ?: throw IllegalStateException("Activity Intent was missing Uri extra!")
+        val documentUri =
+            intent.getSupportParcelableExtra(EXTRA_URI, Uri::class.java)
+                ?: throw IllegalStateException("Activity Intent was missing Uri extra!")
 
         // Get the configuration from the provided Intent.
         configuration = intent.getSupportParcelableExtra(EXTRA_CONFIGURATION, PdfConfiguration::class.java)
             ?: throw IllegalStateException("Activity Intent was missing configuration extra!")
 
         fragment = PdfFragment.newInstance(documentUri, configuration)
-        supportFragmentManager.beginTransaction()
+        supportFragmentManager
+            .beginTransaction()
             .replace(R.id.fragmentContainer, fragment)
             .commit()
         fragment.addDocumentListener(this)

@@ -33,11 +33,7 @@ import com.pspdfkit.catalog.R
  * @param onConfirm Callback invoked when the user confirms with username and password
  */
 @Composable
-fun BasicAuthDialog(
-    isVisible: Boolean,
-    onDismiss: () -> Unit,
-    onConfirm: (username: String, password: String) -> Unit
-) {
+fun BasicAuthDialog(isVisible: Boolean, onDismiss: () -> Unit, onConfirm: (username: String, password: String) -> Unit) {
     if (!isVisible) return
 
     var username by remember { mutableStateOf("") }
@@ -50,14 +46,14 @@ fun BasicAuthDialog(
         },
         text = {
             Column(
-                verticalArrangement = Arrangement.spacedBy(8.dp)
+                verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 OutlinedTextField(
                     value = username,
                     onValueChange = { username = it },
                     label = { Text(stringResource(R.string.instant_username)) },
                     singleLine = true,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 )
                 OutlinedTextField(
                     value = password,
@@ -65,7 +61,7 @@ fun BasicAuthDialog(
                     label = { Text(stringResource(R.string.instant_password)) },
                     visualTransformation = PasswordVisualTransformation(),
                     singleLine = true,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 )
             }
         },
@@ -73,7 +69,7 @@ fun BasicAuthDialog(
             TextButton(
                 onClick = {
                     onConfirm(username, password)
-                }
+                },
             ) {
                 Text(stringResource(R.string.instant_login))
             }
@@ -82,6 +78,6 @@ fun BasicAuthDialog(
             TextButton(onClick = onDismiss) {
                 Text(stringResource(android.R.string.cancel))
             }
-        }
+        },
     )
 }

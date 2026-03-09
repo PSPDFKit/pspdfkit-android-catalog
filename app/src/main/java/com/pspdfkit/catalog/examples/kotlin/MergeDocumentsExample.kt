@@ -33,44 +33,48 @@ import java.io.File
 /**
  * This example shows how to merge multiple PDFs using the document processor.
  */
-class MergeDocumentsExample(context: Context) : SdkExample(context, R.string.mergeDocumentsExampleTitle, R.string.mergeDocumentsExampleDescription) {
-
+class MergeDocumentsExample(context: Context) :
+    SdkExample(context, R.string.mergeDocumentsExampleTitle, R.string.mergeDocumentsExampleDescription) {
     /** Disposable for document merge operation of [com.pspdfkit.document.processor.PdfProcessor].*/
     private var mergingDisposable: Disposable? = null
 
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
-        val dialog = ProgressDialog.show(context, "Merging Documents", "Please wait", true, true) {
-            mergingDisposable?.dispose()
-        }
-
-        mergingDisposable = Single.fromCallable {
-            // Open the documents we are going to merge.
-            val documents = listOf("AnnualReport.pdf", "Scientific-Report.pdf", WELCOME_DOC)
-                .asSequence()
-                .map { PdfDocumentLoader.openDocument(context, DocumentSource(AssetDataProvider(it))) }
-
-            // Start with an empty document.
-            val task = PdfProcessorTask.empty()
-
-            // Add all document pages.
-            var totalPageCount = 0
-            for (document in documents) {
-                for (i in 0 until document.pageCount) {
-                    // We use `totalPageCount` here to add the pages to the end.
-                    // But you are free to add them at any place in the document you'd like.
-                    task.addNewPage(NewPage.fromPage(document, i).build(), totalPageCount)
-                    totalPageCount++
-                }
+        val dialog =
+            ProgressDialog.show(context, "Merging Documents", "Please wait", true, true) {
+                mergingDisposable?.dispose()
             }
 
-            // Finally create the resulting document.
-            val mergedDocumentsFile = File(context.getDir("documents", Context.MODE_PRIVATE), "merged-documents.pdf")
-            PdfProcessor.processDocument(task, mergedDocumentsFile)
+        mergingDisposable =
+            Single
+                .fromCallable {
+                    // Open the documents we are going to merge.
+                    val documents =
+                        listOf("AnnualReport.pdf", "Scientific-Report.pdf", WELCOME_DOC)
+                            .asSequence()
+                            .map { PdfDocumentLoader.openDocument(context, DocumentSource(AssetDataProvider(it))) }
 
-            return@fromCallable Uri.fromFile(mergedDocumentsFile)
-        }.subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doFinally { dialog.cancel() }
-            .subscribe { uri -> PdfActivity.showDocument(context, uri, configuration.build()) }
+                    // Start with an empty document.
+                    val task = PdfProcessorTask.empty()
+
+                    // Add all document pages.
+                    var totalPageCount = 0
+                    for (document in documents) {
+                        for (i in 0 until document.pageCount) {
+                            // We use `totalPageCount` here to add the pages to the end.
+                            // But you are free to add them at any place in the document you'd like.
+                            task.addNewPage(NewPage.fromPage(document, i).build(), totalPageCount)
+                            totalPageCount++
+                        }
+                    }
+
+                    // Finally create the resulting document.
+                    val mergedDocumentsFile = File(context.getDir("documents", Context.MODE_PRIVATE), "merged-documents.pdf")
+                    PdfProcessor.processDocument(task, mergedDocumentsFile)
+
+                    return@fromCallable Uri.fromFile(mergedDocumentsFile)
+                }.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally { dialog.cancel() }
+                .subscribe { uri -> PdfActivity.showDocument(context, uri, configuration.build()) }
     }
 }

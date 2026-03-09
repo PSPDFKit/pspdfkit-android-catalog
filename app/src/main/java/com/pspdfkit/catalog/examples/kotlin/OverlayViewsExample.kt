@@ -19,6 +19,7 @@ import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
 import android.webkit.WebView
+import android.webkit.WebViewClient
 import android.widget.TextView
 import androidx.activity.viewModels
 import com.pspdfkit.annotations.Annotation
@@ -40,19 +41,19 @@ import kotlinx.coroutines.runBlocking
 import kotlin.getValue
 
 class OverlayViewsExample(context: Context) : SdkExample(context, R.string.overlayViewsExample, R.string.overlayViewsExampleDescription) {
-
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // We use a custom utility class to extract the example document from the assets.
         ExtractAssetTask.extract(WELCOME_DOC, title, context, true) { documentFile ->
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .configuration(
-                    configuration
-                        // We disable annotation editing to keep the example focused.
-                        .editableAnnotationTypes(listOf(AnnotationType.NONE))
-                        .build()
-                )
-                .activityClass(OverlayViewsActivity::class)
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    .configuration(
+                        configuration
+                            // We disable annotation editing to keep the example focused.
+                            .editableAnnotationTypes(listOf(AnnotationType.NONE))
+                            .build(),
+                    ).activityClass(OverlayViewsActivity::class)
+                    .build()
 
             // Start the OverlayViewsActivity for the extracted document.
             context.startActivity(intent)
@@ -62,7 +63,6 @@ class OverlayViewsExample(context: Context) : SdkExample(context, R.string.overl
 
 // Suppress warnings about experimental classes.
 class OverlayViewsActivity : PdfActivity() {
-
     private val viewModel: AnnotationCreationViewModel by viewModels()
 
     private lateinit var viewProvider: MyViewProvider
@@ -80,29 +80,37 @@ class OverlayViewsActivity : PdfActivity() {
 
         viewModel.createObjects {
             // We add a simple annotation to explain to users what to do.
-            val clickHereAnnotation = FreeTextAnnotation(
-                0,
-                RectF(50f, 600f, 350f, 400f),
-                "Tap Anywhere on The Page"
-            )
+            val clickHereAnnotation =
+                FreeTextAnnotation(
+                    0,
+                    RectF(50f, 600f, 350f, 400f),
+                    "Tap Anywhere on The Page",
+                )
             clickHereAnnotation.textSize = 48f
             clickHereAnnotation.color = Color.RED
 
             runBlocking { document.annotationProvider.addAnnotationToPage(clickHereAnnotation) }
 
             // Add a stamp with a custom AP stream that overlaps the overlay view for z-order testing.
-            val stampAnnotation = StampAnnotation(
-                0,
-                RectF(320f, 460f, 520f, 300f),
-                "Overlay Order Stamp"
-            ).apply {
-                appearanceStreamGenerator = AssetAppearanceStreamGenerator("images/Nutrient_Logo.pdf")
-            }
+            val stampAnnotation =
+                StampAnnotation(
+                    0,
+                    RectF(320f, 460f, 520f, 300f),
+                    "Overlay Order Stamp",
+                ).apply {
+                    appearanceStreamGenerator = AssetAppearanceStreamGenerator("images/Nutrient_Logo.pdf")
+                }
             runBlocking { document.annotationProvider.addAnnotationToPage(stampAnnotation) }
         }
     }
 
-    override fun onPageClick(document: PdfDocument, pageIndex: Int, event: MotionEvent?, pagePosition: PointF?, clickedAnnotation: Annotation?): Boolean {
+    override fun onPageClick(
+        document: PdfDocument,
+        pageIndex: Int,
+        event: MotionEvent?,
+        pagePosition: PointF?,
+        clickedAnnotation: Annotation?,
+    ): Boolean {
         if (pageIndex == 0) {
             // User tapped on first page, toggle overlay ordering.
             viewProvider.toggleAnnotationOverlayOrder()
@@ -126,12 +134,7 @@ class OverlayViewsActivity : PdfActivity() {
 
 /** A custom OverlayViewProvider that will display views on the first and second. */
 @SuppressLint("SetTextI18n", "SetJavaScriptEnabled")
-class MyViewProvider(
-    context: Context,
-    private val pdfFragment: PdfFragment,
-    savedInstanceState: Bundle?
-) : OverlayViewProvider() {
-
+class MyViewProvider(context: Context, private val pdfFragment: PdfFragment, savedInstanceState: Bundle?) : OverlayViewProvider() {
     companion object {
         private const val STATE_FIRST_PAGE_CLICKED = "MyOverlayProvider.FirstPageClicked"
         private const val STATE_SECOND_PAGE_CLICKED = "MyOverlayProvider.SecondPageClicked"
@@ -178,24 +181,28 @@ class MyViewProvider(
         // We put this view next to our freetext annotation.
 
         // The rect are the PDF coordinates on the page where our TextView should be.
-        firstPageView.layoutParams = OverlayLayoutParams(
-            RectF(250f, 500f, 668f, 300f),
-            // We use SizingMode.SCALING here, this has the effect that the view will only be measured once and then a scale will be applied to it.
-            // This means that the text size will automatically scale up as the page is zoomed.
-            OverlayLayoutParams.SizingMode.SCALING
-        )
+        firstPageView.layoutParams =
+            OverlayLayoutParams(
+                RectF(250f, 500f, 668f, 300f),
+                // We use SizingMode.SCALING here, this has the effect that the view will only be measured once and then a scale will be applied to it.
+                // This means that the text size will automatically scale up as the page is zoomed.
+                OverlayLayoutParams.SizingMode.SCALING,
+            )
 
         // You can embed any kind of view, even a WebView.
         secondPageView = WebView(context)
         secondPageView.settings.javaScriptEnabled = true
+        // Set a WebViewClient so navigation stays within the WebView instead of opening the system browser.
+        secondPageView.webViewClient = WebViewClient()
         // Load the Nutrient homepage.
         secondPageView.loadUrl("https://nutrient.io/")
         // We fill the entire page, the Webview will consume all scroll events so scrolling the page will only work in the margins.
-        secondPageView.layoutParams = OverlayLayoutParams(
-            RectF(0f, 1024f, 768f, 0f),
-            // We use the SizingMode.LAYOUT here since we want the WebView to actually increase the available size if the page is zoomed in.
-            OverlayLayoutParams.SizingMode.LAYOUT
-        )
+        secondPageView.layoutParams =
+            OverlayLayoutParams(
+                RectF(0f, 1024f, 768f, 0f),
+                // We use the SizingMode.LAYOUT here since we want the WebView to actually increase the available size if the page is zoomed in.
+                OverlayLayoutParams.SizingMode.LAYOUT,
+            )
 
         if (savedInstanceState != null) {
             // If we have a saved state we restore it here.
@@ -251,11 +258,12 @@ class MyViewProvider(
     }
 
     private fun updateFirstPageText() {
-        val orderLabel = if (isAnnotationOverlayAboveOverlayViews) {
-            "Annotation overlay above overlay views"
-        } else {
-            "Overlay views above annotation overlay"
-        }
+        val orderLabel =
+            if (isAnnotationOverlayAboveOverlayViews) {
+                "Annotation overlay above overlay views"
+            } else {
+                "Overlay views above annotation overlay"
+            }
         firstPageView.text = "\uD83D\uDC4B I'm a custom overlay view!\nTap me or the page to toggle order.\nNow: $orderLabel"
     }
 

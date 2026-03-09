@@ -68,11 +68,7 @@ import kotlinx.coroutines.delay
 @Composable
 @ExperimentalAnimationApi
 @ExperimentalComposeUiApi
-fun CatalogAppBar(
-    state: State,
-    dispatcher: Dispatcher,
-    isTablet: Boolean = false
-) {
+fun CatalogAppBar(state: State, dispatcher: Dispatcher, isTablet: Boolean = false) {
     val isOnMainPage = state.currentPage == Page.ExampleList
 
     TopAppBar(
@@ -83,13 +79,14 @@ fun CatalogAppBar(
                 val context = LocalContext.current
                 val version = remember { context.packageManager.getSupportPackageInfo(context.packageName, 0).versionName }
                 Text(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .padding(start = 12.dp)
-                        .alpha(AlphaDefs.titleSdkVersion)
+                        .alpha(AlphaDefs.TITLE_SDK_VERSION)
                         .align(Alignment.Bottom),
                     text = version ?: "",
                     fontWeight = FontWeight.W400,
-                    fontSize = 16.sp
+                    fontSize = 16.sp,
                 )
             }
         },
@@ -97,23 +94,23 @@ fun CatalogAppBar(
             if (!isOnMainPage) {
                 BackNavigationIconButton(
                     isTablet = isTablet,
-                    onClick = { dispatcher(Action.UpButtonTapped) }
+                    onClick = { dispatcher(Action.UpButtonTapped) },
                 )
             }
         },
         actions = {
             // These are wrapped in a row so they animate nicely when navigating.
             Row(
-                modifier = Modifier.animateContentSize()
+                modifier = Modifier.animateContentSize(),
             ) {
                 IconButton(
-                    onClick = { dispatcher(Action.SearchButtonTapped) }
+                    onClick = { dispatcher(Action.SearchButtonTapped) },
                 ) {
                     // TODO: COMPOSE extract the strings
                     Icon(
                         painter = painterResource(id = R.drawable.ic_topbar_search),
                         tint = MaterialTheme.colorScheme.onPrimary,
-                        contentDescription = "Search button"
+                        contentDescription = "Search button",
                     )
                 }
 
@@ -121,22 +118,23 @@ fun CatalogAppBar(
                     IconButton(
                         onClick = {
                             dispatcher(Action.SettingsButtonTapped)
-                        }
+                        },
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_topbar_settings),
                             tint = MaterialTheme.colorScheme.onPrimary,
-                            contentDescription = "Search button in the top bar."
+                            contentDescription = "Search button in the top bar.",
                         )
                     }
                 }
             }
         },
-        colors = TopAppBarDefaults.topAppBarColors(
+        colors =
+        TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary,
-            titleContentColor = MaterialTheme.colorScheme.onPrimary
+            titleContentColor = MaterialTheme.colorScheme.onPrimary,
         ),
-        modifier = Modifier.shadow(4.dp)
+        modifier = Modifier.shadow(4.dp),
     )
 
     SearchToolbar(
@@ -144,15 +142,12 @@ fun CatalogAppBar(
         searchState = state.searchState,
         isOnMainPage = isOnMainPage,
         onSearchQueryChanged = { dispatcher(Action.SearchQueryChanged(it)) },
-        onSearchCancelled = { dispatcher(Action.CancelSearchButtonTapped) }
+        onSearchCancelled = { dispatcher(Action.CancelSearchButtonTapped) },
     )
 }
 
 @Composable
-private fun BackNavigationIconButton(
-    isTablet: Boolean,
-    onClick: () -> Unit
-) {
+private fun BackNavigationIconButton(isTablet: Boolean, onClick: () -> Unit) {
     val icon =
         if (isTablet) {
             Icons.Default.Close
@@ -164,7 +159,7 @@ private fun BackNavigationIconButton(
         Icon(
             imageVector = icon,
             tint = MaterialTheme.colorScheme.onPrimary,
-            contentDescription = "Back navigation button in the top bar."
+            contentDescription = "Back navigation button in the top bar.",
         )
     }
 }
@@ -177,26 +172,27 @@ private fun SearchToolbar(
     searchState: SearchState,
     isOnMainPage: Boolean,
     onSearchQueryChanged: (String) -> Unit,
-    onSearchCancelled: () -> Unit
+    onSearchCancelled: () -> Unit,
 ) {
     val isVisible = searchState != SearchState.Hidden
 
-    val rippleOrigin = with(LocalDensity.current) {
-        Offset(
-            (if (isOnMainPage) 75 else 30).dp.toPx(),
-            30.dp.toPx()
-        )
-    }
+    val rippleOrigin =
+        with(LocalDensity.current) {
+            Offset(
+                (if (isOnMainPage) 75 else 30).dp.toPx(),
+                30.dp.toPx(),
+            )
+        }
 
     CircularReveal(
         modifier = modifier,
         isVisible = isVisible,
-        rippleOrigin = rippleOrigin
+        rippleOrigin = rippleOrigin,
     ) {
         Row(
             modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp),
             verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+            horizontalArrangement = Arrangement.SpaceBetween,
         ) {
             val keyboardController = LocalSoftwareKeyboardController.current
             val focusRequester = remember { FocusRequester() }
@@ -208,7 +204,8 @@ private fun SearchToolbar(
             }
 
             TextField(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .weight(1f)
                     .focusRequester(focusRequester),
                 value = textFieldValue,
@@ -220,12 +217,13 @@ private fun SearchToolbar(
                 singleLine = true,
                 colors = TextFieldDefaults.colors(focusedContainerColor = Color.Transparent, unfocusedContainerColor = Color.Transparent),
                 keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
-                keyboardActions = KeyboardActions(
+                keyboardActions =
+                KeyboardActions(
                     onSearch = {
                         keyboardController?.hide()
                         focusRequester.freeFocus()
-                    }
-                )
+                    },
+                ),
             )
 
             // debounce keyboard input slightly to improve search performance
@@ -238,7 +236,7 @@ private fun SearchToolbar(
 
             IconButton(
                 onClick = { onSearchCancelled() },
-                modifier = Modifier.padding(start = 8.dp)
+                modifier = Modifier.padding(start = 8.dp),
             ) {
                 Icon(imageVector = Icons.Default.Close, contentDescription = null)
             }

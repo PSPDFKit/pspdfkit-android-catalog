@@ -24,11 +24,12 @@ import com.pspdfkit.ui.PdfActivityIntentBuilder
  * This example demonstrates different thumbnail bar modes available in the SDK.
  * It allows toggling between Floating, Pinned, Scrollable, and None modes via the options menu.
  */
-class ThumbnailBarExample(context: Context) : SdkExample(
-    context,
-    R.string.thumbnailBarExampleTitle,
-    R.string.thumbnailBarExampleDescription
-) {
+class ThumbnailBarExample(context: Context) :
+    SdkExample(
+        context,
+        R.string.thumbnailBarExampleTitle,
+        R.string.thumbnailBarExampleDescription,
+    ) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // Start with floating thumbnail bar mode (default)
         configuration.setThumbnailBarMode(ThumbnailBarMode.THUMBNAIL_BAR_MODE_FLOATING)

@@ -32,41 +32,49 @@ import java.net.URLConnection
 /**
  * This is an example showing how to use the [DownloadJob] to download a PDF document from the web.
  */
-class DocumentDownloadExample(context: Context) : SdkExample(context, R.string.documentDownloadExampleTitle, R.string.documentDownloadExampleDescription) {
-
+class DocumentDownloadExample(context: Context) :
+    SdkExample(context, R.string.documentDownloadExampleTitle, R.string.documentDownloadExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // The web download source is a custom DownloadSource implemented below.
-        val source: WebDownloadSource = try {
-            // Try to parse the URL pointing to the PDF document. If an error occurs, log it and leave the example.
-            WebDownloadSource(URL("https://nutrient.io/downloads/case-study-box.pdf"))
-        } catch (e: MalformedURLException) {
-            Log.e(TAG, "Error while trying to parse the PDF Download URL.", e)
-            return
-        }
+        val source: WebDownloadSource =
+            try {
+                // Try to parse the URL pointing to the PDF document. If an error occurs, log it and leave the example.
+                WebDownloadSource(URL("https://nutrient.io/downloads/case-study-box.pdf"))
+            } catch (e: MalformedURLException) {
+                Log.e(TAG, "Error while trying to parse the PDF Download URL.", e)
+                return
+            }
 
         // Build a download request based on various input parameters. Provide the web source pointing to the document.
-        val request = DownloadRequest.Builder(context)
-            .source(source)
-            .outputFile(File(context.getDir("documents", Context.MODE_PRIVATE), "case-study-box.pdf"))
-            .overwriteExisting(true)
-            .build()
+        val request =
+            DownloadRequest
+                .Builder(context)
+                .source(source)
+                .outputFile(File(context.getDir("documents", Context.MODE_PRIVATE), "case-study-box.pdf"))
+                .overwriteExisting(true)
+                .build()
 
         // This will initiate the download.
         val job = DownloadJob.startDownload(request)
-        job.setProgressListener(object : DownloadJob.ProgressListenerAdapter() {
-            override fun onComplete(output: File) {
-                val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(output))
-                    .configuration(configuration.build())
-                    .build()
-                context.startActivity(intent)
-            }
+        job.setProgressListener(
+            object : DownloadJob.ProgressListenerAdapter() {
+                override fun onComplete(output: File) {
+                    val intent =
+                        PdfActivityIntentBuilder
+                            .fromUri(context, Uri.fromFile(output))
+                            .configuration(configuration.build())
+                            .build()
+                    context.startActivity(intent)
+                }
 
-            override fun onError(exception: Throwable) {
-                AlertDialog.Builder(context)
-                    .setMessage("There was an error downloading the example PDF file. For further information see Logcat.")
-                    .show()
-            }
-        })
+                override fun onError(exception: Throwable) {
+                    AlertDialog
+                        .Builder(context)
+                        .setMessage("There was an error downloading the example PDF file. For further information see Logcat.")
+                        .show()
+                }
+            },
+        )
 
         val fragment = DownloadProgressFragment()
         fragment.show((context as FragmentActivity).supportFragmentManager, "download-fragment")
@@ -111,7 +119,5 @@ private class WebDownloadSource constructor(private val documentURL: URL) : Down
         return length
     }
 
-    override fun toString(): String {
-        return "WebDownloadSource{documentURL=$documentURL}"
-    }
+    override fun toString(): String = "WebDownloadSource{documentURL=$documentURL}"
 }

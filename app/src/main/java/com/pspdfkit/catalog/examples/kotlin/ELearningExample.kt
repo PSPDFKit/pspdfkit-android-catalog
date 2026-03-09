@@ -38,8 +38,7 @@ import java.util.EnumSet
 /**
  * This example shows how to swap between documents and sync view state, annotations, and bookmarks.
  */
-class ELearningExample(context: Context) :
-    SdkExample(context, R.string.eLearningExampleTitle, R.string.eLearningExampleDescription) {
+class ELearningExample(context: Context) : SdkExample(context, R.string.eLearningExampleTitle, R.string.eLearningExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // We'll disable redaction tool in annotation creation toolbar to prevent creation of redaction annotations.
         val annotationTools = mutableListOf(*AnnotationTool.values())
@@ -73,10 +72,12 @@ class ELearningExample(context: Context) :
             extract("Student.pdf", title, context) { studentDocumentFile ->
                 val teacherDocumentUri = Uri.fromFile(teacherDocumentFile)
                 val studentDocumentUri = Uri.fromFile(studentDocumentFile)
-                val intent = PdfActivityIntentBuilder.fromUri(context, teacherDocumentUri)
-                    .configuration(configuration.build())
-                    .activityClass(ELearningActivity::class)
-                    .build()
+                val intent =
+                    PdfActivityIntentBuilder
+                        .fromUri(context, teacherDocumentUri)
+                        .configuration(configuration.build())
+                        .activityClass(ELearningActivity::class)
+                        .build()
                 intent.putExtra(ELearningActivity.STUDENT_URI_KEY, studentDocumentUri)
                 intent.putExtra(ELearningActivity.TEACHER_URI_KEY, teacherDocumentUri)
                 context.startActivity(intent)
@@ -86,7 +87,6 @@ class ELearningExample(context: Context) :
 }
 
 class ELearningActivity : PdfActivity() {
-
     /** List of annotations in instant JSON format that will be copied over the new document.  */
     private val serializedAnnotationsToTransfer: MutableList<String> = mutableListOf()
 
@@ -129,15 +129,14 @@ class ELearningActivity : PdfActivity() {
     /**
      * Set the corresponding action for every button.
      */
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            SWITCH_ITEM_ID -> {
-                switchDocument()
-                true
-            }
-            else -> {
-                super.onOptionsItemSelected(item)
-            }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        SWITCH_ITEM_ID -> {
+            switchDocument()
+            true
+        }
+
+        else -> {
+            super.onOptionsItemSelected(item)
         }
     }
 
@@ -161,39 +160,40 @@ class ELearningActivity : PdfActivity() {
     @UiThread
     override fun onDocumentLoaded(document: PdfDocument) {
         // Take any serialized annotations that were stored upon switching, and add them to the loaded document.
-        transferDataJob = lifecycleScope.launch {
-            withContext(Dispatchers.IO) {
-                // Create annotations from instant JSON and add them to the document.
-                for (json in serializedAnnotationsToTransfer) {
-                    document.annotationProvider.createAnnotationFromInstantJson(json)
+        transferDataJob =
+            lifecycleScope.launch {
+                withContext(Dispatchers.IO) {
+                    // Create annotations from instant JSON and add them to the document.
+                    for (json in serializedAnnotationsToTransfer) {
+                        document.annotationProvider.createAnnotationFromInstantJson(json)
+                    }
+                    // Once all annotations are transferred, we can clear the list.
+                    serializedAnnotationsToTransfer.clear()
+
+                    // Take any bookmarks that were stored upon switching, and add them to the loaded document.
+                    bookmarksToTransfer.forEach { bookmark ->
+                        document.bookmarkProvider.addBookmarkAsync(bookmark).blockingAwait()
+                    }
+                    // Once all bookmarks are transferred, we can clear the list.
+                    bookmarksToTransfer.clear()
                 }
-                // Once all annotations are transferred, we can clear the list.
-                serializedAnnotationsToTransfer.clear()
 
-                // Take any bookmarks that were stored upon switching, and add them to the loaded document.
-                bookmarksToTransfer.forEach { bookmark ->
-                    document.bookmarkProvider.addBookmarkAsync(bookmark).blockingAwait()
+                // Restore page index, scroll and zoom.
+                fragmentState?.let {
+                    requirePdfFragment().state = it
+                    fragmentState = null
                 }
-                // Once all bookmarks are transferred, we can clear the list.
-                bookmarksToTransfer.clear()
+
+                // Make sure the outline view shows the changes from transferring bookmarks and annotations.
+                pspdfKitViews.outlineView?.setDocument(document, configuration.configuration)
+
+                // Restore bookmark list view visibility.
+                if (isBookmarkListDisplayed) {
+                    pspdfKitViews.outlineView?.show()
+                }
+
+                invalidateOptionsMenu()
             }
-
-            // Restore page index, scroll and zoom.
-            fragmentState?.let {
-                requirePdfFragment().state = it
-                fragmentState = null
-            }
-
-            // Make sure the outline view shows the changes from transferring bookmarks and annotations.
-            pspdfKitViews.outlineView?.setDocument(document, configuration.configuration)
-
-            // Restore bookmark list view visibility.
-            if (isBookmarkListDisplayed) {
-                pspdfKitViews.outlineView?.show()
-            }
-
-            invalidateOptionsMenu()
-        }
     }
 
     /**
@@ -210,46 +210,48 @@ class ELearningActivity : PdfActivity() {
         requirePdfFragment().isDocumentInteractionEnabled = false
 
         // Run the collection of annotations and bookmarks asynchronously.
-        switchDocumentJob = lifecycleScope.launch {
-            // Clear previous data
-            serializedAnnotationsToTransfer.clear()
-            bookmarksToTransfer.clear()
+        switchDocumentJob =
+            lifecycleScope.launch {
+                // Clear previous data
+                serializedAnnotationsToTransfer.clear()
+                bookmarksToTransfer.clear()
 
-            withContext(Dispatchers.IO) {
-                // Fetch all annotations, serialize them, and collect them in a list. We keep them around in
-                // memory, and will add them to the other document once it is loaded.
-                val annotations = document.annotationProvider.getAllAnnotationsOfType(
-                    AnnotationType.entries.toSet()
-                )
+                withContext(Dispatchers.IO) {
+                    // Fetch all annotations, serialize them, and collect them in a list. We keep them around in
+                    // memory, and will add them to the other document once it is loaded.
+                    val annotations =
+                        document.annotationProvider.getAllAnnotationsOfType(
+                            AnnotationType.entries.toSet(),
+                        )
 
-                annotations.forEach { annotation ->
-                    val json = annotation.toInstantJson()
-                    // For some unsupported annotation types (like popup annotations) we don't offer serialization.
-                    // In these cases, `toInstantJson()` returns "null". We filter those from the serialized items.
-                    if (invalidInstantJson(json)) {
-                        serializedAnnotationsToTransfer.add(json)
+                    annotations.forEach { annotation ->
+                        val json = annotation.toInstantJson()
+                        // For some unsupported annotation types (like popup annotations) we don't offer serialization.
+                        // In these cases, `toInstantJson()` returns "null". We filter those from the serialized items.
+                        if (invalidInstantJson(json)) {
+                            serializedAnnotationsToTransfer.add(json)
+                        }
                     }
+
+                    // Fetch the bookmarks for synchronization and collect them in a list.
+                    val bookmarks = document.bookmarkProvider.bookmarks
+                    bookmarksToTransfer.addAll(bookmarks)
                 }
 
-                // Fetch the bookmarks for synchronization and collect them in a list.
-                val bookmarks = document.bookmarkProvider.bookmarks
-                bookmarksToTransfer.addAll(bookmarks)
+                // Save current page index, scroll and zoom.
+                fragmentState = requirePdfFragment().state
+
+                // Save bookmark list view visibility.
+                isBookmarkListDisplayed = pspdfKitViews.outlineView?.isDisplayed ?: false
+
+                // Swap out the current document to either the teacher or student version.
+                if (document.documentSource.fileUri == teacherUri) {
+                    documentCoordinator.setDocument(DocumentDescriptor.fromUri(studentUri))
+                } else {
+                    documentCoordinator.setDocument(DocumentDescriptor.fromUri(teacherUri))
+                }
+                invalidateOptionsMenu()
             }
-
-            // Save current page index, scroll and zoom.
-            fragmentState = requirePdfFragment().state
-
-            // Save bookmark list view visibility.
-            isBookmarkListDisplayed = pspdfKitViews.outlineView?.isDisplayed ?: false
-
-            // Swap out the current document to either the teacher or student version.
-            if (document.documentSource.fileUri == teacherUri) {
-                documentCoordinator.setDocument(DocumentDescriptor.fromUri(studentUri))
-            } else {
-                documentCoordinator.setDocument(DocumentDescriptor.fromUri(teacherUri))
-            }
-            invalidateOptionsMenu()
-        }
     }
 
     companion object {

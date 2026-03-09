@@ -28,12 +28,9 @@ import com.pspdfkit.catalog.ui.theming.Animations
 @Composable
 @ExperimentalAnimationApi
 @ExperimentalComposeUiApi
-fun PhoneCatalog(
-    state: State,
-    dispatcher: Dispatcher
-) {
+fun PhoneCatalog(state: State, dispatcher: Dispatcher) {
     Scaffold(
-        topBar = { CatalogAppBar(state, dispatcher) }
+        topBar = { CatalogAppBar(state, dispatcher) },
     ) { paddingValues ->
         Box(Modifier.padding(paddingValues)) {
             // List of examples.
@@ -42,7 +39,7 @@ fun PhoneCatalog(
             AnimatedVisibility(
                 visible = state.currentPage == Page.Settings,
                 enter = Animations.catalogEnterAnimation(),
-                exit = Animations.catalogExitAnimation()
+                exit = Animations.catalogExitAnimation(),
             ) {
                 // List of options.
                 Preferences(state, dispatcher)

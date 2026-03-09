@@ -12,6 +12,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.annotation.UiThread
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -37,7 +38,8 @@ import com.pspdfkit.ui.PdfThumbnailGrid
  * - It removes the thumbnail bar and adds two navigation buttons to the layouts ("Next" and "Previous").
  * - It puts the thumbnail grid into the right navigation drawer.
  */
-class CustomLayoutExample(context: Context) : SdkExample(context, R.string.customLayoutExampleTitle, R.string.customLayoutExampleDescription) {
+class CustomLayoutExample(context: Context) :
+    SdkExample(context, R.string.customLayoutExampleTitle, R.string.customLayoutExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // Define the custom layout of our activity inside the configuration.
         configuration.layout(R.layout.custom_pdf_activity)
@@ -74,17 +76,18 @@ class CustomLayoutExample(context: Context) : SdkExample(context, R.string.custo
         // We use a custom utility class to extract the example document from the assets.
         ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
             // To start the `CustomLayoutActivity` create a launch intent using the builder.
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .configuration(configuration.build())
-                .activityClass(CustomLayoutActivity::class)
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    .configuration(configuration.build())
+                    .activityClass(CustomLayoutActivity::class)
+                    .build()
             context.startActivity(intent)
         }
     }
 }
 
 class CustomLayoutActivity : PdfActivity() {
-
     /**
      * Total number of pages in the current document.
      */
@@ -109,30 +112,34 @@ class CustomLayoutActivity : PdfActivity() {
         requirePdfFragment().addDocumentListener(thumbnailGridView)
 
         // Toggle drawer when thumbnail grid visibility changes.
-        thumbnailGridView.addOnVisibilityChangedListener(object : OnVisibilityChangedListener {
-            override fun onShow(view: View) {
-                drawerLayout.openDrawer(DRAWER_GRAVITY)
-            }
+        thumbnailGridView.addOnVisibilityChangedListener(
+            object : OnVisibilityChangedListener {
+                override fun onShow(view: View) {
+                    drawerLayout.openDrawer(DRAWER_GRAVITY)
+                }
 
-            override fun onHide(view: View) {
-                drawerLayout.closeDrawer(DRAWER_GRAVITY)
-            }
-        })
+                override fun onHide(view: View) {
+                    drawerLayout.closeDrawer(DRAWER_GRAVITY)
+                }
+            },
+        )
 
         // Ensure action bar and grid are visible when drawer is opened.
-        drawerLayout.addDrawerListener(object : SimpleDrawerListener() {
-            override fun onDrawerSlide(drawerView: View, slideOffset: Float) {}
+        drawerLayout.addDrawerListener(
+            object : SimpleDrawerListener() {
+                override fun onDrawerSlide(drawerView: View, slideOffset: Float) {}
 
-            override fun onDrawerClosed(drawerView: View) {
-                thumbnailGridView.hide()
-            }
-
-            override fun onDrawerStateChanged(newState: Int) {
-                if (newState == DrawerLayout.STATE_DRAGGING) {
-                    thumbnailGridView.show()
+                override fun onDrawerClosed(drawerView: View) {
+                    thumbnailGridView.hide()
                 }
-            }
-        })
+
+                override fun onDrawerStateChanged(newState: Int) {
+                    if (newState == DrawerLayout.STATE_DRAGGING) {
+                        thumbnailGridView.show()
+                    }
+                }
+            },
+        )
 
         // Go to the tapped page, and close the thumbnail drawer after selecting a page.
         thumbnailGridView.setOnPageClickListener { _, pageIndex ->
@@ -150,6 +157,21 @@ class CustomLayoutActivity : PdfActivity() {
             val currentPage = pageIndex
             if (currentPage > 0) pageIndex = currentPage - 1
         }
+
+        // Handle back button presses using OnBackPressedDispatcher
+        onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    // First let parent handle back press
+                    isEnabled = false
+                    onBackPressedDispatcher.onBackPressed()
+                    isEnabled = true
+                    // Then hide thumbnail grid
+                    hideThumbnailGrid()
+                }
+            },
+        )
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -161,18 +183,13 @@ class CustomLayoutActivity : PdfActivity() {
                 // Consume the event, preventing the default behavior.
                 return true
             }
+
             MENU_OPTION_OUTLINE, MENU_OPTION_SEARCH -> {
                 hideThumbnailGrid()
                 // Don't consume the event here since we want to fallback to default action handling.
             }
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    @Deprecated("Deprecated in Java")
-    override fun onBackPressed() {
-        super.onBackPressed()
-        hideThumbnailGrid()
     }
 
     /**

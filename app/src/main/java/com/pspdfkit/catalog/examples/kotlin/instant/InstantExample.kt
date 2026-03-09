@@ -22,7 +22,6 @@ import java.util.EnumSet
  * and displays the Instant document.
  */
 class InstantExample(context: Context) : SdkExample(context, R.string.tryInstantExampleTitle, R.string.tryInstantExampleDescription) {
-
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // Instant example starts with a simple login/connection screen.
         val intent = Intent(context, InstantExampleConnectionActivity::class.java)
@@ -31,7 +30,11 @@ class InstantExample(context: Context) : SdkExample(context, R.string.tryInstant
         // NOTE: Since Instant Comments have to be supported by the used Nutrient Document Engine license,
         // Nutrient for Android disables Instant Comment functionality by default. In our example,
         // our server supports Instant Comments, so we can safely enable these tools here.
-        val enabledTools = configuration.build().configuration.enabledAnnotationTools.toMutableList()
+        val enabledTools =
+            configuration
+                .build()
+                .configuration.enabledAnnotationTools
+                .toMutableList()
         enabledTools.addAll(EnumSet.of(AnnotationTool.INSTANT_COMMENT_MARKER, AnnotationTool.INSTANT_HIGHLIGHT_COMMENT))
         configuration.enabledAnnotationTools(enabledTools)
         intent.putExtra(InstantExampleConnectionActivity.CONFIGURATION_ARG, configuration.build())

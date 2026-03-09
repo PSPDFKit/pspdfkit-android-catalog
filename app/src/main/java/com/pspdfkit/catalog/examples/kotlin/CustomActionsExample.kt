@@ -28,15 +28,17 @@ import com.pspdfkit.ui.PdfActivityIntentBuilder
  * This example shows how to use the Kotlin language to configure a custom [com.pspdfkit.ui.PdfActivity]. Kotlin is a JVM-compatible programming language and
  * the second by Google supported programming language for developing Android apps (see introduction: https://developer.android.com/kotlin/index.html).
  */
-class CustomActionsExample(context: Context) : SdkExample(context, R.string.customActionsExampleTitle, R.string.customActionsExampleDescription) {
-
+class CustomActionsExample(context: Context) :
+    SdkExample(context, R.string.customActionsExampleTitle, R.string.customActionsExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // We use a custom utility class to extract the example document from the assets.
         ExtractAssetTask.extract(SdkExample.WELCOME_DOC, title, context) { documentFile ->
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .configuration(configuration.build())
-                .activityClass(CustomActionsActivity::class)
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    .configuration(configuration.build())
+                    .activityClass(CustomActionsActivity::class)
+                    .build()
 
             // You can add your own intent extras to the activity too.
             intent.putExtra(CustomActionsActivity.STRING_SAMPLE_ARG, "This toast message is passed via intent extras.")
@@ -51,7 +53,6 @@ class CustomActionsExample(context: Context) : SdkExample(context, R.string.cust
  * This subclass of [PdfActivity] adds a set of custom actions.
  */
 class CustomActionsActivity : PdfActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -106,13 +107,18 @@ class CustomActionsActivity : PdfActivity() {
         // Let's say we want to tint icons same as the default ones). We can read the color
         // from the theme, or specify the same color we have in theme. Reading from theme is a bit
         // more complex but a better way to do it, so here's how to:
-        val a = theme.obtainStyledAttributes(
-            null,
-            com.pspdfkit.R.styleable.pspdf__ActionBarIcons,
-            com.pspdfkit.R.attr.pspdf__actionBarIconsStyle,
-            com.pspdfkit.R.style.PSPDFKit_ActionBarIcons
-        )
-        val mainToolbarIconsColor = a.getColor(com.pspdfkit.R.styleable.pspdf__ActionBarIcons_pspdf__iconsColor, ContextCompat.getColor(this, com.pspdfkit.R.color.pspdf__onPrimary))
+        val a =
+            theme.obtainStyledAttributes(
+                null,
+                com.pspdfkit.R.styleable.pspdf__ActionBarIcons,
+                com.pspdfkit.R.attr.pspdf__actionBarIconsStyle,
+                com.pspdfkit.R.style.PSPDFKit_ActionBarIcons,
+            )
+        val mainToolbarIconsColor =
+            a.getColor(
+                com.pspdfkit.R.styleable.pspdf__ActionBarIcons_pspdf__iconsColor,
+                ContextCompat.getColor(this, com.pspdfkit.R.color.pspdf__onPrimary),
+            )
         a.recycle()
 
         // Tinting all custom menu drawables (you can do it the easier way if you iterate over your ids).
@@ -147,26 +153,27 @@ class CustomActionsActivity : PdfActivity() {
      * Override onOptionsItemSelected(MenuItem) to handle click events for your custom menu items.
      */
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        val handled = when (item.itemId) {
-            R.id.custom_action1 -> {
-                Toast.makeText(this, "Selected Action 1", Toast.LENGTH_SHORT).show()
-                true
-            }
+        val handled =
+            when (item.itemId) {
+                R.id.custom_action1 -> {
+                    Toast.makeText(this, "Selected Action 1", Toast.LENGTH_SHORT).show()
+                    true
+                }
 
-            R.id.custom_action2 -> {
-                Toast.makeText(this, "Selected Action 2", Toast.LENGTH_SHORT).show()
-                true
-            }
+                R.id.custom_action2 -> {
+                    Toast.makeText(this, "Selected Action 2", Toast.LENGTH_SHORT).show()
+                    true
+                }
 
-            R.id.custom_action3 -> {
-                Toast.makeText(this, "Selected Action 3", Toast.LENGTH_SHORT).show()
-                true
-            }
+                R.id.custom_action3 -> {
+                    Toast.makeText(this, "Selected Action 3", Toast.LENGTH_SHORT).show()
+                    true
+                }
 
-            else -> {
-                false
+                else -> {
+                    false
+                }
             }
-        }
 
         // Return true if you have handled the current event. If your code has not handled the event,
         // pass it on to the superclass. This is important or standard Nutrient actions won't work.

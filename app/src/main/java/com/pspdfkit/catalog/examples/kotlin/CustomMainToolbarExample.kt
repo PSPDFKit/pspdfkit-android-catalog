@@ -29,11 +29,12 @@ import com.pspdfkit.utils.getSupportParcelableExtra
  * [com.pspdfkit.ui.PdfActivity]) and customize the main toolbar by adding custom menu options
  * using [OnToolbarMenuChangedListener].
  */
-class CustomMainToolbarExample(context: Context) : SdkExample(
-    context,
-    R.string.customMainToolbarExampleTitle,
-    R.string.customMainToolbarExampleDescription
-) {
+class CustomMainToolbarExample(context: Context) :
+    SdkExample(
+        context,
+        R.string.customMainToolbarExampleTitle,
+        R.string.customMainToolbarExampleDescription,
+    ) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
             val intent = Intent(context, CustomMainToolbarActivity::class.java)
@@ -101,32 +102,35 @@ class CustomMainToolbarActivity :
         // No-op: menu item state is set during creation.
     }
 
-    override fun onToolbarMenuItemClick(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.custom_action_show -> {
-                optionsExpanded = true
-                pdfUiFragment?.invalidateMenu()
-                true
-            }
-            R.id.custom_action_hide -> {
-                optionsExpanded = false
-                pdfUiFragment?.invalidateMenu()
-                true
-            }
-            R.id.custom_action1 -> {
-                Toast.makeText(this, "Option 1 selected", Toast.LENGTH_SHORT).show()
-                true
-            }
-            R.id.custom_action2 -> {
-                Toast.makeText(this, "Option 2 selected", Toast.LENGTH_SHORT).show()
-                true
-            }
-            R.id.custom_action3 -> {
-                Toast.makeText(this, "Option 3 selected", Toast.LENGTH_SHORT).show()
-                true
-            }
-            else -> false
+    override fun onToolbarMenuItemClick(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.custom_action_show -> {
+            optionsExpanded = true
+            pdfUiFragment?.invalidateMenu()
+            true
         }
+
+        R.id.custom_action_hide -> {
+            optionsExpanded = false
+            pdfUiFragment?.invalidateMenu()
+            true
+        }
+
+        R.id.custom_action1 -> {
+            Toast.makeText(this, "Option 1 selected", Toast.LENGTH_SHORT).show()
+            true
+        }
+
+        R.id.custom_action2 -> {
+            Toast.makeText(this, "Option 2 selected", Toast.LENGTH_SHORT).show()
+            true
+        }
+
+        R.id.custom_action3 -> {
+            Toast.makeText(this, "Option 3 selected", Toast.LENGTH_SHORT).show()
+            true
+        }
+
+        else -> false
     }
 
     companion object {

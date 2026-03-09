@@ -17,7 +17,8 @@ import com.pspdfkit.ui.PdfActivity
 /**
  * Opens the [PdfActivity] for viewing a PDF stored within the app's asset folder.
  */
-abstract class AssetExample(context: Context, @StringRes titleRes: Int, @StringRes descriptionRes: Int) : SdkExample(context, titleRes, descriptionRes) {
+abstract class AssetExample(context: Context, @StringRes titleRes: Int, @StringRes descriptionRes: Int) :
+    SdkExample(context, titleRes, descriptionRes) {
     /**
      * Gets the path to the asset that we want to display.
      * @return The path to the asset

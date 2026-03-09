@@ -94,22 +94,20 @@ import java.util.Locale
 @Composable
 @ExperimentalComposeUiApi
 @ExperimentalFoundationApi
-fun Preferences(
-    state: State,
-    dispatcher: Dispatcher
-) {
+fun Preferences(state: State, dispatcher: Dispatcher) {
     var preferences by remember { mutableStateOf(listOf<PreferencesSection>()) }
 
     // I'm using a LaunchedEffect here to filter the list in a background thread
     LaunchedEffect(state.preferenceSections, state.searchState) {
-        preferences = state.preferenceSections.filterBySearchState(state.searchState, preferences) { parent, filteredChildren ->
-            PreferencesSection(parent.title, filteredChildren)
-        }
+        preferences =
+            state.preferenceSections.filterBySearchState(state.searchState, preferences) { parent, filteredChildren ->
+                PreferencesSection(parent.title, filteredChildren)
+            }
     }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
+        color = MaterialTheme.colorScheme.background,
     ) {
         // We use our own ExpandableList, which implements a LazyColumn.
         ExpandableList(
@@ -118,41 +116,41 @@ fun Preferences(
             expandedSectionsState = state.expandedPreferenceSectionTitles,
             sectionKey = { it.title },
             areSectionHeadersSticky = false,
-
             topHeaderLayout = {
                 Column(
-                    modifier = Modifier.padding(Dimens.preferencesPageHeaderPadding)
+                    modifier = Modifier.padding(Dimens.preferencesPageHeaderPadding),
                 ) {
                     Image(
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .padding(top = 16.dp)
                             .size(40.dp)
                             .clip(RoundedCornerShape(8.dp)),
                         painter = painterResource(id = R.drawable.ic_logo),
-                        contentDescription = stringResource(R.string.preferences_nutrient_logo)
+                        contentDescription = stringResource(R.string.preferences_nutrient_logo),
                     )
 
                     Text(
                         text = stringResource(R.string.app_name),
                         style = MaterialTheme.typography.displaySmall,
                         color = MaterialTheme.colorScheme.onBackground,
-                        modifier = Modifier
-                            .alpha(AlphaDefs.title)
-                            .padding(top = 11.dp, bottom = 1.dp)
+                        modifier =
+                        Modifier
+                            .alpha(AlphaDefs.TITLE)
+                            .padding(top = 11.dp, bottom = 1.dp),
                     )
 
                     val context = LocalContext.current
                     val version = remember { context.packageManager.getSupportPackageInfo(context.packageName, 0).versionName }
                     Text(
-                        modifier = Modifier.alpha(AlphaDefs.half),
+                        modifier = Modifier.alpha(AlphaDefs.HALF),
                         text = stringResource(R.string.preferences_header_version, version ?: ""),
-                        style = MaterialTheme.typography.displayLarge
+                        style = MaterialTheme.typography.displayLarge,
                     )
                 }
 
                 SpacerLine()
             },
-
             sectionHeaderLayout = { sectionIndex, sectionIsExpanded, _ ->
                 val title = preferences.elementAt(sectionIndex).title
                 PreferenceHeader(
@@ -161,83 +159,86 @@ fun Preferences(
                     onExpandButtonClicked = {
                         val action = Action.TogglePreferenceSection(title)
                         dispatcher(action)
-                    }
+                    },
                 )
             },
-
             itemLayout = { preference ->
                 Column(
-                    modifier = Modifier.padding(Dimens.preferencesListPadding)
+                    modifier = Modifier.padding(Dimens.preferencesListPadding),
                 ) {
                     when (preference) {
-                        is CheckboxPreference -> CheckboxSetting(
-                            value = state.preferences[preference.key] as Boolean,
-                            preference = preference,
-                            onValueChanged = { key, value ->
-                                dispatcher(Action.PreferenceChanged(key, value))
-                            }
-                        )
+                        is CheckboxPreference -> {
+                            CheckboxSetting(
+                                value = state.preferences[preference.key] as Boolean,
+                                preference = preference,
+                                onValueChanged = { key, value ->
+                                    dispatcher(Action.PreferenceChanged(key, value))
+                                },
+                            )
+                        }
 
-                        is IntegerPreference -> IntegerSetting(
-                            value = state.preferences[preference.key] as Int,
-                            preference = preference,
-                            onValueChanged = { key, value ->
-                                dispatcher(Action.PreferenceChanged(key, value))
-                            }
-                        )
+                        is IntegerPreference -> {
+                            IntegerSetting(
+                                value = state.preferences[preference.key] as Int,
+                                preference = preference,
+                                onValueChanged = { key, value ->
+                                    dispatcher(Action.PreferenceChanged(key, value))
+                                },
+                            )
+                        }
 
-                        is ButtonPreference -> ButtonSetting(
-                            preference = preference,
-                            onButtonPressed = { dispatcher(Action.PreferenceButtonTapped(it)) }
-                        )
+                        is ButtonPreference -> {
+                            ButtonSetting(
+                                preference = preference,
+                                onButtonPressed = { dispatcher(Action.PreferenceButtonTapped(it)) },
+                            )
+                        }
 
-                        is RadioPreference -> RadioSetting(
-                            state = state,
-                            preference = preference,
-                            onValueChanged = { key, value ->
-                                dispatcher(Action.PreferenceChanged(key, value))
-                            }
-                        )
+                        is RadioPreference -> {
+                            RadioSetting(
+                                state = state,
+                                preference = preference,
+                                onValueChanged = { key, value ->
+                                    dispatcher(Action.PreferenceChanged(key, value))
+                                },
+                            )
+                        }
                     }
                 }
             },
-
             sectionFooterLayout = {
                 SpacerTransparentFooter()
             },
-
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
         )
     }
 }
 
 @Composable
-fun CheckboxSetting(
-    value: Boolean,
-    preference: Preference<Boolean>,
-    onValueChanged: (Preferences.Key<Boolean>, Boolean) -> Unit
-) {
+fun CheckboxSetting(value: Boolean, preference: Preference<Boolean>, onValueChanged: (Preferences.Key<Boolean>, Boolean) -> Unit) {
     Column(
-        modifier = Modifier.clickable { onValueChanged(preference.key, !value) }
+        modifier = Modifier.clickable { onValueChanged(preference.key, !value) },
     ) {
         Row(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .height(Dimens.inlineSettingHeight)
                 .fillMaxWidth(),
-            verticalAlignment = CenterVertically
+            verticalAlignment = CenterVertically,
         ) {
             Checkbox(
                 checked = value,
                 onCheckedChange = { onValueChanged(preference.key, it) },
-                colors = CheckboxDefaults.colors(checkedColor = MaterialTheme.colorScheme.primary)
+                colors = CheckboxDefaults.colors(checkedColor = MaterialTheme.colorScheme.primary),
             )
 
             Text(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .padding(start = 32.dp)
-                    .alpha(AlphaDefs.title),
+                    .alpha(AlphaDefs.TITLE),
                 text = preference.title,
-                style = MaterialTheme.typography.headlineMedium
+                style = MaterialTheme.typography.headlineMedium,
             )
         }
 
@@ -247,43 +248,40 @@ fun CheckboxSetting(
 
 @Composable
 @ExperimentalFoundationApi
-fun PreferenceHeader(
-    sectionTitle: String,
-    expanded: Boolean,
-    onExpandButtonClicked: () -> Unit
-) {
+fun PreferenceHeader(sectionTitle: String, expanded: Boolean, onExpandButtonClicked: () -> Unit) {
     // Animations for switching colors to purple and alpha to 100% when a section is expanded.
     val expandSectionColorAnimation by Animations.sectionExpandingColor(expanded = expanded)
     val expandSectionAlphaAnimation by Animations.sectionExpandingAlpha(expanded = expanded)
 
     Box(
-        modifier = Modifier.clickable { onExpandButtonClicked() }
+        modifier = Modifier.clickable { onExpandButtonClicked() },
     ) {
         Row(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .height(Dimens.listHeaderHeight)
                 .padding(Dimens.preferencesItemHeaderPadding)
                 .fillMaxWidth(),
-            verticalAlignment = CenterVertically
+            verticalAlignment = CenterVertically,
         ) {
             Text(
                 modifier = Modifier.alpha(expandSectionAlphaAnimation),
-
                 text = sectionTitle,
                 style = MaterialTheme.typography.displayLarge,
-                color = expandSectionColorAnimation
+                color = expandSectionColorAnimation,
             )
 
             Column(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxWidth(),
-                horizontalAlignment = Alignment.End
+                horizontalAlignment = Alignment.End,
             ) {
                 ExpandSectionButton(
                     sectionTitle,
                     Dimens.iconSize,
                     expanded,
-                    onExpandButtonClicked
+                    onExpandButtonClicked,
                 )
             }
         }
@@ -291,18 +289,15 @@ fun PreferenceHeader(
 }
 
 @Composable
-fun IntegerSetting(
-    value: Int,
-    preference: IntegerPreference,
-    onValueChanged: (Preferences.Key<Int>, Int) -> Unit
-) {
+fun IntegerSetting(value: Int, preference: IntegerPreference, onValueChanged: (Preferences.Key<Int>, Int) -> Unit) {
     val openDialog = remember { mutableStateOf(false) }
     val textFieldValue = remember { mutableStateOf(TextFieldValue()) }
 
     Column(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
-            .clickable { openDialog.value = true }
+            .clickable { openDialog.value = true },
     ) {
         // The description of IntegerSettings has the integer as the last number in the description.
         SettingItemWithDescription(preference, value.toString())
@@ -317,62 +312,65 @@ fun IntegerSetting(
             confirmButton = {},
             title = {
                 Text(
-                    modifier = Modifier
-                        .alpha(AlphaDefs.title),
+                    modifier =
+                    Modifier
+                        .alpha(AlphaDefs.TITLE),
                     text = preference.title,
-                    style = MaterialTheme.typography.headlineMedium
+                    style = MaterialTheme.typography.headlineMedium,
                 )
             },
-
             text = {
                 Column {
                     Text(
-                        modifier = Modifier
-                            .alpha(AlphaDefs.half),
+                        modifier =
+                        Modifier
+                            .alpha(AlphaDefs.HALF),
                         text = stringResource(R.string.preferences_starting_page_dialog_desc),
-                        style = MaterialTheme.typography.bodyLarge
+                        style = MaterialTheme.typography.bodyLarge,
                     )
 
                     TextField(
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .padding(top = 10.dp),
-
                         value = textFieldValue.value,
                         onValueChange = {
                             // Here we need to both remember the TextFieldValue and notify the ViewModel.
                             textFieldValue.value = it
                             onValueChanged(
                                 preference.key,
-                                if (it.text.isEmpty()) 0 else it.text.toInt()
+                                if (it.text.isEmpty()) 0 else it.text.toInt(),
                             )
                         },
                         placeholder = { Text(text = value.toString()) },
                         maxLines = 1,
-                        colors = TextFieldDefaults.colors(focusedContainerColor = Color.Transparent, unfocusedContainerColor = Color.Transparent),
-
-                        keyboardOptions = KeyboardOptions(
-                            keyboardType = KeyboardType.NumberPassword,
-                            imeAction = ImeAction.Done
+                        colors = TextFieldDefaults.colors(
+                            focusedContainerColor = Color.Transparent,
+                            unfocusedContainerColor = Color.Transparent,
                         ),
-                        keyboardActions = KeyboardActions(
-                            onDone = { openDialog.value = false }
-                        )
+                        keyboardOptions =
+                        KeyboardOptions(
+                            keyboardType = KeyboardType.NumberPassword,
+                            imeAction = ImeAction.Done,
+                        ),
+                        keyboardActions =
+                        KeyboardActions(
+                            onDone = { openDialog.value = false },
+                        ),
                     )
                 }
-            }
+            },
         )
     }
 }
 
 @Composable
-fun ButtonSetting(
-    preference: ButtonPreference,
-    onButtonPressed: (Preferences.Key<String>) -> Unit
-) {
+fun ButtonSetting(preference: ButtonPreference, onButtonPressed: (Preferences.Key<String>) -> Unit) {
     Column(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
-            .clickable { onButtonPressed(preference.key) }
+            .clickable { onButtonPressed(preference.key) },
     ) {
         SettingItemWithDescription(preference)
         SpacerLine()
@@ -387,15 +385,16 @@ fun ButtonSetting(
 fun SettingItemWithDescription(preference: Preference<*>, descriptionExtras: String? = null) {
     Column(
         verticalArrangement = Arrangement.Center,
-        modifier = Modifier
+        modifier =
+        Modifier
             .padding(Dimens.buttonSettingPadding)
             .wrapContentHeight()
-            .requiredHeightIn(min = Dimens.buttonSettingMinHeight)
+            .requiredHeightIn(min = Dimens.buttonSettingMinHeight),
     ) {
         Text(
             text = preference.title,
             style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.alpha(AlphaDefs.title)
+            modifier = Modifier.alpha(AlphaDefs.TITLE),
         )
 
         if (preference.description.isNotEmpty()) {
@@ -409,7 +408,7 @@ fun SettingItemWithDescription(preference: Preference<*>, descriptionExtras: Str
             Text(
                 text = finalDescription,
                 style = MaterialTheme.typography.bodyLarge,
-                modifier = Modifier.alpha(AlphaDefs.half)
+                modifier = Modifier.alpha(AlphaDefs.HALF),
             )
         }
     }
@@ -420,50 +419,59 @@ fun SettingItemWithDescription(preference: Preference<*>, descriptionExtras: Str
  * Inline radio settings go directly to [RadioButtonGroup], while pop-ups go through [PopUpRadioSetting] first.
  */
 @Composable
-fun RadioSetting(
-    preference: RadioPreference,
-    state: State,
-    onValueChanged: (Preferences.Key<String>, String) -> Unit
-) {
+fun RadioSetting(preference: RadioPreference, state: State, onValueChanged: (Preferences.Key<String>, String) -> Unit) {
     val context = LocalContext.current
     val resources = LocalResources.current
     val selectedOption = getRadioOptionStringFromEnumName(state.preferences[preference.key] as String, context)
 
-    val possibleOptions = remember(preference.possibleValuesResource) {
-        resources.getStringArray(preference.possibleValuesResource).toList()
-    }
+    val possibleOptions =
+        remember(preference.possibleValuesResource) {
+            resources.getStringArray(preference.possibleValuesResource).toList()
+        }
 
     val onSelectionChanged: (String) -> Unit = {
         when (preference.key) {
-            PreferenceKeys.PageScrollDirection -> onValueChanged(
-                preference.key,
-                getPageScrollDirectionFromString(it, context).name
-            )
+            PreferenceKeys.PageScrollDirection -> {
+                onValueChanged(
+                    preference.key,
+                    getPageScrollDirectionFromString(it, context).name,
+                )
+            }
 
-            PreferenceKeys.PageLayoutMode -> onValueChanged(
-                preference.key,
-                getPageLayoutFromString(it, context).name
-            )
+            PreferenceKeys.PageLayoutMode -> {
+                onValueChanged(
+                    preference.key,
+                    getPageLayoutFromString(it, context).name,
+                )
+            }
 
-            PreferenceKeys.SystemUserInterfaceMode -> onValueChanged(
-                preference.key,
-                getUserInterfaceModeFromString(it, context).name
-            )
+            PreferenceKeys.SystemUserInterfaceMode -> {
+                onValueChanged(
+                    preference.key,
+                    getUserInterfaceModeFromString(it, context).name,
+                )
+            }
 
-            PreferenceKeys.ThumbnailBarMode -> onValueChanged(
-                preference.key,
-                getThumbnailBarModeFromString(it, context).name
-            )
+            PreferenceKeys.ThumbnailBarMode -> {
+                onValueChanged(
+                    preference.key,
+                    getThumbnailBarModeFromString(it, context).name,
+                )
+            }
 
-            PreferenceKeys.AnnotationReplies -> onValueChanged(
-                preference.key,
-                getAnnotationReplyFeaturesFromString(it, context).name
-            )
+            PreferenceKeys.AnnotationReplies -> {
+                onValueChanged(
+                    preference.key,
+                    getAnnotationReplyFeaturesFromString(it, context).name,
+                )
+            }
 
-            PreferenceKeys.ThemeMode -> onValueChanged(
-                preference.key,
-                getThemeModeFromString(it, context).name
-            )
+            PreferenceKeys.ThemeMode -> {
+                onValueChanged(
+                    preference.key,
+                    getThemeModeFromString(it, context).name,
+                )
+            }
         }
     }
 
@@ -471,14 +479,14 @@ fun RadioSetting(
         RadioButtonGroup(
             selectedOption = selectedOption,
             possibleOptions = possibleOptions,
-            onSelectionChanged = onSelectionChanged
+            onSelectionChanged = onSelectionChanged,
         )
     } else {
         PopUpRadioSetting(
             preference = preference,
             selectedOption = selectedOption,
             possibleOptions = possibleOptions,
-            onSelectionChanged = onSelectionChanged
+            onSelectionChanged = onSelectionChanged,
         )
     }
 }
@@ -488,34 +496,37 @@ fun PopUpRadioSetting(
     preference: RadioPreference,
     selectedOption: String,
     possibleOptions: Collection<String>,
-    onSelectionChanged: (String) -> Unit
+    onSelectionChanged: (String) -> Unit,
 ) {
     val openDialog = remember { mutableStateOf(false) }
 
     Column(
-        modifier = Modifier
+        modifier =
+        Modifier
             .height(Dimens.popupRadioSettingHeight)
             .fillMaxWidth()
             .clickable { openDialog.value = true },
-        verticalArrangement = Arrangement.Center
+        verticalArrangement = Arrangement.Center,
     ) {
         Text(
-            modifier = Modifier
-                .alpha(AlphaDefs.title),
+            modifier =
+            Modifier
+                .alpha(AlphaDefs.TITLE),
             text = preference.title,
-            style = MaterialTheme.typography.titleMedium
+            style = MaterialTheme.typography.titleMedium,
         )
 
         Text(
-            modifier = Modifier
-                .alpha(AlphaDefs.half),
+            modifier =
+            Modifier
+                .alpha(AlphaDefs.HALF),
             text = selectedOption,
-            style = MaterialTheme.typography.titleMedium
+            style = MaterialTheme.typography.titleMedium,
         )
     }
 
     Box(
-        contentAlignment = Alignment.BottomStart
+        contentAlignment = Alignment.BottomStart,
     ) {
         SpacerLine()
     }
@@ -528,39 +539,36 @@ fun PopUpRadioSetting(
             confirmButton = {},
             title = {
                 Text(
-                    modifier = Modifier
-                        .alpha(AlphaDefs.title),
+                    modifier =
+                    Modifier
+                        .alpha(AlphaDefs.TITLE),
                     text = preference.title,
-                    style = MaterialTheme.typography.titleMedium
+                    style = MaterialTheme.typography.titleMedium,
                 )
             },
-
             text = {
                 Column {
                     RadioButtonGroup(
                         selectedOption = selectedOption,
-                        possibleOptions = possibleOptions
+                        possibleOptions = possibleOptions,
                     ) {
                         openDialog.value = false
                         onSelectionChanged.invoke(it)
                     }
                 }
-            }
+            },
         )
     }
 }
 
 @Composable
-fun RadioButtonGroup(
-    selectedOption: String,
-    possibleOptions: Collection<String>,
-    onSelectionChanged: ((String) -> Unit)
-) {
+fun RadioButtonGroup(selectedOption: String, possibleOptions: Collection<String>, onSelectionChanged: ((String) -> Unit)) {
     possibleOptions.forEach { currentOption ->
 
-        val isSelected = remember(selectedOption, currentOption) {
-            currentOption.lowercase(Locale.getDefault()) == selectedOption.lowercase(Locale.getDefault())
-        }
+        val isSelected =
+            remember(selectedOption, currentOption) {
+                currentOption.lowercase(Locale.getDefault()) == selectedOption.lowercase(Locale.getDefault())
+            }
 
         Column {
             Row(
@@ -572,21 +580,22 @@ fun RadioButtonGroup(
                         role = Role.RadioButton,
                         onClick = {
                             onSelectionChanged.invoke(currentOption)
-                        }
+                        },
                     ),
-                verticalAlignment = CenterVertically
+                verticalAlignment = CenterVertically,
             ) {
                 RadioButton(
                     selected = isSelected,
                     colors = RadioButtonDefaults.colors(selectedColor = MaterialTheme.colorScheme.primary),
-                    onClick = null
+                    onClick = null,
                 )
                 Text(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .padding(start = 32.dp)
-                        .alpha(AlphaDefs.title),
+                        .alpha(AlphaDefs.TITLE),
                     text = currentOption,
-                    style = MaterialTheme.typography.titleMedium
+                    style = MaterialTheme.typography.titleMedium,
                 )
             }
 

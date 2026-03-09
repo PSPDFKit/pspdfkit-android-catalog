@@ -52,7 +52,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.getValue
 
-class CustomSearchUiComposeExample(context: Context) : SdkExample(context, R.string.customSearchUiComposeExampleTitle, R.string.customSearchUiComposeExampleDescription) {
+class CustomSearchUiComposeExample(context: Context) :
+    SdkExample(context, R.string.customSearchUiComposeExampleTitle, R.string.customSearchUiComposeExampleDescription) {
     /** Configuration is handled inside [CustomSearchUiComposeActivity] */
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
@@ -64,7 +65,6 @@ class CustomSearchUiComposeExample(context: Context) : SdkExample(context, R.str
 }
 
 class CustomSearchUiComposeActivity : AppCompatActivity() {
-
     private val viewModel: CustomSearchUiComposeViewModel by viewModels { CustomSearchUiComposeViewModel.Factory }
 
     private var highlighter: SearchResultHighlighter? = null
@@ -81,22 +81,25 @@ class CustomSearchUiComposeActivity : AppCompatActivity() {
                 val searchQuery = viewModel.searchQuery
 
                 Scaffold(
-                    modifier = Modifier.background(color = MaterialTheme.colorScheme.onPrimary)
+                    modifier =
+                    Modifier
+                        .background(color = MaterialTheme.colorScheme.onPrimary)
                         .statusBarsPadding(),
                     topBar = {
                         TextField(
                             value = searchQuery,
                             onValueChange = viewModel::performSearch,
                             modifier = Modifier.fillMaxWidth(),
-                            placeholder = { Text(text = "Search") }
+                            placeholder = { Text(text = "Search") },
                         )
-                    }
+                    },
                 ) { paddingValues ->
 
-                    val pdfActivityConfiguration = PdfActivityConfiguration
-                        .Builder(this)
-                        .setUserInterfaceViewMode(UserInterfaceViewMode.USER_INTERFACE_VIEW_MODE_HIDDEN)
-                        .build()
+                    val pdfActivityConfiguration =
+                        PdfActivityConfiguration
+                            .Builder(this)
+                            .setUserInterfaceViewMode(UserInterfaceViewMode.USER_INTERFACE_VIEW_MODE_HIDDEN)
+                            .build()
 
                     val documentState = rememberDocumentState(uri, pdfActivityConfiguration)
 
@@ -104,18 +107,20 @@ class CustomSearchUiComposeActivity : AppCompatActivity() {
                         DocumentView(
                             documentState = documentState,
                             modifier = Modifier.fillMaxSize(),
-                            documentManager = getDefaultDocumentManager(
-                                documentListener = DefaultListeners.documentListeners(
+                            documentManager =
+                            getDefaultDocumentManager(
+                                documentListener =
+                                DefaultListeners.documentListeners(
                                     onDocumentLoaded = { document ->
                                         viewModel.onDocumentLoaded(
                                             document,
                                             pdfActivityConfiguration.configuration,
                                             documentState,
-                                            highlighter
+                                            highlighter,
                                         )
-                                    }
-                                )
-                            )
+                                    },
+                                ),
+                            ),
                         )
                     }
                 }
@@ -129,7 +134,6 @@ class CustomSearchUiComposeActivity : AppCompatActivity() {
 }
 
 class CustomSearchUiComposeViewModel : ViewModel() {
-
     var searchQuery by mutableStateOf("")
         private set
 
@@ -138,12 +142,18 @@ class CustomSearchUiComposeViewModel : ViewModel() {
     private var textSearch: TextSearch? = null
     private var highlighter: SearchResultHighlighter? = null
 
-    fun onDocumentLoaded(document: PdfDocument, pdfConfiguration: PdfConfiguration, documentState: DocumentState, highlighter: SearchResultHighlighter?) {
+    fun onDocumentLoaded(
+        document: PdfDocument,
+        pdfConfiguration: PdfConfiguration,
+        documentState: DocumentState,
+        highlighter: SearchResultHighlighter?,
+    ) {
         this.document = document
-        textSearch = TextSearch(
-            document,
-            pdfConfiguration
-        )
+        textSearch =
+            TextSearch(
+                document,
+                pdfConfiguration,
+            )
         highlighter?.let {
             documentState.documentConnection.addDrawableProvider(it)
         }
@@ -165,12 +175,10 @@ class CustomSearchUiComposeViewModel : ViewModel() {
     }
 
     companion object {
-        val Factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-            @Suppress("UNCHECKED_CAST")
-            override fun <T : ViewModel> create(
-                modelClass: Class<T>,
-                extras: CreationExtras
-            ) = CustomSearchUiComposeViewModel() as T
-        }
+        val Factory: ViewModelProvider.Factory =
+            object : ViewModelProvider.Factory {
+                @Suppress("UNCHECKED_CAST")
+                override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras) = CustomSearchUiComposeViewModel() as T
+            }
     }
 }

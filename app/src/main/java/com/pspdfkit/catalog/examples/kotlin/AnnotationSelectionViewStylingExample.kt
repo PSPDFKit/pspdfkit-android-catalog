@@ -28,8 +28,8 @@ import com.pspdfkit.ui.special_mode.controller.AnnotationSelectionController
 /**
  * This example shows how to customize the annotation selection layout.
  */
-class AnnotationSelectionViewStylingExample(context: Context) : SdkExample(context, R.string.annotationSelectionViewStylingExampleTitle, R.string.annotationSelectionViewStylingExampleDescription) {
-
+class AnnotationSelectionViewStylingExample(context: Context) :
+    SdkExample(context, R.string.annotationSelectionViewStylingExampleTitle, R.string.annotationSelectionViewStylingExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // Set the new theme that overrides annotation selection color,
         // scale handle drawables and background drawable.
@@ -37,10 +37,12 @@ class AnnotationSelectionViewStylingExample(context: Context) : SdkExample(conte
 
         // Extract the example document from the app's assets.
         ExtractAssetTask.extract("Annotation-Selection.pdf", title, context) { documentFile ->
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .configuration(configuration.build())
-                .activityClass(AnnotationSelectionViewStylingActivity::class)
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    .configuration(configuration.build())
+                    .activityClass(AnnotationSelectionViewStylingActivity::class)
+                    .build()
 
             context.startActivity(intent)
         }
@@ -50,12 +52,14 @@ class AnnotationSelectionViewStylingExample(context: Context) : SdkExample(conte
 /**
  * This activity shows how to customize the annotation selection view programmatically.
  */
-class AnnotationSelectionViewStylingActivity : PdfActivity(), OnAnnotationSelectedListener {
+class AnnotationSelectionViewStylingActivity :
+    PdfActivity(),
+    OnAnnotationSelectedListener {
+    private var customHandleDrawable: Drawable? = null
 
-    private var collaborate: Drawable? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        collaborate = AppCompatResources.getDrawable(this, R.drawable.ic_collaborate)
+        customHandleDrawable = AppCompatResources.getDrawable(this, R.drawable.ic_align)
     }
 
     override fun onDocumentSaved(document: PdfDocument) {
@@ -79,17 +83,27 @@ class AnnotationSelectionViewStylingActivity : PdfActivity(), OnAnnotationSelect
      * @return `true` when you want [AnnotationSelectionController] to proceed with the selection. Returning `false`
      * will prevent annotation from being selected.
      */
-    override fun onPrepareAnnotationSelection(controller: AnnotationSelectionController, annotation: Annotation, annotationCreated: Boolean): Boolean {
+    override fun onPrepareAnnotationSelection(
+        controller: AnnotationSelectionController,
+        annotation: Annotation,
+        annotationCreated: Boolean,
+    ): Boolean {
         // Extract current annotation selection view theme configuration.
         val extractedCurrentConfiguration = controller.annotationSelectionViewThemeConfiguration
         // Build a new annotation selection view theme configuration using the current configuration as a base configuration.
-        val annotationSelectionViewThemeConfiguration = build(extractedCurrentConfiguration) {
-            // Customize the bottom right scale handle drawable depending on the annotation type.
-            if (annotation.type == AnnotationType.STAMP) {
-                setRotationHandleDrawable(null)
-                setBottomRightScaleHandleDrawable(collaborate)
+        val annotationSelectionViewThemeConfiguration =
+            build(extractedCurrentConfiguration) {
+                // Demonstrate runtime customization of edit-handle drawable and color.
+                setEditHandleDrawable(customHandleDrawable)
+                setSelectionEditHandleColor(getColor(R.color.primaryLight))
+                // Disable handle touch feedback animation in this example for easier comparison/testing.
+                setHandleTouchFeedbackAnimationEnabled(false)
+
+                // Keep a custom rotation icon only for stamp annotations.
+                if (annotation.type == AnnotationType.STAMP) {
+                    setRotationHandleDrawable(customHandleDrawable)
+                }
             }
-        }
         // Apply the new configuration to the annotation selection view.
         controller.annotationSelectionViewThemeConfiguration = annotationSelectionViewThemeConfiguration
         return true
@@ -108,7 +122,8 @@ class AnnotationSelectionViewStylingActivity : PdfActivity(), OnAnnotationSelect
  * }
  * ```
  */
-private inline fun build(block: AnnotationSelectionViewThemeConfiguration.Builder.() -> Unit) = AnnotationSelectionViewThemeConfiguration.Builder().apply(block).build()
+private inline fun build(block: AnnotationSelectionViewThemeConfiguration.Builder.() -> Unit) =
+    AnnotationSelectionViewThemeConfiguration.Builder().apply(block).build()
 
 /**
  * Returns an [AnnotationSelectionViewThemeConfiguration] from an existing annotation view theme configuration
@@ -121,5 +136,5 @@ private inline fun build(block: AnnotationSelectionViewThemeConfiguration.Builde
  */
 private inline fun build(
     annotationSelectionViewThemeConfiguration: AnnotationSelectionViewThemeConfiguration,
-    block: AnnotationSelectionViewThemeConfiguration.Builder.() -> Unit
+    block: AnnotationSelectionViewThemeConfiguration.Builder.() -> Unit,
 ) = AnnotationSelectionViewThemeConfiguration.Builder(annotationSelectionViewThemeConfiguration).apply(block).build()

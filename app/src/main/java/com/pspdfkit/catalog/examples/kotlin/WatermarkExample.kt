@@ -36,10 +36,12 @@ import com.pspdfkit.ui.drawable.PdfDrawableProvider
  */
 class WatermarkExample(context: Context) : SdkExample(context, R.string.watermarkExampleTitle, R.string.watermarkExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
-        val intent = PdfActivityIntentBuilder.fromDataProvider(context, AssetDataProvider(WELCOME_DOC))
-            .configuration(configuration.build())
-            .activityClass(WatermarkExampleActivity::class.java)
-            .build()
+        val intent =
+            PdfActivityIntentBuilder
+                .fromDataProvider(context, AssetDataProvider(WELCOME_DOC))
+                .configuration(configuration.build())
+                .activityClass(WatermarkExampleActivity::class.java)
+                .build()
         context.startActivity(intent)
     }
 }
@@ -49,20 +51,22 @@ class WatermarkExample(context: Context) : SdkExample(context, R.string.watermar
  * the [PdfThumbnailGrid], and the [PdfThumbnailBar] using Drawable API.
  */
 class WatermarkExampleActivity : PdfActivity() {
-
     /**
      * Drawable provider that provides example watermarks.
      */
-    private val customTestDrawableProvider: PdfDrawableProvider = object : PdfDrawableProvider() {
-        override suspend fun getDrawablesForPage(context: Context, document: PdfDocument, @IntRange(from = 0) pageIndex: Int): List<PdfDrawable> {
-            return listOf(
+    private val customTestDrawableProvider: PdfDrawableProvider =
+        object : PdfDrawableProvider() {
+            override suspend fun getDrawablesForPage(
+                context: Context,
+                document: PdfDocument,
+                @IntRange(from = 0) pageIndex: Int,
+            ): List<PdfDrawable> = listOf(
                 // Text watermark, tilted by 45 degrees with a bottom-left corner at (350, 350) in PDF coordinates.
                 WatermarkDrawable("Watermark", PointF(350f, 350f)),
                 // Simple watermark consisting of 2 square shapes.
-                TwoSquaresDrawable(RectF(0f, 400f, 400f, 0f))
+                TwoSquaresDrawable(RectF(0f, 400f, 400f, 0f)),
             )
         }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,27 +88,26 @@ class WatermarkExampleActivity : PdfActivity() {
  * This is a simple Kotlin extension function on [android.graphics.Rect]
  * so we can have a fluent API for converting to [RectF].
  */
-private fun Rect.toRectF(): RectF {
-    return RectF(this)
-}
+private fun Rect.toRectF(): RectF = RectF(this)
 
 /**
  * An implementation of [PdfDrawable], which shows two semi-transparent squares in the bottom-left
  * corner of the page.
  */
 private class TwoSquaresDrawable(private val pageCoordinates: RectF) : PdfDrawable() {
+    private val redPaint =
+        Paint().apply {
+            color = Color.RED
+            style = Paint.Style.FILL
+            alpha = 50
+        }
 
-    private val redPaint = Paint().apply {
-        color = Color.RED
-        style = Paint.Style.FILL
-        alpha = 50
-    }
-
-    private val bluePaint = Paint().apply {
-        color = Color.BLUE
-        style = Paint.Style.FILL
-        alpha = 50
-    }
+    private val bluePaint =
+        Paint().apply {
+            color = Color.BLUE
+            style = Paint.Style.FILL
+            alpha = 50
+        }
 
     private val screenCoordinates = RectF()
 
@@ -119,14 +122,14 @@ private class TwoSquaresDrawable(private val pageCoordinates: RectF) : PdfDrawab
             bounds.top,
             bounds.right - bounds.width() / 2f,
             bounds.bottom - bounds.height() / 2f,
-            redPaint
+            redPaint,
         )
         canvas.drawRect(
             bounds.left + bounds.width() / 2f,
             bounds.top + bounds.height() / 2f,
             bounds.right,
             bounds.bottom,
-            bluePaint
+            bluePaint,
         )
     }
 
@@ -165,22 +168,20 @@ private class TwoSquaresDrawable(private val pageCoordinates: RectF) : PdfDrawab
     }
 
     @Deprecated("Deprecated in Java")
-    override fun getOpacity(): Int {
-        return PixelFormat.TRANSLUCENT
-    }
+    override fun getOpacity(): Int = PixelFormat.TRANSLUCENT
 }
 
 /**
  * An implementation of [PdfDrawable], which shows a semi-transparent text tilted by 45 degrees.
  */
 private class WatermarkDrawable(private val text: String, startingPoint: PointF) : PdfDrawable() {
-
-    private val redPaint = Paint().apply {
-        color = Color.RED
-        style = Paint.Style.FILL
-        alpha = 50
-        textSize = 100f
-    }
+    private val redPaint =
+        Paint().apply {
+            color = Color.RED
+            style = Paint.Style.FILL
+            alpha = 50
+            textSize = 100f
+        }
 
     private val pageCoordinates = RectF()
     private val screenCoordinates = RectF()
@@ -196,7 +197,7 @@ private class WatermarkDrawable(private val text: String, startingPoint: PointF)
             point.x,
             point.y + textBounds.height().toFloat(),
             point.x + textBounds.width().toFloat(),
-            point.y
+            point.y,
         )
     }
 
@@ -225,11 +226,7 @@ private class WatermarkDrawable(private val text: String, startingPoint: PointF)
         }
     }
 
-    private fun setTextSizeForWidth(
-        paint: Paint,
-        desiredWidth: Float,
-        text: String
-    ) {
+    private fun setTextSizeForWidth(paint: Paint, desiredWidth: Float, text: String) {
         // Pick a reasonably large value for the test.
         val testTextSize = 60f
 
@@ -269,7 +266,5 @@ private class WatermarkDrawable(private val text: String, startingPoint: PointF)
     }
 
     @Deprecated("Deprecated in Java")
-    override fun getOpacity(): Int {
-        return PixelFormat.TRANSLUCENT
-    }
+    override fun getOpacity(): Int = PixelFormat.TRANSLUCENT
 }

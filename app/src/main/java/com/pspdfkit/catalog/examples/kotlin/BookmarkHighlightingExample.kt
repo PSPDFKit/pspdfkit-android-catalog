@@ -33,8 +33,8 @@ import io.reactivex.rxjava3.disposables.Disposable
 /**
  * Example showing how to use the drawable API to put a drawn highlight on all pages that contain a bookmark.
  */
-class BookmarkHighlightingExample(private val context: Context) : SdkExample(context, R.string.bookmarkHighlightingExampleTitle, R.string.bookmarkHighlightingExampleDescription) {
-
+class BookmarkHighlightingExample(private val context: Context) :
+    SdkExample(context, R.string.bookmarkHighlightingExampleTitle, R.string.bookmarkHighlightingExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // This uses larger thumbnails making our bookmark indicator more easily visible.
         configuration
@@ -43,10 +43,12 @@ class BookmarkHighlightingExample(private val context: Context) : SdkExample(con
 
         // Start the activity once the example document has been extracted from the app's assets.
         ExtractAssetTask.extract(BOOKMARK_DOCUMENT, title, context) { documentFile ->
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .configuration(configuration.build())
-                .activityClass(BookmarkHighlightingActivity::class)
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    .configuration(configuration.build())
+                    .activityClass(BookmarkHighlightingActivity::class)
+                    .build()
 
             // Start the BookmarkHighlightingActivity for the extracted document.
             context.startActivity(intent)
@@ -59,22 +61,22 @@ class BookmarkHighlightingExample(private val context: Context) : SdkExample(con
 }
 
 class BookmarkHighlightingActivity : PdfActivity() {
-
     /** List of bookmarks that current exist in the document. */
     private val currentBookmarks = mutableListOf<Bookmark>()
 
     /** Drawable provider that will put a bookmark icon on bookmarked pages. */
-    private val drawableProvider = object : PdfDrawableProvider() {
-        override suspend fun getDrawablesForPage(context: Context, document: PdfDocument, pageIndex: Int): List<PdfDrawable> {
-            if (currentBookmarks.any { it.pageIndex == pageIndex }) {
-                // If there's bookmark for the given page index, add our drawable.
-                return listOf(BookmarkDrawable(this@BookmarkHighlightingActivity))
-            } else {
-                // Otherwise we draw nothing.
-                return emptyList()
+    private val drawableProvider =
+        object : PdfDrawableProvider() {
+            override suspend fun getDrawablesForPage(context: Context, document: PdfDocument, pageIndex: Int): List<PdfDrawable> {
+                if (currentBookmarks.any { it.pageIndex == pageIndex }) {
+                    // If there's bookmark for the given page index, add our drawable.
+                    return listOf(BookmarkDrawable(this@BookmarkHighlightingActivity))
+                } else {
+                    // Otherwise we draw nothing.
+                    return emptyList()
+                }
             }
         }
-    }
 
     /** Used to stop the bookmark loading process when closing the activity. */
     private var bookmarkLoadingDisposable: Disposable? = null
@@ -82,14 +84,15 @@ class BookmarkHighlightingActivity : PdfActivity() {
     override fun onDocumentLoaded(document: PdfDocument) {
         super.onDocumentLoaded(document)
         // When the document is initially loaded we prepare the first set of bookmarks to be displayed.
-        bookmarkLoadingDisposable = document
-            .bookmarkProvider
-            .bookmarksAsync
-            .firstOrError()
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { bookmarks ->
-                updateBookmarkDrawables(bookmarks)
-            }
+        bookmarkLoadingDisposable =
+            document
+                .bookmarkProvider
+                .bookmarksAsync
+                .firstOrError()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { bookmarks ->
+                    updateBookmarkDrawables(bookmarks)
+                }
 
         // Afterwards we subscribe to be updated whenever the list of bookmarks change.
         document.bookmarkProvider.addBookmarkListener {
@@ -124,7 +127,6 @@ class BookmarkHighlightingActivity : PdfActivity() {
  * An implementation of [PdfDrawable], which shows an indicator on bookmarked pages.
  */
 private class BookmarkDrawable(private val context: Context) : PdfDrawable() {
-
     // This has to be non null, otherwise this whole example will do nothing.
     private val bookmarkDrawable: Drawable = ContextCompat.getDrawable(context, R.drawable.ic_bookmark_highlight)!!
 
@@ -146,12 +148,13 @@ private class BookmarkDrawable(private val context: Context) : PdfDrawable() {
 
         // Then we place the bookmark in top right edge, with some margin to the right,
         // and moving it up a bit so it sits flush with the page edge.
-        bookmarkDrawable.bounds = Rect(
-            (canvas.width - effectiveBookmarkSize - effectiveMargin).toInt(),
-            -effectiveMargin.toInt(),
-            (canvas.width - effectiveMargin).toInt(),
-            effectiveBookmarkSize.toInt()
-        )
+        bookmarkDrawable.bounds =
+            Rect(
+                (canvas.width - effectiveBookmarkSize - effectiveMargin).toInt(),
+                -effectiveMargin.toInt(),
+                (canvas.width - effectiveMargin).toInt(),
+                effectiveBookmarkSize.toInt(),
+            )
 
         // Finally we simply draw it onto the page.
         bookmarkDrawable.draw(canvas)
@@ -162,9 +165,7 @@ private class BookmarkDrawable(private val context: Context) : PdfDrawable() {
     }
 
     @Deprecated("Deprecated in Java")
-    override fun getOpacity(): Int {
-        return PixelFormat.TRANSLUCENT
-    }
+    override fun getOpacity(): Int = PixelFormat.TRANSLUCENT
 
     override fun setColorFilter(colorFilter: ColorFilter?) {
         // Not required.

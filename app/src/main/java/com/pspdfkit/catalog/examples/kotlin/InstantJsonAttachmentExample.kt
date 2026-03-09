@@ -34,12 +34,12 @@ import kotlin.getValue
  * Example showing how to export and import instant JSON attachment binaries.
  *
  */
-class InstantJsonAttachmentExample(context: Context) : SdkExample(
-    context,
-    R.string.instantJsonAttachmentTitle,
-    R.string.instantJsonAttachmentDescription
-) {
-
+class InstantJsonAttachmentExample(context: Context) :
+    SdkExample(
+        context,
+        R.string.instantJsonAttachmentTitle,
+        R.string.instantJsonAttachmentDescription,
+    ) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // We turn off auto save to avoid saving redundant annotations.
         configuration.autosaveEnabled(false)
@@ -47,10 +47,12 @@ class InstantJsonAttachmentExample(context: Context) : SdkExample(
         // We use a custom utility class to extract the example document from the assets.
         ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
             // To start the `InstantJsonAttachmentExampleActivity` create a launch intent using the builder.
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .configuration(configuration.build())
-                .activityClass(InstantJsonAttachmentExampleActivity::class)
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    .configuration(configuration.build())
+                    .activityClass(InstantJsonAttachmentExampleActivity::class)
+                    .build()
             context.startActivity(intent)
         }
     }
@@ -61,7 +63,6 @@ class InstantJsonAttachmentExample(context: Context) : SdkExample(
  * instant JSON Attachment APIs.
  */
 class InstantJsonAttachmentExampleActivity : PdfActivity() {
-
     private val viewModel: AnnotationCreationViewModel by viewModels()
 
     override fun onDocumentLoaded(document: PdfDocument) {
@@ -70,11 +71,12 @@ class InstantJsonAttachmentExampleActivity : PdfActivity() {
         viewModel.createObjects {
             // Create a stamp annotation from an image bitmap.
             val annotationBitmap = getBitmapFromAsset()
-            val stampAnnotation = StampAnnotation(
-                0,
-                RectF(100f, (annotationBitmap.height / 2) + 100f, (annotationBitmap.width / 2) + 100f, 100f),
-                annotationBitmap
-            )
+            val stampAnnotation =
+                StampAnnotation(
+                    0,
+                    RectF(100f, (annotationBitmap.height / 2) + 100f, (annotationBitmap.width / 2) + 100f, 100f),
+                    annotationBitmap,
+                )
 
             // Add the stamp annotation to the document.
             runBlocking { document.annotationProvider.addAnnotationToPage(stampAnnotation) }
@@ -110,13 +112,11 @@ class InstantJsonAttachmentExampleActivity : PdfActivity() {
     }
 
     /** Decodes bitmap from application's assets. */
-    private fun getBitmapFromAsset(): Bitmap {
-        return try {
-            val inputStream = assets.open("images/android.png")
-            BitmapFactory.decodeStream(inputStream)
-        } catch (ioException: IOException) {
-            throw RuntimeException("Error while trying to load PNG from assets: images/android.png", ioException)
-        }
+    private fun getBitmapFromAsset(): Bitmap = try {
+        val inputStream = assets.open("images/android.png")
+        BitmapFactory.decodeStream(inputStream)
+    } catch (ioException: IOException) {
+        throw RuntimeException("Error while trying to load PNG from assets: images/android.png", ioException)
     }
 }
 
@@ -124,19 +124,11 @@ class InstantJsonAttachmentExampleActivity : PdfActivity() {
  * Data provider that handles serving data from [File].
  */
 open class FileDataProvider(val file: File) : InputStreamDataProvider() {
-    override fun getSize(): Long {
-        return file.length()
-    }
+    override fun getSize(): Long = file.length()
 
-    override fun getUid(): String {
-        return file.canonicalPath
-    }
+    override fun getUid(): String = file.canonicalPath
 
-    override fun openInputStream(): InputStream {
-        return file.inputStream()
-    }
+    override fun openInputStream(): InputStream = file.inputStream()
 
-    override fun getTitle(): String? {
-        return file.nameWithoutExtension
-    }
+    override fun getTitle(): String? = file.nameWithoutExtension
 }

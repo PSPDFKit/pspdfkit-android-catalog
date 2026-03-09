@@ -31,18 +31,21 @@ import java.io.FileNotFoundException
 import java.util.EnumSet
 
 /** Shows how to import and export annotations in XFDF format. */
-class XfdfExample(context: Context) : SdkExample(
-    context,
-    R.string.xfdfExampleTitle,
-    R.string.xfdfExampleDescription
-) {
+class XfdfExample(context: Context) :
+    SdkExample(
+        context,
+        R.string.xfdfExampleTitle,
+        R.string.xfdfExampleDescription,
+    ) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // Extract the document from the assets and launch example activity.
         extract(WELCOME_DOC, title, context) { documentFile ->
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .configuration(configuration.build())
-                .activityClass(XfdfExampleActivity::class.java)
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    .configuration(configuration.build())
+                    .activityClass(XfdfExampleActivity::class.java)
+                    .build()
             context.startActivity(intent)
         }
     }
@@ -50,7 +53,6 @@ class XfdfExample(context: Context) : SdkExample(
 
 /** This activity shows how to import and export annotations in XFDF format. */
 class XfdfExampleActivity : PdfActivity() {
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         super.onCreateOptionsMenu(menu)
         menu.add(0, EXPORT_TO_XFDF_ITEM_ID, 0, "Export to XFDF")
@@ -58,17 +60,19 @@ class XfdfExampleActivity : PdfActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            EXPORT_TO_XFDF_ITEM_ID -> {
-                pickFileForXfdfExport()
-                true
-            }
-            IMPORT_FROM_XFDF_ITEM_ID -> {
-                pickFileForXfdfImport()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        EXPORT_TO_XFDF_ITEM_ID -> {
+            pickFileForXfdfExport()
+            true
+        }
+
+        IMPORT_FROM_XFDF_ITEM_ID -> {
+            pickFileForXfdfImport()
+            true
+        }
+
+        else -> {
+            super.onOptionsItemSelected(item)
         }
     }
 
@@ -80,12 +84,13 @@ class XfdfExampleActivity : PdfActivity() {
     private fun pickFileForXfdfExport() {
         if (document == null) return
 
-        val intent = Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
-            type = "application/*"
-            addCategory(Intent.CATEGORY_OPENABLE)
-            // This sets the default name of the output file.
-            putExtra(Intent.EXTRA_TITLE, "annotations.xfdf")
-        }
+        val intent =
+            Intent(Intent.ACTION_CREATE_DOCUMENT).apply {
+                type = "application/*"
+                addCategory(Intent.CATEGORY_OPENABLE)
+                // This sets the default name of the output file.
+                putExtra(Intent.EXTRA_TITLE, "annotations.xfdf")
+            }
 
         startActivityForResult(intent, PICK_EXPORT_FILE_RESULT)
     }
@@ -98,10 +103,11 @@ class XfdfExampleActivity : PdfActivity() {
     private fun pickFileForXfdfImport() {
         if (document == null) return
 
-        val intent = Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
-            type = "application/*"
-            addCategory(Intent.CATEGORY_OPENABLE)
-        }
+        val intent =
+            Intent(Intent.ACTION_OPEN_DOCUMENT).apply {
+                type = "application/*"
+                addCategory(Intent.CATEGORY_OPENABLE)
+            }
 
         startActivityForResult(intent, PICK_IMPORT_FILE_RESULT)
     }
@@ -132,24 +138,27 @@ class XfdfExampleActivity : PdfActivity() {
                 try {
                     val doc = document ?: return@launch
 
-                    val allAnnotations = doc.annotationProvider.getAllAnnotationsOfType(
-                        EnumSet.allOf(AnnotationType::class.java)
-                    )
+                    val allAnnotations =
+                        doc.annotationProvider.getAllAnnotationsOfType(
+                            EnumSet.allOf(AnnotationType::class.java),
+                        )
                     withContext(Dispatchers.IO) {
                         XfdfFormatter.writeXfdf(doc, allAnnotations, emptyList(), outputStream)
                         outputStream.close()
                     }
-                    Toast.makeText(
-                        this@XfdfExampleActivity,
-                        "Annotations successfully exported",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    Toast
+                        .makeText(
+                            this@XfdfExampleActivity,
+                            "Annotations successfully exported",
+                            Toast.LENGTH_LONG,
+                        ).show()
                 } catch (e: Exception) {
-                    Toast.makeText(
-                        this@XfdfExampleActivity,
-                        "Annotations export failed",
-                        Toast.LENGTH_LONG
-                    ).show()
+                    Toast
+                        .makeText(
+                            this@XfdfExampleActivity,
+                            "Annotations export failed",
+                            Toast.LENGTH_LONG,
+                        ).show()
                 }
             }
         } catch (ignored: FileNotFoundException) {
@@ -165,26 +174,29 @@ class XfdfExampleActivity : PdfActivity() {
         CoroutineScope(Dispatchers.Main).launch {
             try {
                 val doc = document ?: return@launch
-                val annotations = withContext(Dispatchers.IO) {
-                    XfdfFormatter.parseXfdf(doc, ContentResolverDataProvider(uri))
-                }
+                val annotations =
+                    withContext(Dispatchers.IO) {
+                        XfdfFormatter.parseXfdf(doc, ContentResolverDataProvider(uri))
+                    }
                 // Annotations parsed from XFDF are not added to document automatically.
                 // We need to add them manually.
                 for (annotation in annotations) {
                     pdfFragment?.addAnnotationToPage(annotation, false)
                 }
 
-                Toast.makeText(
-                    this@XfdfExampleActivity,
-                    "Annotations successfully imported",
-                    Toast.LENGTH_LONG
-                ).show()
+                Toast
+                    .makeText(
+                        this@XfdfExampleActivity,
+                        "Annotations successfully imported",
+                        Toast.LENGTH_LONG,
+                    ).show()
             } catch (e: Exception) {
-                Toast.makeText(
-                    this@XfdfExampleActivity,
-                    "Annotations import failed",
-                    Toast.LENGTH_LONG
-                ).show()
+                Toast
+                    .makeText(
+                        this@XfdfExampleActivity,
+                        "Annotations import failed",
+                        Toast.LENGTH_LONG,
+                    ).show()
             }
         }
     }

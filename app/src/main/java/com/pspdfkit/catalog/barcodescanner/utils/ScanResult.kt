@@ -11,5 +11,6 @@ package com.pspdfkit.catalog.barcodescanner.utils
 
 sealed class ScanResult {
     internal data class Success(val value: String) : ScanResult()
+
     internal data class Error(val error: Throwable) : ScanResult()
 }

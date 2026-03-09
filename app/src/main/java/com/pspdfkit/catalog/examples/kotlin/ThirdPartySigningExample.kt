@@ -35,8 +35,8 @@ import java.security.KeyStore
 /**
  * An example showing the ability to sign a document using a third-party service.
  * */
-class ThirdPartySigningExample(context: Context) : SdkExample(context, R.string.thirdPartySigningExampleTitle, R.string.thirdPartySigningExampleDescription) {
-
+class ThirdPartySigningExample(context: Context) :
+    SdkExample(context, R.string.thirdPartySigningExampleTitle, R.string.thirdPartySigningExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         val assetName = "Form_example.pdf"
 
@@ -47,32 +47,44 @@ class ThirdPartySigningExample(context: Context) : SdkExample(context, R.string.
         outputFile.delete() // make sure output is deleted from previous runs.
 
         /** [SignerOptions] contains all the required configuration for [SigningManager]*/
-        val signerOptions = SignerOptions.Builder(signatureFormFields[0], Uri.fromFile(outputFile))
-            .setType(digitalSignatureType).build()
+        val signerOptions =
+            SignerOptions
+                .Builder(signatureFormFields[0], Uri.fromFile(outputFile))
+                .setType(digitalSignatureType)
+                .build()
         CoroutineScope(Dispatchers.Main).launch {
-            SigningManager.getDataToSign(context, signerOptions).onSuccess { unsignedData ->
-                // ---  Start  --- //
-                // This code can be replaced by a third party signing service that signs the data in PKCS@7 format.
-                val signingConfiguration = SigningConfiguration(
-                    privateKey = keyEntryWithCertificates.privateKey,
-                    certificates = keyEntryWithCertificates.getX509Certificates()
-                )
-                val signResponse = if (digitalSignatureType == DigitalSignatureType.BASIC) {
-                    SigningManager.signWithBasicSignature(context, signingConfiguration, unsignedData.first, unsignedData.second)
-                } else {
-                    SigningManager.signWithCAdESSignature(context, signingConfiguration, unsignedData.first, unsignedData.second)
-                }
-                // ---  End  --- //
+            SigningManager
+                .getDataToSign(context, signerOptions)
+                .onSuccess { unsignedData ->
+                    // ---  Start  --- //
+                    // This code can be replaced by a third party signing service that signs the data in PKCS@7 format.
+                    val signingConfiguration =
+                        SigningConfiguration(
+                            privateKey = keyEntryWithCertificates.privateKey,
+                            certificates = keyEntryWithCertificates.getX509Certificates(),
+                        )
+                    val signResponse =
+                        if (digitalSignatureType == DigitalSignatureType.BASIC) {
+                            SigningManager.signWithBasicSignature(context, signingConfiguration, unsignedData.first, unsignedData.second)
+                        } else {
+                            SigningManager.signWithCAdESSignature(context, signingConfiguration, unsignedData.first, unsignedData.second)
+                        }
+                    // ---  End  --- //
 
-                signResponse.onSuccess { signedData ->
-                    SigningManager.embedPKCS7Signature(context, signerOptions, signedData).onSuccessEmpty {
-                        val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(outputFile))
-                            .configuration(configuration.build())
-                            .build()
-                        context.startActivity(intent)
-                    }.onError { Log.e(TAG, "embedPKCS7Signature: ${it.localizedMessage}") }
-                }.onError { Log.e(TAG, "signWithBasicSignature: ${it.localizedMessage}") }
-            }.onError { Log.e(TAG, "getDataToSign: ${it.localizedMessage}") }
+                    signResponse
+                        .onSuccess { signedData ->
+                            SigningManager
+                                .embedPKCS7Signature(context, signerOptions, signedData)
+                                .onSuccessEmpty {
+                                    val intent =
+                                        PdfActivityIntentBuilder
+                                            .fromUri(context, Uri.fromFile(outputFile))
+                                            .configuration(configuration.build())
+                                            .build()
+                                    context.startActivity(intent)
+                                }.onError { Log.e(TAG, "embedPKCS7Signature: ${it.localizedMessage}") }
+                        }.onError { Log.e(TAG, "signWithBasicSignature: ${it.localizedMessage}") }
+                }.onError { Log.e(TAG, "getDataToSign: ${it.localizedMessage}") }
         }
     }
 

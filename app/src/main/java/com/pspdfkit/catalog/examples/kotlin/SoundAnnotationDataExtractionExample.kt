@@ -37,15 +37,16 @@ import java.io.IOException
 /**
  * An example on how to create a sound annotation programmatically and extract the audio data from it.
  */
-class SoundAnnotationDataExtractionExample(context: Context) : SdkExample(context, R.string.soundAnnotationDataExtractionTitle, R.string.soundAnnotationDataExtractionDescription) {
+class SoundAnnotationDataExtractionExample(context: Context) :
+    SdkExample(context, R.string.soundAnnotationDataExtractionTitle, R.string.soundAnnotationDataExtractionDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // Turn off saving, so we have the clean original document every time the example is launched.
         configuration.autosaveEnabled(false)
 
         configuration.enabledAnnotationTools(
             listOf(
-                AnnotationTool.SOUND
-            )
+                AnnotationTool.SOUND,
+            ),
         )
 
         // The annotation creator written into newly created annotations. If not set, or set to `null`
@@ -57,10 +58,12 @@ class SoundAnnotationDataExtractionExample(context: Context) : SdkExample(contex
 
         // Extract the document from the assets. The launched activity will add annotations to that document.
         ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .configuration(configuration.build())
-                .activityClass(SoundAnnotationDataExtractionActivity::class)
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    .configuration(configuration.build())
+                    .activityClass(SoundAnnotationDataExtractionActivity::class)
+                    .build()
             context.startActivity(intent)
         }
     }
@@ -71,7 +74,6 @@ class SoundAnnotationDataExtractionExample(context: Context) : SdkExample(contex
  * It also adds a custom menu item to the toolbar that extracts the sound data from the annotation and saves it to a .wav file.
  */
 class SoundAnnotationDataExtractionActivity : PdfActivity() {
-
     private val viewModel: AnnotationCreationViewModel by viewModels()
 
     @UiThread
@@ -83,17 +85,15 @@ class SoundAnnotationDataExtractionActivity : PdfActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         super.onCreateOptionsMenu(menu)
-        menu.add(0, menuId, 0, "Extract sound .wav")
+        menu.add(0, MENU_ID, 0, "Extract sound .wav")
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (item.itemId == menuId) {
-            menuItemClicked()
-            true
-        } else {
-            super.onOptionsItemSelected(item)
-        }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = if (item.itemId == MENU_ID) {
+        menuItemClicked()
+        true
+    } else {
+        super.onOptionsItemSelected(item)
     }
 
     private fun menuItemClicked() {
@@ -129,6 +129,6 @@ class SoundAnnotationDataExtractionActivity : PdfActivity() {
     }
 
     companion object {
-        private const val menuId = 1
+        private const val MENU_ID = 1
     }
 }

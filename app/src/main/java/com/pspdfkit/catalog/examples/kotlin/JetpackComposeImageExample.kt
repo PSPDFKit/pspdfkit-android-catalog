@@ -33,11 +33,12 @@ import com.pspdfkit.utils.getSupportParcelableExtra
 /**
  * Opens the example image using Jetpack Compose.
  */
-class JetpackComposeImageExample(context: Context) : SdkExample(
-    context,
-    R.string.jetpackImageExampleTitle,
-    R.string.jetpackImageExampleDescription
-) {
+class JetpackComposeImageExample(context: Context) :
+    SdkExample(
+        context,
+        R.string.jetpackImageExampleTitle,
+        R.string.jetpackImageExampleDescription,
+    ) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         ExtractAssetTask.extract(ANDROID_IMAGE_PNG, title, context) { documentFile ->
             val intent = Intent(context, JetpackComposeImageActivity::class.java)
@@ -51,7 +52,6 @@ class JetpackComposeImageExample(context: Context) : SdkExample(
  * This example shows you how to use the [PdfUiFragment] to display PDFs in your activities.
  */
 class JetpackComposeImageActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -60,7 +60,7 @@ class JetpackComposeImageActivity : AppCompatActivity() {
         setContent {
             CatalogTheme {
                 Surface(
-                    modifier = Modifier.background(color = MaterialTheme.colorScheme.onPrimaryContainer)
+                    modifier = Modifier.background(color = MaterialTheme.colorScheme.onPrimaryContainer),
                 ) {
                     val imageDocumentConfiguration =
                         ImageDocumentLoader.getDefaultImageDocumentActivityConfiguration(this)
@@ -68,7 +68,7 @@ class JetpackComposeImageActivity : AppCompatActivity() {
                     val documentState = rememberImageDocumentState(uri, imageDocumentConfiguration)
                     ImageDocumentView(
                         documentState = documentState,
-                        modifier = Modifier.fillMaxSize()
+                        modifier = Modifier.fillMaxSize(),
                     )
 
                     // Loading via uri is also supported, and the default pdfActivityConfiguration is being used

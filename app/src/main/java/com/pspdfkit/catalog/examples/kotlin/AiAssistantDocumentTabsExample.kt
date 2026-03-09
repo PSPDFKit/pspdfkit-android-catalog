@@ -33,29 +33,34 @@ import kotlinx.coroutines.launch
 /**
  * Shows how to implement AI Assistant chat supporting multiple tabbed documents analysis and interaction.
  */
-class AiAssistantDocumentTabsExample(context: Context) : SdkExample(context, R.string.aiAssistantTabbedDocumentExampleTitle, R.string.aiAssistantTabbedDocumentExampleDescription) {
-
+class AiAssistantDocumentTabsExample(context: Context) :
+    SdkExample(context, R.string.aiAssistantTabbedDocumentExampleTitle, R.string.aiAssistantTabbedDocumentExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         configuration.setAiAssistantEnabled(true)
 
-        Observable.fromIterable(AiAssistantDocumentTabsActivity.assetFiles)
+        Observable
+            .fromIterable(AiAssistantDocumentTabsActivity.assetFiles)
             .flatMapSingle { assetName -> extractAsync(assetName, assetName, context, false, null) }
             .map { file ->
                 DocumentDescriptor.fromUri(Uri.fromFile(file))
-            }
-            .toList()
+            }.toList()
             .observeOn(AndroidSchedulers.mainThread())
             .doOnSuccess { documentDescriptors ->
                 launchExampleActivity(context, documentDescriptors, configuration)
             }.subscribe()
     }
 
-    private fun launchExampleActivity(context: Context, documentDescriptors: List<DocumentDescriptor>, configuration: PdfActivityConfiguration.Builder) {
-        val intentBuilder = if (documentDescriptors.isEmpty()) {
-            PdfActivityIntentBuilder.emptyActivity(context)
-        } else {
-            PdfActivityIntentBuilder.fromDocumentDescriptor(context, *documentDescriptors.toTypedArray())
-        }
+    private fun launchExampleActivity(
+        context: Context,
+        documentDescriptors: List<DocumentDescriptor>,
+        configuration: PdfActivityConfiguration.Builder,
+    ) {
+        val intentBuilder =
+            if (documentDescriptors.isEmpty()) {
+                PdfActivityIntentBuilder.emptyActivity(context)
+            } else {
+                PdfActivityIntentBuilder.fromDocumentDescriptor(context, *documentDescriptors.toTypedArray())
+            }
         intentBuilder
             .configuration(configuration.build())
             .activityClass(AiAssistantDocumentTabsActivity::class.java)
@@ -64,8 +69,9 @@ class AiAssistantDocumentTabsExample(context: Context) : SdkExample(context, R.s
     }
 }
 
-class AiAssistantDocumentTabsActivity : PdfActivity(), AiAssistantProvider {
-
+class AiAssistantDocumentTabsActivity :
+    PdfActivity(),
+    AiAssistantProvider {
     var ipAddressValue = ""
     private val sessionId = AiAssistantDocumentTabsActivity::class.java.simpleName
 
@@ -94,29 +100,25 @@ class AiAssistantDocumentTabsActivity : PdfActivity(), AiAssistantProvider {
         jwtToken = { documentIds ->
             JwtGenerator.generateJwtToken(
                 this@AiAssistantDocumentTabsActivity,
-                claims = mapOf(
+                claims =
+                mapOf(
                     "document_ids" to documentIds,
                     "session_ids" to listOf(sessionId),
-                    "request_limit" to mapOf(
-                        "requests" to 160,
-                        "time_period_s" to 1000 * 60 * 10
-                    )
-                )
+                    "request_limit" to
+                        mapOf(
+                            "requests" to 160,
+                            "time_period_s" to 1000 * 60 * 10,
+                        ),
+                ),
             )
-        }
+        },
     )
 
-    override fun getAiAssistant(): AiAssistant {
-        return assistant ?: getAiAssistantInstance().also {
-            assistant = it
-        }
+    override fun getAiAssistant(): AiAssistant = assistant ?: getAiAssistantInstance().also {
+        assistant = it
     }
 
-    override fun navigateTo(
-        documentRect: List<RectF>,
-        pageIndex: Int,
-        documentIndex: Int
-    ) {
+    override fun navigateTo(documentRect: List<RectF>, pageIndex: Int, documentIndex: Int) {
         val descriptor = documentCoordinator.getDocuments()[documentIndex]
         documentCoordinator.setVisibleDocument(descriptor)
         pdfFragment?.highlight(this@AiAssistantDocumentTabsActivity, documentRect, pageIndex)

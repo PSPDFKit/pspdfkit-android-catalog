@@ -33,7 +33,8 @@ import com.pspdfkit.jetpack.compose.interactors.rememberDocumentState
 import com.pspdfkit.jetpack.compose.views.DocumentView
 import com.pspdfkit.utils.getSupportParcelableExtra
 
-class FormClickInterceptExample(context: Context) : SdkExample(context, R.string.formInterceptExampleTitle, R.string.formInterceptExampleDescription) {
+class FormClickInterceptExample(context: Context) :
+    SdkExample(context, R.string.formInterceptExampleTitle, R.string.formInterceptExampleDescription) {
     /** Configuration is handled inside [FormInterceptActivity] */
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
@@ -45,7 +46,6 @@ class FormClickInterceptExample(context: Context) : SdkExample(context, R.string
 }
 
 class FormInterceptActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -53,10 +53,11 @@ class FormInterceptActivity : AppCompatActivity() {
 
         setContent {
             Scaffold { paddingValues ->
-                val pdfActivityConfiguration = PdfActivityConfiguration
-                    .Builder(this)
-                    .setUserInterfaceViewMode(UserInterfaceViewMode.USER_INTERFACE_VIEW_MODE_HIDDEN)
-                    .build()
+                val pdfActivityConfiguration =
+                    PdfActivityConfiguration
+                        .Builder(this)
+                        .setUserInterfaceViewMode(UserInterfaceViewMode.USER_INTERFACE_VIEW_MODE_HIDDEN)
+                        .build()
 
                 val documentState = rememberDocumentState(uri, pdfActivityConfiguration)
 
@@ -65,8 +66,10 @@ class FormInterceptActivity : AppCompatActivity() {
                     DocumentView(
                         documentState = documentState,
                         modifier = Modifier.fillMaxSize(),
-                        documentManager = getDefaultDocumentManager(
-                            documentListener = DefaultListeners.documentListeners(
+                        documentManager =
+                        getDefaultDocumentManager(
+                            documentListener =
+                            DefaultListeners.documentListeners(
                                 onDocumentLoaded = {
                                     Log.e(TAG, "onDocumentLoaded ${it.title}")
                                     documentState.documentConnection.setPageIndex(16)
@@ -79,23 +82,26 @@ class FormInterceptActivity : AppCompatActivity() {
                                 },
                                 onDocumentZoomed = { document, pageIndex, scaleFactor ->
                                     Log.e(TAG, "onDocumentZoomed: ${document.title}  $pageIndex $scaleFactor")
-                                }
+                                },
                             ),
-                            annotationListener = DefaultListeners.annotationListeners(
+                            annotationListener =
+                            DefaultListeners.annotationListeners(
                                 onAnnotationSelected = { annotation, created ->
                                     Log.e(TAG, "onAnnotationSelected: ${annotation.type.name} $created")
                                 },
                                 onAnnotationDeselected = { annotation, created ->
                                     Log.e(TAG, "onAnnotationDeselected: ${annotation.type.name} $created")
-                                }
+                                },
                             ),
-                            formListener = DefaultListeners.formListeners(
+                            formListener =
+                            DefaultListeners.formListeners(
                                 onFormElementClickedListener = { formElement ->
-                                    Toast.makeText(
-                                        context,
-                                        "Clicked form of type ${formElement.type}",
-                                        Toast.LENGTH_SHORT
-                                    ).show()
+                                    Toast
+                                        .makeText(
+                                            context,
+                                            "Clicked form of type ${formElement.type}",
+                                            Toast.LENGTH_SHORT,
+                                        ).show()
                                     true
                                 },
                                 onFormElementViewUpdatedListener = { formElement ->
@@ -133,9 +139,9 @@ class FormInterceptActivity : AppCompatActivity() {
                                 onFormElementDeselectedListener = { formElement, _ ->
                                     println("Form click addOnFormElementDeselectedListener formElement ${formElement.type}")
                                     true
-                                }
-                            )
-                        )
+                                },
+                            ),
+                        ),
                     )
                 }
             }

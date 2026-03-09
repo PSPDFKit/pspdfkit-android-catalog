@@ -23,7 +23,6 @@ import java.util.Date
  * @param context The application context used to access assets.
  */
 class JwtGenerator(private val context: Context) {
-
     /**
      * Generates a JWT token with the RS256 algorithm using a private key from the assets folder.
      * @param claims Map of claims to include in the JWT.
@@ -33,13 +32,15 @@ class JwtGenerator(private val context: Context) {
      */
     fun generateJwtToken(
         claims: Map<String, Any>,
-        privateKeyPath: String = "keys/jwt.pem" // Default path in assets
+        // Default path in assets
+        privateKeyPath: String = "keys/jwt.pem",
     ): String {
         try {
             // Load the private key from the specified path in assets
             val privateKey = loadPrivateKeyFromAssets(privateKeyPath)
             // Build and sign the JWT token
-            return Jwts.builder()
+            return Jwts
+                .builder()
                 .setClaims(claims)
                 .setIssuedAt(Date())
                 .setExpiration(Date(System.currentTimeMillis() + 60 * 60 * 1000)) // 1 hour expiry
@@ -59,20 +60,22 @@ class JwtGenerator(private val context: Context) {
     private fun loadPrivateKeyFromAssets(path: String): PrivateKey {
         try {
             // Read the PEM file from assets
-            val privateKeyPEM = context.assets.open(path).use { inputStream ->
-                BufferedReader(InputStreamReader(inputStream)).use { reader ->
-                    reader.readText()
+            val privateKeyPEM =
+                context.assets.open(path).use { inputStream ->
+                    BufferedReader(InputStreamReader(inputStream)).use { reader ->
+                        reader.readText()
+                    }
                 }
-            }
             // Remove PEM headers and whitespace
-            val keyString = privateKeyPEM
-                .replace("-----BEGIN RSA PRIVATE KEY-----", "")
-                .replace("-----END RSA PRIVATE KEY-----", "")
-                .replace("-----BEGIN PRIVATE KEY-----", "")
-                .replace("-----END PRIVATE KEY-----", "")
-                .replace("\n", "")
-                .replace("\r", "")
-                .trim()
+            val keyString =
+                privateKeyPEM
+                    .replace("-----BEGIN RSA PRIVATE KEY-----", "")
+                    .replace("-----END RSA PRIVATE KEY-----", "")
+                    .replace("-----BEGIN PRIVATE KEY-----", "")
+                    .replace("-----END PRIVATE KEY-----", "")
+                    .replace("\n", "")
+                    .replace("\r", "")
+                    .trim()
 
             // Decode the base64 encoded key and generate the PrivateKey object
             val keyBytes = Base64.decode(keyString, Base64.DEFAULT)
@@ -92,10 +95,7 @@ class JwtGenerator(private val context: Context) {
          * @param privateKeyPath Path to the .pem file in the assets folder.
          * @return The generated JWT token.
          */
-        fun generateJwtToken(
-            context: Context,
-            claims: Map<String, Any>,
-            privateKeyPath: String = "keys/jwt.pem"
-        ) = JwtGenerator(context).generateJwtToken(claims, privateKeyPath)
+        fun generateJwtToken(context: Context, claims: Map<String, Any>, privateKeyPath: String = "keys/jwt.pem") =
+            JwtGenerator(context).generateJwtToken(claims, privateKeyPath)
     }
 }

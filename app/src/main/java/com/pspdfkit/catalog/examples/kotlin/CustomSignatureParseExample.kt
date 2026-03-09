@@ -35,12 +35,12 @@ import com.pspdfkit.ui.PdfActivityIntentBuilder
  * Shows how to build Signature object and pass between activities.
  * This use case demonstrated that Signature object can be properly written to and created from Parcel.
  */
-class CustomSignatureParseExample(context: Context) : SdkExample(
-    context,
-    R.string.customSignatureParseExampleTitle,
-    R.string.customSignatureParseExampleBody
-) {
-
+class CustomSignatureParseExample(context: Context) :
+    SdkExample(
+        context,
+        R.string.customSignatureParseExampleTitle,
+        R.string.customSignatureParseExampleBody,
+    ) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         configuration.layout(R.layout.custom_example_signature_parse_activity)
         configuration.navigationButtonsEnabled(false)
@@ -49,17 +49,18 @@ class CustomSignatureParseExample(context: Context) : SdkExample(
         configuration.setMeasurementToolsEnabled(false)
 
         ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .configuration(configuration.build())
-                .activityClass(CustomSignatureParseActivity::class)
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    .configuration(configuration.build())
+                    .activityClass(CustomSignatureParseActivity::class)
+                    .build()
             context.startActivity(intent)
         }
     }
 }
 
 class CustomSignatureParseActivity : PdfActivity() {
-
     private val addSignatureContract =
         registerForActivityResult(SignatureActivityContract()) { signature ->
             Log.d("CustomSignatureParseActivity", signature.toString())
@@ -76,23 +77,16 @@ class CustomSignatureParseActivity : PdfActivity() {
     }
 }
 
-class SignatureActivityContract :
-    ActivityResultContract<String, Signature?>() {
+class SignatureActivityContract : ActivityResultContract<String, Signature?>() {
+    override fun createIntent(context: Context, input: String): Intent = Intent(context, ResultSignatureActivity::class.java)
 
-    override fun createIntent(
-        context: Context,
-        input: String
-    ): Intent = Intent(context, ResultSignatureActivity::class.java)
-
-    override fun parseResult(
-        resultCode: Int,
-        intent: Intent?
-    ): Signature? = if (resultCode == RESULT_OK) {
+    override fun parseResult(resultCode: Int, intent: Intent?): Signature? = if (resultCode == RESULT_OK) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            val signature = intent?.extras?.getParcelable(
-                RESULT_EXTRA_SIGNATURE,
-                Signature::class.java
-            )
+            val signature =
+                intent?.extras?.getParcelable(
+                    RESULT_EXTRA_SIGNATURE,
+                    Signature::class.java,
+                )
             signature?.let {
                 println("Correctly parsed signature $signature")
             }
@@ -116,18 +110,21 @@ class ResultSignatureActivity : AppCompatActivity() {
         setContentView(R.layout.custom_example_parse_activity)
 
         findViewById<Button>(R.id.return_signature_button).setOnClickListener {
-            val signatureBitmap = ContextCompat.getDrawable(
-                this@ResultSignatureActivity,
-                R.drawable.mock_page
-            )?.toBitmap()!!
+            val signatureBitmap =
+                ContextCompat
+                    .getDrawable(
+                        this@ResultSignatureActivity,
+                        R.drawable.mock_page,
+                    )?.toBitmap()!!
 
             val (width, height) = signatureBitmap.width to signatureBitmap.height
-            val signature = createStampSignature(
-                bitmap = signatureBitmap,
-                stampRect = RectF(0f, 0f, width.toFloat(), height.toFloat()),
-                biometricSignatureData = null,
-                drawWidthRatio = 1f
-            )
+            val signature =
+                createStampSignature(
+                    bitmap = signatureBitmap,
+                    stampRect = RectF(0f, 0f, width.toFloat(), height.toFloat()),
+                    biometricSignatureData = null,
+                    drawWidthRatio = 1f,
+                )
 
             setResult(RESULT_OK, Intent().putExtra(RESULT_EXTRA_SIGNATURE, signature))
             finish()

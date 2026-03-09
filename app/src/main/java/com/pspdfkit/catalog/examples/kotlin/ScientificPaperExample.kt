@@ -19,8 +19,8 @@ import com.pspdfkit.ui.PdfActivity
 /**
  * Opens the [PdfActivity] configured for viewing a scientific paper.
  */
-class ScientificPaperExample(context: Context) : AssetExample(context, R.string.scientificPaperExampleTitle, R.string.scientificPaperExampleDescription) {
-
+class ScientificPaperExample(context: Context) :
+    AssetExample(context, R.string.scientificPaperExampleTitle, R.string.scientificPaperExampleDescription) {
     override val assetPath: String
         get() = "Scientific-paper.pdf"
 

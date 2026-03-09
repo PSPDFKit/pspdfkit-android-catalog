@@ -23,19 +23,22 @@ import com.pspdfkit.ui.PdfActivityIntentBuilder
  * Showcases how to toggle annotation overlay visibility using
  * [com.pspdfkit.ui.PdfFragment.setAnnotationOverlayEnabled].
  */
-class AnnotationOverlayVisibilityExample(context: Context) : SdkExample(
-    context,
-    R.string.annotationOverlayVisibilityExampleTitle,
-    R.string.annotationOverlayVisibilityExampleDescription
-) {
+class AnnotationOverlayVisibilityExample(context: Context) :
+    SdkExample(
+        context,
+        R.string.annotationOverlayVisibilityExampleTitle,
+        R.string.annotationOverlayVisibilityExampleDescription,
+    ) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         configuration.layout(R.layout.activity_annotation_overlay_visibility)
 
         ExtractAssetTask.extract(ANNOTATIONS_EXAMPLE, title, context) { documentFile ->
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .configuration(configuration.build())
-                .activityClass(AnnotationOverlayVisibilityActivity::class.java)
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    .configuration(configuration.build())
+                    .activityClass(AnnotationOverlayVisibilityActivity::class.java)
+                    .build()
             context.startActivity(intent)
         }
     }
@@ -45,7 +48,6 @@ class AnnotationOverlayVisibilityExample(context: Context) : SdkExample(
  * Activity that displays a PDF with a FAB to toggle annotation overlay visibility.
  */
 class AnnotationOverlayVisibilityActivity : PdfActivity() {
-
     private lateinit var toggleOverlayFab: FloatingActionButton
     private var overlayEnabled = true
 

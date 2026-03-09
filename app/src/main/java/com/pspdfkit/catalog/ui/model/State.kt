@@ -27,6 +27,7 @@ import java.util.Locale
 
 sealed class SearchState {
     object Hidden : SearchState()
+
     class Visible(searchQuery: String, previousQuery: String = "") : SearchState() {
         val searchQuery = searchQuery.lowercase(Locale.getDefault())
         val previousQuery = previousQuery.lowercase(Locale.getDefault())
@@ -51,39 +52,40 @@ data class State(
     val expandedPreferenceSectionTitles: Set<String> = emptySet(),
     val searchState: SearchState = SearchState.Hidden,
     val showedExampleLanguageHint: Boolean = false,
-    val preferences: Map<Preferences.Key<*>, Any> = mapOf(
-        Pair(PreferenceKeys.PageScrollDirection, PageScrollDirection.HORIZONTAL.name),
-        Pair(PreferenceKeys.PageLayoutMode, PageLayoutMode.AUTO.name),
-        Pair(PreferenceKeys.PageScrollContinuous, false),
-        Pair(PreferenceKeys.FitPageToWidth, true),
-        Pair(PreferenceKeys.FirstPageAsSingle, false),
-        Pair(PreferenceKeys.ShowGapBetweenPages, false),
-        Pair(PreferenceKeys.SystemUserInterfaceMode, UserInterfaceViewMode.USER_INTERFACE_VIEW_MODE_AUTOMATIC.name),
-        Pair(PreferenceKeys.HideUiWhenCreatingAnnotations, true),
-        Pair(PreferenceKeys.ShowSearchAction, true),
-        Pair(PreferenceKeys.InlineSearch, true),
-        Pair(PreferenceKeys.ThumbnailBarMode, ThumbnailBarMode.THUMBNAIL_BAR_MODE_FLOATING.name),
-        Pair(PreferenceKeys.ShowThumbnailGridAction, true),
-        Pair(PreferenceKeys.EnableDocumentOutline, true),
-        Pair(PreferenceKeys.ShowAnnotationListAction, true),
-        Pair(PreferenceKeys.ShowPageNumberOverlay, true),
-        Pair(PreferenceKeys.ShowPageLabels, true),
-        Pair(PreferenceKeys.InvertColors, false),
-        Pair(PreferenceKeys.Grayscale, false),
-        Pair(PreferenceKeys.StartPage, 0),
-        Pair(PreferenceKeys.RestoreLastViewedPage, false),
-        Pair(PreferenceKeys.EnableAnnotationEditing, true),
-        Pair(PreferenceKeys.EnableAnnotationRotation, true),
-        Pair(PreferenceKeys.AnnotationReplies, AnnotationReplyFeatures.ENABLED.name),
-        Pair(PreferenceKeys.EnableTextSelection, true),
-        Pair(PreferenceKeys.EnableFormEditing, true),
-        Pair(PreferenceKeys.ShowShareAction, true),
-        Pair(PreferenceKeys.ShowPrintAction, true),
-        Pair(PreferenceKeys.ThemeMode, ThemeMode.DEFAULT.name),
-        Pair(PreferenceKeys.EnableVolumeButtonsNavigation, false),
-        Pair(PreferenceKeys.MultiThreadedRendering, true),
-        Pair(PreferenceKeys.LeakCanaryEnabled, true)
-    )
+    val preferences: Map<Preferences.Key<*>, Any> =
+        mapOf(
+            Pair(PreferenceKeys.PageScrollDirection, PageScrollDirection.HORIZONTAL.name),
+            Pair(PreferenceKeys.PageLayoutMode, PageLayoutMode.AUTO.name),
+            Pair(PreferenceKeys.PageScrollContinuous, false),
+            Pair(PreferenceKeys.FitPageToWidth, true),
+            Pair(PreferenceKeys.FirstPageAsSingle, false),
+            Pair(PreferenceKeys.ShowGapBetweenPages, false),
+            Pair(PreferenceKeys.SystemUserInterfaceMode, UserInterfaceViewMode.USER_INTERFACE_VIEW_MODE_AUTOMATIC.name),
+            Pair(PreferenceKeys.HideUiWhenCreatingAnnotations, true),
+            Pair(PreferenceKeys.ShowSearchAction, true),
+            Pair(PreferenceKeys.InlineSearch, true),
+            Pair(PreferenceKeys.ThumbnailBarMode, ThumbnailBarMode.THUMBNAIL_BAR_MODE_FLOATING.name),
+            Pair(PreferenceKeys.ShowThumbnailGridAction, true),
+            Pair(PreferenceKeys.EnableDocumentOutline, true),
+            Pair(PreferenceKeys.ShowAnnotationListAction, true),
+            Pair(PreferenceKeys.ShowPageNumberOverlay, true),
+            Pair(PreferenceKeys.ShowPageLabels, true),
+            Pair(PreferenceKeys.InvertColors, false),
+            Pair(PreferenceKeys.Grayscale, false),
+            Pair(PreferenceKeys.StartPage, 0),
+            Pair(PreferenceKeys.RestoreLastViewedPage, false),
+            Pair(PreferenceKeys.EnableAnnotationEditing, true),
+            Pair(PreferenceKeys.EnableAnnotationRotation, true),
+            Pair(PreferenceKeys.AnnotationReplies, AnnotationReplyFeatures.ENABLED.name),
+            Pair(PreferenceKeys.EnableTextSelection, true),
+            Pair(PreferenceKeys.EnableFormEditing, true),
+            Pair(PreferenceKeys.ShowShareAction, true),
+            Pair(PreferenceKeys.ShowPrintAction, true),
+            Pair(PreferenceKeys.ThemeMode, ThemeMode.DEFAULT.name),
+            Pair(PreferenceKeys.EnableVolumeButtonsNavigation, false),
+            Pair(PreferenceKeys.MultiThreadedRendering, true),
+            Pair(PreferenceKeys.LeakCanaryEnabled, true),
+        ),
 )
 
 fun State.getPdfActivityConfigurationBuilder(context: Context): PdfActivityConfiguration.Builder {
@@ -91,24 +93,26 @@ fun State.getPdfActivityConfigurationBuilder(context: Context): PdfActivityConfi
     val fitPageToWidth = if (fitPageToWidth) PageFitMode.FIT_TO_WIDTH else PageFitMode.FIT_TO_SCREEN
     val searchType = if (inlineSearch) SearchType.INLINE else SearchType.MODULAR
 
-    val configuration = PdfActivityConfiguration.Builder(context)
-        .scrollDirection(PageScrollDirection.valueOf(scrollDirection))
-        .scrollMode(scrollMode)
-        .fitMode(fitPageToWidth)
-        .layoutMode(PageLayoutMode.valueOf(pageLayout))
-        .theme(R.style.PSPDFCatalog_Theme)
-        .themeDark(R.style.PSPDFCatalog_Theme_Dark)
-        .themeMode(ThemeMode.valueOf(themeMode))
-        .firstPageAlwaysSingle(displayFirstPageAsSingle)
-        .showGapBetweenPages(showGapsBetweenPages)
-        .restoreLastViewedPage(restoreLastViewedPage)
-        .setUserInterfaceViewMode(UserInterfaceViewMode.valueOf(userInterfaceViewMode))
-        .hideUserInterfaceWhenCreatingAnnotations(hideUiWhenCreatingAnnotations)
-        .setSearchType(searchType)
-        .setThumbnailBarMode(ThumbnailBarMode.valueOf(thumbnailBarMode))
-        .annotationReplyFeatures(AnnotationReplyFeatures.valueOf(annotationReplies))
-        .page(startPage)
-        .setMultithreadedRenderingEnabled(enableMultithreadingRendering)
+    val configuration =
+        PdfActivityConfiguration
+            .Builder(context)
+            .scrollDirection(PageScrollDirection.valueOf(scrollDirection))
+            .scrollMode(scrollMode)
+            .fitMode(fitPageToWidth)
+            .layoutMode(PageLayoutMode.valueOf(pageLayout))
+            .theme(R.style.PSPDFCatalog_Theme)
+            .themeDark(R.style.PSPDFCatalog_Theme_Dark)
+            .themeMode(ThemeMode.valueOf(themeMode))
+            .firstPageAlwaysSingle(displayFirstPageAsSingle)
+            .showGapBetweenPages(showGapsBetweenPages)
+            .restoreLastViewedPage(restoreLastViewedPage)
+            .setUserInterfaceViewMode(UserInterfaceViewMode.valueOf(userInterfaceViewMode))
+            .hideUserInterfaceWhenCreatingAnnotations(hideUiWhenCreatingAnnotations)
+            .setSearchType(searchType)
+            .setThumbnailBarMode(ThumbnailBarMode.valueOf(thumbnailBarMode))
+            .annotationReplyFeatures(AnnotationReplyFeatures.valueOf(annotationReplies))
+            .page(startPage)
+            .setMultithreadedRenderingEnabled(enableMultithreadingRendering)
 
     configuration.searchEnabled(showSearchAction)
     configuration.thumbnailGridEnabled(showThumbnailGrid)

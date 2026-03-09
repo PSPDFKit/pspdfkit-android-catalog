@@ -13,6 +13,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.ActivityResultLauncher
@@ -51,7 +52,6 @@ import kotlin.coroutines.suspendCoroutine
 @ExperimentalComposeUiApi
 @ExperimentalFoundationApi
 class MainActivity : AppCompatActivity() {
-
     // Properties needed to handle permission requesting using coroutines
     private lateinit var storagePermissionLauncher: ActivityResultLauncher<String>
     private lateinit var storagePermissionLauncherCallback: (Boolean) -> Unit
@@ -69,7 +69,8 @@ class MainActivity : AppCompatActivity() {
             throwable.printStackTrace()
 
             if (throwable is OutOfMemoryError) {
-                AlertDialog.Builder(this)
+                AlertDialog
+                    .Builder(this)
                     .setTitle("Out of memory")
                     .setMessage("Please free up some RAM on the device and try again.")
                     .setNeutralButton("OK") { dialog, _ -> dialog.dismiss() }
@@ -82,17 +83,19 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        storagePermissionLauncher = activityResultRegistry.register(
-            Manifest.permission.WRITE_EXTERNAL_STORAGE,
-            ActivityResultContracts.RequestPermission(),
-            ::onFilePermission
-        )
+        storagePermissionLauncher =
+            activityResultRegistry.register(
+                Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                ActivityResultContracts.RequestPermission(),
+                ::onFilePermission,
+            )
 
         setContent {
             CatalogTheme {
                 val screenWidthDp =
                     with(LocalDensity.current) {
-                        LocalWindowInfo.current.containerSize.width.toDp()
+                        LocalWindowInfo.current.containerSize.width
+                            .toDp()
                     }
 
                 val isTablet = screenWidthDp > Dimens.tabletWidthCutout
@@ -121,6 +124,21 @@ class MainActivity : AppCompatActivity() {
             val className = intent.getStringExtra(EXTRA_LAUNCH_EXAMPLE) ?: return
             launchExampleWithClassName(className)
         }
+
+        // Handle back button presses using OnBackPressedDispatcher
+        onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    val callSuper = viewModel.backPressed()
+                    if (callSuper) {
+                        isEnabled = false
+                        onBackPressedDispatcher.onBackPressed()
+                        isEnabled = true
+                    }
+                }
+            },
+        )
     }
 
     override fun onResume() {
@@ -152,14 +170,6 @@ class MainActivity : AppCompatActivity() {
         storagePermissionLauncher.unregister()
     }
 
-    @Suppress("DEPRECATION", "OVERRIDE_DEPRECATION")
-    override fun onBackPressed() {
-        val callSuper = viewModel.backPressed()
-        if (callSuper) {
-            super.onBackPressed()
-        }
-    }
-
     private suspend fun storagePermissionsAreGranted() = suspendCoroutine<Boolean> {
         // On Android 6.0+ we ask for SD card access permission.
         // Since documents can be annotated we ask for write permission as well.
@@ -186,9 +196,10 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Find the DownloadProgressFragment for showing download progress, or create a new one.
-        val downloadFragment = supportFragmentManager
-            .findFragmentByTag(DOWNLOAD_PROGRESS_FRAGMENT) as? DownloadProgressFragment
-            ?: tryCreateDownloadFragment(uri)
+        val downloadFragment =
+            supportFragmentManager
+                .findFragmentByTag(DOWNLOAD_PROGRESS_FRAGMENT) as? DownloadProgressFragment
+                ?: tryCreateDownloadFragment(uri)
 
         if (downloadFragment == null) {
             showDownloadErrorAndFinishActivity()
@@ -202,24 +213,24 @@ class MainActivity : AppCompatActivity() {
                     override fun onComplete(output: File) {
                         openDocumentAndFinishActivity(Uri.fromFile(output))
                     }
-                }
+                },
             )
     }
 
-    private fun tryCreateDownloadFragment(uri: Uri): DownloadProgressFragment? =
-        try {
-            val request = DownloadRequest.Builder(this).uri(uri).build()
-            val job = DownloadJob.startDownload(request)
-            DownloadProgressFragment().apply {
-                show(supportFragmentManager, DOWNLOAD_PROGRESS_FRAGMENT)
-                setJob(job)
-            }
-        } catch (ex: Exception) {
-            null
+    private fun tryCreateDownloadFragment(uri: Uri): DownloadProgressFragment? = try {
+        val request = DownloadRequest.Builder(this).uri(uri).build()
+        val job = DownloadJob.startDownload(request)
+        DownloadProgressFragment().apply {
+            show(supportFragmentManager, DOWNLOAD_PROGRESS_FRAGMENT)
+            setJob(job)
         }
+    } catch (ex: Exception) {
+        null
+    }
 
     private fun showDownloadErrorAndFinishActivity() {
-        AlertDialog.Builder(this)
+        AlertDialog
+            .Builder(this)
             .setTitle("Download error")
             .setMessage("Nutrient could not download the PDF file from the given URL.")
             .setNeutralButton("Exit catalog app") { dialog, _ -> dialog.dismiss() }
@@ -230,9 +241,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun openDocumentAndFinishActivity(uri: Uri) {
         val configuration = getPdfActivityConfigurationBuilder().build()
-        val intent = PdfActivityIntentBuilder.fromUri(this, uri)
-            .configuration(configuration)
-            .build()
+        val intent =
+            PdfActivityIntentBuilder
+                .fromUri(this, uri)
+                .configuration(configuration)
+                .build()
         startActivity(intent)
         finish()
     }
@@ -260,13 +273,13 @@ class MainActivity : AppCompatActivity() {
                 throw IllegalArgumentException(
                     "Example class " +
                         exampleClassName +
-                        " must be assignable to SdkExample"
+                        " must be assignable to SdkExample",
                 )
             }
         } catch (ex: Throwable) {
             throw IllegalArgumentException(
                 "Can't launch example with class name $exampleClassName: ${ex.message}",
-                ex
+                ex,
             )
         }
     }
@@ -274,11 +287,9 @@ class MainActivity : AppCompatActivity() {
     private fun checkStoragePermission(): Boolean =
         ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED
 
-    private fun Intent.actionIsViewOrEdit(): Boolean =
-        action == Intent.ACTION_VIEW || action == Intent.ACTION_EDIT
+    private fun Intent.actionIsViewOrEdit(): Boolean = action == Intent.ACTION_VIEW || action == Intent.ACTION_EDIT
 
-    private fun getPdfActivityConfigurationBuilder() =
-        viewModel.state.value.getPdfActivityConfigurationBuilder(this)
+    private fun getPdfActivityConfigurationBuilder() = viewModel.state.value.getPdfActivityConfigurationBuilder(this)
 
     companion object {
         private const val URI_SCHEME_FILE = "file"

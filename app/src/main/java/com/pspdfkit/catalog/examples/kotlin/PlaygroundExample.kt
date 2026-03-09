@@ -24,7 +24,6 @@ import com.pspdfkit.ui.PdfActivity
  * Playground example that opens an activity extending the [PdfActivity] class.
  */
 class PlaygroundExample(context: Context) : SdkExample(context, R.string.playgroundExampleTitle, R.string.playgroundExampleDescription) {
-
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // Launch the picker activity to let users choose between default or custom document.
         val intent = Intent(context, PlaygroundExamplePickerActivity::class.java)
@@ -46,20 +45,17 @@ class PlaygroundExamplePickerActivity : DocumentPickerActivity() {
  * loaded, see [onDocumentLoaded].
  */
 class PlaygroundActivity : PdfActivity() {
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         super.onCreateOptionsMenu(menu)
         menu.add(0, CUSTOM_MENU_ITEM_ID, 0, "Custom Menu Item")
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return if (item.itemId == CUSTOM_MENU_ITEM_ID) {
-            menuItemClicked()
-            true
-        } else {
-            super.onOptionsItemSelected(item)
-        }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = if (item.itemId == CUSTOM_MENU_ITEM_ID) {
+        menuItemClicked()
+        true
+    } else {
+        super.onOptionsItemSelected(item)
     }
 
     override fun onDocumentLoaded(document: PdfDocument) {

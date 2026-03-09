@@ -30,8 +30,8 @@ import java.security.cert.X509Certificate
  * An example that shows how to digitally sign a PDF document using [SigningManager].
  * This is a Simple implementation where user provides Private key in [SignerOptions].
  */
-class LongTermValidationExample(context: Context) : SdkExample(context, R.string.digitalSignatureLtvExampleTitle, R.string.digitalSignatureLtvExampleDescription) {
-
+class LongTermValidationExample(context: Context) :
+    SdkExample(context, R.string.digitalSignatureLtvExampleTitle, R.string.digitalSignatureLtvExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         val assetName = "Form_example.pdf"
 
@@ -41,28 +41,32 @@ class LongTermValidationExample(context: Context) : SdkExample(context, R.string
         val signatureFormFields = unsignedDocument.documentSignatureInfo.signatureFormFields
         val outputFile = File(context.filesDir, "signedDocument.pdf")
         outputFile.delete() // make sure output is deleted from previous runs.
-        val signerOptions = SignerOptions.Builder(signatureFormFields[0], Uri.fromFile(outputFile))
-            .setPrivateKey(privateKey)
-            .setCertificates(certificates)
-            // LTV is enabled by default, but you can disable it here if you don't need or experience issues with it.
-            .setEnableLtv(true)
-            .setType(digitalSignatureType)
-            .build()
+        val signerOptions =
+            SignerOptions
+                .Builder(signatureFormFields[0], Uri.fromFile(outputFile))
+                .setPrivateKey(privateKey)
+                .setCertificates(certificates)
+                // LTV is enabled by default, but you can disable it here if you don't need or experience issues with it.
+                .setEnableLtv(true)
+                .setType(digitalSignatureType)
+                .build()
 
-        /** [SignerOptions] contains all the required configuration for [SigningManager]*/
+        // [SignerOptions] contains all the required configuration for [SigningManager]
         SigningManager.signDocument(
             context = context,
             signerOptions = signerOptions,
             onFailure = { e ->
                 Toast.makeText(context, "Error launching example. See logcat for details.", Toast.LENGTH_SHORT).show()
                 PdfLog.e("AdvancedLtvExample", e, "Error while launching example.")
-            }
+            },
         ) {
             val signedDocument = Uri.fromFile(outputFile)
             // Load and show the signed document.
-            val intent = PdfActivityIntentBuilder.fromUri(context, signedDocument)
-                .configuration(configuration.build())
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, signedDocument)
+                    .configuration(configuration.build())
+                    .build()
             context.startActivity(intent)
         }
     }
@@ -72,18 +76,15 @@ class LongTermValidationExample(context: Context) : SdkExample(context, R.string
      * that will be used by our [SigningManager].
      * In this example, we are using 3 certificates (signer, issuer, and root).
      */
-    private fun getCertificates(context: Context): List<X509Certificate> {
-        return listOf(
-            loadCertificateFromStream(context.assets.open("digital-signatures/ltv/Signer.cert")),
-            loadCertificateFromStream(context.assets.open("digital-signatures/ltv/Issuer.cert")),
-            loadCertificateFromStream(context.assets.open("digital-signatures/ltv/Root.cert"))
-        )
-    }
+    private fun getCertificates(context: Context): List<X509Certificate> = listOf(
+        loadCertificateFromStream(context.assets.open("digital-signatures/ltv/Signer.cert")),
+        loadCertificateFromStream(context.assets.open("digital-signatures/ltv/Issuer.cert")),
+        loadCertificateFromStream(context.assets.open("digital-signatures/ltv/Root.cert")),
+    )
 
     /**
      * Loads the [PrivateKey] that will be used by our [SigningManager].
      */
-    private fun getPrivateKey(context: Context): PrivateKey {
-        return getPrivateKeyFromFile(context.assets.open("digital-signatures/ltv/Signer.key"))
-    }
+    private fun getPrivateKey(context: Context): PrivateKey =
+        getPrivateKeyFromFile(context.assets.open("digital-signatures/ltv/Signer.key"))
 }

@@ -28,14 +28,15 @@ import io.reactivex.rxjava3.core.Single
  */
 class OutlineProviderExample(context: Context) :
     SdkExample(context, R.string.outlineProviderExample, R.string.outlineProviderExampleDescription) {
-
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // We use a custom utility class to extract the example document from the assets.
         ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .configuration(configuration.build())
-                .activityClass(OutlineProviderActivity::class)
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    .configuration(configuration.build())
+                    .activityClass(OutlineProviderActivity::class)
+                    .build()
 
             // Start the OutlineProviderActivity for the extracted document.
             context.startActivity(intent)
@@ -47,7 +48,6 @@ class OutlineProviderExample(context: Context) :
  * This subclass of [PdfActivity] sets a custom outline that replaces default document outline.
  */
 class OutlineProviderActivity : PdfActivity() {
-
     override fun onDocumentLoaded(document: PdfDocument) {
         super.onDocumentLoaded(document)
 
@@ -63,39 +63,42 @@ class OutlineProviderActivity : PdfActivity() {
 
         // Outline elements can have children - outline is a tree structure.
         outlineElements.add(
-            OutlineElement.Builder("With Children")
+            OutlineElement
+                .Builder("With Children")
                 .setChildren(
                     listOf(
                         OutlineElement.Builder("Children 1").build(),
                         OutlineElement.Builder("Children 2").build(),
-                        OutlineElement.Builder("Children 3").build()
-                    )
+                        OutlineElement.Builder("Children 3").build(),
+                    ),
                 )
                 // This property controls whether this element will be expanded or not when shown.
                 .setExpanded(true)
-                .build()
+                .build(),
         )
 
         // Outline elements can have arbitrary actions.
         outlineElements.add(
-            OutlineElement.Builder("Uri Action")
+            OutlineElement
+                .Builder("Uri Action")
                 // Outline text color and style are configurable.
                 .setColor(Color.BLUE)
                 .setStyle(Typeface.ITALIC)
                 // Set action that opens Nutrient's website after clicking on the outline element.
                 .setAction(UriAction("https://nutrient.io"))
-                .build()
+                .build(),
         )
 
         // You can directly create outline elements using their constructor too.
         outlineElements.add(OutlineElement.Builder(document, "Go to page 3", 3).build())
         // This is equivalent to the above outline element.
         outlineElements.add(
-            OutlineElement.Builder("Go to page 3")
+            OutlineElement
+                .Builder("Go to page 3")
                 .setAction(GoToAction(3))
                 // The page label is optional. If set, it will be displayed in addition to title.
                 .setPageLabel(document.getPageLabel(3, false))
-                .build()
+                .build(),
         )
 
         return outlineElements

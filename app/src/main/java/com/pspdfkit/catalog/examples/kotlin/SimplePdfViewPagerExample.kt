@@ -37,7 +37,6 @@ import com.pspdfkit.ui.PdfUiFragmentBuilder
  */
 class SimplePdfViewPagerExample(context: Context) :
     SdkExample(context, R.string.simplePdfViewPagerExampleTitle, R.string.simplePdfViewPagerExampleDescription) {
-
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         context.startActivity(Intent(context, SimplePdfViewPagerActivity::class.java))
     }
@@ -47,7 +46,6 @@ class SimplePdfViewPagerExample(context: Context) :
  * Activity that hosts a ViewPager2 with 4 PdfUiFragments and a TabLayout for navigation.
  */
 class SimplePdfViewPagerActivity : AppCompatActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_simple_pdf_view_pager)
@@ -68,21 +66,23 @@ class SimplePdfViewPagerActivity : AppCompatActivity() {
             WindowInsetsCompat.CONSUMED
         }
 
-        viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                // Update the globally tracked selected page
-                selectedPage = position
-            }
-
-            override fun onPageScrollStateChanged(state: Int) {
-                super.onPageScrollStateChanged(state)
-                // Refresh the current fragment when scrolling stops
-                if (state == ViewPager2.SCROLL_STATE_IDLE) {
-                    refresh(selectedPage)
+        viewPager.registerOnPageChangeCallback(
+            object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    // Update the globally tracked selected page
+                    selectedPage = position
                 }
-            }
-        })
+
+                override fun onPageScrollStateChanged(state: Int) {
+                    super.onPageScrollStateChanged(state)
+                    // Refresh the current fragment when scrolling stops
+                    if (state == ViewPager2.SCROLL_STATE_IDLE) {
+                        refresh(selectedPage)
+                    }
+                }
+            },
+        )
 
         // Setup ViewPager2
         val adapter = SimplePdfPagerAdapter(this)
@@ -97,17 +97,15 @@ class SimplePdfViewPagerActivity : AppCompatActivity() {
 /**
  * Adapter that provides PdfUiFragment instances for each page.
  */
-class SimplePdfPagerAdapter(
-    private val fragmentActivity: FragmentActivity
-) : FragmentStateAdapter(fragmentActivity) {
-
+class SimplePdfPagerAdapter(private val fragmentActivity: FragmentActivity) : FragmentStateAdapter(fragmentActivity) {
     // List of PDF files to display
-    private val pdfFiles = listOf(
-        WELCOME_DOC,
-        "Scientific-paper.pdf",
-        "Teacher.pdf",
-        "The-Cosmic-Context-for-Life.pdf"
-    )
+    private val pdfFiles =
+        listOf(
+            WELCOME_DOC,
+            "Scientific-paper.pdf",
+            "Teacher.pdf",
+            "The-Cosmic-Context-for-Life.pdf",
+        )
 
     override fun getItemCount(): Int = pdfFiles.size
 
@@ -115,15 +113,18 @@ class SimplePdfPagerAdapter(
         // Get the PDF URI from assets
         val pdfUri: Uri = "file:///android_asset/${pdfFiles[position]}".toUri()
 
-        val activityConfiguration = PdfActivityConfiguration.Builder(fragmentActivity.applicationContext)
-            // Content editing is disabled because PDFs loaded from assets (file:///android_asset/)
-            // are read-only. To enable content editing, PDFs must be extracted from assets to
-            // writable storage using ExtractAssetTask before loading them.
-            .contentEditingEnabled(false)
-            .build()
+        val activityConfiguration =
+            PdfActivityConfiguration
+                .Builder(fragmentActivity.applicationContext)
+                // Content editing is disabled because PDFs loaded from assets (file:///android_asset/)
+                // are read-only. To enable content editing, PDFs must be extracted from assets to
+                // writable storage using ExtractAssetTask before loading them.
+                .contentEditingEnabled(false)
+                .build()
 
         // Build and return PdfUiFragment
-        return PdfUiFragmentBuilder.fromUri(fragmentActivity, pdfUri)
+        return PdfUiFragmentBuilder
+            .fromUri(fragmentActivity, pdfUri)
             .configuration(activityConfiguration)
             .build()
     }

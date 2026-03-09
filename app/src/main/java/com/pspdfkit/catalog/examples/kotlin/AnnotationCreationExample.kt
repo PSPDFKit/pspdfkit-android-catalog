@@ -50,7 +50,8 @@ import java.io.IOException
 /**
  * This activity shows how to create various annotations programmatically.
  */
-class AnnotationCreationExample(context: Context) : SdkExample(context, R.string.annotationCreationExampleTitle, R.string.annotationCreationExampleDescription) {
+class AnnotationCreationExample(context: Context) :
+    SdkExample(context, R.string.annotationCreationExampleTitle, R.string.annotationCreationExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // Turn off saving, so we have the clean original document every time the example is launched.
         configuration.autosaveEnabled(false)
@@ -64,8 +65,8 @@ class AnnotationCreationExample(context: Context) : SdkExample(context, R.string
                 AnnotationType.FREETEXT,
                 AnnotationType.STAMP,
                 AnnotationType.SQUARE,
-                AnnotationType.SOUND
-            )
+                AnnotationType.SOUND,
+            ),
         )
 
         // You can also specify which annotations tools are enabled. Note that annotation tool will
@@ -80,8 +81,8 @@ class AnnotationCreationExample(context: Context) : SdkExample(context, R.string
                 AnnotationTool.HIGHLIGHT,
                 AnnotationTool.FREETEXT,
                 AnnotationTool.SQUARE,
-                AnnotationTool.SOUND
-            )
+                AnnotationTool.SOUND,
+            ),
         )
 
         // The annotation creator written into newly created annotations. If not set, or set to `null`
@@ -93,10 +94,12 @@ class AnnotationCreationExample(context: Context) : SdkExample(context, R.string
 
         // Extract the document from the assets. The launched activity will add annotations to that document.
         ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .configuration(configuration.build())
-                .activityClass(AnnotationCreationActivity::class)
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    .configuration(configuration.build())
+                    .activityClass(AnnotationCreationActivity::class)
+                    .build()
             context.startActivity(intent)
         }
     }
@@ -106,7 +109,6 @@ class AnnotationCreationExample(context: Context) : SdkExample(context, R.string
  * This activity will create multiple annotations on the loaded document to showcase the annotation creation API.
  */
 class AnnotationCreationActivity : PdfActivity() {
-
     private val viewModel: AnnotationCreationViewModel by viewModels()
 
     @UiThread
@@ -149,11 +151,7 @@ class AnnotationCreationActivity : PdfActivity() {
         }
     }
 
-    private fun createHighlightAnnotation(
-        @IntRange(from = 0) pageIndex: Int,
-        highlightedText: String,
-        @ColorInt color: Int
-    ) {
+    private fun createHighlightAnnotation(@IntRange(from = 0) pageIndex: Int, highlightedText: String, @ColorInt color: Int) {
         val document = document ?: return
 
         // Find the provided text on the current page.
@@ -163,9 +161,10 @@ class AnnotationCreationActivity : PdfActivity() {
             // to highlight and pass them to the annotation constructor.
             val textRects = document.getPageTextRects(pageIndex, textPosition, highlightedText.length, true)
 
-            val highlightAnnotation = HighlightAnnotation(pageIndex, textRects).apply {
-                this.color = color
-            }
+            val highlightAnnotation =
+                HighlightAnnotation(pageIndex, textRects).apply {
+                    this.color = color
+                }
 
             addAnnotationToDocument(highlightAnnotation)
         } else {
@@ -181,9 +180,10 @@ class AnnotationCreationActivity : PdfActivity() {
         val color = Color.GREEN
 
         // Create the annotation, and set its color.
-        val noteAnnotation = NoteAnnotation(pageIndex, pageRect, contents, icon).apply {
-            this.color = color
-        }
+        val noteAnnotation =
+            NoteAnnotation(pageIndex, pageRect, contents, icon).apply {
+                this.color = color
+            }
 
         addAnnotationToDocument(noteAnnotation)
     }
@@ -192,10 +192,11 @@ class AnnotationCreationActivity : PdfActivity() {
         val contents = "Add text to pages using FreeTextAnnotations"
         val pageRect = RectF(100f, 980f, 320f, 930f)
 
-        val freeTextAnnotation = FreeTextAnnotation(pageIndex, pageRect, contents).apply {
-            color = Color.BLUE
-            textSize = 20f
-        }
+        val freeTextAnnotation =
+            FreeTextAnnotation(pageIndex, pageRect, contents).apply {
+                color = Color.BLUE
+                textSize = 20f
+            }
 
         addAnnotationToDocument(freeTextAnnotation)
     }
@@ -204,46 +205,48 @@ class AnnotationCreationActivity : PdfActivity() {
         val contents = "Call out things using call outs"
         val pageRect = RectF(250f, 100f, 620f, 200f)
 
-        val freeTextAnnotation = FreeTextAnnotation(pageIndex, pageRect, contents).apply {
-            color = Color.BLUE
-            textSize = 20f
-            textInsets = EdgeInsets(0f, 150f, 0f, 0f)
+        val freeTextAnnotation =
+            FreeTextAnnotation(pageIndex, pageRect, contents).apply {
+                color = Color.BLUE
+                textSize = 20f
+                textInsets = EdgeInsets(0f, 150f, 0f, 0f)
 
-            // Change free-text annotation to callout by setting its intent.
-            intent = FreeTextAnnotation.FreeTextAnnotationIntent.FREE_TEXT_CALLOUT
+                // Change free-text annotation to callout by setting its intent.
+                intent = FreeTextAnnotation.FreeTextAnnotationIntent.FREE_TEXT_CALLOUT
 
-            // We need to specify 2 or 3 callout points.
-            callOutPoints = listOf(PointF(255f, 195f), PointF(325f, 150f), PointF(400f, 150f))
+                // We need to specify 2 or 3 callout points.
+                callOutPoints = listOf(PointF(255f, 195f), PointF(325f, 150f), PointF(400f, 150f))
 
-            // Callouts can also have borders.
-            borderWidth = 1.5f
-            borderStyle = BorderStyle.SOLID
-            borderColor = Color.BLACK
+                // Callouts can also have borders.
+                borderWidth = 1.5f
+                borderStyle = BorderStyle.SOLID
+                borderColor = Color.BLACK
 
-            // Callout line end can be configured.
-            lineEnd = LineEndType.CLOSED_ARROW
-        }
+                // Callout line end can be configured.
+                lineEnd = LineEndType.CLOSED_ARROW
+            }
 
         addAnnotationToDocument(freeTextAnnotation)
     }
 
     private fun createInkAnnotation(@IntRange(from = 0) pageIndex: Int) {
-        val inkAnnotation = InkAnnotation(pageIndex).apply {
-            color = Color.rgb(255, 165, 0)
-            lineWidth = 10f
+        val inkAnnotation =
+            InkAnnotation(pageIndex).apply {
+                color = Color.rgb(255, 165, 0)
+                lineWidth = 10f
 
-            // Create a line from a list of points.
-            val line: MutableList<PointF> = ArrayList()
-            var x = 120
-            while (x < 720) {
-                val y = if (x % 120 == 0) 400 else 350
-                line.add(PointF(x.toFloat(), y.toFloat()))
-                x += 60
+                // Create a line from a list of points.
+                val line: MutableList<PointF> = ArrayList()
+                var x = 120
+                while (x < 720) {
+                    val y = if (x % 120 == 0) 400 else 350
+                    line.add(PointF(x.toFloat(), y.toFloat()))
+                    x += 60
+                }
+
+                // Ink annotations can hold multiple lines. This example only uses a single line.
+                lines = listOf(line)
             }
-
-            // Ink annotations can hold multiple lines. This example only uses a single line.
-            lines = listOf(line)
-        }
 
         addAnnotationToDocument(inkAnnotation)
     }
@@ -251,11 +254,12 @@ class AnnotationCreationActivity : PdfActivity() {
     private fun createCloudySquareAnnotation(pageIndex: Int) {
         val pageRect = RectF(100f, 900f, 320f, 850f)
 
-        val squareAnnotation = SquareAnnotation(pageIndex, pageRect).apply {
-            color = Color.RED
-            borderEffect = BorderEffect.CLOUDY
-            borderEffectIntensity = 3f
-        }
+        val squareAnnotation =
+            SquareAnnotation(pageIndex, pageRect).apply {
+                color = Color.RED
+                borderEffect = BorderEffect.CLOUDY
+                borderEffectIntensity = 3f
+            }
 
         addAnnotationToDocument(squareAnnotation)
     }
@@ -267,21 +271,23 @@ class AnnotationCreationActivity : PdfActivity() {
         val pageSize = document.getPageSize(pageIndex)
         val halfWidth = pageSize.width / 2
         val halfHeight = pageSize.height / 2
-        val rect = RectF(
-            halfWidth - 100,
-            halfHeight + 100,
-            halfWidth + 100,
-            halfHeight - 100
-        )
+        val rect =
+            RectF(
+                halfWidth - 100,
+                halfHeight + 100,
+                halfWidth + 100,
+                halfHeight - 100,
+            )
 
         // Nutrient ships with multiple pre-built stamp types.
-        val stamp = StampAnnotation(pageIndex, rect, StampType.ACCEPTED).apply {
-            // Stamp border color.
-            color = Color.rgb(255, 0, 0)
+        val stamp =
+            StampAnnotation(pageIndex, rect, StampType.ACCEPTED).apply {
+                // Stamp border color.
+                color = Color.rgb(255, 0, 0)
 
-            // Stamp fill color.
-            fillColor = Color.rgb(255, 255, 255)
-        }
+                // Stamp fill color.
+                fillColor = Color.rgb(255, 255, 255)
+            }
 
         // Stamps with custom text are also supported
         // val stamp = StampAnnotation(pageIndex, rect, "Custom stamp title")
@@ -297,10 +303,11 @@ class AnnotationCreationActivity : PdfActivity() {
         // to match the source aspect ratio exactly. Source logo PDF is 320x360 points big.
         val pageRect = RectF(500f, 980f, 660f, 800f)
 
-        val stampAnnotation = StampAnnotation(pageIndex, pageRect, "Stamp with custom AP stream").apply {
-            // Set PDF from assets containing vector logo as annotation's appearance stream generator.
-            appearanceStreamGenerator = AssetAppearanceStreamGenerator("images/Nutrient_Logo.pdf")
-        }
+        val stampAnnotation =
+            StampAnnotation(pageIndex, pageRect, "Stamp with custom AP stream").apply {
+                // Set PDF from assets containing vector logo as annotation's appearance stream generator.
+                appearanceStreamGenerator = AssetAppearanceStreamGenerator("images/Nutrient_Logo.pdf")
+            }
 
         addAnnotationToDocument(stampAnnotation)
     }

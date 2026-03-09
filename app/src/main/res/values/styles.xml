@@ -183,13 +183,11 @@
     </style>
 
     <style name="AnnotationSelectionCustomization" parent="PSPDFKit.AnnotationSelection">
-        <item name="pspdf__bottomRightScaleHandleDrawable">@drawable/ic_south_east</item>
-        <!-- Comment the next line to hide and disable the rotation handle. -->
-        <item name="pspdf__rotationHandleDrawable">@drawable/ic_rotate</item>
-        <item name="pspdf__scaleHandleColor">@android:color/transparent</item>
+        <!-- Apply a custom drawable for point-edit handles (and scale handles fallback). -->
+        <item name="pspdf__editHandleDrawable">@drawable/ic_align</item>
+        <item name="pspdf__scaleHandleColor">@color/primaryLight</item>
+        <item name="pspdf__editHandleColor">@color/primaryLight</item>
         <item name="pspdf__backgroundDrawable">@drawable/annotation_selection_background</item>
-
-        <!-- Setting this to `@android:color/transparent` will make the rotation handle line disappear. -->
         <item name="pspdf__borderColor">@color/primaryLight</item>
     </style>
 

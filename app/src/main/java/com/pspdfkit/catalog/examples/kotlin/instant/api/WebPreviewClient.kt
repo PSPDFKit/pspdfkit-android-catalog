@@ -33,16 +33,20 @@ class WebPreviewClient(serverUrl: String = "https://web-examples.our.services.nu
         val logging = HttpLoggingInterceptor { s -> println(s) }
         logging.level = HttpLoggingInterceptor.Level.HEADERS
 
-        val okHttpClient = OkHttpClient.Builder()
-            .addInterceptor(basicAuthInterceptor)
-            .addInterceptor(logging)
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .build()
-        val retrofit: Retrofit = Retrofit.Builder()
-            .baseUrl(serverUrl)
-            .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        val okHttpClient =
+            OkHttpClient
+                .Builder()
+                .addInterceptor(basicAuthInterceptor)
+                .addInterceptor(logging)
+                .connectTimeout(30, TimeUnit.SECONDS)
+                .build()
+        val retrofit: Retrofit =
+            Retrofit
+                .Builder()
+                .baseUrl(serverUrl)
+                .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
         apiService = retrofit.create(WebPreviewService::class.java)
     }
 
@@ -80,6 +84,7 @@ private interface WebPreviewService {
 
 private class BasicAuthInterceptor : Interceptor {
     private var credentials: String? = null
+
     fun setCredentials(user: String, password: String) {
         credentials = Credentials.basic(user, password)
     }
@@ -88,8 +93,11 @@ private class BasicAuthInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request()
         return if (credentials != null) {
-            val authenticatedRequest = request.newBuilder()
-                .header("Authorization", credentials!!).build()
+            val authenticatedRequest =
+                request
+                    .newBuilder()
+                    .header("Authorization", credentials!!)
+                    .build()
             chain.proceed(authenticatedRequest)
         } else {
             chain.proceed(request)

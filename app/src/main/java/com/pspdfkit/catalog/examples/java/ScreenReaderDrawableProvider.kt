@@ -7,14 +7,10 @@ import com.pspdfkit.ui.drawable.PdfDrawable
 import com.pspdfkit.ui.drawable.PdfDrawableProvider
 
 // Fixme: Convert ScreenReaderExample to Kotlin and use it directly.
-internal class ScreenReaderDrawableProvider(
-    private val screenReader: ScreenReaderExample.ScreenReader
-) : PdfDrawableProvider() {
+internal class ScreenReaderDrawableProvider(private val screenReader: ScreenReaderExample.ScreenReader) : PdfDrawableProvider() {
     override suspend fun getDrawablesForPage(
         context: Context,
         document: PdfDocument,
-        @IntRange(from = 0) pageIndex: Int
-    ): List<PdfDrawable>? {
-        return screenReader.getDrawablesForPage(pageIndex)
-    }
+        @IntRange(from = 0) pageIndex: Int,
+    ): List<PdfDrawable>? = screenReader.getDrawablesForPage(pageIndex)
 }

@@ -34,11 +34,11 @@ import kotlin.math.min
  * Simple example that shows how to zoom to page annotations, using the [PdfFragment.zoomTo] method.
  */
 class ZoomExample(context: Context) : SdkExample(context, R.string.zoomExampleTitle, R.string.zoomExampleDescription) {
-
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // This example uses a custom activity which adds some option menu items.
         // The default menu items are deactivated for simplicity.
-        configuration.searchEnabled(false)
+        configuration
+            .searchEnabled(false)
             .outlineEnabled(false)
             .thumbnailGridEnabled(false)
 
@@ -84,14 +84,16 @@ class ZoomExampleActivity : PdfActivity() {
     @UiThread
     override fun onDocumentLoaded(document: PdfDocument) {
         viewModel.createObjects {
-            annotationLoadingJob = lifecycleScope.launch {
-                val annotations = withContext(Dispatchers.IO) {
-                    document.annotationProvider.getAllAnnotationsOfType(
-                        AnnotationType.entries.toSet()
-                    )
+            annotationLoadingJob =
+                lifecycleScope.launch {
+                    val annotations =
+                        withContext(Dispatchers.IO) {
+                            document.annotationProvider.getAllAnnotationsOfType(
+                                AnnotationType.entries.toSet(),
+                            )
+                        }
+                    documentAnnotations.addAll(annotations)
                 }
-                documentAnnotations.addAll(annotations)
-            }
         }
     }
 
@@ -120,17 +122,19 @@ class ZoomExampleActivity : PdfActivity() {
     /**
      * Handles clicks on the navigation option menu items.
      */
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.nextAnnotation -> {
-                zoomToNextAnnotation()
-                true
-            }
-            R.id.previousAnnotation -> {
-                zoomToPreviousAnnotation()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.nextAnnotation -> {
+            zoomToNextAnnotation()
+            true
+        }
+
+        R.id.previousAnnotation -> {
+            zoomToPreviousAnnotation()
+            true
+        }
+
+        else -> {
+            super.onOptionsItemSelected(item)
         }
     }
 
@@ -142,11 +146,12 @@ class ZoomExampleActivity : PdfActivity() {
         if (documentAnnotations.isEmpty()) return
 
         var currentAnnotation = this.currentAnnotation
-        val currentAnnotationIndex = if (currentAnnotation == null) {
-            -1
-        } else {
-            documentAnnotations.indexOf(currentAnnotation)
-        }
+        val currentAnnotationIndex =
+            if (currentAnnotation == null) {
+                -1
+            } else {
+                documentAnnotations.indexOf(currentAnnotation)
+            }
         val nextAnnotationIndex = min(currentAnnotationIndex + 1, documentAnnotations.size - 1)
 
         if (nextAnnotationIndex != currentAnnotationIndex) {

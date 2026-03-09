@@ -115,19 +115,21 @@ open class InstantExampleConnectionActivity : AppCompatActivity() {
         enableEdgeToEdge()
         // Extract PdfActivity configuration from extras.
         @Suppress("DEPRECATION")
-        configuration = checkNotNull(intent.getParcelableExtra(CONFIGURATION_ARG)) {
-            "InstantExampleConnectionActivity was not initialized with proper arguments: Missing configuration extra!"
-        }
+        configuration =
+            checkNotNull(intent.getParcelableExtra(CONFIGURATION_ARG)) {
+                "InstantExampleConnectionActivity was not initialized with proper arguments: Missing configuration extra!"
+            }
 
         // Register activity result launchers
-        scanQrLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result.resultCode == RESULT_OK) {
-                val url = result.data?.extras?.getString(BarcodeActivity.BARCODE_ENCODED_KEY)
-                if (url != null) {
-                    editDocument(url, "", currentUseCompose, currentEnableAssistant)
+        scanQrLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+                if (result.resultCode == RESULT_OK) {
+                    val url = result.data?.extras?.getString(BarcodeActivity.BARCODE_ENCODED_KEY)
+                    if (url != null) {
+                        editDocument(url, "", currentUseCompose, currentEnableAssistant)
+                    }
                 }
             }
-        }
 
         setContent {
             CatalogTheme {
@@ -144,7 +146,7 @@ open class InstantExampleConnectionActivity : AppCompatActivity() {
                     onSwitchStateChanged = { useCompose, enableAssistant ->
                         currentUseCompose = useCompose
                         currentEnableAssistant = enableAssistant
-                    }
+                    },
                 )
 
                 // Basic auth dialog
@@ -152,7 +154,8 @@ open class InstantExampleConnectionActivity : AppCompatActivity() {
                     isVisible = showBasicAuthDialog.value,
                     onDismiss = {
                         showBasicAuthDialog.value = false
-                        basicAuthContinuation?.takeIf { it.isActive }
+                        basicAuthContinuation
+                            ?.takeIf { it.isActive }
                             ?.resumeWithException(Exception("User cancelled basic auth."))
                         basicAuthContinuation = null
                     },
@@ -161,7 +164,7 @@ open class InstantExampleConnectionActivity : AppCompatActivity() {
                         apiClient.setBasicAuthCredentials(username, password)
                         basicAuthContinuation?.takeIf { it.isActive }?.resume(Unit)
                         basicAuthContinuation = null
-                    }
+                    },
                 )
 
                 // Enter document link bottom sheet
@@ -173,7 +176,7 @@ open class InstantExampleConnectionActivity : AppCompatActivity() {
                     onConfirm = { documentLink, username ->
                         showEnterLinkBottomSheet.value = false
                         editDocument(documentLink, username, currentUseCompose, currentEnableAssistant)
-                    }
+                    },
                 )
             }
         }
@@ -187,66 +190,60 @@ open class InstantExampleConnectionActivity : AppCompatActivity() {
 
     private fun createNewDocument(useCompose: Boolean, enableAssistant: Boolean) {
         connectionJob?.cancel()
-        connectionJob = lifecycleScope.launch {
-            try {
-                val documentDescriptor = withContext(Dispatchers.IO) { apiClient.createNewDocument() }
-                showInstantDocument(documentDescriptor, useCompose, enableAssistant)
-            } catch (throwable: Throwable) {
-                handleError(throwable)
+        connectionJob =
+            lifecycleScope.launch {
+                try {
+                    val documentDescriptor = withContext(Dispatchers.IO) { apiClient.createNewDocument() }
+                    showInstantDocument(documentDescriptor, useCompose, enableAssistant)
+                } catch (throwable: Throwable) {
+                    handleError(throwable)
+                }
             }
-        }
     }
 
-    private fun editDocument(
-        url: String,
-        username: String,
-        useCompose: Boolean = false,
-        enableAssistant: Boolean = false
-    ) {
+    private fun editDocument(url: String, username: String, useCompose: Boolean = false, enableAssistant: Boolean = false) {
         connectionJob?.cancel()
-        connectionJob = lifecycleScope.launch {
-            try {
-                val trimmedUrl = url.trim()
-                val webPreviewDescriptor = runCatching {
-                    loadDocumentDescriptor(trimmedUrl)
-                }.getOrNull()
-                if (webPreviewDescriptor != null) {
-                    showInstantDocument(webPreviewDescriptor, useCompose, enableAssistant)
-                    return@launch
-                }
-
-                // Example servers require a username so we can call /api/document/:id or /api/documents.
-                if (username.isNotBlank()) {
-                    val exampleDescriptor = loadFromExampleServer(trimmedUrl, username.trim())
-                    if (exampleDescriptor != null) {
-                        showInstantDocument(exampleDescriptor, useCompose, enableAssistant)
+        connectionJob =
+            lifecycleScope.launch {
+                try {
+                    val trimmedUrl = url.trim()
+                    val webPreviewDescriptor =
+                        runCatching {
+                            loadDocumentDescriptor(trimmedUrl)
+                        }.getOrNull()
+                    if (webPreviewDescriptor != null) {
+                        showInstantDocument(webPreviewDescriptor, useCompose, enableAssistant)
                         return@launch
                     }
+
+                    // Example servers require a username so we can call /api/document/:id or /api/documents.
+                    if (username.isNotBlank()) {
+                        val exampleDescriptor = loadFromExampleServer(trimmedUrl, username.trim())
+                        if (exampleDescriptor != null) {
+                            showInstantDocument(exampleDescriptor, useCompose, enableAssistant)
+                            return@launch
+                        }
+                    }
+
+                    Toast
+                        .makeText(
+                            this@InstantExampleConnectionActivity,
+                            R.string.instant_error_missing_jwt,
+                            Toast.LENGTH_LONG,
+                        ).show()
+                } catch (throwable: Throwable) {
+                    handleError(throwable)
                 }
-
-                Toast.makeText(
-                    this@InstantExampleConnectionActivity,
-                    R.string.instant_error_missing_jwt,
-                    Toast.LENGTH_LONG
-                ).show()
-            } catch (throwable: Throwable) {
-                handleError(throwable)
             }
-        }
     }
 
-    private suspend fun loadDocumentDescriptor(url: String): InstantExampleDocumentDescriptor {
-        return try {
-            withContext(Dispatchers.IO) { apiClient.getDocument(url) }
-        } catch (exception: Throwable) {
-            handleHttpException(exception, url)
-        }
+    private suspend fun loadDocumentDescriptor(url: String): InstantExampleDocumentDescriptor = try {
+        withContext(Dispatchers.IO) { apiClient.getDocument(url) }
+    } catch (exception: Throwable) {
+        handleHttpException(exception, url)
     }
 
-    private suspend fun handleHttpException(
-        exception: Throwable,
-        url: String
-    ): InstantExampleDocumentDescriptor {
+    private suspend fun handleHttpException(exception: Throwable, url: String): InstantExampleDocumentDescriptor {
         if (exception is HttpException) {
             if (exception.code() == 401) {
                 // We need a basic auth request here.
@@ -275,10 +272,7 @@ open class InstantExampleConnectionActivity : AppCompatActivity() {
      * If the URL contains a document id, we call `/api/document/:id`. Otherwise we list
      * documents and let the user pick one.
      */
-    private suspend fun loadFromExampleServer(
-        url: String,
-        username: String
-    ): InstantExampleDocumentDescriptor? {
+    private suspend fun loadFromExampleServer(url: String, username: String): InstantExampleDocumentDescriptor? {
         val serverUrl = extractServerUrl(url).trimEnd('/')
         val documentId = extractExampleServerDocumentId(url)
         val client = ExampleServerClient(serverUrl, username)
@@ -291,7 +285,7 @@ open class InstantExampleConnectionActivity : AppCompatActivity() {
                 documentId = documentId,
                 jwt = token,
                 documentCode = "",
-                webUrl = webUrl
+                webUrl = webUrl,
             )
         } else {
             val documents = withContext(Dispatchers.IO) { client.getDocuments() }
@@ -299,11 +293,12 @@ open class InstantExampleConnectionActivity : AppCompatActivity() {
                 Toast.makeText(this, R.string.instant_error_invalid_id, Toast.LENGTH_LONG).show()
                 null
             } else {
-                val selected = if (documents.size == 1) {
-                    documents.first()
-                } else {
-                    selectDocument(documents)
-                } ?: return null
+                val selected =
+                    if (documents.size == 1) {
+                        documents.first()
+                    } else {
+                        selectDocument(documents)
+                    } ?: return null
                 val token = selected.tokens.firstOrNull().orEmpty()
                 if (token.isBlank()) return null
                 val webUrl = "$serverUrl/documents/${selected.id}"
@@ -312,7 +307,7 @@ open class InstantExampleConnectionActivity : AppCompatActivity() {
                     documentId = selected.id,
                     jwt = token,
                     documentCode = "",
-                    webUrl = webUrl
+                    webUrl = webUrl,
                 )
             }
         }
@@ -343,51 +338,56 @@ open class InstantExampleConnectionActivity : AppCompatActivity() {
     private fun mapToInstantServerUrl(serverUrl: String): String {
         val parsed = serverUrl.toHttpUrlOrNull() ?: return serverUrl
         val port = parsed.port
-        val targetPort = if (port == ExampleServerClient.WEB_EXAMPLE_SERVER_PORT) {
-            ExampleServerClient.INSTANT_SERVER_PORT
-        } else {
-            port
-        }
-        return parsed.newBuilder().port(targetPort).build().toString().trimEnd('/')
+        val targetPort =
+            if (port == ExampleServerClient.WEB_EXAMPLE_SERVER_PORT) {
+                ExampleServerClient.INSTANT_SERVER_PORT
+            } else {
+                port
+            }
+        return parsed
+            .newBuilder()
+            .port(targetPort)
+            .build()
+            .toString()
+            .trimEnd('/')
     }
 
     /**
      * Simple chooser for `/api/documents` results so we can re-use a single input field.
      */
-    private suspend fun selectDocument(
-        documents: List<ExampleServerDocument>
-    ): ExampleServerDocument? = suspendCancellableCoroutine { continuation ->
-        val items = documents.map { it.title.ifBlank { it.id } }.toTypedArray()
-        val dialog = androidx.appcompat.app.AlertDialog.Builder(this)
-            .setTitle(R.string.instant_select_document)
-            .setItems(items) { _, which ->
-                continuation.resume(documents[which])
-            }
-            .setOnCancelListener {
-                continuation.resume(null)
-            }
-            .show()
-        continuation.invokeOnCancellation { dialog.dismiss() }
-    }
+    private suspend fun selectDocument(documents: List<ExampleServerDocument>): ExampleServerDocument? =
+        suspendCancellableCoroutine { continuation ->
+            val items = documents.map { it.title.ifBlank { it.id } }.toTypedArray()
+            val dialog =
+                androidx.appcompat.app.AlertDialog
+                    .Builder(this)
+                    .setTitle(R.string.instant_select_document)
+                    .setItems(items) { _, which ->
+                        continuation.resume(documents[which])
+                    }.setOnCancelListener {
+                        continuation.resume(null)
+                    }.show()
+            continuation.invokeOnCancellation { dialog.dismiss() }
+        }
 
     /** Asks the user for basic auth credentials and sets them on the apiClient.  */
-    private suspend fun performBasicAuth() {
-        return suspendCancellableCoroutine { continuation ->
-            basicAuthContinuation?.takeIf { it.isActive }
-                ?.resumeWithException(IllegalStateException("Basic auth already in progress."))
-            basicAuthContinuation = continuation
-            showBasicAuthDialog.value = true
-            continuation.invokeOnCancellation {
-                if (basicAuthContinuation === continuation) {
-                    basicAuthContinuation = null
-                }
+    private suspend fun performBasicAuth() = suspendCancellableCoroutine { continuation ->
+        basicAuthContinuation
+            ?.takeIf { it.isActive }
+            ?.resumeWithException(IllegalStateException("Basic auth already in progress."))
+        basicAuthContinuation = continuation
+        showBasicAuthDialog.value = true
+        continuation.invokeOnCancellation {
+            if (basicAuthContinuation === continuation) {
+                basicAuthContinuation = null
             }
         }
     }
 
     private fun showInstantDocument(descriptor: InstantExampleDocumentDescriptor, useCompose: Boolean, enableAssistant: Boolean) {
         // Clear the Instant client cache first.
-        InstantClient.create(this, descriptor.serverUrl)
+        InstantClient
+            .create(this, descriptor.serverUrl)
             .removeLocalStorage()
 
         val intent = createIntentForInstantDocumentActivity(descriptor, useCompose, enableAssistant)
@@ -404,25 +404,28 @@ open class InstantExampleConnectionActivity : AppCompatActivity() {
     protected open fun createIntentForInstantDocumentActivity(
         descriptor: InstantExampleDocumentDescriptor,
         useCompose: Boolean,
-        enableAssistant: Boolean
+        enableAssistant: Boolean,
     ): Intent {
-        val updatedConfiguration = if (enableAssistant) {
-            configuration.copy(configuration = configuration.configuration.copy(isAiAssistantEnabled = true))
-        } else {
-            configuration
-        }
-
-        val intent = if (useCompose) {
-            Intent(this, InstantComposeExampleActivity::class.java).apply {
-                putExtra(InstantComposeExampleActivity.DOCUMENT_DESCRIPTOR, descriptor)
-                putExtra(InstantComposeExampleActivity.CONFIGURATION, updatedConfiguration)
+        val updatedConfiguration =
+            if (enableAssistant) {
+                configuration.copy(configuration = configuration.configuration.copy(isAiAssistantEnabled = true))
+            } else {
+                configuration
             }
-        } else {
-            InstantPdfActivityIntentBuilder.fromInstantDocument(this, descriptor.serverUrl, descriptor.jwt)
-                .configuration(updatedConfiguration)
-                .activityClass(InstantExampleActivity::class.java)
-                .build()
-        }
+
+        val intent =
+            if (useCompose) {
+                Intent(this, InstantComposeExampleActivity::class.java).apply {
+                    putExtra(InstantComposeExampleActivity.DOCUMENT_DESCRIPTOR, descriptor)
+                    putExtra(InstantComposeExampleActivity.CONFIGURATION, updatedConfiguration)
+                }
+            } else {
+                InstantPdfActivityIntentBuilder
+                    .fromInstantDocument(this, descriptor.serverUrl, descriptor.jwt)
+                    .configuration(updatedConfiguration)
+                    .activityClass(InstantExampleActivity::class.java)
+                    .build()
+            }
 
         return intent
     }
@@ -439,11 +442,12 @@ open class InstantExampleConnectionActivity : AppCompatActivity() {
         } else if (throwable is UnknownHostException) {
             errorText = R.string.instant_error_no_connection
         }
-        Toast.makeText(
-            this,
-            getString(R.string.instant_error_connection_failed, getString(errorText)),
-            Toast.LENGTH_LONG
-        ).show()
+        Toast
+            .makeText(
+                this,
+                getString(R.string.instant_error_connection_failed, getString(errorText)),
+                Toast.LENGTH_LONG,
+            ).show()
         PdfLog.e("InstantExample", "Error loading document with Instant: $throwable")
     }
 
@@ -459,7 +463,7 @@ fun InstantConnectionScreen(
     onCreateNewDocument: (useCompose: Boolean, enableAssistant: Boolean) -> Unit,
     onScanQrCode: () -> Unit,
     onEnterLinkManually: () -> Unit,
-    onSwitchStateChanged: (useCompose: Boolean, enableAssistant: Boolean) -> Unit
+    onSwitchStateChanged: (useCompose: Boolean, enableAssistant: Boolean) -> Unit,
 ) {
     var useCompose by remember { mutableStateOf(false) }
     var enableAiAssistant by remember { mutableStateOf(false) }
@@ -468,22 +472,23 @@ fun InstantConnectionScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Nutrient Instant") }
+                title = { Text("Nutrient Instant") },
             )
-        }
+        },
     ) { paddingValues ->
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
                 .verticalScroll(rememberScrollState())
                 .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             // Description text
             Text(
                 text = stringResource(R.string.instant_description),
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.bodyMedium,
             )
 
             HorizontalDivider()
@@ -493,20 +498,20 @@ fun InstantConnectionScreen(
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
                     Row(
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Icon(
                             painter = painterResource(R.drawable.ic_jetpack_compose),
                             contentDescription = null,
-                            modifier = Modifier.size(24.dp)
+                            modifier = Modifier.size(24.dp),
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = stringResource(R.string.useComposeForInstantExample),
-                            style = MaterialTheme.typography.bodyMedium
+                            style = MaterialTheme.typography.bodyMedium,
                         )
                     }
                     Switch(
@@ -514,7 +519,7 @@ fun InstantConnectionScreen(
                         onCheckedChange = {
                             useCompose = it
                             onSwitchStateChanged(it, enableAiAssistant)
-                        }
+                        },
                     )
                 }
 
@@ -522,20 +527,20 @@ fun InstantConnectionScreen(
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
                     Row(
-                        verticalAlignment = Alignment.CenterVertically
+                        verticalAlignment = Alignment.CenterVertically,
                     ) {
                         Icon(
                             painter = painterResource(R.drawable.ic_ai_assistant),
                             contentDescription = null,
-                            modifier = Modifier.size(24.dp)
+                            modifier = Modifier.size(24.dp),
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
                             text = stringResource(R.string.enableAiAssistantForInstantExample),
-                            style = MaterialTheme.typography.bodyMedium
+                            style = MaterialTheme.typography.bodyMedium,
                         )
                     }
                     Switch(
@@ -543,29 +548,32 @@ fun InstantConnectionScreen(
                         onCheckedChange = {
                             enableAiAssistant = it
                             onSwitchStateChanged(useCompose, it)
-                        }
+                        },
                     )
                 }
 
                 // Info message when enableAiAssistant is enabled
                 if (enableAiAssistant) {
                     Row(
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .fillMaxWidth()
                             .padding(start = 32.dp, top = 8.dp),
-                        verticalAlignment = Alignment.Top
+                        verticalAlignment = Alignment.Top,
                     ) {
                         Icon(
                             imageVector = Icons.Default.Info,
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.primary,
-                            modifier = Modifier.size(16.dp)
+                            modifier = Modifier.size(16.dp),
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            text = "Note: On Instant, this feature requires a running Nutrient AI Assistant server. Please ensure the server is accessible before proceeding.",
+                            text =
+                            "Note: On Instant, this feature requires a running Nutrient AI Assistant server. " +
+                                "Please ensure the server is accessible before proceeding.",
                             style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
                     }
                 }
@@ -580,12 +588,12 @@ fun InstantConnectionScreen(
                     onCreateNewDocument(useCompose, enableAiAssistant)
                 },
                 modifier = Modifier.fillMaxWidth(),
-                enabled = !isLoading
+                enabled = !isLoading,
             ) {
                 if (isLoading) {
                     CircularProgressIndicator(
                         modifier = Modifier.size(24.dp),
-                        color = MaterialTheme.colorScheme.onPrimary
+                        color = MaterialTheme.colorScheme.onPrimary,
                     )
                 } else {
                     Text(stringResource(R.string.instant_create_new_document))
@@ -594,7 +602,7 @@ fun InstantConnectionScreen(
 
             Text(
                 text = stringResource(R.string.instant_create_new_document_description),
-                style = MaterialTheme.typography.bodySmall
+                style = MaterialTheme.typography.bodySmall,
             )
 
             Spacer(modifier = Modifier.height(12.dp))
@@ -602,11 +610,11 @@ fun InstantConnectionScreen(
             // Scan QR Code button
             Button(
                 onClick = onScanQrCode,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             ) {
                 Icon(
                     imageVector = Icons.Default.QrCodeScanner,
-                    contentDescription = null
+                    contentDescription = null,
                 )
                 Spacer(modifier = Modifier.width(8.dp))
                 Text(stringResource(R.string.instant_scan_qr_code))
@@ -614,13 +622,13 @@ fun InstantConnectionScreen(
 
             Text(
                 text = stringResource(R.string.instant_edit_existing_document_description),
-                style = MaterialTheme.typography.bodySmall
+                style = MaterialTheme.typography.bodySmall,
             )
 
             // Enter Link Manually button
             Button(
                 onClick = onEnterLinkManually,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             ) {
                 Text(stringResource(R.string.instant_enter_link_manually))
             }

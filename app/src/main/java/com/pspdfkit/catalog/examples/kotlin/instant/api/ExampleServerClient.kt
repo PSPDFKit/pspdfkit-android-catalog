@@ -30,22 +30,28 @@ internal class ExampleServerClient(serverUrl: String, username: String) {
 
     init {
         val authHeader = Credentials.basic(username, "")
-        val okHttpClient = OkHttpClient.Builder()
-            .addInterceptor(
-                Interceptor { chain ->
-                    val request = chain.request().newBuilder()
-                        .header("Authorization", authHeader)
-                        .build()
-                    chain.proceed(request)
-                }
-            )
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .build()
-        val retrofit = Retrofit.Builder()
-            .baseUrl(ensureTrailingSlash(serverUrl))
-            .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        val okHttpClient =
+            OkHttpClient
+                .Builder()
+                .addInterceptor(
+                    Interceptor { chain ->
+                        val request =
+                            chain
+                                .request()
+                                .newBuilder()
+                                .header("Authorization", authHeader)
+                                .build()
+                        chain.proceed(request)
+                    },
+                ).connectTimeout(30, TimeUnit.SECONDS)
+                .build()
+        val retrofit =
+            Retrofit
+                .Builder()
+                .baseUrl(ensureTrailingSlash(serverUrl))
+                .client(okHttpClient)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
         apiService = retrofit.create(ExampleServerService::class.java)
     }
 
@@ -66,22 +72,11 @@ internal class ExampleServerClient(serverUrl: String, username: String) {
     }
 }
 
-internal data class ExampleServerDocumentList(
-    val documents: List<ExampleServerDocument>
-)
+internal data class ExampleServerDocumentList(val documents: List<ExampleServerDocument>)
 
-internal data class ExampleServerDocument(
-    val id: String,
-    val title: String,
-    val layers: List<String>,
-    val tokens: List<String>
-)
+internal data class ExampleServerDocument(val id: String, val title: String, val layers: List<String>, val tokens: List<String>)
 
-internal data class ExampleServerTokenResponse(
-    val success: Boolean,
-    val token: String,
-    val message: String? = null
-)
+internal data class ExampleServerTokenResponse(val success: Boolean, val token: String, val message: String? = null)
 
 private interface ExampleServerService {
     @GET("api/documents")

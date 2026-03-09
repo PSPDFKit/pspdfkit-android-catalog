@@ -35,19 +35,16 @@ import com.pspdfkit.catalog.ui.model.State
 @Composable
 @ExperimentalAnimationApi
 @ExperimentalComposeUiApi
-fun TabletCatalog(
-    state: State,
-    dispatcher: Dispatcher
-) {
+fun TabletCatalog(state: State, dispatcher: Dispatcher) {
     Scaffold(
-        topBar = { CatalogAppBar(state, dispatcher, isTablet = true) }
+        topBar = { CatalogAppBar(state, dispatcher, isTablet = true) },
     ) { paddingValues ->
         Box(Modifier.padding(paddingValues)) {
             val drawerState = rememberDrawerState(DrawerValue.Closed)
 
             EndPositionedModalDrawer(
                 drawerContent = { Preferences(state, dispatcher) },
-                drawerState = drawerState
+                drawerState = drawerState,
             ) {
                 Examples(state, dispatcher)
             }
@@ -74,17 +71,18 @@ fun TabletCatalog(
 private fun EndPositionedModalDrawer(
     drawerContent: @Composable () -> Unit,
     drawerState: DrawerState = rememberDrawerState(DrawerValue.Closed),
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     // HACK: There is currently no way to force the drawer to come from
     // the trailing part of the screen. I'm changing the layout direction
     // to RTL for the drawer to render at the end and then switching back
     // for the remaining content.
     val originalLayoutDirection = LocalLayoutDirection.current
-    val oppositeLayoutDirection = when (originalLayoutDirection) {
-        LayoutDirection.Ltr -> LayoutDirection.Rtl
-        LayoutDirection.Rtl -> LayoutDirection.Ltr
-    }
+    val oppositeLayoutDirection =
+        when (originalLayoutDirection) {
+            LayoutDirection.Ltr -> LayoutDirection.Rtl
+            LayoutDirection.Rtl -> LayoutDirection.Ltr
+        }
 
     WithLayoutDirection(oppositeLayoutDirection) {
         ModalNavigationDrawer(
@@ -93,7 +91,7 @@ private fun EndPositionedModalDrawer(
                     drawerContent()
                 }
             },
-            drawerState = drawerState
+            drawerState = drawerState,
         ) {
             WithLayoutDirection(originalLayoutDirection) {
                 content()
@@ -103,12 +101,9 @@ private fun EndPositionedModalDrawer(
 }
 
 @Composable
-private fun WithLayoutDirection(
-    layoutDirection: LayoutDirection,
-    content: @Composable () -> Unit
-) {
+private fun WithLayoutDirection(layoutDirection: LayoutDirection, content: @Composable () -> Unit) {
     CompositionLocalProvider(
-        LocalLayoutDirection provides layoutDirection
+        LocalLayoutDirection provides layoutDirection,
     ) {
         content()
     }

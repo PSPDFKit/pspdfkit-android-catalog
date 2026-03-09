@@ -25,17 +25,20 @@ import com.pspdfkit.ui.toolbar.popup.PopupToolbarMenuItem
 /**
  * Example showing how to customise the text highlight popup toolbar.
  */
-class TextHighlightPopupCustomisationExample(context: Context) : SdkExample(
-    context,
-    R.string.textHighlightPopupCustomisationTitle,
-    R.string.textHighlightPopupCustomisationDescription
-) {
+class TextHighlightPopupCustomisationExample(context: Context) :
+    SdkExample(
+        context,
+        R.string.textHighlightPopupCustomisationTitle,
+        R.string.textHighlightPopupCustomisationDescription,
+    ) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .configuration(configuration.build())
-                .activityClass(TextHighlightPopupCustomisationActivity::class)
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    .configuration(configuration.build())
+                    .activityClass(TextHighlightPopupCustomisationActivity::class)
+                    .build()
             context.startActivity(intent)
         }
     }
@@ -48,7 +51,6 @@ class TextHighlightPopupCustomisationActivity :
     PdfActivity(),
     OnPreparePopupToolbarListener,
     PopupToolbar.OnPopupToolbarItemClickedListener {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -72,24 +74,24 @@ class TextHighlightPopupCustomisationActivity :
         menuItems.add(
             PopupToolbarMenuItem(
                 com.pspdfkit.R.id.pspdf__text_selection_toolbar_item_copy,
-                com.pspdfkit.R.string.pspdf__action_menu_copy
-            )
+                com.pspdfkit.R.string.pspdf__action_menu_copy,
+            ),
         )
 
         // Underline
         menuItems.add(
             PopupToolbarMenuItem(
                 com.pspdfkit.R.id.pspdf__text_selection_toolbar_item_underline,
-                com.pspdfkit.R.string.pspdf__edit_menu_underline
-            )
+                com.pspdfkit.R.string.pspdf__edit_menu_underline,
+            ),
         )
 
         // And, create link
         menuItems.add(
             PopupToolbarMenuItem(
                 com.pspdfkit.R.id.pspdf__text_selection_toolbar_item_link,
-                com.pspdfkit.R.string.pspdf__create_link
-            )
+                com.pspdfkit.R.string.pspdf__create_link,
+            ),
         )
 
         // Make sure to set them back on the toolbar, so we can re-initialize it.
@@ -98,12 +100,13 @@ class TextHighlightPopupCustomisationActivity :
 
     /** Override this [PopupToolbar.OnPopupToolbarItemClickedListener] allows us to customise the click behaviour. */
     override fun onItemClicked(popupToolbarMenuItem: PopupToolbarMenuItem): Boolean {
-        val toastText = when (popupToolbarMenuItem.id) {
-            com.pspdfkit.R.id.pspdf__text_selection_toolbar_item_copy -> "Copy!!"
-            com.pspdfkit.R.id.pspdf__text_selection_toolbar_item_underline -> "Underline!!"
-            com.pspdfkit.R.id.pspdf__text_selection_toolbar_item_link -> "Liiiiiink!"
-            else -> ""
-        }
+        val toastText =
+            when (popupToolbarMenuItem.id) {
+                com.pspdfkit.R.id.pspdf__text_selection_toolbar_item_copy -> "Copy!!"
+                com.pspdfkit.R.id.pspdf__text_selection_toolbar_item_underline -> "Underline!!"
+                com.pspdfkit.R.id.pspdf__text_selection_toolbar_item_link -> "Liiiiiink!"
+                else -> ""
+            }
 
         Toast.makeText(this, toastText, Toast.LENGTH_SHORT).show()
 

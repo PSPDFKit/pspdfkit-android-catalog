@@ -54,7 +54,10 @@ import kotlinx.coroutines.withContext
  * This is meant to be used with the example server implementation:
  * https://github.com/PSPDFKit/pspdfkit-server-example-nodejs
  */
-open class InstantExampleActivity : InstantPdfActivity(), ActionMenuListener, AiAssistantProvider {
+open class InstantExampleActivity :
+    InstantPdfActivity(),
+    ActionMenuListener,
+    AiAssistantProvider {
     /** Descriptor for the displayed document.  */
     private lateinit var documentDescriptor: InstantExampleDocumentDescriptor
     private lateinit var aiAssistantInstance: AiAssistant
@@ -72,27 +75,41 @@ open class InstantExampleActivity : InstantPdfActivity(), ActionMenuListener, Ai
     private var resetCacheDialog: AlertDialog? = null
     private var progressDialog: AlertDialog? = null
 
-    private val instantErrorListener = object : InstantDocumentListener {
-        override fun onSyncError(instantDocument: InstantPdfDocument, error: InstantException) {
-            if (error.errorCode == InstantErrorCode.INVALID_REQUEST && !resetTriggeredForSyncError) {
-                resetTriggeredForSyncError = true
-                showResetCacheDialog()
+    private val instantErrorListener =
+        object : InstantDocumentListener {
+            override fun onSyncError(instantDocument: InstantPdfDocument, error: InstantException) {
+                if (error.errorCode == InstantErrorCode.INVALID_REQUEST && !resetTriggeredForSyncError) {
+                    resetTriggeredForSyncError = true
+                    showResetCacheDialog()
+                }
             }
         }
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val documentDescriptor: InstantExampleDocumentDescriptor? = intent.getSupportParcelableExtra(
-            InstantExampleExtras.DOCUMENT_DESCRIPTOR,
-            InstantExampleDocumentDescriptor::class.java
-        )
-        checkNotNull(documentDescriptor) { "InstantExampleActivity was not initialized with proper arguments: Missing document descriptor extra!" }
+        val documentDescriptor: InstantExampleDocumentDescriptor? =
+            intent.getSupportParcelableExtra(
+                InstantExampleExtras.DOCUMENT_DESCRIPTOR,
+                InstantExampleDocumentDescriptor::class.java,
+            )
+        checkNotNull(documentDescriptor) {
+            "InstantExampleActivity was not initialized with proper arguments: Missing document descriptor extra!"
+        }
         this.documentDescriptor = documentDescriptor
 
-        val a = theme.obtainStyledAttributes(null, com.pspdfkit.R.styleable.pspdf__ActionBarIcons, com.pspdfkit.R.attr.pspdf__actionBarIconsStyle, com.pspdfkit.R.style.PSPDFKit_ActionBarIcons)
-        mainToolbarIconsColor = a.getColor(com.pspdfkit.R.styleable.pspdf__ActionBarIcons_pspdf__iconsColor, ContextCompat.getColor(this, com.pspdfkit.R.color.pspdf__onPrimary))
+        val a =
+            theme.obtainStyledAttributes(
+                null,
+                com.pspdfkit.R.styleable.pspdf__ActionBarIcons,
+                com.pspdfkit.R.attr.pspdf__actionBarIconsStyle,
+                com.pspdfkit.R.style.PSPDFKit_ActionBarIcons,
+            )
+        mainToolbarIconsColor =
+            a.getColor(
+                com.pspdfkit.R.styleable.pspdf__ActionBarIcons_pspdf__iconsColor,
+                ContextCompat.getColor(this, com.pspdfkit.R.color.pspdf__onPrimary),
+            )
         a.recycle()
         // only initialise if AI Assistant is enabled
         if (configuration.configuration.isAiAssistantEnabled) aiAssistantInstance = createAiAssistantInstance()
@@ -116,9 +133,25 @@ open class InstantExampleActivity : InstantPdfActivity(), ActionMenuListener, Ai
         collaborateMenu = SharingMenu(this, null)
         collaborateMenu.setTitle(getString(R.string.instant_collaborate))
 
-        collaborateMenu.addMenuItem(FixedActionMenuItem(this, R.id.open_in_browser, R.drawable.ic_open_in_browser, R.string.instant_open_in_browser))
-        collaborateMenu.addMenuItem(FixedActionMenuItem(this, R.id.share_document_link, com.pspdfkit.R.drawable.pspdf__ic_open_in, R.string.instant_share_document_link))
-        collaborateMenu.addMenuItem(FixedActionMenuItem(this, R.id.instant_reset_cache, com.pspdfkit.R.drawable.pspdf__ic_status_clear, R.string.instant_reset_cache))
+        collaborateMenu.addMenuItem(
+            FixedActionMenuItem(this, R.id.open_in_browser, R.drawable.ic_open_in_browser, R.string.instant_open_in_browser),
+        )
+        collaborateMenu.addMenuItem(
+            FixedActionMenuItem(
+                this,
+                R.id.share_document_link,
+                com.pspdfkit.R.drawable.pspdf__ic_open_in,
+                R.string.instant_share_document_link,
+            ),
+        )
+        collaborateMenu.addMenuItem(
+            FixedActionMenuItem(
+                this,
+                R.id.instant_reset_cache,
+                com.pspdfkit.R.drawable.pspdf__ic_status_clear,
+                R.string.instant_reset_cache,
+            ),
+        )
 
         collaborateMenu.addActionMenuListener(this)
     }
@@ -138,10 +171,11 @@ open class InstantExampleActivity : InstantPdfActivity(), ActionMenuListener, Ai
         val collaborateMenuItem = menu.findItem(R.id.instant_collaborate)
         collaborateMenuItem.isEnabled = document != null
 
-        collaborateMenuItem.icon = ContextCompat.getDrawable(this, R.drawable.ic_collaborate)?.apply {
-            DrawableCompat.setTint(this, mainToolbarIconsColor)
-            alpha = if (document != null) 255 else 128
-        }
+        collaborateMenuItem.icon =
+            ContextCompat.getDrawable(this, R.drawable.ic_collaborate)?.apply {
+                DrawableCompat.setTint(this, mainToolbarIconsColor)
+                alpha = if (document != null) 255 else 128
+            }
 
         return true
     }
@@ -154,17 +188,13 @@ open class InstantExampleActivity : InstantPdfActivity(), ActionMenuListener, Ai
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onPrepareActionMenu(actionMenu: ActionMenu): Boolean {
-        return true
-    }
+    override fun onPrepareActionMenu(actionMenu: ActionMenu): Boolean = true
 
     override fun onDisplayActionMenu(actionMenu: ActionMenu) {}
 
     override fun onRemoveActionMenu(actionMenu: ActionMenu) {}
 
-    override fun onActionMenuItemLongClicked(actionMenu: ActionMenu, menuItem: ActionMenuItem): Boolean {
-        return false
-    }
+    override fun onActionMenuItemLongClicked(actionMenu: ActionMenu, menuItem: ActionMenuItem): Boolean = false
 
     override fun onActionMenuItemClicked(actionMenu: ActionMenu, menuItem: ActionMenuItem): Boolean {
         if (menuItem.itemId == R.id.share_document_link) {
@@ -185,23 +215,22 @@ open class InstantExampleActivity : InstantPdfActivity(), ActionMenuListener, Ai
     private fun showResetCacheDialog() {
         resetCacheDialog?.dismiss()
         collaborateMenu.dismiss()
-        resetCacheDialog = AlertDialog.Builder(this)
-            .setTitle(R.string.instant_reset_cache_title)
-            .setMessage(R.string.instant_reset_cache_message)
-            .setPositiveButton(R.string.instant_reset_cache_action) { _, _ ->
-                resetCacheAndReopen()
-            }
-            .setNegativeButton(android.R.string.cancel) { _, _ ->
-                resetTriggeredForSyncError = false
-            }
-            .setOnDismissListener {
-                resetCacheDialog = null
-                // Reset flag if dismissed without starting reset operation
-                if (resetJob == null && !isFinishing) {
+        resetCacheDialog =
+            AlertDialog
+                .Builder(this)
+                .setTitle(R.string.instant_reset_cache_title)
+                .setMessage(R.string.instant_reset_cache_message)
+                .setPositiveButton(R.string.instant_reset_cache_action) { _, _ ->
+                    resetCacheAndReopen()
+                }.setNegativeButton(android.R.string.cancel) { _, _ ->
                     resetTriggeredForSyncError = false
-                }
-            }
-            .show()
+                }.setOnDismissListener {
+                    resetCacheDialog = null
+                    // Reset flag if dismissed without starting reset operation
+                    if (resetJob == null && !isFinishing) {
+                        resetTriggeredForSyncError = false
+                    }
+                }.show()
     }
 
     /**
@@ -217,57 +246,63 @@ open class InstantExampleActivity : InstantPdfActivity(), ActionMenuListener, Ai
         val documentId = instantDocument?.instantDocumentDescriptor?.documentId
         resetJob?.cancel()
         showProgressDialog()
-        resetJob = lifecycleScope.launch {
-            try {
-                val newDescriptor = withContext(Dispatchers.IO) {
-                    webPreviewClient.getDocument(documentDescriptor.webUrl)
-                }
-                withContext(Dispatchers.IO) {
-                    val client = InstantClient.create(this@InstantExampleActivity, serverUrl)
-                    if (documentId != null) {
-                        client.removeLocalStorageForDocument(documentId)
-                    } else {
-                        client.removeLocalStorage()
+        resetJob =
+            lifecycleScope.launch {
+                try {
+                    val newDescriptor =
+                        withContext(Dispatchers.IO) {
+                            webPreviewClient.getDocument(documentDescriptor.webUrl)
+                        }
+                    withContext(Dispatchers.IO) {
+                        val client = InstantClient.create(this@InstantExampleActivity, serverUrl)
+                        if (documentId != null) {
+                            client.removeLocalStorageForDocument(documentId)
+                        } else {
+                            client.removeLocalStorage()
+                        }
                     }
+                    dismissProgressDialog()
+                    Toast.makeText(this@InstantExampleActivity, R.string.toast_cache_cleared, Toast.LENGTH_SHORT).show()
+                    val intent =
+                        InstantPdfActivityIntentBuilder
+                            .fromInstantDocument(
+                                this@InstantExampleActivity,
+                                newDescriptor.serverUrl,
+                                newDescriptor.jwt,
+                            ).configuration(configuration)
+                            .activityClass(InstantExampleActivity::class.java)
+                            .build()
+                    intent.putExtra(InstantExampleExtras.DOCUMENT_DESCRIPTOR, newDescriptor)
+                    startActivity(intent)
+                    finish()
+                } catch (e: Exception) {
+                    // Don't catch Error subclasses
+                    dismissProgressDialog()
+                    Log.e("InstantExample", "Failed to reset cache and reopen", e)
+                    Toast
+                        .makeText(
+                            this@InstantExampleActivity,
+                            R.string.instant_error_something_went_wrong,
+                            Toast.LENGTH_LONG,
+                        ).show()
+                    resetTriggeredForSyncError = false // Allow retry
                 }
-                dismissProgressDialog()
-                Toast.makeText(this@InstantExampleActivity, R.string.toast_cache_cleared, Toast.LENGTH_SHORT).show()
-                val intent = InstantPdfActivityIntentBuilder.fromInstantDocument(
-                    this@InstantExampleActivity,
-                    newDescriptor.serverUrl,
-                    newDescriptor.jwt
-                )
-                    .configuration(configuration)
-                    .activityClass(InstantExampleActivity::class.java)
-                    .build()
-                intent.putExtra(InstantExampleExtras.DOCUMENT_DESCRIPTOR, newDescriptor)
-                startActivity(intent)
-                finish()
-            } catch (e: Exception) { // Don't catch Error subclasses
-                dismissProgressDialog()
-                Log.e("InstantExample", "Failed to reset cache and reopen", e)
-                Toast.makeText(
-                    this@InstantExampleActivity,
-                    R.string.instant_error_something_went_wrong,
-                    Toast.LENGTH_LONG
-                ).show()
-                resetTriggeredForSyncError = false // Allow retry
             }
-        }
     }
 
     private fun showProgressDialog() {
         progressDialog?.dismiss()
-        progressDialog = AlertDialog.Builder(this)
-            .setView(
-                android.widget.ProgressBar(this).apply {
-                    isIndeterminate = true
-                    setPadding(0, 48, 0, 48)
-                }
-            )
-            .setMessage(R.string.instant_resetting_cache)
-            .setCancelable(false)
-            .show()
+        progressDialog =
+            AlertDialog
+                .Builder(this)
+                .setView(
+                    android.widget.ProgressBar(this).apply {
+                        isIndeterminate = true
+                        setPadding(0, 48, 0, 48)
+                    },
+                ).setMessage(R.string.instant_resetting_cache)
+                .setCancelable(false)
+                .show()
     }
 
     private fun dismissProgressDialog() {
@@ -277,12 +312,13 @@ open class InstantExampleActivity : InstantPdfActivity(), ActionMenuListener, Ai
 
     private fun showOpenInBrowserMenu() {
         val shareIntent = Intent(Intent.ACTION_VIEW, documentDescriptor.webUrl.toUri())
-        val sharingMenu = SharingMenu(
-            this
-        ) { shareTarget ->
-            shareIntent.setPackage(shareTarget.packageName)
-            startActivity(shareIntent)
-        }
+        val sharingMenu =
+            SharingMenu(
+                this,
+            ) { shareTarget ->
+                shareIntent.setPackage(shareTarget.packageName)
+                startActivity(shareIntent)
+            }
         sharingMenu.setTitle(R.string.instant_open_in_browser)
         sharingMenu.setShareIntents(listOf(shareIntent))
 
@@ -292,18 +328,20 @@ open class InstantExampleActivity : InstantPdfActivity(), ActionMenuListener, Ai
 
     private fun showShareTextMenu(@StringRes titleRes: Int, textToShare: String) {
         val shareIntent = DocumentSharingIntentHelper.getShareTextIntent(textToShare)
-        val sharingMenu = SharingMenu(
-            this
-        ) { shareTarget ->
-            shareIntent.setPackage(shareTarget.packageName)
-            startActivity(shareIntent)
-        }
+        val sharingMenu =
+            SharingMenu(
+                this,
+            ) { shareTarget ->
+                shareIntent.setPackage(shareTarget.packageName)
+                startActivity(shareIntent)
+            }
         sharingMenu.setTitle(titleRes)
         sharingMenu.setShareIntents(listOf(shareIntent))
 
         collaborateMenu.dismiss()
         sharingMenu.show()
     }
+
     val sessionId = "my-session-id"
 
     override fun getAiAssistant(): AiAssistant = aiAssistantInstance
@@ -313,19 +351,20 @@ open class InstantExampleActivity : InstantPdfActivity(), ActionMenuListener, Ai
         documentDescriptor.serverUrl,
         listOf(documentDescriptor.jwt),
         "http://192.168.1.6:4000",
-        sessionId
-
+        sessionId,
     ) { instantDocumentIds ->
         JwtGenerator.generateJwtToken(
             this@InstantExampleActivity,
-            claims = mapOf(
+            claims =
+            mapOf(
                 "document_ids" to instantDocumentIds,
                 "session_ids" to listOf(sessionId),
-                "request_limit" to mapOf(
-                    "requests" to 160,
-                    "time_period_s" to 1000 * 60 * 10
-                )
-            )
+                "request_limit" to
+                    mapOf(
+                        "requests" to 160,
+                        "time_period_s" to 1000 * 60 * 10,
+                    ),
+            ),
         )
     }
 

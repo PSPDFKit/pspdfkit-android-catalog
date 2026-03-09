@@ -12,7 +12,6 @@ import org.junit.Assert.assertTrue
 import org.junit.Test
 
 class StringExtKtTest {
-
     private val originalString = "Fragment Example"
 
     @Test

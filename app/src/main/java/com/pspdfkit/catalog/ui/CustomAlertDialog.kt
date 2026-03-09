@@ -54,7 +54,7 @@ fun SelectSignatureTypeDialog(dialogVisibility: Boolean, onDismissRequest: () ->
             title = {
                 Text(
                     text = stringResource(id = R.string.selectDigitalSignatureType),
-                    color = MaterialTheme.colorScheme.primary
+                    color = MaterialTheme.colorScheme.primary,
                 )
             },
             text = {
@@ -62,16 +62,17 @@ fun SelectSignatureTypeDialog(dialogVisibility: Boolean, onDismissRequest: () ->
             },
             confirmButton = {
                 Row(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .padding(10.dp)
                         .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End
+                    horizontalArrangement = Arrangement.End,
                 ) {
                     OutlinedButton(
                         onClick = {
                             onDismissRequest.invoke()
                             action.invoke(DigitalSignatureType.BASIC)
-                        }
+                        },
                     ) {
                         Text(stringResource(id = R.string.digitalSignatureTypeBasic))
                     }
@@ -80,12 +81,12 @@ fun SelectSignatureTypeDialog(dialogVisibility: Boolean, onDismissRequest: () ->
                         onClick = {
                             onDismissRequest.invoke()
                             action.invoke(DigitalSignatureType.CADES)
-                        }
+                        },
                     ) {
                         Text(stringResource(id = R.string.digitalSignatureTypePAdES))
                     }
                 }
-            }
+            },
         )
     }
 }
@@ -119,16 +120,17 @@ fun IpAddressDialog(dialogVisibility: Boolean, onDismissRequest: () -> Unit, act
             text = {
                 Column(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally
+                    horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
                     Text(
                         modifier = Modifier.padding(vertical = 10.dp),
                         textAlign = TextAlign.Center,
                         text = stringResource(R.string.ai_assistant_dialog_text),
-                        style = TextStyle(
+                        style =
+                        TextStyle(
                             fontWeight = FontWeight.W500,
-                            fontSize = 17.sp
-                        )
+                            fontSize = 17.sp,
+                        ),
                     )
 
                     TextField(
@@ -136,15 +138,15 @@ fun IpAddressDialog(dialogVisibility: Boolean, onDismissRequest: () -> Unit, act
                         value = localIpAddress,
                         placeholder = {
                             Text(
-                                text = stringResource(R.string.ai_assistant_dialog_textfield_placeholder)
+                                text = stringResource(R.string.ai_assistant_dialog_textfield_placeholder),
                             )
                         },
                         onValueChange = {
                             localIpAddress = it
-                        }
+                        },
                     )
                 }
-            }
+            },
         )
     }
 }

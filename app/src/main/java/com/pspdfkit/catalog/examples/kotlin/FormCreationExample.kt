@@ -46,7 +46,6 @@ import java.io.InputStream
  */
 class FormCreationExample(context: Context) :
     SdkExample(context, R.string.formCreationExampleTitle, R.string.formCreationExampleDescription) {
-
     private var documentProcessingDisposable: Disposable? = null
 
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
@@ -67,22 +66,26 @@ class FormCreationExample(context: Context) :
             throw IllegalStateException("Couldn't create Blank.pdf file.", exception)
         }
 
-        documentProcessingDisposable = PdfProcessor.processDocumentAsync(task, outputFile)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(outputFile))
-                        .configuration(configuration.build())
-                        .activityClass(FormCreationActivity::class)
-                        .build()
+        documentProcessingDisposable =
+            PdfProcessor
+                .processDocumentAsync(task, outputFile)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        val intent =
+                            PdfActivityIntentBuilder
+                                .fromUri(context, Uri.fromFile(outputFile))
+                                .configuration(configuration.build())
+                                .activityClass(FormCreationActivity::class)
+                                .build()
 
-                    context.startActivity(intent)
-                },
-                { throwable ->
-                    Log.e(TAG, "Error while trying to create PDF document.", throwable)
-                }
-            )
+                        context.startActivity(intent)
+                    },
+                    { throwable ->
+                        Log.e(TAG, "Error while trying to create PDF document.", throwable)
+                    },
+                )
     }
 
     override fun onDestroy() {
@@ -108,7 +111,6 @@ class FormCreationExample(context: Context) :
 }
 
 class FormCreationActivity : PdfActivity() {
-
     private val viewModel: AnnotationCreationViewModel by viewModels()
     private var getFormElementsDisposable: Disposable? = null
 
@@ -117,10 +119,11 @@ class FormCreationActivity : PdfActivity() {
 
         viewModel.createObjects {
             // Retrieve existing form elements and create form fields only when there are no forms.
-            getFormElementsDisposable = document.formProvider.formElementsAsync.subscribe { formElements ->
-                if (formElements.isNotEmpty()) return@subscribe
-                createForms()
-            }
+            getFormElementsDisposable =
+                document.formProvider.formElementsAsync.subscribe { formElements ->
+                    if (formElements.isNotEmpty()) return@subscribe
+                    createForms()
+                }
         }
     }
 
@@ -142,9 +145,11 @@ class FormCreationActivity : PdfActivity() {
      */
     private fun createTextFormField() {
         val rectF = RectF(30f, 750f, 200f, 720f)
-        val textFormConfiguration = TextFormConfiguration.Builder(0, rectF)
-            .setText("Example text")
-            .build()
+        val textFormConfiguration =
+            TextFormConfiguration
+                .Builder(0, rectF)
+                .setText("Example text")
+                .build()
         document?.formProvider?.addFormElementToPage("textfield-1", textFormConfiguration)
     }
 
@@ -153,14 +158,18 @@ class FormCreationActivity : PdfActivity() {
      */
     private fun createCheckBoxFormField() {
         val rectFCheckBoxFormConfiguration1 = RectF(30f, 650f, 60f, 620f)
-        val checkBoxFormConfiguration1 = CheckBoxFormConfiguration.Builder(0, rectFCheckBoxFormConfiguration1)
-            .select()
-            .build()
+        val checkBoxFormConfiguration1 =
+            CheckBoxFormConfiguration
+                .Builder(0, rectFCheckBoxFormConfiguration1)
+                .select()
+                .build()
 
         val rectFCheckBoxFormConfiguration2 = RectF(30f, 600f, 60f, 570f)
-        val checkBoxFormConfiguration2 = CheckBoxFormConfiguration.Builder(0, rectFCheckBoxFormConfiguration2)
-            .deselect()
-            .build()
+        val checkBoxFormConfiguration2 =
+            CheckBoxFormConfiguration
+                .Builder(0, rectFCheckBoxFormConfiguration2)
+                .deselect()
+                .build()
 
         val checkBoxFormConfigurationList = listOf(checkBoxFormConfiguration1, checkBoxFormConfiguration2)
         document?.formProvider?.addFormElementsToPage("checkboxfield-1", checkBoxFormConfigurationList)
@@ -171,14 +180,18 @@ class FormCreationActivity : PdfActivity() {
      */
     private fun createRadioButtonFormField() {
         val rectFRadioButtonFormConfiguration1 = RectF(30f, 500f, 60f, 470f)
-        val radioButtonFormConfiguration1 = RadioButtonFormConfiguration.Builder(0, rectFRadioButtonFormConfiguration1)
-            .select()
-            .build()
+        val radioButtonFormConfiguration1 =
+            RadioButtonFormConfiguration
+                .Builder(0, rectFRadioButtonFormConfiguration1)
+                .select()
+                .build()
 
         val rectFRadioButtonFormConfiguration2 = RectF(30f, 450f, 60f, 420f)
-        val radioButtonFormConfiguration2 = RadioButtonFormConfiguration.Builder(0, rectFRadioButtonFormConfiguration2)
-            .deselect()
-            .build()
+        val radioButtonFormConfiguration2 =
+            RadioButtonFormConfiguration
+                .Builder(0, rectFRadioButtonFormConfiguration2)
+                .deselect()
+                .build()
 
         val radioButtonFormConfigurationList = listOf(radioButtonFormConfiguration1, radioButtonFormConfiguration2)
         document?.formProvider?.addFormElementsToPage("radiobuttonfield-1", radioButtonFormConfigurationList)
@@ -192,13 +205,14 @@ class FormCreationActivity : PdfActivity() {
 
         val bitmapFromAsset = getBitmapFromAsset(assets, "images/android.png") ?: return
 
-        val pushButtonFormConfiguration = PushButtonFormConfiguration.Builder(
-            0,
-            rectFPushButtonFormConfiguration,
-            bitmapFromAsset
-        )
-            .setAction(UriAction("https://developer.android.com/index.html"))
-            .build()
+        val pushButtonFormConfiguration =
+            PushButtonFormConfiguration
+                .Builder(
+                    0,
+                    rectFPushButtonFormConfiguration,
+                    bitmapFromAsset,
+                ).setAction(UriAction("https://developer.android.com/index.html"))
+                .build()
 
         document?.formProvider?.addFormElementToPage("pushbuttonfield-1", pushButtonFormConfiguration)
     }
@@ -209,8 +223,10 @@ class FormCreationActivity : PdfActivity() {
     private fun createSignatureFormField() {
         val rectFSignatureFormConfiguration = RectF(30f, 190f, 200f, 160f)
 
-        val signatureFormConfiguration = SignatureFormConfiguration.Builder(0, rectFSignatureFormConfiguration)
-            .build()
+        val signatureFormConfiguration =
+            SignatureFormConfiguration
+                .Builder(0, rectFSignatureFormConfiguration)
+                .build()
 
         document?.formProvider?.addFormElementToPage("signaturefield-1", signatureFormConfiguration)
     }
@@ -220,15 +236,16 @@ class FormCreationActivity : PdfActivity() {
      */
     private fun createComboBoxFormField() {
         val rectFComboBoxFormConfiguration = RectF(350f, 650f, 520f, 620f)
-        val comboBoxFormConfiguration = ComboBoxFormConfiguration.Builder(0, rectFComboBoxFormConfiguration)
-            .setFormOptions(
-                listOf(
-                    FormOption("L1", "42"),
-                    FormOption("L2", "43")
-                )
-            )
-            .setCustomText("Custom text")
-            .build()
+        val comboBoxFormConfiguration =
+            ComboBoxFormConfiguration
+                .Builder(0, rectFComboBoxFormConfiguration)
+                .setFormOptions(
+                    listOf(
+                        FormOption("L1", "42"),
+                        FormOption("L2", "43"),
+                    ),
+                ).setCustomText("Custom text")
+                .build()
 
         document?.formProvider?.addFormElementToPage("comboboxfield-1", comboBoxFormConfiguration)
     }
@@ -238,18 +255,19 @@ class FormCreationActivity : PdfActivity() {
      */
     private fun createListBoxFormField() {
         val rectFListBoxFormConfiguration = RectF(350f, 500f, 520f, 420f)
-        val listBoxFormConfiguration = ListBoxFormConfiguration.Builder(0, rectFListBoxFormConfiguration)
-            .setFormOptions(
-                listOf(
-                    FormOption("L1", "42"),
-                    FormOption("L2", "43"),
-                    FormOption("L3", "44"),
-                    FormOption("L4", "45")
-                )
-            )
-            .setMultiSelectionEnabled(true)
-            .setSelectedIndexes(listOf(1, 2))
-            .build()
+        val listBoxFormConfiguration =
+            ListBoxFormConfiguration
+                .Builder(0, rectFListBoxFormConfiguration)
+                .setFormOptions(
+                    listOf(
+                        FormOption("L1", "42"),
+                        FormOption("L2", "43"),
+                        FormOption("L3", "44"),
+                        FormOption("L4", "45"),
+                    ),
+                ).setMultiSelectionEnabled(true)
+                .setSelectedIndexes(listOf(1, 2))
+                .build()
 
         document?.formProvider?.addFormElementToPage("listboxfield-1", listBoxFormConfiguration)
     }

@@ -72,10 +72,12 @@ class HideRevealAnnotationsCreationExample(context: Context) :
         }
         // Extract the document from the assets.
         extract("Classbook.pdf", title, context) { documentFile ->
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .configuration(configuration.build())
-                .activityClass(HideRevealAnnotationsCreationActivity::class)
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    .configuration(configuration.build())
+                    .activityClass(HideRevealAnnotationsCreationActivity::class)
+                    .build()
             context.startActivity(intent)
         }
     }
@@ -150,27 +152,29 @@ class HideRevealAnnotationsCreationActivity :
     }
 
     /** Set the corresponding action for every button in the toolbar. */
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            HIDE_ITEM_ID -> {
-                hideArea()
-                true
-            }
-            RESET_HIDE_ITEM_ID -> {
-                resetHideArea()
-                true
-            }
-            REVEAL_ITEM_ID -> {
-                revealArea()
-                true
-            }
-            RESET_REVEAL_ITEM_ID -> {
-                resetRevealArea()
-                true
-            }
-            else -> {
-                super.onOptionsItemSelected(item)
-            }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        HIDE_ITEM_ID -> {
+            hideArea()
+            true
+        }
+
+        RESET_HIDE_ITEM_ID -> {
+            resetHideArea()
+            true
+        }
+
+        REVEAL_ITEM_ID -> {
+            revealArea()
+            true
+        }
+
+        RESET_REVEAL_ITEM_ID -> {
+            resetRevealArea()
+            true
+        }
+
+        else -> {
+            super.onOptionsItemSelected(item)
         }
     }
 
@@ -193,9 +197,13 @@ class HideRevealAnnotationsCreationActivity :
     /** Adds a drawable provider which will serve the reveal area drawable for covering the page in black. */
     private fun addRevealAreaDrawableProvider(revealArea: SquareAnnotation?) {
         if (revealArea != null) {
-            revealAreaDrawableProvider = object : PdfDrawableProvider() {
-                override suspend fun getDrawablesForPage(context: Context, document: PdfDocument, @IntRange(from = 0) pageIndex: Int): List<PdfDrawable> {
-                    return mutableListOf<PdfDrawable>().apply {
+            revealAreaDrawableProvider =
+                object : PdfDrawableProvider() {
+                    override suspend fun getDrawablesForPage(
+                        context: Context,
+                        document: PdfDocument,
+                        @IntRange(from = 0) pageIndex: Int,
+                    ): List<PdfDrawable> = mutableListOf<PdfDrawable>().apply {
                         if (pageIndex == revealArea.pageIndex) {
                             val drawable = RevealAreaDrawable(document.getPageSize(pageIndex), revealArea)
                             revealAreaDrawable = drawable
@@ -203,7 +211,6 @@ class HideRevealAnnotationsCreationActivity :
                         }
                     }
                 }
-            }
             revealAreaDrawableProvider?.let {
                 requirePdfFragment().addDrawableProvider(it)
             }
@@ -243,9 +250,10 @@ class HideRevealAnnotationsCreationActivity :
         SquareAnnotation(pageIndex, rect).apply {
             hideArea = this
             fillColor = Color.BLACK
-            customData = JSONObject().apply {
-                put(HIDE_AREA_KEY, true)
-            }
+            customData =
+                JSONObject().apply {
+                    put(HIDE_AREA_KEY, true)
+                }
             addAnnotationToDocument(this)
             invalidateOptionsMenu()
         }
@@ -266,9 +274,10 @@ class HideRevealAnnotationsCreationActivity :
         SquareAnnotation(pageIndex, rect).apply {
             revealArea = this
             fillColor = Color.TRANSPARENT
-            customData = JSONObject().apply {
-                put(REVEAL_AREA_KEY, true)
-            }
+            customData =
+                JSONObject().apply {
+                    put(REVEAL_AREA_KEY, true)
+                }
             addAnnotationToDocument(this)
             addRevealAreaDrawableProvider(this)
             invalidateOptionsMenu()
@@ -355,7 +364,7 @@ class HideRevealAnnotationsCreationActivity :
                 bounds.top.toFloat(),
                 annotationScreenCoordinates.left,
                 bounds.bottom.toFloat(),
-                paint
+                paint,
             )
             // Top.
             canvas.drawRect(
@@ -363,7 +372,7 @@ class HideRevealAnnotationsCreationActivity :
                 bounds.top.toFloat(),
                 annotationScreenCoordinates.right,
                 annotationScreenCoordinates.top,
-                paint
+                paint,
             )
             // Right
             canvas.drawRect(
@@ -371,7 +380,7 @@ class HideRevealAnnotationsCreationActivity :
                 bounds.top.toFloat(),
                 bounds.right.toFloat(),
                 bounds.bottom.toFloat(),
-                paint
+                paint,
             )
             // Bottom
             canvas.drawRect(
@@ -379,7 +388,7 @@ class HideRevealAnnotationsCreationActivity :
                 annotationScreenCoordinates.bottom,
                 annotationScreenCoordinates.right,
                 bounds.bottom.toFloat(),
-                paint
+                paint,
             )
         }
 
@@ -417,13 +426,12 @@ class HideRevealAnnotationsCreationActivity :
         }
 
         @Deprecated("Deprecated in Java")
-        override fun getOpacity(): Int {
-            return PixelFormat.TRANSLUCENT
-        }
+        override fun getOpacity(): Int = PixelFormat.TRANSLUCENT
     }
 
     // These methods are part of the [ContextualToolbarLifecycleListener] interface, but are not required for this example.
     override fun onDisplayContextualToolbar(toolbar: ContextualToolbar<*>) = Unit
+
     override fun onRemoveContextualToolbar(toolbar: ContextualToolbar<*>) = Unit
 
     companion object {

@@ -36,81 +36,78 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 
 object Animations {
-
-    private const val sectionExpandingDuration = 250
+    private const val SECTION_EXPANDING_DURATION = 250
 
     fun catalogEnterAnimation() = slideInHorizontally()
 
     fun catalogExitAnimation() = slideOutHorizontally()
 
     @Composable
-    fun expandSectionButtonRotation(expanded: Boolean): State<Float> =
-        animateFloatAsState(
-            targetValue = if (expanded) -180f else 0f,
-            animationSpec = tween(
-                durationMillis = sectionExpandingDuration,
-                easing = FastOutSlowInEasing
-            )
-        )
+    fun expandSectionButtonRotation(expanded: Boolean): State<Float> = animateFloatAsState(
+        targetValue = if (expanded) -180f else 0f,
+        animationSpec =
+        tween(
+            durationMillis = SECTION_EXPANDING_DURATION,
+            easing = FastOutSlowInEasing,
+        ),
+    )
 
     @Composable
-    fun sectionExpandingAlpha(expanded: Boolean): State<Float> =
-        animateFloatAsState(
-            targetValue = if (expanded) 1.0f else AlphaDefs.title,
-            animationSpec = tween(
-                durationMillis = sectionExpandingDuration,
-                easing = LinearEasing
-            )
-        )
+    fun sectionExpandingAlpha(expanded: Boolean): State<Float> = animateFloatAsState(
+        targetValue = if (expanded) 1.0f else AlphaDefs.TITLE,
+        animationSpec =
+        tween(
+            durationMillis = SECTION_EXPANDING_DURATION,
+            easing = LinearEasing,
+        ),
+    )
 
     @Composable
-    fun sectionExpandingIconAlpha(expanded: Boolean): State<Float> =
-        animateFloatAsState(
-            targetValue = if (expanded) 1.0f else AlphaDefs.iconUnselected,
-            animationSpec = tween(
-                durationMillis = sectionExpandingDuration,
-                easing = LinearEasing
-            )
-        )
+    fun sectionExpandingIconAlpha(expanded: Boolean): State<Float> = animateFloatAsState(
+        targetValue = if (expanded) 1.0f else AlphaDefs.ICON_UNSELECTED,
+        animationSpec =
+        tween(
+            durationMillis = SECTION_EXPANDING_DURATION,
+            easing = LinearEasing,
+        ),
+    )
 
     @Composable
-    fun sectionExpandingColor(expanded: Boolean): State<Color> =
-        animateColorAsState(
-            targetValue = if (expanded) {
-                MaterialTheme.colorScheme.primary
-            } else {
-                MaterialTheme.colorScheme.onBackground
-            },
-            animationSpec = tween(
-                durationMillis = sectionExpandingDuration,
-                easing = LinearEasing
-            )
-        )
+    fun sectionExpandingColor(expanded: Boolean): State<Color> = animateColorAsState(
+        targetValue =
+        if (expanded) {
+            MaterialTheme.colorScheme.primary
+        } else {
+            MaterialTheme.colorScheme.onBackground
+        },
+        animationSpec =
+        tween(
+            durationMillis = SECTION_EXPANDING_DURATION,
+            easing = LinearEasing,
+        ),
+    )
 }
 
 @Composable
 @ExperimentalAnimationApi
-fun CircularReveal(
-    modifier: Modifier = Modifier,
-    isVisible: Boolean,
-    rippleOrigin: Offset,
-    content: @Composable () -> Unit
-) {
+fun CircularReveal(modifier: Modifier = Modifier, isVisible: Boolean, rippleOrigin: Offset, content: @Composable () -> Unit) {
     val height = 56.dp
-    val (widthInPx, heightInPx) = with(LocalConfiguration.current) {
-        with(LocalDensity.current) { screenWidthDp.dp.toPx() to height.toPx() }
-    }
+    val (widthInPx, heightInPx) =
+        with(LocalConfiguration.current) {
+            with(LocalDensity.current) { screenWidthDp.dp.toPx() to height.toPx() }
+        }
 
     // Calculate the minimum size needed for the ripple effect
     val maxRadiusPx = kotlin.math.hypot(widthInPx.toDouble(), heightInPx.toDouble())
     val backgroundColor = MaterialTheme.colorScheme.background
     val radius by animateFloatAsState(
         targetValue = if (isVisible) maxRadiusPx.toFloat() else 0f,
-        animationSpec = tween()
+        animationSpec = tween(),
     )
 
     Box(
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxWidth()
             .height(height)
             .background(Color.Transparent)
@@ -120,15 +117,15 @@ fun CircularReveal(
                 drawCircle(
                     color = backgroundColor,
                     radius = radius,
-                    center = Offset(size.width - rippleOrigin.x, rippleOrigin.y)
+                    center = Offset(size.width - rippleOrigin.x, rippleOrigin.y),
                 )
-            }
+            },
     ) {
         AnimatedVisibility(
             visible = isVisible,
             // Any animation other than fading looks wonky
             enter = fadeIn(),
-            exit = fadeOut()
+            exit = fadeOut(),
         ) {
             content()
         }

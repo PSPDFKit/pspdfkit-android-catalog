@@ -39,11 +39,7 @@ import kotlinx.coroutines.launch
  * The State within it serves as our single source of truth for anything state related.
  * This ViewModel should be the only way to access and mutate that state.
  */
-class CatalogViewModel(
-    application: Application,
-    private val dataStore: DataStore<Preferences>
-) : AndroidViewModel(application) {
-
+class CatalogViewModel(application: Application, private val dataStore: DataStore<Preferences>) : AndroidViewModel(application) {
     // Note that the MutableStateFlow is private. We only expose an immutable version for Composables to observe.
     private val mutableState = MutableStateFlow(State())
     val state = mutableState.asStateFlow()
@@ -53,16 +49,18 @@ class CatalogViewModel(
             val examples = getSectionsWithExamples(application.applicationContext)
             val preferencesSections = preferenceSections(application.applicationContext)
             val storedPreferences = dataStore.data.first()
-            val preferences = state.value.preferences.map { (preferenceKey, defaultValue) ->
-                val entry = storedPreferences[preferenceKey] ?: defaultValue
-                preferenceKey to entry
-            }.toMap()
+            val preferences =
+                state.value.preferences
+                    .map { (preferenceKey, defaultValue) ->
+                        val entry = storedPreferences[preferenceKey] ?: defaultValue
+                        preferenceKey to entry
+                    }.toMap()
 
             mutableState.mutate {
                 copy(
                     preferences = preferences,
                     examples = examples,
-                    preferenceSections = preferencesSections
+                    preferenceSections = preferencesSections,
                 )
             }
         }
@@ -70,25 +68,51 @@ class CatalogViewModel(
 
     fun dispatch(action: Action) {
         when (action) {
-            Action.CancelSearchButtonTapped -> onCancelSearchButtonTapped()
-            is Action.SearchQueryChanged -> onSearchQueryChanged(action.searchQuery)
-            is Action.PreferenceButtonTapped -> onPreferenceButtonTapped(action.key)
-            is Action.PreferenceChanged<*> -> viewModelScope.launch {
-                @Suppress("UNCHECKED_CAST")
-                val key = action.key as Preferences.Key<Any>
-                val value = action.value
-                dataStore.edit { preferences -> preferences[action.key] = value }
-                mutableState.mutate {
-                    copy(
-                        preferences = preferences.toMutableMap().apply { this[key] = value }
-                    )
+            Action.CancelSearchButtonTapped -> {
+                onCancelSearchButtonTapped()
+            }
+
+            is Action.SearchQueryChanged -> {
+                onSearchQueryChanged(action.searchQuery)
+            }
+
+            is Action.PreferenceButtonTapped -> {
+                onPreferenceButtonTapped(action.key)
+            }
+
+            is Action.PreferenceChanged<*> -> {
+                viewModelScope.launch {
+                    @Suppress("UNCHECKED_CAST")
+                    val key = action.key as Preferences.Key<Any>
+                    val value = action.value
+                    dataStore.edit { preferences -> preferences[action.key] = value }
+                    mutableState.mutate {
+                        copy(
+                            preferences = preferences.toMutableMap().apply { this[key] = value },
+                        )
+                    }
                 }
             }
-            Action.SearchButtonTapped -> onSearchButtonTapped()
-            Action.SettingsButtonTapped -> onSettingsButtonTapped()
-            Action.UpButtonTapped -> onUpButtonTapped()
-            is Action.ToggleExampleSection -> toggleExampleSection(action.sectionTitle)
-            is Action.TogglePreferenceSection -> togglePreferenceSection(action.sectionTitle)
+
+            Action.SearchButtonTapped -> {
+                onSearchButtonTapped()
+            }
+
+            Action.SettingsButtonTapped -> {
+                onSettingsButtonTapped()
+            }
+
+            Action.UpButtonTapped -> {
+                onUpButtonTapped()
+            }
+
+            is Action.ToggleExampleSection -> {
+                toggleExampleSection(action.sectionTitle)
+            }
+
+            is Action.TogglePreferenceSection -> {
+                togglePreferenceSection(action.sectionTitle)
+            }
         }
     }
 
@@ -171,18 +195,15 @@ class CatalogViewModel(
         mutableState.mutate {
             val oldQuery = (searchState as? SearchState.Visible)?.searchQuery ?: ""
             copy(
-                searchState = SearchState.Visible(searchQuery, oldQuery)
+                searchState = SearchState.Visible(searchQuery, oldQuery),
             )
         }
     }
 
     class Factory(private val application: Application, private val dataStore: DataStore<Preferences>) :
         ViewModelProvider.AndroidViewModelFactory(application) {
-
         @Suppress("UNCHECKED_CAST")
-        override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T {
-            return CatalogViewModel(application, dataStore) as T
-        }
+        override fun <T : ViewModel> create(modelClass: Class<T>, extras: CreationExtras): T = CatalogViewModel(application, dataStore) as T
     }
 
     private fun <T> MutableStateFlow<T>.mutate(mutateFunction: T.() -> T) {

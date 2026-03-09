@@ -40,11 +40,12 @@ import java.util.EnumSet
  * Shows how to use [com.pspdfkit.annotations.AnnotationFlags] to modify annotation
  * characteristics.
  */
-class AnnotationFlagsExample(context: Context) : SdkExample(
-    context,
-    R.string.annotationFlagsExampleTitle,
-    R.string.annotationFlagsExampleDescription
-) {
+class AnnotationFlagsExample(context: Context) :
+    SdkExample(
+        context,
+        R.string.annotationFlagsExampleTitle,
+        R.string.annotationFlagsExampleDescription,
+    ) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         configuration
             // Turn off saving, so we have the clean original document every time the example is
@@ -59,10 +60,12 @@ class AnnotationFlagsExample(context: Context) : SdkExample(
         ExtractAssetTask.extract(ANNOTATIONS_EXAMPLE, title, context) { documentFile ->
             // To start the AnnotationFlagsActivity create a launch intent using the
             // builder.
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .configuration(configuration.build())
-                .activityClass(AnnotationFlagsActivity::class.java)
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    .configuration(configuration.build())
+                    .activityClass(AnnotationFlagsActivity::class.java)
+                    .build()
 
             context.startActivity(intent)
         }
@@ -70,8 +73,9 @@ class AnnotationFlagsExample(context: Context) : SdkExample(
 }
 
 /** This example showcases supported [AnnotationFlags]. */
-class AnnotationFlagsActivity : PdfActivity(), ToolbarCoordinatorLayout.OnContextualToolbarLifecycleListener {
-
+class AnnotationFlagsActivity :
+    PdfActivity(),
+    ToolbarCoordinatorLayout.OnContextualToolbarLifecycleListener {
     override fun onPause() {
         super.onPause()
         setOnContextualToolbarLifecycleListener(null)
@@ -151,35 +155,45 @@ class AnnotationFlagsActivity : PdfActivity(), ToolbarCoordinatorLayout.OnContex
                 annotation.flags = EnumSet.of(AnnotationFlags.PRINT, AnnotationFlags.NOZOOM)
                 true
             }
+
             R.id.toggle_read_only_flag -> {
                 toggleAnnotationFlag(annotation, AnnotationFlags.READONLY)
                 true
             }
+
             R.id.toggle_hidden_flag -> {
                 toggleAnnotationFlag(annotation, AnnotationFlags.HIDDEN)
                 true
             }
+
             R.id.toggle_print_flag -> {
                 toggleAnnotationFlag(annotation, AnnotationFlags.PRINT)
                 true
             }
+
             R.id.toggle_no_view_flag -> {
                 toggleAnnotationFlag(annotation, AnnotationFlags.NOVIEW)
                 true
             }
+
             R.id.toggle_locked_flag -> {
                 toggleAnnotationFlag(annotation, AnnotationFlags.LOCKED)
                 true
             }
+
             R.id.toggle_locked_contents_flag -> {
                 toggleAnnotationFlag(annotation, AnnotationFlags.LOCKEDCONTENTS)
                 true
             }
+
             R.id.toggle_no_zoom_flag -> {
                 toggleAnnotationFlag(annotation, AnnotationFlags.NOZOOM)
                 true
             }
-            else -> super.onContextItemSelected(item)
+
+            else -> {
+                super.onContextItemSelected(item)
+            }
         }
     }
 
@@ -198,18 +212,20 @@ class AnnotationFlagsActivity : PdfActivity(), ToolbarCoordinatorLayout.OnContex
             val menuItems = toolbar.menuItems
 
             // Create our custom menu item.
-            val settingsDrawable: Drawable = ContextCompat.getDrawable(this, R.drawable.ic_settings)
-                ?: return
-            val customItem = ContextualToolbarMenuItem.createSingleItem(
-                this,
-                R.id.pspdf_menu_custom,
-                settingsDrawable,
-                "Annotation flags",
-                Color.MAGENTA,
-                Color.CYAN,
-                ContextualToolbarMenuItem.Position.END,
-                false
-            )
+            val settingsDrawable: Drawable =
+                ContextCompat.getDrawable(this, R.drawable.ic_settings)
+                    ?: return
+            val customItem =
+                ContextualToolbarMenuItem.createSingleItem(
+                    this,
+                    R.id.pspdf_menu_custom,
+                    settingsDrawable,
+                    "Annotation flags",
+                    Color.MAGENTA,
+                    Color.CYAN,
+                    ContextualToolbarMenuItem.Position.END,
+                    false,
+                )
             // Register it to for context menu.
             registerForContextMenu(customItem)
 
@@ -250,9 +266,10 @@ class AnnotationFlagsActivity : PdfActivity(), ToolbarCoordinatorLayout.OnContex
 
         CoroutineScope(Dispatchers.Main).launch {
             try {
-                val annotations = doc.annotationProvider.getAllAnnotationsOfType(
-                    EnumSet.allOf(AnnotationType::class.java)
-                )
+                val annotations =
+                    doc.annotationProvider.getAllAnnotationsOfType(
+                        EnumSet.allOf(AnnotationType::class.java),
+                    )
                 annotations.forEach { annotation -> annotation.flags = newFlags }
             } catch (e: Exception) {
                 Log.e(LOG_TAG, "Failed to set flags on annotations", e)

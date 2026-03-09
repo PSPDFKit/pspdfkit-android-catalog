@@ -30,10 +30,12 @@ class RotatePageExample(context: Context) : SdkExample(context, R.string.rotateP
 
         // Start the activity once the example document has been extracted from the app's assets.
         ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .configuration(configuration.build())
-                .activityClass(RotatePageActivity::class.java)
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    .configuration(configuration.build())
+                    .activityClass(RotatePageActivity::class.java)
+                    .build()
 
             // Start the RotatePageActivity for the extracted document.
             context.startActivity(intent)
@@ -57,17 +59,19 @@ class RotatePageActivity : PdfActivity() {
     /**
      * Handles clicks on the navigation option menu items.
      */
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.rotateClockwise -> {
-                rotatePage(pageIndex, 90)
-                true
-            }
-            R.id.rotateCounterClockwise -> {
-                rotatePage(pageIndex, -90)
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.rotateClockwise -> {
+            rotatePage(pageIndex, 90)
+            true
+        }
+
+        R.id.rotateCounterClockwise -> {
+            rotatePage(pageIndex, -90)
+            true
+        }
+
+        else -> {
+            super.onOptionsItemSelected(item)
         }
     }
 
@@ -88,13 +92,14 @@ class RotatePageActivity : PdfActivity() {
             newRotation -= 360
         }
 
-        newRotation = when (newRotation) {
-            0 -> PdfDocument.NO_ROTATION
-            90 -> PdfDocument.ROTATION_90
-            180 -> PdfDocument.ROTATION_180
-            270 -> PdfDocument.ROTATION_270
-            else -> return
-        }
+        newRotation =
+            when (newRotation) {
+                0 -> PdfDocument.NO_ROTATION
+                90 -> PdfDocument.ROTATION_90
+                180 -> PdfDocument.ROTATION_180
+                270 -> PdfDocument.ROTATION_270
+                else -> return
+            }
 
         // Applies a temporary rotation to the specified page of the document.
         // This will change the size reported by the document to match the new rotation.

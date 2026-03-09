@@ -33,9 +33,11 @@ class DarkThemeExample(context: Context) : SdkExample(context, R.string.darkThem
             //     android:theme="@style/PSPDFCatalog.Theme.Dark" />
 
             // To start the DarkThemeActivity create a launch intent using the PdfActivityIntentBuilder
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .configuration(configuration.build())
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    .configuration(configuration.build())
+                    .build()
 
             // Start the DarkThemeActivity for the extracted document.
             context.startActivity(intent)

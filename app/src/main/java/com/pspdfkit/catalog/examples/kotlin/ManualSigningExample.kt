@@ -37,8 +37,8 @@ import java.security.Signature
 /**
  * An example showing how to leverage customSigning functionality in [SigningManager] to digitally sign document manually.
  * */
-class ManualSigningExample(context: Context) : SdkExample(context, R.string.manualSigningExampleTitle, R.string.manualSigningExampleDescription) {
-
+class ManualSigningExample(context: Context) :
+    SdkExample(context, R.string.manualSigningExampleTitle, R.string.manualSigningExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         val assetName = "Form_example.pdf"
 
@@ -51,56 +51,61 @@ class ManualSigningExample(context: Context) : SdkExample(context, R.string.manu
         outputFile.delete() // make sure output is deleted from previous runs.
 
         /** Configure the appearance of the signature using [SignatureAppearance] **/
-        val appearance = SignatureAppearance(
-            signatureAppearanceMode = SignatureAppearanceMode.SIGNATURE_ONLY
-        )
-        val metadata = DigitalSignatureMetadata(
-            signatureAppearance = appearance,
-            timestampData = TimestampData("https://freetsa.org/tsr")
-        )
+        val appearance =
+            SignatureAppearance(
+                signatureAppearanceMode = SignatureAppearanceMode.SIGNATURE_ONLY,
+            )
+        val metadata =
+            DigitalSignatureMetadata(
+                signatureAppearance = appearance,
+                timestampData = TimestampData("https://freetsa.org/tsr"),
+            )
 
         /** [SignerOptions] contains all the required configuration for [SigningManager]*/
-        val signerOptions = SignerOptions.Builder(signatureFormFields[0], Uri.fromFile(outputFile))
-            .setCertificates(certificates)
-            .setSignatureMetadata(metadata)
-            .setType(digitalSignatureType)
-            .build()
+        val signerOptions =
+            SignerOptions
+                .Builder(signatureFormFields[0], Uri.fromFile(outputFile))
+                .setCertificates(certificates)
+                .setSignatureMetadata(metadata)
+                .setType(digitalSignatureType)
+                .build()
 
-        /** [SignerOptions] contains all the required configuration for [SigningManager]*/
+        // [SignerOptions] contains all the required configuration for [SigningManager]
         SigningManager.signDocument(
             context = context,
             signerOptions = signerOptions,
             customSigning = { data, hashAlgorithm ->
-                /** Here we are manually signing ByteArray with provided hashAlgorithm and private key, this is a mandatory step if
-                 * customer doesn't provide private key in [SignerOptions] */
+                // Here we are manually signing ByteArray with provided hashAlgorithm and private key,
+                // this is a mandatory step if customer doesn't provide private key in [SignerOptions]
                 data.signData(privateKey, hashAlgorithm)
             },
             onFailure = { e ->
                 Toast.makeText(context, "Error launching example. See logcat for details.", Toast.LENGTH_SHORT).show()
                 PdfLog.e("ManualSigningExample", e, "Error while launching example.")
-            }
+            },
         ) {
             val signedDocument = Uri.fromFile(outputFile)
             // Load and show the signed document.
-            val intent = PdfActivityIntentBuilder.fromUri(context, signedDocument)
-                .configuration(configuration.build())
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, signedDocument)
+                    .configuration(configuration.build())
+                    .build()
             context.startActivity(intent)
         }
     }
 
     private fun ByteArray.signData(privateKey: PrivateKey, hashAlgorithm: String?): ByteArray = try {
-        /** We are using the [Signature] class from java.security package, to sign the byte arrays.*/
+        // We are using the [Signature] class from java.security package, to sign the byte arrays.
 
-        /** The signature algorithm can be, among others, the NIST standard DSA, using DSA and SHA-256.
-         *  The DSA algorithm using the SHA-256 message digest algorithm can be specified as SHA256withDSA.
-         *  In the case of RSA the signing algorithm could be specified as, for example, SHA256withRSA.
-         *  The algorithm name must be specified, as there is no default.
-         *
-         *  Here 'hashAlgorithm' is SHA256 and 'key.algorithm' is RSA
-         *  providing algorithm as SHA256withRSA
-         *  for more details visit https://docs.oracle.com/javase/8/docs/api/java/security/Signature.html
-         **/
+        // The signature algorithm can be, among others, the NIST standard DSA, using DSA and SHA-256.
+        // The DSA algorithm using the SHA-256 message digest algorithm can be specified as SHA256withDSA.
+        // In the case of RSA the signing algorithm could be specified as, for example, SHA256withRSA.
+        // The algorithm name must be specified, as there is no default.
+        //
+        // Here 'hashAlgorithm' is SHA256 and 'key.algorithm' is RSA
+        // providing algorithm as SHA256withRSA
+        // for more details visit https://docs.oracle.com/javase/8/docs/api/java/security/Signature.html
         val algorithm = "${hashAlgorithm}with${privateKey.algorithm}"
 
         Signature.getInstance(algorithm).run {

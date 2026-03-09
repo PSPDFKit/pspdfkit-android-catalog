@@ -29,10 +29,11 @@ fun SpacerLine() {
     }
 
     Spacer(
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxWidth()
             .height(1.dp)
-            .background(color = spacerColor.value)
+            .background(color = spacerColor.value),
     )
 }
 
@@ -41,10 +42,11 @@ fun SpacerTransparentFooter() {
     val height = remember { Dimens.preferencesSpacerHeight }
 
     Spacer(
-        modifier = Modifier
+        modifier =
+        Modifier
             .height(height.value.dp)
             .fillMaxWidth()
-            .background(Color.Transparent)
+            .background(Color.Transparent),
     )
 }
 
@@ -53,9 +55,10 @@ fun SpacerExamplesHeader() {
     val height = remember { Dimens.examplesSpacerHeight }
 
     Spacer(
-        modifier = Modifier
+        modifier =
+        Modifier
             .height(height.value.dp)
             .fillMaxWidth()
-            .background(MaterialTheme.colorScheme.background)
+            .background(MaterialTheme.colorScheme.background),
     )
 }

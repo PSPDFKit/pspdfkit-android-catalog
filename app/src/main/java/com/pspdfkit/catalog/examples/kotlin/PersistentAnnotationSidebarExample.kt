@@ -43,7 +43,8 @@ import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
 import java.util.EnumSet
 
-class PersistentAnnotationSidebarExample(context: Context) : SdkExample(context, R.string.annotationSidebarExampleTitle, R.string.annotationSidebarExampleDescription) {
+class PersistentAnnotationSidebarExample(context: Context) :
+    SdkExample(context, R.string.annotationSidebarExampleTitle, R.string.annotationSidebarExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // We don't need to show it in the outline since we will build our own UI for this.
         configuration.annotationListEnabled(false)
@@ -67,7 +68,6 @@ class PersistentAnnotationSidebarExample(context: Context) : SdkExample(context,
 }
 
 class PersistentAnnotationSidebarActivity : AppCompatActivity() {
-
     /** The adapter we use for our recycler view. */
     private val annotationRecyclerAdapter = AnnotationRecyclerAdapter(this)
 
@@ -86,23 +86,24 @@ class PersistentAnnotationSidebarActivity : AppCompatActivity() {
         recyclerView.adapter = annotationRecyclerAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-        annotationRecyclerAdapter.annotationRecyclerAdapterListener = object : AnnotationRecyclerAdapter.AnnotationRecyclerAdapterListener {
-            override fun onAnnotationClicked(annotation: Annotation) {
-                // When an annotation is clicked we scroll to the page containing it.
-                // And also select the annotation for editing if possible.
-                pdfUiFragment.setPageIndex(annotation.pageIndex, true)
-                pdfUiFragment.pdfFragment?.setSelectedAnnotation(annotation)
-            }
+        annotationRecyclerAdapter.annotationRecyclerAdapterListener =
+            object : AnnotationRecyclerAdapter.AnnotationRecyclerAdapterListener {
+                override fun onAnnotationClicked(annotation: Annotation) {
+                    // When an annotation is clicked we scroll to the page containing it.
+                    // And also select the annotation for editing if possible.
+                    pdfUiFragment.setPageIndex(annotation.pageIndex, true)
+                    pdfUiFragment.pdfFragment?.setSelectedAnnotation(annotation)
+                }
 
-            override fun onAnnotationsLoaded(annotations: List<Annotation>) {
-                // We want to show a short description of what's going on if there are no annotations.
-                if (annotations.isEmpty()) {
-                    noAnnotationsView.visibility = View.VISIBLE
-                } else {
-                    noAnnotationsView.visibility = View.GONE
+                override fun onAnnotationsLoaded(annotations: List<Annotation>) {
+                    // We want to show a short description of what's going on if there are no annotations.
+                    if (annotations.isEmpty()) {
+                        noAnnotationsView.visibility = View.VISIBLE
+                    } else {
+                        noAnnotationsView.visibility = View.GONE
+                    }
                 }
             }
-        }
 
         window.setBackgroundDrawableResource(R.color.primaryLight)
 
@@ -115,7 +116,8 @@ class PersistentAnnotationSidebarActivity : AppCompatActivity() {
         // We either grab the existing fragment or add a new one.
         pdfUiFragment = supportFragmentManager.findFragmentByTag(FRAGMENT_TAG) as? PdfUiFragment
             // There is no existing fragment, create a new one.
-            ?: PdfUiFragmentBuilder.fromUri(this, intent.extras!!.getSupportParcelable(EXTRA_URI, Uri::class.java))
+            ?: PdfUiFragmentBuilder
+                .fromUri(this, intent.extras!!.getSupportParcelable(EXTRA_URI, Uri::class.java))
                 .configuration(intent.extras!!.getSupportParcelable(EXTRA_CONFIGURATION, PdfActivityConfiguration::class.java))
                 .build()
                 .apply {
@@ -127,44 +129,44 @@ class PersistentAnnotationSidebarActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         // We need to be notified when the document was loaded.
-        pdfUiFragment.pdfFragment?.addDocumentListener(object : DocumentListener {
-            override fun onDocumentLoaded(document: PdfDocument) {
-                // When the document is loaded clear the previous annotations.
-                annotationRecyclerAdapter.clear()
+        pdfUiFragment.pdfFragment?.addDocumentListener(
+            object : DocumentListener {
+                override fun onDocumentLoaded(document: PdfDocument) {
+                    // When the document is loaded clear the previous annotations.
+                    annotationRecyclerAdapter.clear()
 
-                // We need to set the current document so we can load the annotations.
-                annotationRecyclerAdapter.currentDocument = document
+                    // We need to set the current document so we can load the annotations.
+                    annotationRecyclerAdapter.currentDocument = document
 
-                // We need to be aware of any change to the annotations so we can keep our list updated.
-                pdfUiFragment.pdfFragment?.addOnAnnotationUpdatedListener(object : AnnotationProvider.OnAnnotationUpdatedListener {
-                    override fun onAnnotationCreated(annotation: Annotation) {
-                        annotationRecyclerAdapter.refreshAnnotationsForPage(annotation.pageIndex)
-                    }
+                    // We need to be aware of any change to the annotations so we can keep our list updated.
+                    pdfUiFragment.pdfFragment?.addOnAnnotationUpdatedListener(
+                        object : AnnotationProvider.OnAnnotationUpdatedListener {
+                            override fun onAnnotationCreated(annotation: Annotation) {
+                                annotationRecyclerAdapter.refreshAnnotationsForPage(annotation.pageIndex)
+                            }
 
-                    override fun onAnnotationUpdated(annotation: Annotation) {
-                        annotationRecyclerAdapter.refreshAnnotationsForPage(annotation.pageIndex)
-                    }
+                            override fun onAnnotationUpdated(annotation: Annotation) {
+                                annotationRecyclerAdapter.refreshAnnotationsForPage(annotation.pageIndex)
+                            }
 
-                    override fun onAnnotationRemoved(annotation: Annotation) {
-                        annotationRecyclerAdapter.refreshAnnotationsForPage(annotation.pageIndex)
-                    }
+                            override fun onAnnotationRemoved(annotation: Annotation) {
+                                annotationRecyclerAdapter.refreshAnnotationsForPage(annotation.pageIndex)
+                            }
 
-                    override fun onAnnotationZOrderChanged(
-                        pageIndex: Int,
-                        oldOrder: List<Annotation>,
-                        newOrder: List<Annotation>
-                    ) {
+                            override fun onAnnotationZOrderChanged(pageIndex: Int, oldOrder: List<Annotation>, newOrder: List<Annotation>) {
+                                annotationRecyclerAdapter.refreshAnnotationsForPage(pageIndex)
+                            }
+                        },
+                    )
+
+                    // We also need to initialize the list of annotations to begin with.
+                    // This is a bit ineffective since we refresh the RecyclerView adapter for each page but this is fine for our small example.
+                    for (pageIndex in 0 until document.pageCount) {
                         annotationRecyclerAdapter.refreshAnnotationsForPage(pageIndex)
                     }
-                })
-
-                // We also need to initialize the list of annotations to begin with.
-                // This is a bit ineffective since we refresh the RecyclerView adapter for each page but this is fine for our small example.
-                for (pageIndex in 0 until document.pageCount) {
-                    annotationRecyclerAdapter.refreshAnnotationsForPage(pageIndex)
                 }
-            }
-        })
+            },
+        )
     }
 
     override fun onDestroy() {
@@ -182,7 +184,6 @@ class PersistentAnnotationSidebarActivity : AppCompatActivity() {
 }
 
 class AnnotationRecyclerAdapter(private val context: Context) : RecyclerView.Adapter<AnnotationRecyclerAdapterViewHolder>() {
-
     /** We keep a list of all annotations we display for easy access. */
     private val displayedItems = mutableListOf<Annotation>()
 
@@ -196,11 +197,12 @@ class AnnotationRecyclerAdapter(private val context: Context) : RecyclerView.Ada
     var annotationRecyclerAdapterListener: AnnotationRecyclerAdapterListener? = null
 
     // We only list certain annotation types.
-    private val listedAnnotationTypes = AnnotationType.entries.toMutableSet().apply {
-        // We don't want to clutter the list with widget or link annotations.
-        remove(AnnotationType.WIDGET)
-        remove(AnnotationType.LINK)
-    }
+    private val listedAnnotationTypes =
+        AnnotationType.entries.toMutableSet().apply {
+            // We don't want to clutter the list with widget or link annotations.
+            remove(AnnotationType.WIDGET)
+            remove(AnnotationType.LINK)
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AnnotationRecyclerAdapterViewHolder {
         val root = LayoutInflater.from(context).inflate(R.layout.item_annotation, parent, false)
@@ -241,11 +243,12 @@ class AnnotationRecyclerAdapter(private val context: Context) : RecyclerView.Ada
 
         // We grab the annotations for the current page index.
         // This operates on a background scheduler so we have to explicitly observe it on the main thread.
-        loadingJobs[pageIndex] = adapterScope.launch {
-            val annotations = document.annotationProvider.getAllAnnotationsOfType(listedAnnotationTypes, pageIndex, 1)
-            annotationsPerPage[pageIndex] = annotations
-            refreshDisplayedItems()
-        }
+        loadingJobs[pageIndex] =
+            adapterScope.launch {
+                val annotations = document.annotationProvider.getAllAnnotationsOfType(listedAnnotationTypes, pageIndex, 1)
+                annotationsPerPage[pageIndex] = annotations
+                refreshDisplayedItems()
+            }
     }
 
     @SuppressLint("NotifyDataSetChanged")

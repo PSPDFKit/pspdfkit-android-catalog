@@ -15,7 +15,6 @@ import android.util.Log
  * debug source set; release builds call into this no-op wrapper safely.
  */
 object NutrientReporting {
-
     private const val DEBUG_IMPLEMENTATION = "com.pspdfkit.catalog.DebugNutrientReporting"
     private const val INITIALIZER_METHOD = "initializeBugReporting"
 

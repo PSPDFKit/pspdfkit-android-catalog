@@ -40,11 +40,9 @@ import com.pspdfkit.ui.PdfActivityIntentBuilder
 import java.io.File
 import kotlin.getValue
 
-class AnnotationWithAlphaCreationExample(context: Context) : SdkExample(context, R.string.annotationWithAlphaCreationExampleTitle, R.string.annotationWithAlphaCreationExampleDescription) {
-    override fun launchExample(
-        context: Context,
-        configuration: PdfActivityConfiguration.Builder
-    ) {
+class AnnotationWithAlphaCreationExample(context: Context) :
+    SdkExample(context, R.string.annotationWithAlphaCreationExampleTitle, R.string.annotationWithAlphaCreationExampleDescription) {
+    override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         configuration // Turn off saving, so we have the clean original document every time the example is
             // launched.
             .autosaveEnabled(false)
@@ -61,18 +59,19 @@ class AnnotationWithAlphaCreationExample(context: Context) : SdkExample(context,
             title,
             context,
             OnDocumentExtractedListener { documentFile: File? ->
-                val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                    .configuration(configuration.build())
-                    .activityClass(AnnotationWithAlphaCreationActivity::class.java)
-                    .build()
+                val intent =
+                    PdfActivityIntentBuilder
+                        .fromUri(context, Uri.fromFile(documentFile))
+                        .configuration(configuration.build())
+                        .activityClass(AnnotationWithAlphaCreationActivity::class.java)
+                        .build()
                 context.startActivity(intent)
-            }
+            },
         )
     }
 }
 
 class AnnotationWithAlphaCreationActivity : PdfActivity() {
-
     private val viewModel: AnnotationCreationViewModel by viewModels()
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -139,11 +138,7 @@ class AnnotationWithAlphaCreationActivity : PdfActivity() {
         addAnnotationToPage(noteAnnotation)
     }
 
-    private fun createHighlightAnnotation(
-        @IntRange(from = 0) pageIndex: Int,
-        highlightedText: String,
-        @ColorInt color: Int
-    ) {
+    private fun createHighlightAnnotation(@IntRange(from = 0) pageIndex: Int, highlightedText: String, @ColorInt color: Int) {
         val document = document
         // Find the provided text on the current page.
         val textPosition = document!!.getPageText(pageIndex).indexOf(highlightedText)
@@ -160,7 +155,8 @@ class AnnotationWithAlphaCreationActivity : PdfActivity() {
 
             addAnnotationToPage(highlightAnnotation)
         } else {
-            Toast.makeText(this, "Can't find the text to highlight.", Toast.LENGTH_SHORT)
+            Toast
+                .makeText(this, "Can't find the text to highlight.", Toast.LENGTH_SHORT)
                 .show()
         }
     }
@@ -197,10 +193,11 @@ class AnnotationWithAlphaCreationActivity : PdfActivity() {
     }
 
     private fun createPolyline(@IntRange(from = 0) pageIndex: Int) {
-        val polylineAnnotation = PolylineAnnotation(
-            pageIndex,
-            listOf(PointF(400f, 200f), PointF(500f, 200f), PointF(500f, 150f))
-        )
+        val polylineAnnotation =
+            PolylineAnnotation(
+                pageIndex,
+                listOf(PointF(400f, 200f), PointF(500f, 200f), PointF(500f, 150f)),
+            )
 
         polylineAnnotation.alpha = ALPHA
         polylineAnnotation.color = Color.RED
@@ -210,10 +207,11 @@ class AnnotationWithAlphaCreationActivity : PdfActivity() {
     }
 
     private fun createPolygon(@IntRange(from = 0) pageIndex: Int) {
-        val polygonAnnotation = PolygonAnnotation(
-            pageIndex,
-            listOf(PointF(600f, 600f), PointF(600f, 500f), PointF(500f, 550f))
-        )
+        val polygonAnnotation =
+            PolygonAnnotation(
+                pageIndex,
+                listOf(PointF(600f, 600f), PointF(600f, 500f), PointF(500f, 550f)),
+            )
 
         polygonAnnotation.alpha = ALPHA
         polygonAnnotation.color = Color.RED

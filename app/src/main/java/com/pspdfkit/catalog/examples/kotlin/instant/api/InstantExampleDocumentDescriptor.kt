@@ -26,5 +26,5 @@ data class InstantExampleDocumentDescriptor(
     val documentCode: String,
     /** Web preview url.  */
     @com.google.gson.annotations.SerializedName("url")
-    val webUrl: String
+    val webUrl: String,
 ) : Parcelable

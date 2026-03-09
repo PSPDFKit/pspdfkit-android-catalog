@@ -9,7 +9,4 @@
 
 package com.pspdfkit.catalog.barcodescanner
 
-data class ScanState(
-    val qrValue: String? = null,
-    val error: Throwable? = null
-)
+data class ScanState(val qrValue: String? = null, val error: Throwable? = null)

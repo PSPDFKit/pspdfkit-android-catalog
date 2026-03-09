@@ -18,15 +18,12 @@ import com.pspdfkit.ui.PdfActivity
 /**
  * This example shows how to open a demo image document from the assets folder.
  */
-class ImageDocumentExample(context: Context) : AssetExample(context, R.string.imageDocumentExampleTitle, R.string.imageDocumentExampleDescription) {
-
+class ImageDocumentExample(context: Context) :
+    AssetExample(context, R.string.imageDocumentExampleTitle, R.string.imageDocumentExampleDescription) {
     override val assetPath: String
         get() = "images/android.png"
 
-    override fun launchExample(
-        context: Context,
-        configuration: PdfActivityConfiguration.Builder
-    ) {
+    override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // We start off with the filename (or path) of an image document inside the app's assets.
         val assetPath = assetPath
 
@@ -44,7 +41,7 @@ class ImageDocumentExample(context: Context) : AssetExample(context, R.string.im
             PdfActivity.showImage(
                 context,
                 Uri.fromFile(documentFile),
-                imageDocumentConfiguration
+                imageDocumentConfiguration,
             )
         }
     }

@@ -38,7 +38,8 @@ import java.util.EnumSet
  * included. You can always reapply the changes by tapping import, but the example works best if you
  * close the example and reopen it before importing (so the document's original state is restored).
  */
-class DocumentJsonExample(context: Context) : SdkExample(context, R.string.documentJsonExampleTitle, R.string.documentJsonExampleDescription) {
+class DocumentJsonExample(context: Context) :
+    SdkExample(context, R.string.documentJsonExampleTitle, R.string.documentJsonExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // Disable auto-save so we get the original document when example is opened.
         configuration.autosaveEnabled(false)
@@ -57,10 +58,12 @@ class DocumentJsonExample(context: Context) : SdkExample(context, R.string.docum
 
         // Load and show the a custom activity for importing and exporting document JSON.
         ExtractAssetTask.extract(ANNOTATIONS_EXAMPLE, title, context, false) { documentFile ->
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .activityClass(DocumentJsonExampleActivity::class)
-                .configuration(configuration.build())
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    .activityClass(DocumentJsonExampleActivity::class)
+                    .configuration(configuration.build())
+                    .build()
             context.startActivity(intent)
         }
     }
@@ -69,12 +72,12 @@ class DocumentJsonExample(context: Context) : SdkExample(context, R.string.docum
 /**
  * This activity allows editing of annotations and exporting and importing of changes
  * to an Instant Document JSON file on the external storage.
+ *
+ * We're temporarily suppressing the warning for startActivityForResult being deprecated.
+ * Issue: https://github.com/PSPDFKit/PSPDFKit/issues/31881
  */
-// We're temporarily suppressing the warning for startActivityForResult being deprecated.
-// Issue: https://github.com/PSPDFKit/PSPDFKit/issues/31881
 @Suppress("DEPRECATION")
 class DocumentJsonExampleActivity : PdfActivity() {
-
     /** Adds import/export actions to the toolbar.  */
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         super.onCreateOptionsMenu(menu)
@@ -82,17 +85,19 @@ class DocumentJsonExampleActivity : PdfActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.import_json -> {
-                pickFileForJsonImport()
-                true
-            }
-            R.id.export_json -> {
-                pickFileForJsonExport()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.import_json -> {
+            pickFileForJsonImport()
+            true
+        }
+
+        R.id.export_json -> {
+            pickFileForJsonExport()
+            true
+        }
+
+        else -> {
+            super.onOptionsItemSelected(item)
         }
     }
 
@@ -136,16 +141,17 @@ class DocumentJsonExampleActivity : PdfActivity() {
     private fun exportDocumentJson(uri: Uri) {
         val document = document ?: return
 
-        val outputStream = try {
-            contentResolver.openOutputStream(uri)
-        } catch (e: Throwable) {
-            Toast.makeText(this, "Error while opening '$uri' for export. See logcat for more info.", Toast.LENGTH_LONG).show()
-            Log.e(TAG, "Error while opening '$uri' for export", e)
-            return
-        } ?: run {
-            Toast.makeText(this, "Error while opening '$uri' for export.", Toast.LENGTH_LONG).show()
-            return
-        }
+        val outputStream =
+            try {
+                contentResolver.openOutputStream(uri)
+            } catch (e: Throwable) {
+                Toast.makeText(this, "Error while opening '$uri' for export. See logcat for more info.", Toast.LENGTH_LONG).show()
+                Log.e(TAG, "Error while opening '$uri' for export", e)
+                return
+            } ?: run {
+                Toast.makeText(this, "Error while opening '$uri' for export.", Toast.LENGTH_LONG).show()
+                return
+            }
 
         lifecycleScope.launch {
             try {

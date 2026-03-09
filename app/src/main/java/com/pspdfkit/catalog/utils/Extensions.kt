@@ -13,24 +13,27 @@ import androidx.annotation.AttrRes
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 
-fun String.firstCharacterUpperCase(): String {
-    return this
-        .lowercase()
-        .replaceFirstChar { char -> char.uppercase() }
-}
+fun String.firstCharacterUpperCase(): String = this
+    .lowercase()
+    .replaceFirstChar { char -> char.uppercase() }
 
 fun SdkExample.isDigitalSignatureExample(context: Context) = when (this.title) {
     context.getString(R.string.digitalSignatureExampleTitle),
     context.getString(R.string.manualSigningExampleTitle),
     context.getString(R.string.twoStepSigningExampleTitle),
-    context.getString(R.string.thirdPartySigningExampleTitle) -> true
+    context.getString(R.string.thirdPartySigningExampleTitle),
+    -> true
+
     else -> false
 }
+
 fun SdkExample.isAiAssistantExample(context: Context) = when (this.title) {
     context.getString(R.string.aiAssistantViewPagerExampleTitle),
     context.getString(R.string.aiAssistantTabbedDocumentExampleTitle),
     context.getString(R.string.jetpackAiAssistantMultiDocExampleTitle),
-    context.getString(R.string.jetpackAiAssistantExampleTitle) -> true
+    context.getString(R.string.jetpackAiAssistantExampleTitle),
+    -> true
+
     else -> false
 }
 

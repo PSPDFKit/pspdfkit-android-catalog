@@ -48,12 +48,13 @@ import kotlin.math.ceil
  * This example shows how to use the [PdfProcessor] to split a document, remove annotations from
  * the document, and flatten annotations on a document.
  */
-class DocumentProcessingExample(context: Context) : SdkExample(context, R.string.documentProcessingExampleTitle, R.string.documentProcessingExampleDescription) {
-
+class DocumentProcessingExample(context: Context) :
+    SdkExample(context, R.string.documentProcessingExampleTitle, R.string.documentProcessingExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // This example uses a custom activity which showcases several document processing features.
         // For the sake of simplicity, deactivate actions in the processing activity.
-        configuration.annotationListEnabled(false)
+        configuration
+            .annotationListEnabled(false)
             .searchEnabled(false)
             .outlineEnabled(false)
             .thumbnailGridEnabled(false)
@@ -66,10 +67,12 @@ class DocumentProcessingExample(context: Context) : SdkExample(context, R.string
             val documentUri2 = Uri.fromFile(documentFile)
 
             // To start the DocumentProcessingExampleActivity create a launch intent using the builder.
-            val intent = PdfActivityIntentBuilder.fromUri(context, documentUri1, documentUri2)
-                .configuration(configuration.build())
-                .activityClass(DocumentProcessingExampleActivity::class)
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, documentUri1, documentUri2)
+                    .configuration(configuration.build())
+                    .activityClass(DocumentProcessingExampleActivity::class)
+                    .build()
             context.startActivity(intent)
         }
     }
@@ -80,7 +83,6 @@ class DocumentProcessingExample(context: Context) : SdkExample(context, R.string
  * on a document.
  */
 class DocumentProcessingExampleActivity : PdfActivity() {
-
     private val disposables = CompositeDisposable()
 
     /**
@@ -96,29 +98,34 @@ class DocumentProcessingExampleActivity : PdfActivity() {
     /**
      * Triggered by selecting an action from the overflow menu in the action bar.
      */
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.item_extract_range -> {
-                createDocumentFromRange()
-                true
-            }
-            R.id.item_flatten_annotations -> {
-                createFlattenedDocument()
-                true
-            }
-            R.id.item_remove_link_annotations -> {
-                createDocumentWithoutLinkAnnotations()
-                true
-            }
-            R.id.item_rotate_pages -> {
-                createDocumentWithRotatedPages()
-                true
-            }
-            R.id.item_new_page -> {
-                createDocumentWithNewPages()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.item_extract_range -> {
+            createDocumentFromRange()
+            true
+        }
+
+        R.id.item_flatten_annotations -> {
+            createFlattenedDocument()
+            true
+        }
+
+        R.id.item_remove_link_annotations -> {
+            createDocumentWithoutLinkAnnotations()
+            true
+        }
+
+        R.id.item_rotate_pages -> {
+            createDocumentWithRotatedPages()
+            true
+        }
+
+        R.id.item_new_page -> {
+            createDocumentWithNewPages()
+            true
+        }
+
+        else -> {
+            super.onOptionsItemSelected(item)
         }
     }
 
@@ -129,11 +136,14 @@ class DocumentProcessingExampleActivity : PdfActivity() {
         val outputFile = File(filesDir, document.uid + "-range.pdf")
 
         // Extract pages with indexes 1, 2, 3, 5, 6, 14. All other pages won't be copied.
-        val task = PdfProcessorTask.fromDocument(document)
-            .removePages(HashSet(listOf(0, 4, 7, 8, 9, 10, 11, 12, 13)))
+        val task =
+            PdfProcessorTask
+                .fromDocument(document)
+                .removePages(HashSet(listOf(0, 4, 7, 8, 9, 10, 11, 12, 13)))
 
         // Start document processing, but without annotation flattening.
-        PdfProcessor.processDocumentAsync(task, outputFile)
+        PdfProcessor
+            .processDocumentAsync(task, outputFile)
             // Drop update events to avoid back pressure on slow devices.
             .onBackpressureDrop()
             .subscribeOn(Schedulers.io())
@@ -147,10 +157,13 @@ class DocumentProcessingExampleActivity : PdfActivity() {
         val outputFile = File(filesDir, document!!.uid + "-flattened.pdf")
 
         // Start document processing, requesting a flattening of all annotations.
-        val task = PdfProcessorTask.fromDocument(document)
-            .changeAllAnnotations(PdfProcessorTask.AnnotationProcessingMode.FLATTEN)
+        val task =
+            PdfProcessorTask
+                .fromDocument(document)
+                .changeAllAnnotations(PdfProcessorTask.AnnotationProcessingMode.FLATTEN)
 
-        PdfProcessor.processDocumentAsync(task, outputFile)
+        PdfProcessor
+            .processDocumentAsync(task, outputFile)
             // Drop update events to avoid back pressure on slow devices.
             .onBackpressureDrop()
             .subscribeOn(Schedulers.io())
@@ -165,10 +178,13 @@ class DocumentProcessingExampleActivity : PdfActivity() {
         val outputFile = File(filesDir, document.uid + "-without-link-annotations.pdf")
 
         // Start document processing, requesting a flattening of all annotations.
-        val task = PdfProcessorTask.fromDocument(document)
-            .changeAnnotationsOfType(AnnotationType.LINK, PdfProcessorTask.AnnotationProcessingMode.DELETE)
+        val task =
+            PdfProcessorTask
+                .fromDocument(document)
+                .changeAnnotationsOfType(AnnotationType.LINK, PdfProcessorTask.AnnotationProcessingMode.DELETE)
 
-        PdfProcessor.processDocumentAsync(task, outputFile)
+        PdfProcessor
+            .processDocumentAsync(task, outputFile)
             // Drop update events to avoid back pressure on slow devices.
             .onBackpressureDrop()
             .subscribeOn(Schedulers.io())
@@ -192,7 +208,8 @@ class DocumentProcessingExampleActivity : PdfActivity() {
         }
 
         // Start document processing.
-        PdfProcessor.processDocumentAsync(task, outputFile)
+        PdfProcessor
+            .processDocumentAsync(task, outputFile)
             // Drop update events to avoid back pressure on slow devices.
             .onBackpressureDrop()
             .subscribeOn(Schedulers.io())
@@ -209,20 +226,22 @@ class DocumentProcessingExampleActivity : PdfActivity() {
         // Create a yellow A5 page with a line pattern as first page.
         val task = PdfProcessorTask.fromDocument(document)
         task.addNewPage(
-            NewPage.patternPage(NewPage.PAGE_SIZE_A5, PagePattern.LINES_7MM)
+            NewPage
+                .patternPage(NewPage.PAGE_SIZE_A5, PagePattern.LINES_7MM)
                 .backgroundColor(Color.rgb(241, 236, 121))
                 .build(),
-            0
+            0,
         )
 
         // Create an A0 page with an image as second page.
         try {
             val bitmap = BitmapFactory.decodeStream(assets.open("media/images/cover.jpg"))
             task.addNewPage(
-                NewPage.emptyPage(NewPage.PAGE_SIZE_A0)
+                NewPage
+                    .emptyPage(NewPage.PAGE_SIZE_A0)
                     .withPageItem(PageImage(bitmap, PagePosition.CENTER))
                     .build(),
-                1
+                1,
             )
         } catch (e: IOException) {
             Log.e(TAG, "Could not read page image.")
@@ -230,14 +249,16 @@ class DocumentProcessingExampleActivity : PdfActivity() {
 
         // The third page is cloned from the last page of the document, but rotated by 90°.
         task.addNewPage(
-            NewPage.fromPage(document, document.pageCount - 1)
+            NewPage
+                .fromPage(document, document.pageCount - 1)
                 .rotation(90)
                 .build(),
-            2
+            2,
         )
 
         // Start document processing.
-        PdfProcessor.processDocumentAsync(task, outputFile)
+        PdfProcessor
+            .processDocumentAsync(task, outputFile)
             // Drop update events to avoid back pressure on slow devices.
             .onBackpressureDrop()
             .subscribeOn(Schedulers.io())
@@ -253,9 +274,11 @@ class DocumentProcessingExampleActivity : PdfActivity() {
 
     private fun showProcessedDocument(processedDocumentFile: File) {
         val context = this@DocumentProcessingExampleActivity
-        val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(processedDocumentFile))
-            .configuration(configuration)
-            .build()
+        val intent =
+            PdfActivityIntentBuilder
+                .fromUri(context, Uri.fromFile(processedDocumentFile))
+                .configuration(configuration)
+                .build()
         startActivity(intent)
     }
 
@@ -263,18 +286,16 @@ class DocumentProcessingExampleActivity : PdfActivity() {
      * Helper class for showing a progress dialog and opening the processed document.
      */
     @Suppress("DEPRECATION")
-    private inner class ProcessorProgressHandler(
-        progressMessage: String,
-        private val outputFile: File
-    ) : DisposableSubscriber<ProcessorProgress>() {
-
-        private val progressDialog: ProgressDialog = ProgressDialog.show(
-            this@DocumentProcessingExampleActivity,
-            "Processing document",
-            progressMessage,
-            false,
-            true
-        ) { cancel() }
+    private inner class ProcessorProgressHandler(progressMessage: String, private val outputFile: File) :
+        DisposableSubscriber<ProcessorProgress>() {
+        private val progressDialog: ProgressDialog =
+            ProgressDialog.show(
+                this@DocumentProcessingExampleActivity,
+                "Processing document",
+                progressMessage,
+                false,
+                true,
+            ) { cancel() }
 
         init {
             disposables.add(this)
@@ -285,7 +306,8 @@ class DocumentProcessingExampleActivity : PdfActivity() {
         }
 
         override fun onError(e: Throwable) {
-            AlertDialog.Builder(this@DocumentProcessingExampleActivity)
+            AlertDialog
+                .Builder(this@DocumentProcessingExampleActivity)
                 .setMessage("Error while processing file: " + e.localizedMessage)
                 .show()
             progressDialog.dismiss()

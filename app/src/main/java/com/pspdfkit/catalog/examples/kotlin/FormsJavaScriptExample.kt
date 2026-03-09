@@ -39,13 +39,10 @@ import kotlin.collections.component2
 import kotlin.collections.forEach
 
 /** This example showcases forms JavaScript functionality. */
-class FormsJavaScriptExample(context: Context) : SdkExample(context, R.string.javaScriptFormsExampleTitle, R.string.javaScriptFormsExampleDescription) {
-
+class FormsJavaScriptExample(context: Context) :
+    SdkExample(context, R.string.javaScriptFormsExampleTitle, R.string.javaScriptFormsExampleDescription) {
     @SuppressLint("SetJavaScriptEnabled", "CheckResult")
-    override fun launchExample(
-        context: Context,
-        configuration: PdfActivityConfiguration.Builder
-    ) {
+    override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         configuration
             // JavaScript is enabled by default. It can be disabled in configuration.
             .setJavaScriptEnabled(true)
@@ -61,28 +58,32 @@ class FormsJavaScriptExample(context: Context) : SdkExample(context, R.string.ja
             task.addNewPage(blankPage, index)
         }
 
-        val outputFile = try {
-            File(getCatalogCacheDirectory(context), "FormsJavaScriptExample.pdf").canonicalFile
-        } catch (exception: IOException) {
-            throw IllegalStateException("Couldn't create FormsJavaScriptExample.pdf file.", exception)
-        }
+        val outputFile =
+            try {
+                File(getCatalogCacheDirectory(context), "FormsJavaScriptExample.pdf").canonicalFile
+            } catch (exception: IOException) {
+                throw IllegalStateException("Couldn't create FormsJavaScriptExample.pdf file.", exception)
+            }
 
-        PdfProcessor.processDocumentAsync(task, outputFile)
+        PdfProcessor
+            .processDocumentAsync(task, outputFile)
             .ignoreElements()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(
                 {
-                    val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(outputFile))
-                        .configuration(configuration.build())
-                        .activityClass(FormsJavaScriptActivity::class.java)
-                        .build()
+                    val intent =
+                        PdfActivityIntentBuilder
+                            .fromUri(context, Uri.fromFile(outputFile))
+                            .configuration(configuration.build())
+                            .activityClass(FormsJavaScriptActivity::class.java)
+                            .build()
 
                     context.startActivity(intent)
                 },
                 { throwable ->
                     Log.e(TAG, "Error while trying to create PDF document.", throwable)
-                }
+                },
             )
     }
 
@@ -107,7 +108,6 @@ class FormsJavaScriptExample(context: Context) : SdkExample(context, R.string.ja
  * JavaScript for Acrobat API Reference.
  */
 class FormsJavaScriptActivity : PdfActivity() {
-
     @SuppressLint("CheckResult")
     @UiThread
     override fun onDocumentLoaded(document: PdfDocument) {
@@ -129,19 +129,19 @@ class FormsJavaScriptActivity : PdfActivity() {
         rect: RectF,
         text: String,
         actions: Map<AnnotationTriggerEvent, String> = emptyMap(),
-        readOnly: Boolean = false
+        readOnly: Boolean = false,
     ) {
         document?.formProvider?.addFormElementToPage(
             name,
-            TextFormConfiguration.Builder(pageIndex, rect)
+            TextFormConfiguration
+                .Builder(pageIndex, rect)
                 .apply {
                     setText(text)
                     actions.forEach { (event, script) ->
                         setAdditionalAction(event, JavaScriptAction(script))
                     }
                     if (readOnly) setReadOnly(true)
-                }
-                .build()
+                }.build(),
         )
     }
 
@@ -153,8 +153,8 @@ class FormsJavaScriptActivity : PdfActivity() {
             "3.0",
             mapOf(
                 AnnotationTriggerEvent.FORM_CHANGED to "AFNumber_Keystroke(2,0,0,0,'',true);",
-                AnnotationTriggerEvent.FIELD_FORMAT to "AFNumber_Format(2,0,0,0,'',true);"
-            )
+                AnnotationTriggerEvent.FIELD_FORMAT to "AFNumber_Format(2,0,0,0,'',true);",
+            ),
         )
 
         addTextField(
@@ -164,8 +164,8 @@ class FormsJavaScriptActivity : PdfActivity() {
             "4",
             mapOf(
                 AnnotationTriggerEvent.FORM_CHANGED to "AFNumber_Keystroke(0,1,0,0,'',true);",
-                AnnotationTriggerEvent.FIELD_FORMAT to "AFNumber_Format(0,1,0,0,'',true);"
-            )
+                AnnotationTriggerEvent.FIELD_FORMAT to "AFNumber_Format(0,1,0,0,'',true);",
+            ),
         )
 
         addTextField(
@@ -176,9 +176,9 @@ class FormsJavaScriptActivity : PdfActivity() {
             mapOf(
                 AnnotationTriggerEvent.FORM_CALCULATE to
                     "AFSimple_Calculate('SUM', new Array('sum-operand1','sum-operand2'));",
-                AnnotationTriggerEvent.FIELD_FORMAT to "AFNumber_Format(2,1,0,0,'',true);"
+                AnnotationTriggerEvent.FIELD_FORMAT to "AFNumber_Format(2,1,0,0,'',true);",
             ),
-            readOnly = true
+            readOnly = true,
         )
     }
 
@@ -191,14 +191,15 @@ class FormsJavaScriptActivity : PdfActivity() {
             RectF(30f, 630f, 200f, 600f),
             "",
             mapOf(
-                AnnotationTriggerEvent.FORM_CALCULATE to """
+                AnnotationTriggerEvent.FORM_CALCULATE to
+                    """
                     var operand1 = doc.getField('concat-operand1');
                     var operand2 = doc.getField('concat-operand2');
                     var result = doc.getField('concat-result');
                     result.value = operand1.value + ' ' + operand2.value;
-                """.trimIndent()
+                    """.trimIndent(),
             ),
-            readOnly = true
+            readOnly = true,
         )
     }
 
@@ -210,8 +211,8 @@ class FormsJavaScriptActivity : PdfActivity() {
             "3.2293",
             mapOf(
                 AnnotationTriggerEvent.FORM_CHANGED to "AFNumber_Keystroke(2,0,0,0,'',true);",
-                AnnotationTriggerEvent.FIELD_FORMAT to "AFNumber_Format(2,0,0,0,'',true);"
-            )
+                AnnotationTriggerEvent.FIELD_FORMAT to "AFNumber_Format(2,0,0,0,'',true);",
+            ),
         )
 
         addTextField(
@@ -221,8 +222,8 @@ class FormsJavaScriptActivity : PdfActivity() {
             "33,99",
             mapOf(
                 AnnotationTriggerEvent.FORM_CHANGED to "AFNumber_Keystroke(2,3,0,0,'€',true);",
-                AnnotationTriggerEvent.FIELD_FORMAT to "AFNumber_Format(2,3,0,0,'€',true);"
-            )
+                AnnotationTriggerEvent.FIELD_FORMAT to "AFNumber_Format(2,3,0,0,'€',true);",
+            ),
         )
 
         addTextField(
@@ -232,8 +233,8 @@ class FormsJavaScriptActivity : PdfActivity() {
             "02/07/2018",
             mapOf(
                 AnnotationTriggerEvent.FORM_CHANGED to "AFDate_KeystrokeEx('mm/dd/yyyy');",
-                AnnotationTriggerEvent.FIELD_FORMAT to "AFDate_FormatEx('mm/dd/yyyy');"
-            )
+                AnnotationTriggerEvent.FIELD_FORMAT to "AFDate_FormatEx('mm/dd/yyyy');",
+            ),
         )
 
         addTextField(
@@ -243,28 +244,29 @@ class FormsJavaScriptActivity : PdfActivity() {
             "12:00:20",
             mapOf(
                 AnnotationTriggerEvent.FORM_CHANGED to "AFTime_Keystroke('HH:MM::ss');",
-                AnnotationTriggerEvent.FIELD_FORMAT to "AFTime_Format('HH:MM::ss');"
-            )
+                AnnotationTriggerEvent.FIELD_FORMAT to "AFTime_Format('HH:MM::ss');",
+            ),
         )
     }
 
     private fun createPushButtonWithImageImportAction() {
         document?.formProvider?.addFormElementToPage(
             "pushbuttonfield",
-            PushButtonFormConfiguration.Builder(
-                3,
-                RectF(30f, 750f, 120f, 660f),
-                getBitmapFromAsset(assets, "images/android.png")
-            )
-                .setAction(JavaScriptAction("var f=this.getField('pushbuttonfield'); f.buttonImportIcon();"))
-                .build()
+            PushButtonFormConfiguration
+                .Builder(
+                    3,
+                    RectF(30f, 750f, 120f, 660f),
+                    getBitmapFromAsset(assets, "images/android.png"),
+                ).setAction(JavaScriptAction("var f=this.getField('pushbuttonfield'); f.buttonImportIcon();"))
+                .build(),
         )
     }
 
     private fun createCheckboxWithHideAction() {
         document?.formProvider?.addFormElementToPage(
             "checkboxfield",
-            CheckBoxFormConfiguration.Builder(3, RectF(150f, 690f, 180f, 660f))
+            CheckBoxFormConfiguration
+                .Builder(3, RectF(150f, 690f, 180f, 660f))
                 .deselect()
                 .setAdditionalAction(
                     AnnotationTriggerEvent.MOUSE_UP,
@@ -272,14 +274,12 @@ class FormsJavaScriptActivity : PdfActivity() {
                         """
                         var pushButtonField = doc.getField('pushbuttonfield');
                         pushButtonField.display = (pushButtonField.display == display.hidden) ? display.visible : display.hidden;
-                        """.trimIndent()
-                    )
-                )
-                .build()
+                        """.trimIndent(),
+                    ),
+                ).build(),
         )
     }
 
-    private fun getBitmapFromAsset(assets: AssetManager, path: String): Bitmap =
-        assets.open(path).use { BitmapFactory.decodeStream(it) }
-            ?: throw IllegalStateException("Failed to decode bitmap from assets: $path")
+    private fun getBitmapFromAsset(assets: AssetManager, path: String): Bitmap = assets.open(path).use { BitmapFactory.decodeStream(it) }
+        ?: throw IllegalStateException("Failed to decode bitmap from assets: $path")
 }

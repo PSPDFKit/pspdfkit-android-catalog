@@ -83,18 +83,18 @@ import java.lang.ref.WeakReference
 /**
  * List of PDF files to be displayed in the example
  */
-private val FILES = listOf(
-    WELCOME_DOC.removeSuffix(".pdf"),
-    "Scientific-paper",
-    "The-Cosmic-Context-for-Life"
-)
+private val FILES =
+    listOf(
+        WELCOME_DOC.removeSuffix(".pdf"),
+        "Scientific-paper",
+        "The-Cosmic-Context-for-Life",
+    )
 
 /**
  * Example entry point showing how to display multiple PDF documents with individual configurations
  */
 class DocumentPagerExample(context: Context) :
     SdkExample(context, R.string.documentPagerExampleTitle, R.string.documentPagerExampleDescription) {
-
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // Extract the documents from assets before launching the activity
         FileUtils.copyFilesFromAssetsToLocalStorage(context, FILES) {
@@ -118,7 +118,7 @@ class DocumentPagerExampleActivity : AppCompatActivity() {
                     files = FILES,
                     getFileUri = { filename ->
                         File(filesDir, "$filename.pdf").toUri()
-                    }
+                    },
                 )
             }
         }
@@ -128,10 +128,7 @@ class DocumentPagerExampleActivity : AppCompatActivity() {
 /**
  * Manages DocumentState instances for multiple PDFs using WeakReferences to prevent memory leaks
  */
-class DocumentStateManager(
-    private val files: List<String>,
-    private val getFileUri: (String) -> Uri
-) {
+class DocumentStateManager(private val files: List<String>, private val getFileUri: (String) -> Uri) {
     private val documentStates = mutableMapOf<Int, WeakReference<DocumentState>>()
 
     /**
@@ -152,8 +149,11 @@ class DocumentStateManager(
 
         // Create a new state with different configuration based on document index
         val context = LocalContext.current
-        val commonConfig = PdfActivityConfiguration.Builder(context)
-            .defaultToolbarEnabled(false).fitMode(PageFitMode.FIT_TO_WIDTH)
+        val commonConfig =
+            PdfActivityConfiguration
+                .Builder(context)
+                .defaultToolbarEnabled(false)
+                .fitMode(PageFitMode.FIT_TO_WIDTH)
         val uri = getFileUri(files[index])
         val configuration = createConfigurationForIndex(index, commonConfig)
         val newState = rememberDocumentState(uri, configuration)
@@ -180,14 +180,12 @@ class DocumentStateManager(
  * @param getFileUri Function to convert a filename to a URI
  */
 @Composable
-fun PdfViewerPager(
-    files: List<String>,
-    getFileUri: (String) -> Uri
-) {
+fun PdfViewerPager(files: List<String>, getFileUri: (String) -> Uri) {
     val localDensity = LocalDensity.current
-    val documentStateManager = remember(files) {
-        DocumentStateManager(files, getFileUri)
-    }
+    val documentStateManager =
+        remember(files) {
+            DocumentStateManager(files, getFileUri)
+        }
 
     val pagerState = rememberPagerState(pageCount = { files.size })
     val coroutineScope = rememberCoroutineScope()
@@ -198,10 +196,11 @@ fun PdfViewerPager(
             topBar = {
                 AnimatedVisibility(
                     visible = hideTopBar,
-                    enter = slideInVertically { with(localDensity) { -40.dp.roundToPx() } } +
+                    enter =
+                    slideInVertically { with(localDensity) { -40.dp.roundToPx() } } +
                         expandVertically(expandFrom = Alignment.Top) +
                         fadeIn(initialAlpha = 0.3f),
-                    exit = slideOutVertically() + shrinkVertically() + fadeOut()
+                    exit = slideOutVertically() + shrinkVertically() + fadeOut(),
                 ) {
                     // Tab row for document selection
                     PdfTabRow(
@@ -211,23 +210,23 @@ fun PdfViewerPager(
                             coroutineScope.launch {
                                 pagerState.animateScrollToPage(index)
                             }
-                        }
+                        },
                     )
                 }
-            }
+            },
         ) { paddingValues ->
             // Horizontal pager for PDF documents
             HorizontalPager(
                 userScrollEnabled = false,
                 state = pagerState,
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
             ) { page ->
                 key(page) {
                     PdfDocumentPage(
                         page = page,
                         documentStateManager = documentStateManager,
                         paddingValues = paddingValues,
-                        localDensity = localDensity
+                        localDensity = localDensity,
                     ) {
                         hideTopBar = it
                     }
@@ -242,16 +241,14 @@ fun PdfViewerPager(
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-private fun PdfTabRow(
-    files: List<String>,
-    currentPage: Int,
-    onTabSelected: (Int) -> Unit
-) {
+private fun PdfTabRow(files: List<String>, currentPage: Int, onTabSelected: (Int) -> Unit) {
     PrimaryTabRow(
         selectedTabIndex = currentPage,
-        modifier = Modifier
-            .fillMaxWidth().background(MaterialTheme.colorScheme.background)
-            .statusBarsPadding()
+        modifier =
+        Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.background)
+            .statusBarsPadding(),
     ) {
         files.forEachIndexed { index, title ->
             Tab(
@@ -262,15 +259,15 @@ private fun PdfTabRow(
                         Modifier
                             .padding(4.dp)
                             .fillMaxWidth(),
-                        verticalArrangement = Arrangement.SpaceBetween
+                        verticalArrangement = Arrangement.SpaceBetween,
                     ) {
                         Text(
                             text = title,
                             style = MaterialTheme.typography.bodyLarge,
-                            modifier = Modifier.align(Alignment.CenterHorizontally)
+                            modifier = Modifier.align(Alignment.CenterHorizontally),
                         )
                     }
-                }
+                },
             )
         }
     }
@@ -285,7 +282,7 @@ private fun PdfDocumentPage(
     documentStateManager: DocumentStateManager,
     paddingValues: PaddingValues,
     localDensity: Density,
-    updateTopBarVisibility: (Boolean) -> Unit
+    updateTopBarVisibility: (Boolean) -> Unit,
 ) {
     val context = LocalContext.current
     val documentState = documentStateManager.getOrCreateDocumentState(page)
@@ -301,7 +298,7 @@ private fun PdfDocumentPage(
     }
 
     Box(
-        contentAlignment = Alignment.TopCenter
+        contentAlignment = Alignment.TopCenter,
     ) {
         Column {
             // Spacer to prevent content from being covered by toolbar
@@ -311,20 +308,22 @@ private fun PdfDocumentPage(
             DocumentView(
                 documentState = documentState,
                 modifier = Modifier.weight(1f),
-                documentManager = createDocumentManager(context) {
+                documentManager =
+                createDocumentManager(context) {
                     toolbarVisibility = !it
                     updateTopBarVisibility.invoke(!it)
-                }
+                },
             )
         }
 
         // Animated toolbar
         AnimatedVisibility(
             visible = toolbarVisibility,
-            enter = slideInVertically { with(localDensity) { -40.dp.roundToPx() } } +
+            enter =
+            slideInVertically { with(localDensity) { -40.dp.roundToPx() } } +
                 expandVertically(expandFrom = Alignment.Top) +
                 fadeIn(initialAlpha = 0.3f),
-            exit = slideOutVertically() + shrinkVertically() + fadeOut()
+            exit = slideOutVertically() + shrinkVertically() + fadeOut(),
         ) {
             // Common toolbar for all pages
             MainToolbar(
@@ -334,7 +333,7 @@ private fun PdfDocumentPage(
                 colorScheme = createCustomUiColors(),
                 onHeightChanged = { height ->
                     toolbarHeight = with(localDensity) { height.toDp() }
-                }
+                },
             )
         }
     }
@@ -344,34 +343,36 @@ private fun PdfDocumentPage(
  * Creates a document manager with listeners for document events
  */
 @Composable
-private fun createDocumentManager(
-    context: Context,
-    onImmersiveModeChanged: (Boolean) -> Unit
-) = getDefaultDocumentManager(
-    documentListener = DefaultListeners.documentListeners(
+private fun createDocumentManager(context: Context, onImmersiveModeChanged: (Boolean) -> Unit) = getDefaultDocumentManager(
+    documentListener =
+    DefaultListeners.documentListeners(
         onDocumentLoaded = {
             Toast.makeText(context, "Document loaded", Toast.LENGTH_SHORT).show()
-        }
+        },
     ),
-    annotationListener = DefaultListeners.annotationListeners(
+    annotationListener =
+    DefaultListeners.annotationListeners(
         onAnnotationSelected = { annotation, _ ->
-            Toast.makeText(
-                context,
-                "${annotation.type} selected",
-                Toast.LENGTH_SHORT
-            ).show()
+            Toast
+                .makeText(
+                    context,
+                    "${annotation.type} selected",
+                    Toast.LENGTH_SHORT,
+                ).show()
         },
         onAnnotationDeselected = { annotation, _ ->
-            Toast.makeText(
-                context,
-                "${annotation.type} deselected",
-                Toast.LENGTH_SHORT
-            ).show()
-        }
+            Toast
+                .makeText(
+                    context,
+                    "${annotation.type} deselected",
+                    Toast.LENGTH_SHORT,
+                ).show()
+        },
     ),
-    uiListener = DefaultListeners.uiListeners(
-        onImmersiveModeEnabled = onImmersiveModeChanged
-    )
+    uiListener =
+    DefaultListeners.uiListeners(
+        onImmersiveModeEnabled = onImmersiveModeChanged,
+    ),
 )
 
 /**
@@ -379,12 +380,13 @@ private fun createDocumentManager(
  */
 @Composable
 private fun createCustomUiColors() = getUiColors().copy(
-    mainToolbar = MainToolbarColors(
+    mainToolbar =
+    MainToolbarColors(
         backgroundColor = MaterialTheme.colorScheme.primary,
         textColor = MaterialTheme.colorScheme.onPrimary,
         popup = ToolbarPopupColors(backgroundColor = MaterialTheme.colorScheme.primary),
-        titleTextColor = MaterialTheme.colorScheme.onPrimary
-    )
+        titleTextColor = MaterialTheme.colorScheme.onPrimary,
+    ),
 )
 
 /**
@@ -398,11 +400,7 @@ object FileUtils {
      * @param fileNames List of filenames to copy
      * @param onComplete Callback to run after copying completes
      */
-    fun copyFilesFromAssetsToLocalStorage(
-        context: Context,
-        fileNames: List<String>,
-        onComplete: () -> Unit = {}
-    ) {
+    fun copyFilesFromAssetsToLocalStorage(context: Context, fileNames: List<String>, onComplete: () -> Unit = {}) {
         fileNames.forEach { fileName ->
             val destinationFile = File(context.filesDir, "$fileName.pdf")
 

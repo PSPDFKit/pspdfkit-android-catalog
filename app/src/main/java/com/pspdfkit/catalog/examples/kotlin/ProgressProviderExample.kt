@@ -35,16 +35,18 @@ import java.util.concurrent.CountDownLatch
  * shows the progress in the [PdfActivity]. Furthermore, it implements [Parcelable] to allow using
  * the data provider with [PdfActivity].
  */
-class ProgressProviderExample(context: Context) : SdkExample(context, R.string.progressProviderExampleTitle, R.string.progressProviderExampleDescription) {
-
+class ProgressProviderExample(context: Context) :
+    SdkExample(context, R.string.progressProviderExampleTitle, R.string.progressProviderExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // Create an instance of the custom data provider. See the implementation details below.
         val dataProvider: DataProvider = RemoteDataProvider("https://nutrient.io/downloads/case-study-box.pdf")
 
         // Start the activity using our custom data provider.
-        val intent = PdfActivityIntentBuilder.fromDataProvider(context, dataProvider)
-            .configuration(configuration.build())
-            .build()
+        val intent =
+            PdfActivityIntentBuilder
+                .fromDataProvider(context, dataProvider)
+                .configuration(configuration.build())
+                .build()
         context.startActivity(intent)
     }
 }
@@ -57,9 +59,10 @@ class ProgressProviderExample(context: Context) : SdkExample(context, R.string.p
  */
 private class RemoteDataProvider(
     /** The url where the PDF document is located.  */
-    private val url: String
-) : InputStreamDataProvider(), ProgressDataProvider, Parcelable {
-
+    private val url: String,
+) : InputStreamDataProvider(),
+    ProgressDataProvider,
+    Parcelable {
     /** Responsible for downloading our PDF.  */
     private var downloadJob: DownloadJob? = null
 
@@ -96,13 +99,9 @@ private class RemoteDataProvider(
         return downloadJob.outputFile.length()
     }
 
-    override fun getUid(): String {
-        return StringUtils.sha1(url)
-    }
+    override fun getUid(): String = StringUtils.sha1(url)
 
-    override fun getTitle(): String? {
-        return url
-    }
+    override fun getTitle(): String? = url
 
     /**
      * Starts our download if it wasn't already started.
@@ -117,39 +116,41 @@ private class RemoteDataProvider(
             } catch (ignored: InterruptedException) {
             }
 
-            downloadJob = DownloadJob.startDownload(
-                DownloadRequest.Builder(getContext())
-                    .uri(url)
-                    .outputFile(File(getContext().getDir("documents", Context.MODE_PRIVATE), "temp.pdf"))
-                    .overwriteExisting(true)
-                    .build()
+            downloadJob =
+                DownloadJob.startDownload(
+                    DownloadRequest
+                        .Builder(getContext())
+                        .uri(url)
+                        .outputFile(File(getContext().getDir("documents", Context.MODE_PRIVATE), "temp.pdf"))
+                        .overwriteExisting(true)
+                        .build(),
+                )
+
+            downloadJob.setProgressListener(
+                object : DownloadJob.ProgressListener {
+                    override fun onProgress(progress: Progress) {
+                        // Notify our listeners about the download progress.
+                        progressSubject.onNext(progress.bytesReceived.toDouble() / progress.totalBytes.toDouble())
+                    }
+
+                    override fun onComplete(output: File) {
+                        progressSubject.onComplete()
+                        downloadLatch.countDown()
+                    }
+
+                    override fun onError(exception: Throwable) {
+                        progressSubject.onError(exception)
+                        downloadLatch.countDown()
+                    }
+                },
             )
-
-            downloadJob.setProgressListener(object : DownloadJob.ProgressListener {
-                override fun onProgress(progress: Progress) {
-                    // Notify our listeners about the download progress.
-                    progressSubject.onNext(progress.bytesReceived.toDouble() / progress.totalBytes.toDouble())
-                }
-
-                override fun onComplete(output: File) {
-                    progressSubject.onComplete()
-                    downloadLatch.countDown()
-                }
-
-                override fun onError(exception: Throwable) {
-                    progressSubject.onError(exception)
-                    downloadLatch.countDown()
-                }
-            })
         }
 
         this.downloadJob = downloadJob
         return downloadJob as DownloadJob
     }
 
-    override fun describeContents(): Int {
-        return 0
-    }
+    override fun describeContents(): Int = 0
 
     override fun writeToParcel(dest: Parcel, flags: Int) {
         dest.writeString(url)
@@ -158,12 +159,8 @@ private class RemoteDataProvider(
     private constructor(input: Parcel) : this(input.readString()!!)
 
     companion object CREATOR : Parcelable.Creator<RemoteDataProvider> {
-        override fun createFromParcel(parcel: Parcel): RemoteDataProvider {
-            return RemoteDataProvider(parcel)
-        }
+        override fun createFromParcel(parcel: Parcel): RemoteDataProvider = RemoteDataProvider(parcel)
 
-        override fun newArray(size: Int): Array<RemoteDataProvider?> {
-            return arrayOfNulls(size)
-        }
+        override fun newArray(size: Int): Array<RemoteDataProvider?> = arrayOfNulls(size)
     }
 }

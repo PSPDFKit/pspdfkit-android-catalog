@@ -38,7 +38,6 @@ import kotlin.math.ceil
  * to extract the text from scanned documents using the [com.pspdfkit.document.processor.PdfProcessor].
  */
 class OcrExample(context: Context) : SdkExample(context, R.string.ocrExampleTitle, R.string.ocrExampleDescription) {
-
     companion object {
         const val OCR_PDF_PATH = "ocr/Remote Work.pdf"
     }
@@ -46,18 +45,20 @@ class OcrExample(context: Context) : SdkExample(context, R.string.ocrExampleTitl
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // We use a custom utility class to extract the example document from the assets.
         ExtractAssetTask.extract(OCR_PDF_PATH, title, context) { documentFile ->
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .configuration(
-                    configuration
-                        .documentInfoViewEnabled(false)
-                        .annotationListEnabled(false)
-                        .bookmarkListEnabled(false)
-                        .settingsMenuEnabled(false)
-                        .thumbnailGridEnabled(false)
-                        .outlineEnabled(false).build()
-                )
-                .activityClass(OcrProcessingActivity::class)
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    .configuration(
+                        configuration
+                            .documentInfoViewEnabled(false)
+                            .annotationListEnabled(false)
+                            .bookmarkListEnabled(false)
+                            .settingsMenuEnabled(false)
+                            .thumbnailGridEnabled(false)
+                            .outlineEnabled(false)
+                            .build(),
+                    ).activityClass(OcrProcessingActivity::class)
+                    .build()
 
             // Start the OcrProcessingActivity for the extracted document.
             context.startActivity(intent)
@@ -70,7 +71,6 @@ class OcrExample(context: Context) : SdkExample(context, R.string.ocrExampleTitl
  * to extract the text from scanned documents using the [com.pspdfkit.document.processor.PdfProcessor].
  */
 class OcrProcessingActivity : PdfActivity() {
-
     private val disposables = CompositeDisposable()
 
     /**
@@ -83,12 +83,15 @@ class OcrProcessingActivity : PdfActivity() {
         val pageIndexesToProcess = (0 until document.pageCount).toSet()
 
         // Start document processing, perform OCR.
-        val task = PdfProcessorTask.fromDocument(document)
-            .performOcrOnPages(pageIndexesToProcess, OcrLanguage.ENGLISH)
+        val task =
+            PdfProcessorTask
+                .fromDocument(document)
+                .performOcrOnPages(pageIndexesToProcess, OcrLanguage.ENGLISH)
 
         val handler = ProcessorProgressHandler("Performing OCR on the document.", outputFile)
 
-        PdfProcessor.processDocumentAsync(task, outputFile)
+        PdfProcessor
+            .processDocumentAsync(task, outputFile)
             // Drop update events to avoid back pressure on slow devices.
             .onBackpressureDrop()
             .subscribeOn(Schedulers.io())
@@ -109,13 +112,14 @@ class OcrProcessingActivity : PdfActivity() {
     /**
      * Triggered by selecting an action from the menu in the action bar.
      */
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.item_perform_ocr -> {
-                performOcr()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.item_perform_ocr -> {
+            performOcr()
+            true
+        }
+
+        else -> {
+            super.onOptionsItemSelected(item)
         }
     }
 
@@ -126,9 +130,11 @@ class OcrProcessingActivity : PdfActivity() {
     }
 
     private fun showProcessedDocument(processedDocumentFile: File) {
-        val intent = PdfActivityIntentBuilder.fromUri(this, Uri.fromFile(processedDocumentFile))
-            .configuration(configuration)
-            .build()
+        val intent =
+            PdfActivityIntentBuilder
+                .fromUri(this, Uri.fromFile(processedDocumentFile))
+                .configuration(configuration)
+                .build()
         startActivity(intent)
     }
 
@@ -136,18 +142,16 @@ class OcrProcessingActivity : PdfActivity() {
      * Helper class for showing a progress dialog and opening the processed document.
      */
     @Suppress("DEPRECATION")
-    private inner class ProcessorProgressHandler(
-        progressMessage: String,
-        private val outputFile: File
-    ) : DisposableSubscriber<PdfProcessor.ProcessorProgress>() {
-
-        private val progressDialog: ProgressDialog = ProgressDialog.show(
-            this@OcrProcessingActivity,
-            "Processing document",
-            progressMessage,
-            false,
-            true
-        ) { cancel() }
+    private inner class ProcessorProgressHandler(progressMessage: String, private val outputFile: File) :
+        DisposableSubscriber<PdfProcessor.ProcessorProgress>() {
+        private val progressDialog: ProgressDialog =
+            ProgressDialog.show(
+                this@OcrProcessingActivity,
+                "Processing document",
+                progressMessage,
+                false,
+                true,
+            ) { cancel() }
 
         init {
             disposables.add(this)
@@ -162,7 +166,8 @@ class OcrProcessingActivity : PdfActivity() {
         }
 
         override fun onError(e: Throwable) {
-            AlertDialog.Builder(this@OcrProcessingActivity)
+            AlertDialog
+                .Builder(this@OcrProcessingActivity)
                 .setMessage("Error while processing file: " + e.localizedMessage)
                 .show()
             progressDialog.dismiss()

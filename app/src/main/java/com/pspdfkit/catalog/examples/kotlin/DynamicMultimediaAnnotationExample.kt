@@ -24,7 +24,8 @@ import java.io.File
 import kotlin.getValue
 
 /** This example showcases how to dynamically add multimedia content to a PDF document.  */
-class DynamicMultimediaAnnotationExample(context: Context) : SdkExample(context, R.string.dynamicMultimediaExampleTitle, R.string.dynamicMultimediaExampleDescription) {
+class DynamicMultimediaAnnotationExample(context: Context) :
+    SdkExample(context, R.string.dynamicMultimediaExampleTitle, R.string.dynamicMultimediaExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // Before launching the example, we extract one video file to the private app folder. This
         // file will be used to dynamically add
@@ -35,10 +36,12 @@ class DynamicMultimediaAnnotationExample(context: Context) : SdkExample(context,
                 // For normal multimedia content playback, it is not necessary to subclass PdfActivity as no custom code is required (only
                 // annotations using the pspdfkit:// scheme have to be present). However, if you want to dynamically add multimedia annotations
                 // to a document, it is preferable to do this using a custom activity class (as done by this example).
-                val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                    .configuration(configuration.build())
-                    .activityClass(MultimediaAnnotationsActivity::class.java)
-                    .build()
+                val intent =
+                    PdfActivityIntentBuilder
+                        .fromUri(context, Uri.fromFile(documentFile))
+                        .configuration(configuration.build())
+                        .activityClass(MultimediaAnnotationsActivity::class.java)
+                        .build()
 
                 // Pass the file system path to our video file to the activity. The activity will use the path to dynamically add a multimedia link
                 // annotation to the PDF for opening the extracted video.
@@ -53,7 +56,6 @@ class DynamicMultimediaAnnotationExample(context: Context) : SdkExample(context,
  * This activity is part of the [DynamicMultimediaAnnotationExample] and shows how to dynamically add multimedia annotations to a PDF document.
  */
 class MultimediaAnnotationsActivity : PdfActivity() {
-
     private val viewModel: AnnotationCreationViewModel by viewModels()
 
     companion object {
@@ -86,20 +88,22 @@ class MultimediaAnnotationsActivity : PdfActivity() {
         val pageIndex = 0
 
         // The activity was launched with the path to a video on the local file system. We're going to use this file for playback with the multimedia annotation.
-        val videoPathUri = intent.getStringExtra(EXTRA_VIDEO_PATH)?.let { Uri.fromFile(File(it)) }
-            ?: throw IllegalStateException("No string value found for $EXTRA_VIDEO_PATH.")
+        val videoPathUri =
+            intent.getStringExtra(EXTRA_VIDEO_PATH)?.let { Uri.fromFile(File(it)) }
+                ?: throw IllegalStateException("No string value found for $EXTRA_VIDEO_PATH.")
 
         // Create the link annotation. The LinkAnnotation constructor takes the index of the page on which the annotation will be added.
-        val multimediaLinkAnnotation = LinkAnnotation(pageIndex).apply {
-            // Set the position of the link annotation on the page.
-            boundingBox = linkAnnotationRect
+        val multimediaLinkAnnotation =
+            LinkAnnotation(pageIndex).apply {
+                // Set the position of the link annotation on the page.
+                boundingBox = linkAnnotationRect
 
-            // To let the link point to the multimedia content, we have to set a UriAction on the link. The UriAction encodes the actual URL of the content.
-            // The multimedia URL uses the pspdfkit:// URL scheme, has optional options in square brackets, followed by the local file system URI of the file.
-            // Note the the videoPathUri also carries a file:// scheme which is required for video discovery. For a comprehensive list of supported URI formats
-            // and options, please consult our Multimedia Annotation online guides at: https://nutrient.io/guides/android/annotations/multimedia-annotations/
-            action = UriAction("pspdfkit://[autoplay:true]$videoPathUri")
-        }
+                // To let the link point to the multimedia content, we have to set a UriAction on the link. The UriAction encodes the actual URL of the content.
+                // The multimedia URL uses the pspdfkit:// URL scheme, has optional options in square brackets, followed by the local file system URI of the file.
+                // Note the the videoPathUri also carries a file:// scheme which is required for video discovery. For a comprehensive list of supported URI formats
+                // and options, please consult our Multimedia Annotation online guides at: https://nutrient.io/guides/android/annotations/multimedia-annotations/
+                action = UriAction("pspdfkit://[autoplay:true]$videoPathUri")
+            }
 
         // Add the annotation to the document and show it.
         requirePdfFragment().addAnnotationToPage(multimediaLinkAnnotation, false)
@@ -120,7 +124,8 @@ class MultimediaAnnotationsActivity : PdfActivity() {
         // See our online guides at https://nutrient.io/guides/android/annotations/multimedia-annotations/ for a full specification of the JSON format
         // used by galleries.
         @Language("JSON")
-        val galleryJson = """
+        val galleryJson =
+            """
             [
               {
                 "contentURL": "https://farm4.staticflickr.com/3701/13630138733_abf2411bd1_z.jpg",
@@ -131,16 +136,17 @@ class MultimediaAnnotationsActivity : PdfActivity() {
                 "caption": "This is a local image. Captions are optional"
               }
             ]
-        """.trimIndent()
+            """.trimIndent()
 
         // Write the JSON to a local gallery file on the file system. It is important that the file uses the .gallery file extension so that Nutrient can
         // recognize the file for showing a gallery.
-        val outputFile = filesDir.resolve("sample.gallery").apply {
-            // For the sake of this example, we recreate the gallery file from scratch. We therefore delete it if it already exists.
-            if (exists()) delete()
-            // Write the whole JSON to the output file.
-            writeText(galleryJson)
-        }
+        val outputFile =
+            filesDir.resolve("sample.gallery").apply {
+                // For the sake of this example, we recreate the gallery file from scratch. We therefore delete it if it already exists.
+                if (exists()) delete()
+                // Write the whole JSON to the output file.
+                writeText(galleryJson)
+            }
 
         // Get the rect for the link annotation we want to add. We're using absolute page coordinates here. These are the same coordinates used by the video
         // annotation created in the method above, but we're adding the gallery to the second page (instead of the first one).
@@ -154,16 +160,17 @@ class MultimediaAnnotationsActivity : PdfActivity() {
         val galleryPathUri = Uri.fromFile(outputFile)
 
         // Create the link annotation. The LinkAnnotation constructor takes the index of the page on which the annotation will be added.
-        val galleryLinkAnnotation = LinkAnnotation(pageIndex).apply {
-            // Set the position of the link annotation on the page.
-            boundingBox = linkAnnotationRect
+        val galleryLinkAnnotation =
+            LinkAnnotation(pageIndex).apply {
+                // Set the position of the link annotation on the page.
+                boundingBox = linkAnnotationRect
 
-            // To let the link point to the gallery file, we have to set a UriAction on the link. The UriAction encodes the actual URL of the content.
-            // The multimedia URL uses the pspdfkit:// URL scheme followed by the local file system URI of the file. Galleries don't support multimedia options.
-            // Note the the galleryPathUri also carries a file:// scheme which is required for gallery discovery. For a comprehensive list of supported URI
-            // formats, please consult our Multimedia Annotation online guides at: https://nutrient.io/guides/android/annotations/multimedia-annotations/
-            action = UriAction("pspdfkit://$galleryPathUri")
-        }
+                // To let the link point to the gallery file, we have to set a UriAction on the link. The UriAction encodes the actual URL of the content.
+                // The multimedia URL uses the pspdfkit:// URL scheme followed by the local file system URI of the file. Galleries don't support multimedia options.
+                // Note the the galleryPathUri also carries a file:// scheme which is required for gallery discovery. For a comprehensive list of supported URI
+                // formats, please consult our Multimedia Annotation online guides at: https://nutrient.io/guides/android/annotations/multimedia-annotations/
+                action = UriAction("pspdfkit://$galleryPathUri")
+            }
 
         // Add the annotation to the document and show it.
         pdfFragment?.addAnnotationToPage(galleryLinkAnnotation, false)

@@ -57,17 +57,14 @@ import java.util.Locale
  * searchable.
  * This example uses the legacy [PdfLibrary] API. For a more modern approach, see
  */
-class IndexedFullTextSearchLegacyExample(context: Context) : SdkExample(context, R.string.indexedFtsLegacyExampleTitle, R.string.indexedFtsLegacyExampleDescription) {
-    override fun launchExample(
-        context: Context,
-        configuration: PdfActivityConfiguration.Builder
-    ) {
+class IndexedFullTextSearchLegacyExample(context: Context) :
+    SdkExample(context, R.string.indexedFtsLegacyExampleTitle, R.string.indexedFtsLegacyExampleDescription) {
+    override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         context.startActivity(Intent(context, IndexedFullTextSearchLegacyActivity::class.java))
     }
 }
 
 class IndexedFullTextSearchLegacyActivity : AppCompatActivity() {
-
     companion object {
         /** Name of the Full-text search library file. */
         private const val FTS_SEARCH_LIBRARY_NAME = "fts-library.db"
@@ -110,11 +107,12 @@ class IndexedFullTextSearchLegacyActivity : AppCompatActivity() {
             library = PdfLibrary(databaseFile.absolutePath)
         } catch (e: IOException) {
             Log.e(TAG, "Error while creating the FTS library database.", e)
-            Toast.makeText(
-                this,
-                "Could not create FTS library - see logcat for error. Exiting example.",
-                Toast.LENGTH_LONG
-            ).show()
+            Toast
+                .makeText(
+                    this,
+                    "Could not create FTS library - see logcat for error. Exiting example.",
+                    Toast.LENGTH_LONG,
+                ).show()
             finish()
             return
         }
@@ -130,35 +128,36 @@ class IndexedFullTextSearchLegacyActivity : AppCompatActivity() {
             val dataProvider = AssetDataProvider(clickedDocumentPath)
 
             // Open the touched search result on the correct page.
-            val configuration = PdfActivityConfiguration.Builder(this)
-                .page(clickedSearchResult.pageIndex)
-                .build()
+            val configuration =
+                PdfActivityConfiguration
+                    .Builder(this)
+                    .page(clickedSearchResult.pageIndex)
+                    .build()
 
-            val intent = PdfActivityIntentBuilder.fromDataProvider(this, dataProvider)
-                .configuration(configuration)
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromDataProvider(this, dataProvider)
+                    .configuration(configuration)
+                    .build()
             startActivity(intent)
         }
 
-        searchResultsList.setOnScrollListener(object : AbsListView.OnScrollListener {
-            override fun onScrollStateChanged(view: AbsListView, scrollState: Int) {
-                // Hide the keyboard when scrolling the list.
-                if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL ||
-                    scrollState == AbsListView.OnScrollListener.SCROLL_STATE_FLING
-                ) {
-                    Utils.hideKeyboard(view)
+        searchResultsList.setOnScrollListener(
+            object : AbsListView.OnScrollListener {
+                override fun onScrollStateChanged(view: AbsListView, scrollState: Int) {
+                    // Hide the keyboard when scrolling the list.
+                    if (scrollState == AbsListView.OnScrollListener.SCROLL_STATE_TOUCH_SCROLL ||
+                        scrollState == AbsListView.OnScrollListener.SCROLL_STATE_FLING
+                    ) {
+                        Utils.hideKeyboard(view)
+                    }
                 }
-            }
 
-            override fun onScroll(
-                view: AbsListView,
-                firstVisibleItem: Int,
-                visibleItemCount: Int,
-                totalItemCount: Int
-            ) {
-                // No-op
-            }
-        })
+                override fun onScroll(view: AbsListView, firstVisibleItem: Int, visibleItemCount: Int, totalItemCount: Int) {
+                    // No-op
+                }
+            },
+        )
 
         // Initially trigger document indexing.
         performIndexing()
@@ -203,59 +202,55 @@ class IndexedFullTextSearchLegacyActivity : AppCompatActivity() {
         searchView.queryHint = "Search PDF documents..."
 
         // Search is started as soon as the user starts writing.
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-            override fun onQueryTextSubmit(query: String): Boolean = false
+        searchView.setOnQueryTextListener(
+            object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String): Boolean = false
 
-            override fun onQueryTextChange(newText: String): Boolean = performSearch(newText)
-        })
+                override fun onQueryTextChange(newText: String): Boolean = performSearch(newText)
+            },
+        )
         return searchView
     }
 
     /** Runs a search query on all indexed documents. */
-    private fun performSearch(query: String): Boolean {
-        return if (query.length > 2) {
-            library.stopSearch()
-            val options = QueryOptions.Builder()
+    private fun performSearch(query: String): Boolean = if (query.length > 2) {
+        library.stopSearch()
+        val options =
+            QueryOptions
+                .Builder()
                 .ignoreDocumentText(ignoreDocumentText)
                 .ignoreAnnotations(ignoreAnnotations)
                 .generateTextPreviews(true)
                 .build()
 
-            library.search(
-                query,
-                options,
-                object : QueryResultListener {
-                    override fun onSearchCompleted(
-                        searchString: String,
-                        results: Map<String, Set<Int>>
-                    ) {
-                        Log.d(
-                            TAG,
-                            "onSearchCompleted() called with: searchString = [$searchString], results = [$results]"
-                        )
-                    }
-
-                    override fun onSearchPreviewsGenerated(
-                        searchString: String,
-                        results: Map<String, Set<QueryPreviewResult>>
-                    ) {
-                        Log.d(
-                            TAG,
-                            "onSearchPreviewsGenerated() called with: searchString = [$searchString], results = [$results]"
-                        )
-
-                        // Search results are returned on a background thread. Post the results
-                        // to the adapter, on the main thread.
-                        runOnUiThread { adapter.setSearchResults(results) }
-                    }
+        library.search(
+            query,
+            options,
+            object : QueryResultListener {
+                override fun onSearchCompleted(searchString: String, results: Map<String, Set<Int>>) {
+                    Log.d(
+                        TAG,
+                        "onSearchCompleted() called with: searchString = [$searchString], results = [$results]",
+                    )
                 }
-            )
-            true
-        } else {
-            // Clear the search results if the query is too short.
-            adapter.setSearchResults(null)
-            false
-        }
+
+                override fun onSearchPreviewsGenerated(searchString: String, results: Map<String, Set<QueryPreviewResult>>) {
+                    Log.d(
+                        TAG,
+                        "onSearchPreviewsGenerated() called with: searchString = [$searchString], results = [$results]",
+                    )
+
+                    // Search results are returned on a background thread. Post the results
+                    // to the adapter, on the main thread.
+                    runOnUiThread { adapter.setSearchResults(results) }
+                }
+            },
+        )
+        true
+    } else {
+        // Clear the search results if the query is too short.
+        adapter.setSearchResults(null)
+        false
     }
 
     /** Performs indexing of all available documents in the app's assets. */
@@ -268,19 +263,23 @@ class IndexedFullTextSearchLegacyActivity : AppCompatActivity() {
 
         try {
             // List all top-level assets of the app and filter them for PDF files.
-            val assets = Observable.fromArray(*assets.list("")!!)
-                .filter { it.endsWith(".pdf") }
-                .toList()
-                .blockingGet()
+            val assets =
+                Observable
+                    .fromArray(*assets.list("")!!)
+                    .filter { it.endsWith(".pdf") }
+                    .toList()
+                    .blockingGet()
 
             // Open and collect all documents that should be indexed.
             for (asset in assets) {
                 try {
                     // Try to open the document and if successful, enqueue it for indexing.
-                    val document = PdfDocumentLoader.openDocumentAsync(
-                        this,
-                        DocumentSource(AssetDataProvider(asset))
-                    ).blockingGet()
+                    val document =
+                        PdfDocumentLoader
+                            .openDocumentAsync(
+                                this,
+                                DocumentSource(AssetDataProvider(asset)),
+                            ).blockingGet()
                     indexingQueue.add(document)
 
                     // Store the asset's path and name using its UID. This allows us to retrieve the
@@ -293,17 +292,18 @@ class IndexedFullTextSearchLegacyActivity : AppCompatActivity() {
                     Log.w(
                         TAG,
                         "Could not open document '$asset' from assets. See exception for reason.",
-                        ex
+                        ex,
                     )
                 }
             }
         } catch (e: IOException) {
             Log.e(TAG, "Error while trying to index all catalog app assets.", e)
-            Toast.makeText(
-                this,
-                "Error listing asset files to index - see logcat for detailed error message.",
-                Toast.LENGTH_LONG
-            ).show()
+            Toast
+                .makeText(
+                    this,
+                    "Error listing asset files to index - see logcat for detailed error message.",
+                    Toast.LENGTH_LONG,
+                ).show()
         }
 
         if (indexingQueue.isNotEmpty()) {
@@ -311,11 +311,12 @@ class IndexedFullTextSearchLegacyActivity : AppCompatActivity() {
             library.enqueueDocuments(indexingQueue, IndexingOptions())
 
             // Show to the user that indexing is in progress.
-            progressIndicator = Snackbar.make(
-                findViewById(android.R.id.content),
-                "Indexing...",
-                Snackbar.LENGTH_INDEFINITE
-            )
+            progressIndicator =
+                Snackbar.make(
+                    findViewById(android.R.id.content),
+                    "Indexing...",
+                    Snackbar.LENGTH_INDEFINITE,
+                )
             progressIndicator?.show()
             scheduleProgressIndicatorUpdate()
         }
@@ -341,23 +342,22 @@ class IndexedFullTextSearchLegacyActivity : AppCompatActivity() {
         val previewTextView: TextView = view.findViewById(R.id.previewTextView)
 
         companion object {
-            fun get(view: View?, parent: ViewGroup): ViewHolder {
-                return if (view != null) {
-                    view.tag as ViewHolder
-                } else {
-                    val newView = LayoutInflater.from(parent.context)
+            fun get(view: View?, parent: ViewGroup): ViewHolder = if (view != null) {
+                view.tag as ViewHolder
+            } else {
+                val newView =
+                    LayoutInflater
+                        .from(parent.context)
                         .inflate(R.layout.item_fts_result, parent, false)
-                    val holder = ViewHolder(newView)
-                    newView.tag = holder
-                    holder
-                }
+                val holder = ViewHolder(newView)
+                newView.tag = holder
+                holder
             }
         }
     }
 
     /** List view adapter for presenting search results. */
     private inner class SearchResultAdapter : BaseAdapter() {
-
         private val listItems = mutableListOf<QueryPreviewResult>()
 
         fun setSearchResults(searchResults: Map<String, Set<QueryPreviewResult>>?) {
@@ -382,11 +382,12 @@ class IndexedFullTextSearchLegacyActivity : AppCompatActivity() {
             val holder = ViewHolder.get(convertView, parent)
             val item = getItem(position)
             holder.documentTitleTextView.text = indexedDocumentPaths[item.uid]
-            holder.pageNumberTextView.text = String.format(
-                Locale.getDefault(),
-                "Page %d",
-                item.pageIndex + 1
-            )
+            holder.pageNumberTextView.text =
+                String.format(
+                    Locale.getDefault(),
+                    "Page %d",
+                    item.pageIndex + 1,
+                )
 
             // Highlight the actual search results phrase.
             val highlightedRange = item.rangeInPreviewText
@@ -395,13 +396,13 @@ class IndexedFullTextSearchLegacyActivity : AppCompatActivity() {
                 StyleSpan(Typeface.BOLD),
                 highlightedRange.startPosition,
                 highlightedRange.endPosition,
-                0
+                0,
             )
             previewText.setSpan(
                 BackgroundColorSpan(Color.YELLOW),
                 highlightedRange.startPosition,
                 highlightedRange.endPosition,
-                0
+                0,
             )
             holder.previewTextView.text = previewText
 

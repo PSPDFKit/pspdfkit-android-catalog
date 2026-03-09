@@ -9,5 +9,6 @@ package com.pspdfkit.catalog.ui.model
 
 sealed class Page {
     object ExampleList : Page()
+
     object Settings : Page()
 }

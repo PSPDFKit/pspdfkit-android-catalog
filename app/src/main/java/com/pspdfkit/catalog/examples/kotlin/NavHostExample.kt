@@ -65,7 +65,7 @@ class NavHostExample(context: Context) : SdkExample(context, R.string.navHostExa
             context.startActivity(
                 Intent(context, NavHostActivity::class.java).apply {
                     putExtra(URL_PARAM, url.toUri().toString())
-                }
+                },
             )
         }
     }
@@ -86,7 +86,7 @@ class NavHostActivity : AppCompatActivity() {
                     NavHost(
                         navController = navController,
                         startDestination = "ScreenOne",
-                        modifier = Modifier.fillMaxSize().padding(it)
+                        modifier = Modifier.fillMaxSize().padding(it),
                     ) {
                         composable("ScreenOne") { ScreenOne(path) { navController.navigate("ScreenTwo") } }
                         composable("ScreenTwo") { ScreenTwo(path) { navController.popBackStack() } }
@@ -104,37 +104,41 @@ class NavHostActivity : AppCompatActivity() {
 fun ScreenOne(path: String, navigate: () -> Unit) {
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.BottomCenter) {
         val context = androidx.compose.ui.platform.LocalContext.current
-        val pdfActivityConfiguration = remember {
-            PdfActivityConfiguration
-                .Builder(context)
-                .layoutMode(PageLayoutMode.AUTO)
-                .scrollMode(PageScrollMode.CONTINUOUS)
-                .fitMode(PageFitMode.FIT_TO_WIDTH)
-                .pagePadding(8)
-                .scrollDirection(PageScrollDirection.VERTICAL)
-                .setUserInterfaceViewMode(UserInterfaceViewMode.USER_INTERFACE_VIEW_MODE_HIDDEN)
-                .autosaveEnabled(false)
-                .formEditingEnabled(false)
-                .build()
-        }
+        val pdfActivityConfiguration =
+            remember {
+                PdfActivityConfiguration
+                    .Builder(context)
+                    .layoutMode(PageLayoutMode.AUTO)
+                    .scrollMode(PageScrollMode.CONTINUOUS)
+                    .fitMode(PageFitMode.FIT_TO_WIDTH)
+                    .pagePadding(8)
+                    .scrollDirection(PageScrollDirection.VERTICAL)
+                    .setUserInterfaceViewMode(UserInterfaceViewMode.USER_INTERFACE_VIEW_MODE_HIDDEN)
+                    .autosaveEnabled(false)
+                    .formEditingEnabled(false)
+                    .build()
+            }
 
         val documentState = rememberDocumentState(documentUri = path.toUri(), configuration = pdfActivityConfiguration)
         DocumentView(
             documentState = documentState,
-            documentManager = getDefaultDocumentManager(
-                documentListener = DefaultListeners.documentListeners(
+            documentManager =
+            getDefaultDocumentManager(
+                documentListener =
+                DefaultListeners.documentListeners(
                     onDocumentLoaded = { i ->
                         i.formProvider
                             .addFormElementToPage<TextFormConfiguration>(
                                 "text-field-1",
-                                TextFormConfiguration.Builder(0, RectF(30f, 750f, 200f, 720f))
+                                TextFormConfiguration
+                                    .Builder(0, RectF(30f, 750f, 200f, 720f))
                                     .setText("Hello new Text")
-                                    .build()
+                                    .build(),
                             )
                         Toast.makeText(context, "Document loaded!", Toast.LENGTH_SHORT).show()
-                    }
-                )
-            )
+                    },
+                ),
+            ),
         )
         ElevatedButton(navigate, modifier = Modifier) {
             Text("Navigate by NavController")
@@ -150,37 +154,41 @@ fun ScreenOne(path: String, navigate: () -> Unit) {
 fun ScreenTwo(path: String, navigate: () -> Unit) {
     Box(modifier = Modifier.fillMaxSize()) {
         val context = androidx.compose.ui.platform.LocalContext.current
-        val pdfActivityConfiguration = remember {
-            PdfActivityConfiguration
-                .Builder(context)
-                .layoutMode(PageLayoutMode.AUTO)
-                .scrollMode(PageScrollMode.PER_PAGE)
-                .fitMode(PageFitMode.FIT_TO_WIDTH)
-                .pagePadding(8)
-                .scrollDirection(PageScrollDirection.VERTICAL)
-                .setUserInterfaceViewMode(UserInterfaceViewMode.USER_INTERFACE_VIEW_MODE_HIDDEN)
-                .autosaveEnabled(false)
-                .formEditingEnabled(true)
-                .build()
-        }
+        val pdfActivityConfiguration =
+            remember {
+                PdfActivityConfiguration
+                    .Builder(context)
+                    .layoutMode(PageLayoutMode.AUTO)
+                    .scrollMode(PageScrollMode.PER_PAGE)
+                    .fitMode(PageFitMode.FIT_TO_WIDTH)
+                    .pagePadding(8)
+                    .scrollDirection(PageScrollDirection.VERTICAL)
+                    .setUserInterfaceViewMode(UserInterfaceViewMode.USER_INTERFACE_VIEW_MODE_HIDDEN)
+                    .autosaveEnabled(false)
+                    .formEditingEnabled(true)
+                    .build()
+            }
 
         val documentState = rememberDocumentState(documentUri = path.toUri(), configuration = pdfActivityConfiguration)
         DocumentView(
             documentState = documentState,
-            documentManager = getDefaultDocumentManager(
-                documentListener = DefaultListeners.documentListeners(
+            documentManager =
+            getDefaultDocumentManager(
+                documentListener =
+                DefaultListeners.documentListeners(
                     onDocumentLoaded = { i ->
                         i.formProvider
                             .addFormElementToPage<TextFormConfiguration>(
                                 "text-field-editable",
-                                TextFormConfiguration.Builder(0, RectF(30f, 750f, 200f, 720f))
+                                TextFormConfiguration
+                                    .Builder(0, RectF(30f, 750f, 200f, 720f))
                                     .setText("Hello new Text")
-                                    .build()
+                                    .build(),
                             )
                         Toast.makeText(context, "Document loaded!", Toast.LENGTH_SHORT).show()
-                    }
-                )
-            )
+                    },
+                ),
+            ),
         )
         Box(modifier = Modifier.background(MaterialTheme.colorScheme.surface)) {
             TopAppBar(
@@ -190,7 +198,7 @@ fun ScreenTwo(path: String, navigate: () -> Unit) {
                         Icon(Icons.AutoMirrored.Default.ArrowBack, contentDescription = "Back")
                     }
                 },
-                modifier = Modifier.statusBarsPadding()
+                modifier = Modifier.statusBarsPadding(),
             )
         }
     }

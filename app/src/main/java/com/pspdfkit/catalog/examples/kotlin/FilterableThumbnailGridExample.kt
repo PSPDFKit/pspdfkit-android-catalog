@@ -49,16 +49,19 @@ import java.util.EnumSet
  * Example on how to display filters in the thumbnail grid. Shows how to combine PDF processor and
  * customizability of the thumbnail grid to create filters.
  */
-class FilterableThumbnailGridExample(context: Context) : SdkExample(
-    context,
-    R.string.filterableThumbnailGridExampleTitle,
-    R.string.filterableThumbnailGridExampleDescription
-) {
+class FilterableThumbnailGridExample(context: Context) :
+    SdkExample(
+        context,
+        R.string.filterableThumbnailGridExampleTitle,
+        R.string.filterableThumbnailGridExampleDescription,
+    ) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
-        val intent = PdfActivityIntentBuilder.fromDataProvider(context, AssetDataProvider(WELCOME_DOC))
-            .configuration(configuration.build())
-            .activityClass(FilterableThumbnailGridActivity::class.java)
-            .build()
+        val intent =
+            PdfActivityIntentBuilder
+                .fromDataProvider(context, AssetDataProvider(WELCOME_DOC))
+                .configuration(configuration.build())
+                .activityClass(FilterableThumbnailGridActivity::class.java)
+                .build()
 
         context.startActivity(intent)
     }
@@ -78,8 +81,9 @@ class FilterableThumbnailGridViewModel : ViewModel() {
  * Each filtering process first retrieves the pages that need to be in the document, and then
  * uses the [PdfProcessor] to keep those pages. Finally it reloads the document.
  */
-class FilterableThumbnailGridActivity : PdfActivity(), FilterPickerView.OnFilterClickedListener {
-
+class FilterableThumbnailGridActivity :
+    PdfActivity(),
+    FilterPickerView.OnFilterClickedListener {
     /** A view with selectable filters that we will add to the thumbnail grid layout. */
     private var filterPickerView: FilterPickerView? = null
 
@@ -98,8 +102,9 @@ class FilterableThumbnailGridActivity : PdfActivity(), FilterPickerView.OnFilter
 
         // View model provider is used to instantiate the view model. If this activity is
         // recreated, it will receive the instance of the same view model.
-        viewModel = ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
-            .get(FilterableThumbnailGridViewModel::class.java)
+        viewModel =
+            ViewModelProvider(this, ViewModelProvider.NewInstanceFactory())
+                .get(FilterableThumbnailGridViewModel::class.java)
 
         // Try to restore the last selected filter, otherwise use the default one.
         @Suppress("DEPRECATION")
@@ -114,17 +119,19 @@ class FilterableThumbnailGridActivity : PdfActivity(), FilterPickerView.OnFilter
             if (thumbnailGridView.isDisplayed) {
                 generateFilterView(thumbnailGridView, selectedFilter)
             } else {
-                pspdfKitViews.addOnVisibilityChangedListener(object : OnVisibilityChangedListener {
-                    override fun onShow(view: View) {
-                        if (view == thumbnailGridView) {
-                            generateFilterView(thumbnailGridView, selectedFilter)
+                pspdfKitViews.addOnVisibilityChangedListener(
+                    object : OnVisibilityChangedListener {
+                        override fun onShow(view: View) {
+                            if (view == thumbnailGridView) {
+                                generateFilterView(thumbnailGridView, selectedFilter)
+                            }
                         }
-                    }
 
-                    override fun onHide(view: View) {
-                        // No action needed when hiding the thumbnail bar.
-                    }
-                })
+                        override fun onHide(view: View) {
+                            // No action needed when hiding the thumbnail bar.
+                        }
+                    },
+                )
             }
         }
     }
@@ -173,14 +180,14 @@ class FilterableThumbnailGridActivity : PdfActivity(), FilterPickerView.OnFilter
         // Set elevation on the picker bar.
         ViewCompat.setElevation(
             picker,
-            resources.getDimension(R.dimen.pspdf__thumbnailGridFilterPickerViewElevation)
+            resources.getDimension(R.dimen.pspdf__thumbnailGridFilterPickerViewElevation),
         )
 
         // Add view to the thumbnail grid (which is a RelativeLayout).
         thumbnailGridView.addView(
             picker,
             RelativeLayout.LayoutParams.MATCH_PARENT,
-            RelativeLayout.LayoutParams.WRAP_CONTENT
+            RelativeLayout.LayoutParams.WRAP_CONTENT,
         )
 
         // Get the recycle view and position it below the newly added view.
@@ -198,24 +205,27 @@ class FilterableThumbnailGridActivity : PdfActivity(), FilterPickerView.OnFilter
                 filterPickerView?.setSelectedFilter(Filter.ALL)
                 loadOriginalDocument()
             }
+
             Filter.ANNOTATED -> {
                 // Get pages that contain annotations and filter them out in the document.
                 val originalDocument = viewModel.pdfDocument ?: return
 
                 CoroutineScope(Dispatchers.Main).launch {
                     // Get all annotations and extract unique page indices.
-                    val annotations = originalDocument.annotationProvider.getAllAnnotationsOfType(
-                        EnumSet.allOf(AnnotationType::class.java)
-                    )
+                    val annotations =
+                        originalDocument.annotationProvider.getAllAnnotationsOfType(
+                            EnumSet.allOf(AnnotationType::class.java),
+                        )
                     val pageIndices = annotations.map { it.pageIndex }.distinct()
 
                     if (pageIndices.isEmpty()) {
                         // If there are no annotations, we don't have any document to switch to.
-                        Toast.makeText(
-                            this@FilterableThumbnailGridActivity,
-                            "There are no annotated pages in the document.",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast
+                            .makeText(
+                                this@FilterableThumbnailGridActivity,
+                                "There are no annotated pages in the document.",
+                                Toast.LENGTH_SHORT,
+                            ).show()
                         return@launch
                     }
 
@@ -227,6 +237,7 @@ class FilterableThumbnailGridActivity : PdfActivity(), FilterPickerView.OnFilter
                     loadFilteredDocument(originalDocument, pageIndices.toHashSet(), "annotated")
                 }
             }
+
             Filter.BOOKMARKED -> {
                 // Get pages that contain bookmarks and filter them out in the document.
                 val originalDocument = viewModel.pdfDocument ?: return
@@ -247,35 +258,38 @@ class FilterableThumbnailGridActivity : PdfActivity(), FilterPickerView.OnFilter
                     // Convert to list.
                     .toList()
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(object : SingleObserver<List<Int>> {
-                        override fun onSubscribe(d: Disposable) {
-                            // Do something once the filtering process starts. Not
-                            // implemented in this example.
-                        }
-
-                        override fun onSuccess(integers: List<Int>) {
-                            if (integers.isEmpty()) {
-                                // If there are no bookmarked pages, we don't have any document to switch to.
-                                Toast.makeText(
-                                    this@FilterableThumbnailGridActivity,
-                                    "There are no bookmarked pages in the document.",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                                return
+                    .subscribe(
+                        object : SingleObserver<List<Int>> {
+                            override fun onSubscribe(d: Disposable) {
+                                // Do something once the filtering process starts. Not
+                                // implemented in this example.
                             }
 
-                            // Refresh selection.
-                            filterPickerView?.setSelectedFilter(Filter.BOOKMARKED)
+                            override fun onSuccess(integers: List<Int>) {
+                                if (integers.isEmpty()) {
+                                    // If there are no bookmarked pages, we don't have any document to switch to.
+                                    Toast
+                                        .makeText(
+                                            this@FilterableThumbnailGridActivity,
+                                            "There are no bookmarked pages in the document.",
+                                            Toast.LENGTH_SHORT,
+                                        ).show()
+                                    return
+                                }
 
-                            // Filter the original document to contain just the
-                            // bookmarked pages, and load it.
-                            loadFilteredDocument(originalDocument, integers.toHashSet(), "bookmarked")
-                        }
+                                // Refresh selection.
+                                filterPickerView?.setSelectedFilter(Filter.BOOKMARKED)
 
-                        override fun onError(e: Throwable) {
-                            // Handle filtering error here.
-                        }
-                    })
+                                // Filter the original document to contain just the
+                                // bookmarked pages, and load it.
+                                loadFilteredDocument(originalDocument, integers.toHashSet(), "bookmarked")
+                            }
+
+                            override fun onError(e: Throwable) {
+                                // Handle filtering error here.
+                            }
+                        },
+                    )
             }
         }
     }
@@ -296,39 +310,38 @@ class FilterableThumbnailGridActivity : PdfActivity(), FilterPickerView.OnFilter
      * @param pages Pages that will be taken from the original document.
      * @param fileSuffix Suffix to add to the filename when creating the filtered document.
      */
-    private fun loadFilteredDocument(
-        originalDocument: PdfDocument,
-        pages: Set<Int>,
-        fileSuffix: String
-    ) {
+    private fun loadFilteredDocument(originalDocument: PdfDocument, pages: Set<Int>, fileSuffix: String) {
         val pdfProcessorTask = PdfProcessorTask.fromDocument(originalDocument).keepPages(pages)
         val newDocumentFile = File(filesDir, "${originalDocument.title}-$fileSuffix")
-        PdfProcessor.processDocumentAsync(pdfProcessorTask, newDocumentFile)
+        PdfProcessor
+            .processDocumentAsync(pdfProcessorTask, newDocumentFile)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(object : DefaultSubscriber<PdfProcessor.ProcessorProgress>() {
-                override fun onNext(processorProgress: PdfProcessor.ProcessorProgress) {
-                    // Consume processing progress here. Could be used to show the
-                    // filtering progress in some UI.
-                }
-
-                override fun onError(t: Throwable) {
-                    // Handle processing error here. Not handled in this particular
-                    // example.
-                }
-
-                override fun onComplete() {
-                    try {
-                        val documentSource = DocumentSource(Uri.fromFile(newDocumentFile.canonicalFile))
-                        val documentDescriptor = DocumentDescriptor.fromDocumentSource(documentSource)
-                        val coordinator = documentCoordinator
-                        coordinator.addOnDocumentVisibleListener { pspdfKitViews.thumbnailGridView?.show() }
-                        coordinator.setDocument(documentDescriptor)
-                    } catch (e: IOException) {
-                        e.printStackTrace()
+            .subscribe(
+                object : DefaultSubscriber<PdfProcessor.ProcessorProgress>() {
+                    override fun onNext(processorProgress: PdfProcessor.ProcessorProgress) {
+                        // Consume processing progress here. Could be used to show the
+                        // filtering progress in some UI.
                     }
-                }
-            })
+
+                    override fun onError(t: Throwable) {
+                        // Handle processing error here. Not handled in this particular
+                        // example.
+                    }
+
+                    override fun onComplete() {
+                        try {
+                            val documentSource = DocumentSource(Uri.fromFile(newDocumentFile.canonicalFile))
+                            val documentDescriptor = DocumentDescriptor.fromDocumentSource(documentSource)
+                            val coordinator = documentCoordinator
+                            coordinator.addOnDocumentVisibleListener { pspdfKitViews.thumbnailGridView?.show() }
+                            coordinator.setDocument(documentDescriptor)
+                        } catch (e: IOException) {
+                            e.printStackTrace()
+                        }
+                    }
+                },
+            )
     }
 
     companion object {

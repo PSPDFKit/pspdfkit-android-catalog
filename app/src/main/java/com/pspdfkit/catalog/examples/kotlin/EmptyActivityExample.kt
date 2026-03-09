@@ -18,13 +18,15 @@ import com.pspdfkit.ui.PdfActivityIntentBuilder
  * [com.pspdfkit.ui.PdfActivity] without any document loaded.
  * This is most useful when also providing a custom activity subclass with options for the user to open a document.
  */
-class EmptyActivityExample(context: Context) : SdkExample(context, R.string.emptyActivityExampleTitle, R.string.emptyActivityExampleDescription) {
-
+class EmptyActivityExample(context: Context) :
+    SdkExample(context, R.string.emptyActivityExampleTitle, R.string.emptyActivityExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // We use emptyActivity() to start the PdfActivity without any document loaded.
-        val intent = PdfActivityIntentBuilder.emptyActivity(context)
-            .configuration(configuration.build())
-            .build()
+        val intent =
+            PdfActivityIntentBuilder
+                .emptyActivity(context)
+                .configuration(configuration.build())
+                .build()
         context.startActivity(intent)
     }
 }

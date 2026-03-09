@@ -67,7 +67,7 @@ class FragmentExample(context: Context) : SdkExample(context, R.string.fragmentE
             // We pass the `PdfFragment` configuration via another extra.
             intent.putExtra(
                 CustomFragmentActivity.EXTRA_CONFIGURATION,
-                configuration.build().configuration
+                configuration.build().configuration,
             )
 
             context.startActivity(intent)
@@ -78,8 +78,10 @@ class FragmentExample(context: Context) : SdkExample(context, R.string.fragmentE
 /**
  * Custom activity that integrates [PdfFragment] together with some of the most important PSPDFKit views.
  */
-class CustomFragmentActivity : AppCompatActivity(), DocumentListener, OnDocumentLongPressListener {
-
+class CustomFragmentActivity :
+    AppCompatActivity(),
+    DocumentListener,
+    OnDocumentLongPressListener {
     private lateinit var fragment: PdfFragment
     private lateinit var thumbnailBar: PdfThumbnailBar
     private lateinit var configuration: PdfConfiguration
@@ -104,23 +106,29 @@ class CustomFragmentActivity : AppCompatActivity(), DocumentListener, OnDocument
                             modularSearchView.hide()
                             return
                         }
+
                         thumbnailGrid.isDisplayed -> {
                             thumbnailGrid.hide()
                             return
                         }
+
                         pdfOutlineView.isDisplayed -> {
                             pdfOutlineView.hide()
                             return
                         }
-                        else -> finish()
+
+                        else -> {
+                            finish()
+                        }
                     }
                 }
-            }
+            },
         )
 
         // Get the Uri provided when launching the activity.
-        val documentUri = intent.getSupportParcelableExtra(EXTRA_URI, Uri::class.java)
-            ?: throw IllegalStateException("Activity Intent was missing Uri extra!")
+        val documentUri =
+            intent.getSupportParcelableExtra(EXTRA_URI, Uri::class.java)
+                ?: throw IllegalStateException("Activity Intent was missing Uri extra!")
 
         // Get the configuration from the provided Intent.
         configuration = intent.getSupportParcelableExtra(EXTRA_CONFIGURATION, PdfConfiguration::class.java)
@@ -158,7 +166,9 @@ class CustomFragmentActivity : AppCompatActivity(), DocumentListener, OnDocument
 
     private fun initThumbnailGridAndButton() {
         thumbnailGrid = findViewById(R.id.thumbnailGrid)
-            ?: throw IllegalStateException("Error while loading CustomFragmentActivity. The example layout was missing the thumbnail grid view.")
+            ?: throw IllegalStateException(
+                "Error while loading CustomFragmentActivity. The example layout was missing the thumbnail grid view.",
+            )
 
         thumbnailGrid.setOnPageClickListener { view, pageIndex ->
             fragment.pageIndex = pageIndex
@@ -166,18 +176,19 @@ class CustomFragmentActivity : AppCompatActivity(), DocumentListener, OnDocument
         }
 
         // The thumbnail grid is hidden by default. Set up a click listener to show it.
-        val openThumbnailGridButton = findViewById<ImageView>(R.id.openThumbnailGridButton)
-            ?: throw IllegalStateException(
-                "Error while loading CustomFragmentActivity. The example layout" +
-                    " was missing the open thumbnail grid button with id `R.id.openThumbnailGridButton`."
-            )
+        val openThumbnailGridButton =
+            findViewById<ImageView>(R.id.openThumbnailGridButton)
+                ?: throw IllegalStateException(
+                    "Error while loading CustomFragmentActivity. The example layout" +
+                        " was missing the open thumbnail grid button with id `R.id.openThumbnailGridButton`.",
+                )
 
         openThumbnailGridButton.apply {
             setImageDrawable(
                 tintDrawable(
                     openThumbnailGridButton.drawable,
-                    ContextCompat.getColor(this@CustomFragmentActivity, com.pspdfkit.R.color.pspdf__onPrimary)
-                )
+                    ContextCompat.getColor(this@CustomFragmentActivity, com.pspdfkit.R.color.pspdf__onPrimary),
+                ),
             )
             setOnClickListener {
                 if (thumbnailGrid.isShown) thumbnailGrid.hide() else thumbnailGrid.show()
@@ -204,18 +215,19 @@ class CustomFragmentActivity : AppCompatActivity(), DocumentListener, OnDocument
             fragment.addDocumentListener(pdfOutlineView.documentListener)
         }
 
-        val openOutlineButton = findViewById<ImageView>(R.id.openOutlineButton)
-            ?: throw IllegalStateException(
-                "Error while loading CustomFragmentActivity. The example layout " +
-                    "was missing the open outline view button with id `R.id.openOutlineButton`."
-            )
+        val openOutlineButton =
+            findViewById<ImageView>(R.id.openOutlineButton)
+                ?: throw IllegalStateException(
+                    "Error while loading CustomFragmentActivity. The example layout " +
+                        "was missing the open outline view button with id `R.id.openOutlineButton`.",
+                )
 
         openOutlineButton.apply {
             setImageDrawable(
                 tintDrawable(
                     openOutlineButton.drawable,
-                    ContextCompat.getColor(this@CustomFragmentActivity, com.pspdfkit.R.color.pspdf__onPrimary)
-                )
+                    ContextCompat.getColor(this@CustomFragmentActivity, com.pspdfkit.R.color.pspdf__onPrimary),
+                ),
             )
             setOnClickListener {
                 if (pdfOutlineView.isShown) pdfOutlineView.hide() else pdfOutlineView.show()
@@ -225,44 +237,48 @@ class CustomFragmentActivity : AppCompatActivity(), DocumentListener, OnDocument
 
     private fun initModularSearchViewAndButton() {
         // The search result highlighter will highlight any selected result.
-        highlighter = SearchResultHighlighter(this).also {
-            fragment.addDrawableProvider(it)
-        }
+        highlighter =
+            SearchResultHighlighter(this).also {
+                fragment.addDrawableProvider(it)
+            }
 
         modularSearchView = findViewById(R.id.modularSearchView)
             ?: throw IllegalStateException("Error while loading CustomFragmentActivity. The example layout was missing the search view.")
 
-        modularSearchView.setSearchViewListener(object : SimpleSearchResultListener() {
-            override fun onMoreSearchResults(results: List<SearchResult>) {
-                highlighter.addSearchResults(results)
-            }
-
-            override fun onSearchCleared() {
-                highlighter.clearSearchResults()
-            }
-
-            override fun onSearchResultSelected(result: SearchResult?) {
-                // Pass on the search result to the highlighter. If 'null' the highlighter will clear any selection.
-                highlighter.setSelectedSearchResult(result)
-                if (result != null) {
-                    fragment.scrollTo(PdfUtils.createPdfRectUnion(result.textBlock.pageRects), result.pageIndex, 250, false)
+        modularSearchView.setSearchViewListener(
+            object : SimpleSearchResultListener() {
+                override fun onMoreSearchResults(results: List<SearchResult>) {
+                    highlighter.addSearchResults(results)
                 }
-            }
-        })
+
+                override fun onSearchCleared() {
+                    highlighter.clearSearchResults()
+                }
+
+                override fun onSearchResultSelected(result: SearchResult?) {
+                    // Pass on the search result to the highlighter. If 'null' the highlighter will clear any selection.
+                    highlighter.setSelectedSearchResult(result)
+                    if (result != null) {
+                        fragment.scrollTo(PdfUtils.createPdfRectUnion(result.textBlock.pageRects), result.pageIndex, 250, false)
+                    }
+                }
+            },
+        )
 
         // The search view is hidden by default (see layout). Set up a click listener that will show the view once pressed.
-        val openSearchButton = findViewById<ImageView>(R.id.openSearchButton)
-            ?: throw IllegalStateException(
-                "Error while loading CustomFragmentActivity. The example layout " +
-                    "was missing the open search button with id `R.id.openSearchButton`."
-            )
+        val openSearchButton =
+            findViewById<ImageView>(R.id.openSearchButton)
+                ?: throw IllegalStateException(
+                    "Error while loading CustomFragmentActivity. The example layout " +
+                        "was missing the open search button with id `R.id.openSearchButton`.",
+                )
 
         openSearchButton.apply {
             setImageDrawable(
                 tintDrawable(
                     drawable,
-                    ContextCompat.getColor(this@CustomFragmentActivity, com.pspdfkit.R.color.pspdf__onPrimary)
-                )
+                    ContextCompat.getColor(this@CustomFragmentActivity, com.pspdfkit.R.color.pspdf__onPrimary),
+                ),
             )
             setOnClickListener {
                 if (modularSearchView.isShown) modularSearchView.hide() else modularSearchView.show()
@@ -305,7 +321,7 @@ class CustomFragmentActivity : AppCompatActivity(), DocumentListener, OnDocument
         @IntRange(from = 0) pageIndex: Int,
         event: MotionEvent?,
         pagePosition: PointF?,
-        longPressedAnnotation: Annotation?
+        longPressedAnnotation: Annotation?,
     ): Boolean {
         // This code showcases how to handle long click gesture on the document links.
         fragment.view?.performHapticFeedback(HapticFeedbackConstants.LONG_PRESS)

@@ -57,7 +57,8 @@ import java.util.EnumSet
  * stroke color for each and blending these colored pages into a single document. Furthermore, it shows how to integrate the
  * {@link com.pspdfkit.document.processor.DocumentComparisonDialog} to align two documents for better comparison results.
  */
-class DocumentComparisonExample(context: Context) : SdkExample(context, R.string.documentComparisonExampleTitle, R.string.documentComparisonExampleDescription) {
+class DocumentComparisonExample(context: Context) :
+    SdkExample(context, R.string.documentComparisonExampleTitle, R.string.documentComparisonExampleDescription) {
     private val documentAIndex = 0 // Destination page index
     private val documentBIndex = 0 // Source page index
 
@@ -89,61 +90,73 @@ class DocumentComparisonExample(context: Context) : SdkExample(context, R.string
         // Comparison process consists from 2 steps:
         // 1. Color strokes from both documents in different colors.
         // 2. Merge 2 pages from these documents with colored strokes together.
-        val processDocumentsForComparison = Single.defer {
-            // Color strokes in the old document to GREEN.
-            val greenDocumentUri = changeStrokeColorForDocumentFromAssets(
-                context,
-                "comparison/Document-A.pdf",
-                oldDocumentColor,
-                "Document-A",
-                documentAIndex
-            )
+        val processDocumentsForComparison =
+            Single.defer {
+                // Color strokes in the old document to GREEN.
+                val greenDocumentUri =
+                    changeStrokeColorForDocumentFromAssets(
+                        context,
+                        "comparison/Document-A.pdf",
+                        oldDocumentColor,
+                        "Document-A",
+                        documentAIndex,
+                    )
 
-            // Color strokes in the new document to RED.
-            val redDocumentUri = changeStrokeColorForDocumentFromAssets(
-                context,
-                "comparison/Document-B.pdf",
-                newDocumentColor,
-                "Document-B",
-                documentBIndex
-            )
+                // Color strokes in the new document to RED.
+                val redDocumentUri =
+                    changeStrokeColorForDocumentFromAssets(
+                        context,
+                        "comparison/Document-B.pdf",
+                        newDocumentColor,
+                        "Document-B",
+                        documentBIndex,
+                    )
 
-            // Now generate document by merging both colored pages.
-            val mergedDocumentUri = generateComparisonDocument(context, greenDocumentUri, redDocumentUri, "Comparison")
+                // Now generate document by merging both colored pages.
+                val mergedDocumentUri = generateComparisonDocument(context, greenDocumentUri, redDocumentUri, "Comparison")
 
-            // Return Single emitting triple of red, green and merged documents.
-            return@defer Single.just(Triple(greenDocumentUri, redDocumentUri, mergedDocumentUri))
-        }
+                // Return Single emitting triple of red, green and merged documents.
+                return@defer Single.just(Triple(greenDocumentUri, redDocumentUri, mergedDocumentUri))
+            }
 
-        processDocumentsForComparison.subscribeOn(Schedulers.io())
+        processDocumentsForComparison
+            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doFinally {
                 // Hide the progress dialog when processing finishes.
                 progressDialog.hide()
-            }
-            .subscribe(
+            }.subscribe(
                 Consumer {
                     // Start the PdfActivity with all 3 documents loaded in tabs. This will show documents A and B, as well as the
                     // comparison result.
-                    val documentTabs = arrayOf(
-                        DocumentDescriptor.fromUri(it.first),
-                        DocumentDescriptor.fromUri(it.second),
-                        DocumentDescriptor.fromUri(it.third).apply {
-                            setTitle("Comparison")
-                        }
-                    )
-                    val intent = PdfActivityIntentBuilder.fromDocumentDescriptor(context, *documentTabs)
-                        .configuration(configuration.build())
-                        // Make the tab with comparison document visible after starting the activity.
-                        .visibleDocument(2)
-                        .activityClass(DocumentComparisonActivity::class.java)
-                        .build()
+                    val documentTabs =
+                        arrayOf(
+                            DocumentDescriptor.fromUri(it.first),
+                            DocumentDescriptor.fromUri(it.second),
+                            DocumentDescriptor.fromUri(it.third).apply {
+                                setTitle("Comparison")
+                            },
+                        )
+                    val intent =
+                        PdfActivityIntentBuilder
+                            .fromDocumentDescriptor(context, *documentTabs)
+                            .configuration(configuration.build())
+                            // Make the tab with comparison document visible after starting the activity.
+                            .visibleDocument(2)
+                            .activityClass(DocumentComparisonActivity::class.java)
+                            .build()
                     context.startActivity(intent)
-                }
+                },
             )
     }
 
-    private fun changeStrokeColorForDocumentFromAssets(context: Context, documentAsset: String, color: Int, outputFileName: String, pageIndex: Int): Uri {
+    private fun changeStrokeColorForDocumentFromAssets(
+        context: Context,
+        documentAsset: String,
+        color: Int,
+        outputFileName: String,
+        pageIndex: Int,
+    ): Uri {
         val outputFile = File(context.filesDir, "$outputFileName.pdf")
 
         val sourceDocument = PdfDocumentLoader.openDocument(context, DocumentSource(AssetDataProvider(documentAsset)))
@@ -157,8 +170,10 @@ class DocumentComparisonExample(context: Context) : SdkExample(context, R.string
         val outputFile = File(context.filesDir, "$outputFileName.pdf")
 
         val oldDocument = PdfDocumentLoader.openDocument(context, oldDocumentUri)
-        val task = PdfProcessorTask.fromDocument(oldDocument)
-            .mergePage(PagePdf(context, newDocumentUri, documentBIndex), documentAIndex, BlendMode.DARKEN)
+        val task =
+            PdfProcessorTask
+                .fromDocument(oldDocument)
+                .mergePage(PagePdf(context, newDocumentUri, documentBIndex), documentAIndex, BlendMode.DARKEN)
         PdfProcessor.processDocument(task, outputFile)
 
         return Uri.fromFile(outputFile)
@@ -188,7 +203,9 @@ class DocumentComparisonExample(context: Context) : SdkExample(context, R.string
  * This activity displays two documents to compare and the merged document.
  * It receives the selected points to updates the aligned comparison document.
  */
-class DocumentComparisonActivity : PdfActivity(), ComparisonDialogListener {
+class DocumentComparisonActivity :
+    PdfActivity(),
+    ComparisonDialogListener {
     private lateinit var oldDocumentSource: DocumentSource
     private lateinit var newDocumentSource: DocumentSource
 
@@ -221,17 +238,18 @@ class DocumentComparisonActivity : PdfActivity(), ComparisonDialogListener {
 
         // Make sure the floating action button is not hidden behind the navigation bar (neither in normal mode nor in immersive mode).
         alignDocumentsButton.setOnApplyWindowInsetsListener { _, insets ->
-            alignDocumentsButton.layoutParams = (alignDocumentsButton.layoutParams as RelativeLayout.LayoutParams).apply {
-                val margin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16f, resources.displayMetrics).toInt()
+            alignDocumentsButton.layoutParams =
+                (alignDocumentsButton.layoutParams as RelativeLayout.LayoutParams).apply {
+                    val margin = TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 16f, resources.displayMetrics).toInt()
 
-                bottomMargin =
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                        margin + insets.getInsets(WindowInsets.Type.systemBars()).bottom
-                    } else {
-                        @Suppress("DEPRECATION")
-                        margin + insets.systemWindowInsetBottom
-                    }
-            }
+                    bottomMargin =
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+                            margin + insets.getInsets(WindowInsets.Type.systemBars()).bottom
+                        } else {
+                            @Suppress("DEPRECATION")
+                            margin + insets.systemWindowInsetBottom
+                        }
+                }
             insets
         }
 

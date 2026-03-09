@@ -5,6 +5,8 @@
  *   Please see License for details. This notice may not be removed from this file.
  */
 
+@file:Suppress("ktlint:standard:no-consecutive-comments", "UseTomlInstead")
+
 
 
 plugins {
@@ -23,8 +25,8 @@ android {
         minSdk = 26
         targetSdk = compileSdk
 
-        versionName = "11.1.1"
-        versionCode = 146310
+        versionName = "11.2.0"
+        versionCode = 146610
 
         vectorDrawables {
             useSupportLibrary = true
@@ -36,10 +38,6 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
-    }
-
-    kotlinOptions {
-        jvmTarget = "17"
     }
 
     buildFeatures {
@@ -58,8 +56,7 @@ android {
     lint {
         warningsAsErrors = true
         // The Catalog app is a demo app with only English strings.
-        // ObsoleteLintCustomCheck can be enabled again when upgrading `AppCompat` to 1.7
-        disable += setOf("MissingTranslation", "ObsoleteLintCustomCheck", "AndroidGradlePluginVersion")
+        disable += setOf("MissingTranslation", "AndroidGradlePluginVersion")
         // This needs to be a separate line for the lint dependency check script to work.
         disable.add("GradleDependency")
         baseline = file("lint-baseline.xml")
@@ -70,11 +67,11 @@ dependencies {
 
     // Nutrient is integrated from the Nutrient Maven repository. See the `repositories` block at the beginning
     // of this file, which shows how to set up the repository in your app.
-    implementation("io.nutrient:nutrient:11.1.1")
+    implementation("io.nutrient:nutrient:11.2.0")
 
     // OCR library + English language pack.
-    implementation("io.nutrient:nutrient-ocr:11.1.1")
-    implementation("io.nutrient:nutrient-ocr-english:11.1.1")
+    implementation("io.nutrient:nutrient-ocr:11.2.0")
+    implementation("io.nutrient:nutrient-ocr-english:11.2.0")
 
 
     // Androidx
@@ -115,7 +112,7 @@ dependencies {
     implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
 
     // Compose navigation
-    implementation("androidx.navigation:navigation-compose:2.8.1")
+    implementation("androidx.navigation:navigation-compose:2.9.7")
 
     // Markwon (Markdown rendering).
     implementation("io.noties.markwon:core:4.6.2")

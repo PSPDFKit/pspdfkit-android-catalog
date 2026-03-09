@@ -58,11 +58,12 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.io.File
 
-class IndexedFullTextSearchExample(context: Context) : SdkExample(
-    context,
-    R.string.indexedFtsExampleTitle,
-    R.string.indexedFtsExampleDescription
-) {
+class IndexedFullTextSearchExample(context: Context) :
+    SdkExample(
+        context,
+        R.string.indexedFtsExampleTitle,
+        R.string.indexedFtsExampleDescription,
+    ) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         val intent = Intent(context, IndexedFullTextSearchActivity::class.java)
         context.startActivity(intent)
@@ -70,7 +71,6 @@ class IndexedFullTextSearchExample(context: Context) : SdkExample(
 }
 
 class IndexedFullTextSearchActivity : ComponentActivity() {
-
     companion object {
         private const val EXTRACTED_PDFS_DIR = "extracted_pdfs"
     }
@@ -138,13 +138,14 @@ class IndexedFullTextSearchActivity : ComponentActivity() {
         }
 
         Scaffold(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
         ) { paddingValues ->
             Column(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxSize()
                     .padding(paddingValues)
-                    .padding(16.dp)
+                    .padding(16.dp),
             ) {
                 OutlinedTextField(
                     value = searchQuery,
@@ -152,55 +153,56 @@ class IndexedFullTextSearchActivity : ComponentActivity() {
                     label = { Text("Search PDFs") },
                     placeholder = { Text("Enter search terms...") },
                     modifier = Modifier.fillMaxWidth(),
-                    enabled = !isIndexing
+                    enabled = !isIndexing,
                 )
 
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.padding(vertical = 4.dp)
+                    modifier = Modifier.padding(vertical = 4.dp),
                 ) {
                     Checkbox(
                         checked = matchExactPhrases,
                         onCheckedChange = { matchExactPhrases = it },
-                        enabled = !isIndexing
+                        enabled = !isIndexing,
                     )
                     Text(
                         text = "Match exact phrases",
                         style = MaterialTheme.typography.bodyMedium,
-                        modifier = Modifier.clickable { matchExactPhrases = !matchExactPhrases }
+                        modifier = Modifier.clickable { matchExactPhrases = !matchExactPhrases },
                     )
                 }
 
                 if (isIndexing) {
                     Column(
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .fillMaxWidth()
                             .padding(vertical = 16.dp),
-                        horizontalAlignment = Alignment.CenterHorizontally
+                        horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
                         CircularProgressIndicator()
                         Text(
                             text = indexingProgress,
                             style = MaterialTheme.typography.bodyMedium,
-                            modifier = Modifier.padding(top = 8.dp)
+                            modifier = Modifier.padding(top = 8.dp),
                         )
                     }
                 } else if (searchQuery.isEmpty()) {
                     Text(
                         text = "Enter a search term to find content in the PDF library",
                         style = MaterialTheme.typography.bodyLarge,
-                        modifier = Modifier.padding(vertical = 16.dp)
+                        modifier = Modifier.padding(vertical = 16.dp),
                     )
                 } else if (searchResults.isEmpty()) {
                     Text(
                         text = "No results found for \"$searchQuery\"",
                         style = MaterialTheme.typography.bodyLarge,
-                        modifier = Modifier.padding(vertical = 16.dp)
+                        modifier = Modifier.padding(vertical = 16.dp),
                     )
                 }
 
                 LazyColumn(
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                    verticalArrangement = Arrangement.spacedBy(8.dp),
                 ) {
                     searchResults.forEach { (_, results) ->
                         items(results.toList()) { result ->
@@ -208,7 +210,7 @@ class IndexedFullTextSearchActivity : ComponentActivity() {
                                 result = result,
                                 onResultClick = { clickedResult ->
                                     openDocumentAtPage(clickedResult)
-                                }
+                                },
                             )
                         }
                     }
@@ -218,29 +220,27 @@ class IndexedFullTextSearchActivity : ComponentActivity() {
     }
 
     @Composable
-    private fun SearchResultCard(
-        result: QueryPreviewResult,
-        onResultClick: (QueryPreviewResult) -> Unit
-    ) {
+    private fun SearchResultCard(result: QueryPreviewResult, onResultClick: (QueryPreviewResult) -> Unit) {
         Card(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .clickable { onResultClick(result) },
-            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+            elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         ) {
             Column(
-                modifier = Modifier.padding(12.dp)
+                modifier = Modifier.padding(12.dp),
             ) {
                 Text(
                     text = "Document: ${getDocumentName(result.uid)}",
                     style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
                 )
                 Text(
                     text = "Page ${result.pageIndex + 1}",
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    modifier = Modifier.padding(bottom = 4.dp)
+                    modifier = Modifier.padding(bottom = 4.dp),
                 )
                 val previewText = result.previewText
                 val range = result.rangeInPreviewText
@@ -255,41 +255,36 @@ class IndexedFullTextSearchActivity : ComponentActivity() {
                         append(previewText.substring(highlightEnd))
                     },
                     style = MaterialTheme.typography.bodyMedium,
-                    modifier = Modifier.padding(top = 4.dp)
+                    modifier = Modifier.padding(top = 4.dp),
                 )
             }
         }
     }
 
-    private suspend fun extractAllPdfAssets(): File {
-        return withContext(Dispatchers.IO) {
-            val extractedDir = File(filesDir, EXTRACTED_PDFS_DIR)
-            if (!extractedDir.exists()) {
-                extractedDir.mkdirs()
-            }
+    private suspend fun extractAllPdfAssets(): File = withContext(Dispatchers.IO) {
+        val extractedDir = File(filesDir, EXTRACTED_PDFS_DIR)
+        if (!extractedDir.exists()) {
+            extractedDir.mkdirs()
+        }
 
-            val assetManager = assets
-            val pdfAssets = assetManager.list("")?.filter { it.endsWith(".pdf") } ?: emptyList()
+        val assetManager = assets
+        val pdfAssets = assetManager.list("")?.filter { it.endsWith(".pdf") } ?: emptyList()
 
-            for (assetName in pdfAssets) {
-                val outputFile = File(extractedDir, assetName)
-                if (!outputFile.exists()) {
-                    assetManager.open(assetName).use { input ->
-                        outputFile.outputStream().use { output ->
-                            input.copyTo(output)
-                        }
+        for (assetName in pdfAssets) {
+            val outputFile = File(extractedDir, assetName)
+            if (!outputFile.exists()) {
+                assetManager.open(assetName).use { input ->
+                    outputFile.outputStream().use { output ->
+                        input.copyTo(output)
                     }
                 }
             }
-
-            extractedDir
         }
+
+        extractedDir
     }
 
-    private suspend fun initializePdfLibrary(
-        documentsDirectory: File,
-        onProgress: (String) -> Unit
-    ) {
+    private suspend fun initializePdfLibrary(documentsDirectory: File, onProgress: (String) -> Unit) {
         withContext(Dispatchers.IO) {
             try {
                 onProgress("Initializing PDF library...")
@@ -312,11 +307,7 @@ class IndexedFullTextSearchActivity : ComponentActivity() {
         }
     }
 
-    private fun performSearch(
-        query: String,
-        matchExactPhrases: Boolean,
-        onResults: (Map<String, Set<QueryPreviewResult>>) -> Unit
-    ) {
+    private fun performSearch(query: String, matchExactPhrases: Boolean, onResults: (Map<String, Set<QueryPreviewResult>>) -> Unit) {
         val library = pdfLibrary ?: return
 
         val queryOptions = QueryOptions.Builder()
@@ -334,15 +325,12 @@ class IndexedFullTextSearchActivity : ComponentActivity() {
                     // Basic results handled by preview callback
                 }
 
-                override fun onSearchPreviewsGenerated(
-                    searchString: String,
-                    results: Map<String, Set<QueryPreviewResult>>
-                ) {
+                override fun onSearchPreviewsGenerated(searchString: String, results: Map<String, Set<QueryPreviewResult>>) {
                     runOnUiThread {
                         onResults(results)
                     }
                 }
-            }
+            },
         )
     }
 
@@ -355,13 +343,17 @@ class IndexedFullTextSearchActivity : ComponentActivity() {
                 val documentFile = File(extractedDir, descriptor.documentPath)
                 val fileUri = Uri.fromFile(documentFile)
 
-                val configuration = PdfActivityConfiguration.Builder(this)
-                    .page(result.pageIndex)
-                    .build()
+                val configuration =
+                    PdfActivityConfiguration
+                        .Builder(this)
+                        .page(result.pageIndex)
+                        .build()
 
-                val intent = PdfActivityIntentBuilder.fromUri(this, fileUri)
-                    .configuration(configuration)
-                    .build()
+                val intent =
+                    PdfActivityIntentBuilder
+                        .fromUri(this, fileUri)
+                        .configuration(configuration)
+                        .build()
 
                 startActivity(intent)
             } catch (e: Exception) {

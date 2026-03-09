@@ -451,6 +451,11 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
+            android:name=".examples.kotlin.BackButtonExampleActivity"
+            android:label="@string/backButtonExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
             android:name=".examples.kotlin.CombineElectronicSignaturesWithDigitalSigningActivity"
             android:label="Combine Electronic Signatures With Digital Signing Example"
             android:windowSoftInputMode="adjustNothing"/>

@@ -26,16 +26,18 @@ import java.io.InputStream
  * This example shows how to create a custom data provider that reads a document from the `raw` resources
  * of the app. Furthermore, it implements [Parcelable] to allow using the data provider with  [PdfActivity].
  */
-class CustomDataProviderExample(context: Context) : SdkExample(context, R.string.customDataProviderExampleTitle, R.string.customDataProviderExampleDescription) {
-
+class CustomDataProviderExample(context: Context) :
+    SdkExample(context, R.string.customDataProviderExampleTitle, R.string.customDataProviderExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // Create an instance of the custom data provider. See the implementation details below.
         val dataProvider: DataProvider = RawResourceDataProvider(R.raw.guide)
 
         // Start the activity using our custom data provider.
-        val intent = PdfActivityIntentBuilder.fromDataProvider(context, dataProvider)
-            .configuration(configuration.build())
-            .build()
+        val intent =
+            PdfActivityIntentBuilder
+                .fromDataProvider(context, dataProvider)
+                .configuration(configuration.build())
+                .build()
         context.startActivity(intent)
     }
 }
@@ -47,8 +49,9 @@ class CustomDataProviderExample(context: Context) : SdkExample(context, R.string
  *
  * @param resId The id of the PDF document inside the resources (stored within the `res/raw` folder of the application).
  */
-class RawResourceDataProvider(@RawRes private val resId: Int) : InputStreamDataProvider(), Parcelable {
-
+class RawResourceDataProvider(@param:RawRes private val resId: Int) :
+    InputStreamDataProvider(),
+    Parcelable {
     /**
      * The size of the raw resource. This will be cached after the first call to [.getSize].
      */
@@ -59,9 +62,7 @@ class RawResourceDataProvider(@RawRes private val resId: Int) : InputStreamDataP
      * method multiple times we have to make sure that it always returns a fresh input stream object.
      */
     @Throws(IOException::class)
-    override fun openInputStream(): InputStream {
-        return getContext().resources.openRawResource(resId)
-    }
+    override fun openInputStream(): InputStream = getContext().resources.openRawResource(resId)
 
     /**
      * This method returns the size of our resource. Android only gives us an [InputStream] for
@@ -74,24 +75,23 @@ class RawResourceDataProvider(@RawRes private val resId: Int) : InputStreamDataP
             return size
         }
 
-        val inputStreamSize = try {
-            // Since we can only get size of the available data in the input stream we need to
-            // reopen it here if the stream position is not 0.
-            if (inputStreamPosition != 0L) {
-                reopenInputStream()
+        val inputStreamSize =
+            try {
+                // Since we can only get size of the available data in the input stream we need to
+                // reopen it here if the stream position is not 0.
+                if (inputStreamPosition != 0L) {
+                    reopenInputStream()
+                }
+                openInputStream().available()
+            } catch (e: Exception) {
+                DataProvider.FILE_SIZE_UNKNOWN
             }
-            openInputStream().available()
-        } catch (e: Exception) {
-            DataProvider.FILE_SIZE_UNKNOWN
-        }
 
         size = inputStreamSize.toLong()
         return size
     }
 
-    override fun getUid(): String {
-        return getContext().resources.getResourceName(resId)
-    }
+    override fun getUid(): String = getContext().resources.getResourceName(resId)
 
     override fun getTitle(): String {
         // If you know the file or document name upfront, you can return it here. Otherwise return null,
@@ -105,9 +105,7 @@ class RawResourceDataProvider(@RawRes private val resId: Int) : InputStreamDataP
     /**
      * Default parcelable implementation. The object is always parceled the same way. Thus, we return 0.
      */
-    override fun describeContents(): Int {
-        return 0
-    }
+    override fun describeContents(): Int = 0
 
     /**
      * We simply write the id of the PDF resource to the parcel.
@@ -122,12 +120,8 @@ class RawResourceDataProvider(@RawRes private val resId: Int) : InputStreamDataP
     internal constructor(input: Parcel) : this(input.readInt())
 
     companion object CREATOR : Parcelable.Creator<RawResourceDataProvider> {
-        override fun createFromParcel(parcel: Parcel): RawResourceDataProvider {
-            return RawResourceDataProvider(parcel)
-        }
+        override fun createFromParcel(parcel: Parcel): RawResourceDataProvider = RawResourceDataProvider(parcel)
 
-        override fun newArray(size: Int): Array<RawResourceDataProvider?> {
-            return arrayOfNulls(size)
-        }
+        override fun newArray(size: Int): Array<RawResourceDataProvider?> = arrayOfNulls(size)
     }
 }

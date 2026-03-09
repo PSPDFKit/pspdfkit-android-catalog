@@ -14,11 +14,13 @@ import com.pspdfkit.catalog.ui.model.searchQueryOrBlank
 // Matchable interface used to make the examples and the preferences of the catalog searchable.
 interface Matchable {
     val stringsToMatch: List<String>
+
     fun matches(stringToMatch: String): Boolean
 }
 
 interface GroupMatchable<T : Matchable> : Matchable {
     val childMatchables: List<T>
+
     fun getMatchingChildren(stringToMatch: String): List<T> = childMatchables.filter { it.matches(stringToMatch) }
 }
 
@@ -32,7 +34,11 @@ interface FuzzlyMatchable : Matchable {
  * @param previousResult Provide here the result of the previous search to optimize filtering.
  * @param createFilteredGroupMatchable A function that creates a new group matchable with the filtered children.
  */
-fun <T : Matchable, G : GroupMatchable<T>> List<G>.filterBySearchState(searchState: SearchState, previousResult: List<G>, createFilteredGroupMatchable: (parent: G, filteredChildren: List<T>) -> G): List<G> {
+fun <T : Matchable, G : GroupMatchable<T>> List<G>.filterBySearchState(
+    searchState: SearchState,
+    previousResult: List<G>,
+    createFilteredGroupMatchable: (parent: G, filteredChildren: List<T>) -> G,
+): List<G> {
     val stringToMatch = searchState.searchQueryOrBlank()
     return if (stringToMatch.isBlank()) {
         this
@@ -40,11 +46,12 @@ fun <T : Matchable, G : GroupMatchable<T>> List<G>.filterBySearchState(searchSta
         val previousQueryString = searchState.previousSearchQueryOrBlank()
 
         // if we just extend the previous search query, we can filter the previous result
-        val groupsToSearch = if (stringToMatch.startsWith(previousQueryString)) {
-            previousResult
-        } else {
-            this
-        }
+        val groupsToSearch =
+            if (stringToMatch.startsWith(previousQueryString)) {
+                previousResult
+            } else {
+                this
+            }
 
         groupsToSearch.mapNotNull { group ->
 

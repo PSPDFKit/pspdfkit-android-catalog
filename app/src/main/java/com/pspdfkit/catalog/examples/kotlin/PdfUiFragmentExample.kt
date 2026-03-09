@@ -13,6 +13,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -32,7 +33,8 @@ import com.pspdfkit.utils.getSupportParcelableExtra
 /**
  * This example shows how to use the [PdfUiFragment] to display PDFs.
  */
-class PdfUiFragmentExample(context: Context) : SdkExample(context, R.string.pdfUiFragmentExampleTitle, R.string.pdfUiFragmentExampleDescription) {
+class PdfUiFragmentExample(context: Context) :
+    SdkExample(context, R.string.pdfUiFragmentExampleTitle, R.string.pdfUiFragmentExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         extract(WELCOME_DOC, title, context) { documentFile ->
             val intent = Intent(context, PdfUiFragmentExampleActivity::class.java)
@@ -46,11 +48,13 @@ class PdfUiFragmentExample(context: Context) : SdkExample(context, R.string.pdfU
 /**
  * This example shows you how to use the [PdfUiFragment] to display PDFs in your activities.
  */
-class PdfUiFragmentExampleActivity : AppCompatActivity(), DocumentListener {
-
+class PdfUiFragmentExampleActivity :
+    AppCompatActivity(),
+    DocumentListener {
     private lateinit var pdfUiFragment: PdfUiFragment
 
     private var observer: PdfUiFragmentLifecycleObserver? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_pdfuifragment_example)
@@ -69,7 +73,10 @@ class PdfUiFragmentExampleActivity : AppCompatActivity(), DocumentListener {
 
         if (supportFragmentManager.findFragmentByTag("pdfUiFragment") == null) {
             // PdfFragment configuration is provided with the launching intent.
-            var configuration: PdfActivityConfiguration? = intent.getSupportParcelableExtra(EXTRA_CONFIGURATION, PdfActivityConfiguration::class.java)
+            var configuration: PdfActivityConfiguration? = intent.getSupportParcelableExtra(
+                EXTRA_CONFIGURATION,
+                PdfActivityConfiguration::class.java,
+            )
             if (configuration == null) {
                 configuration = PdfActivityConfiguration.Builder(this).build()
             }
@@ -78,15 +85,32 @@ class PdfUiFragmentExampleActivity : AppCompatActivity(), DocumentListener {
             val uri = intent.getSupportParcelableExtra(EXTRA_URI, Uri::class.java)
 
             // Create our PdfUiFragment if it doesn't exist yet.
-            pdfUiFragment = PdfUiFragmentBuilder.fromUri(this, uri)
-                .configuration(configuration)
-                .build()
+            pdfUiFragment =
+                PdfUiFragmentBuilder
+                    .fromUri(this, uri)
+                    .configuration(configuration)
+                    .build()
             supportFragmentManager.beginTransaction().add(R.id.fragmentContainer, pdfUiFragment, "pdfUiFragment").commit()
         } else {
             pdfUiFragment = supportFragmentManager.findFragmentByTag("pdfUiFragment") as PdfUiFragment
         }
 
         observer = PdfUiFragmentLifecycleObserver(pdfUiFragment, this)
+
+        // Handle back button presses using OnBackPressedDispatcher
+        onBackPressedDispatcher.addCallback(
+            this,
+            object : OnBackPressedCallback(true) {
+                override fun handleOnBackPressed() {
+                    // If you want the UI to properly respond to backpresses you need to forward this call to the fragment.
+                    if (!pdfUiFragment.onBackPressed()) {
+                        isEnabled = false
+                        onBackPressedDispatcher.onBackPressed()
+                        isEnabled = true
+                    }
+                }
+            },
+        )
     }
 
     override fun onDocumentLoaded(document: PdfDocument) {
@@ -95,20 +119,9 @@ class PdfUiFragmentExampleActivity : AppCompatActivity(), DocumentListener {
         // Do some fun stuff with the document here.
     }
 
-    @Suppress("DEPRECATION", "OVERRIDE_DEPRECATION")
-    override fun onBackPressed() {
-        // If you want the UI to properly respond to backpresses you need to forward this call to the fragment.
-        if (!pdfUiFragment.onBackPressed()) {
-            super.onBackPressed()
-        }
-    }
-
     // We need a LifecycleObserver to observe the fragment lifecycle
-    class PdfUiFragmentLifecycleObserver(
-        private val pdfUiFragment: PdfUiFragment,
-        private val documentListener: DocumentListener
-    ) : DefaultLifecycleObserver {
-
+    class PdfUiFragmentLifecycleObserver(private val pdfUiFragment: PdfUiFragment, private val documentListener: DocumentListener) :
+        DefaultLifecycleObserver {
         init {
             // Add observer
             pdfUiFragment.lifecycle.addObserver(this)

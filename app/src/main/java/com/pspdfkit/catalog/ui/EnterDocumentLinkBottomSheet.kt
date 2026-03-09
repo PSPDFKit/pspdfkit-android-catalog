@@ -42,11 +42,7 @@ import kotlinx.coroutines.launch
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EnterDocumentLinkBottomSheet(
-    isVisible: Boolean,
-    onDismiss: () -> Unit,
-    onConfirm: (documentLink: String, username: String) -> Unit
-) {
+fun EnterDocumentLinkBottomSheet(isVisible: Boolean, onDismiss: () -> Unit, onConfirm: (documentLink: String, username: String) -> Unit) {
     if (!isVisible) return
 
     val sheetState = rememberModalBottomSheetState(skipPartiallyExpanded = true)
@@ -56,19 +52,20 @@ fun EnterDocumentLinkBottomSheet(
 
     ModalBottomSheet(
         onDismissRequest = onDismiss,
-        sheetState = sheetState
+        sheetState = sheetState,
     ) {
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
                 .padding(bottom = 32.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             Text(
                 text = "Enter Document Link",
                 style = MaterialTheme.typography.headlineSmall,
-                modifier = Modifier.padding(bottom = 8.dp)
+                modifier = Modifier.padding(bottom = 8.dp),
             )
 
             OutlinedTextField(
@@ -77,7 +74,7 @@ fun EnterDocumentLinkBottomSheet(
                 label = { Text("Document Link") },
                 placeholder = { Text("Enter Document Link") },
                 singleLine = true,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
 
             OutlinedTextField(
@@ -86,14 +83,14 @@ fun EnterDocumentLinkBottomSheet(
                 label = { Text("Username (only required for example servers)") },
                 placeholder = { Text("Enter username for /api/document or /api/documents") },
                 singleLine = true,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Row(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.End
+                horizontalArrangement = Arrangement.End,
             ) {
                 TextButton(
                     onClick = {
@@ -101,7 +98,7 @@ fun EnterDocumentLinkBottomSheet(
                             sheetState.hide()
                             onDismiss()
                         }
-                    }
+                    },
                 ) {
                     Text("Cancel")
                 }
@@ -115,7 +112,7 @@ fun EnterDocumentLinkBottomSheet(
                             onConfirm(documentLink, username)
                         }
                     },
-                    enabled = documentLink.isNotBlank()
+                    enabled = documentLink.isNotBlank(),
                 ) {
                     Text("Open Document")
                 }

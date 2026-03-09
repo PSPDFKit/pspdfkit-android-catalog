@@ -21,9 +21,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class ScannerViewModel(private val repo: ScannerRepo) : ViewModel() {
-
     private val _scanState = MutableStateFlow(ScanState())
-    val scanStateStateFlow = _scanState.asStateFlow()
+    val scanState = _scanState.asStateFlow()
 
     init {
         scanCode()
@@ -36,6 +35,7 @@ class ScannerViewModel(private val repo: ScannerRepo) : ViewModel() {
                     is ScanResult.Success -> {
                         _scanState.value = ScanState(qrValue = it.value)
                     }
+
                     is ScanResult.Error -> {
                         _scanState.value = ScanState(error = it.error)
                     }

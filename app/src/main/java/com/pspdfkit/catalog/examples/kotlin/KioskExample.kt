@@ -64,7 +64,6 @@ class KioskExample(context: Context) : SdkExample(context, R.string.kioskExample
  * This activity displays all documents found in the assets folder of the app.
  */
 class KioskActivity : AppCompatActivity() {
-
     private lateinit var configuration: PdfActivityConfiguration
     private var listAssetsDisposable: Disposable? = null
 
@@ -79,55 +78,66 @@ class KioskActivity : AppCompatActivity() {
         val documentGrid = findViewById<GridView>(android.R.id.list)
         val documentAdapter: DocumentAdapter = DocumentAdapter(this)
         documentGrid.adapter = documentAdapter
-        documentGrid.onItemClickListener = OnItemClickListener { _, _, position, _ ->
-            val dataProvider = documentAdapter.getItem(position)?.documentSource?.dataProvider
-                ?: return@OnItemClickListener
+        documentGrid.onItemClickListener =
+            OnItemClickListener { _, _, position, _ ->
+                val dataProvider =
+                    documentAdapter.getItem(position)?.documentSource?.dataProvider
+                        ?: return@OnItemClickListener
 
-            // Open the touched document.
-            val intent = PdfActivityIntentBuilder.fromDataProvider(this@KioskActivity, dataProvider)
-                .configuration(configuration)
-                .build()
-            startActivity(intent)
-        }
+                // Open the touched document.
+                val intent =
+                    PdfActivityIntentBuilder
+                        .fromDataProvider(this@KioskActivity, dataProvider)
+                        .configuration(configuration)
+                        .build()
+                startActivity(intent)
+            }
 
         val progressBar = findViewById<ProgressBar>(android.R.id.progress)
         // Load the documents on a background thread.
-        listAssetsDisposable = listAllAssets()
-            // List assets on the background (I/O) thread.
-            .subscribeOn(Schedulers.io())
-            // Filter PDF files only.
-            .filter { it.lowercase(Locale.getDefault()).endsWith(".pdf") }
-            // The second observe on is necessary so opening the documents runs on a different thread as listing the assets.
-            .observeOn(Schedulers.io())
-            .flatMap { asset ->
-                // Open the document with multithreaded rendering disabled (last parameter set to `false`).
-                // This improves performance for single page (cover) rendering in most cases.
-                PdfDocumentLoader.openDocumentAsync(this@KioskActivity, DocumentSource(AssetDataProvider(asset)), false)
-                    .toFlowable()
-                    .doOnError { throwable ->
-                        // This example catches any error that happens while opening the document (e.g. if a password would be needed).
-                        // If an exception is thrown, the document will not be shown.
-                        Log.w(TAG, String.format("Could not open document '%s' from assets. See exception for reason.", asset), throwable)
+        listAssetsDisposable =
+            listAllAssets()
+                // List assets on the background (I/O) thread.
+                .subscribeOn(Schedulers.io())
+                // Filter PDF files only.
+                .filter { it.lowercase(Locale.getDefault()).endsWith(".pdf") }
+                // The second observe on is necessary so opening the documents runs on a different thread as listing the assets.
+                .observeOn(Schedulers.io())
+                .flatMap { asset ->
+                    // Open the document with multithreaded rendering disabled (last parameter set to `false`).
+                    // This improves performance for single page (cover) rendering in most cases.
+                    PdfDocumentLoader
+                        .openDocumentAsync(this@KioskActivity, DocumentSource(AssetDataProvider(asset)), false)
+                        .toFlowable()
+                        .doOnError { throwable ->
+                            // This example catches any error that happens while opening the document (e.g. if a password would be needed).
+                            // If an exception is thrown, the document will not be shown.
+                            Log.w(
+                                TAG,
+                                String.format("Could not open document '%s' from assets. See exception for reason.", asset),
+                                throwable,
+                            )
+                        }.onErrorResumeNext { Flowable.empty() }
+                }.observeOn(AndroidSchedulers.mainThread())
+                .doOnComplete { progressBar.visibility = View.GONE }
+                .toSortedList { document: PdfDocument, document2: PdfDocument ->
+                    val title = document.title
+                    val title2 = document2.title
+                    return@toSortedList when {
+                        document === document2 -> 0
+                        title == null -> -1
+                        title2 == null -> 1
+                        else -> title.compareTo(title2, ignoreCase = true)
                     }
-                    .onErrorResumeNext { Flowable.empty() }
-            }
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnComplete { progressBar.visibility = View.GONE }
-            .toSortedList { document: PdfDocument, document2: PdfDocument ->
-                val title = document.title
-                val title2 = document2.title
-                return@toSortedList when {
-                    document === document2 -> 0
-                    title == null -> -1
-                    title2 == null -> 1
-                    else -> title.compareTo(title2, ignoreCase = true)
+                }.subscribe({ collection: List<PdfDocument> -> documentAdapter.addAll(collection) }) { throwable ->
+                    progressBar.visibility = View.GONE
+                    Log.e(TAG, "Error while trying to list all catalog app assets.", throwable)
+                    Toast.makeText(
+                        this@KioskActivity,
+                        "Error listing asset files - see logcat for detailed error message.",
+                        Toast.LENGTH_LONG,
+                    ).show()
                 }
-            }
-            .subscribe({ collection: List<PdfDocument> -> documentAdapter.addAll(collection) }) { throwable ->
-                progressBar.visibility = View.GONE
-                Log.e(TAG, "Error while trying to list all catalog app assets.", throwable)
-                Toast.makeText(this@KioskActivity, "Error listing asset files - see logcat for detailed error message.", Toast.LENGTH_LONG).show()
-            }
     }
 
     override fun onDestroy() {
@@ -178,7 +188,7 @@ class KioskActivity : AppCompatActivity() {
                     }
                 }
             },
-            BackpressureStrategy.BUFFER
+            BackpressureStrategy.BUFFER,
         )
     }
 
@@ -222,16 +232,18 @@ class KioskActivity : AppCompatActivity() {
                 val size = calculateBitmapSize(document, previewImageSize)
 
                 // Render page to bitmap.
-                holder.previewRenderDisposable = document.renderPageToBitmapAsync(
-                    parent.context,
-                    0,
-                    size.width.toInt(),
-                    size.height.toInt()
-                ).observeOn(AndroidSchedulers.mainThread())
-                    .subscribe { bitmap ->
-                        holder.itemPreviewImageView.setImageBitmap(bitmap)
-                        previewImageCache.put(document.uid, bitmap)
-                    }
+                holder.previewRenderDisposable =
+                    document
+                        .renderPageToBitmapAsync(
+                            parent.context,
+                            0,
+                            size.width.toInt(),
+                            size.height.toInt(),
+                        ).observeOn(AndroidSchedulers.mainThread())
+                        .subscribe { bitmap ->
+                            holder.itemPreviewImageView.setImageBitmap(bitmap)
+                            previewImageCache.put(document.uid, bitmap)
+                        }
             }
 
             if (!TextUtils.isEmpty(document.title)) {
@@ -246,25 +258,28 @@ class KioskActivity : AppCompatActivity() {
         private fun calculateBitmapSize(document: PdfDocument, availableSpace: Size): Size {
             val pageSize = document.getPageSize(0)
             val ratio: Float
-            ratio = if (pageSize.width > pageSize.height) {
-                availableSpace.width / pageSize.width
-            } else {
-                availableSpace.height / pageSize.height
-            }
+            ratio =
+                if (pageSize.width > pageSize.height) {
+                    availableSpace.width / pageSize.width
+                } else {
+                    availableSpace.height / pageSize.height
+                }
             return Size(pageSize.width * ratio, pageSize.height * ratio)
         }
 
         init {
-            previewImageCache = object : LruCache<String, Bitmap>((Runtime.getRuntime().maxMemory() / 1024 / 8).toInt()) {
-                override fun sizeOf(key: String, value: Bitmap): Int {
-                    // The cache size will be measured in kilobytes rather than number of items.
-                    return value.byteCount / 1024
+            previewImageCache =
+                object : LruCache<String, Bitmap>((Runtime.getRuntime().maxMemory() / 1024 / 8).toInt()) {
+                    override fun sizeOf(key: String, value: Bitmap): Int {
+                        // The cache size will be measured in kilobytes rather than number of items.
+                        return value.byteCount / 1024
+                    }
                 }
-            }
-            previewImageSize = Size(
-                context.resources.getDimensionPixelSize(R.dimen.kiosk_previewimage_width).toFloat(),
-                context.resources.getDimensionPixelSize(R.dimen.kiosk_previewimage_height).toFloat()
-            )
+            previewImageSize =
+                Size(
+                    context.resources.getDimensionPixelSize(R.dimen.kiosk_previewimage_width).toFloat(),
+                    context.resources.getDimensionPixelSize(R.dimen.kiosk_previewimage_height).toFloat(),
+                )
         }
     }
 

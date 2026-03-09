@@ -32,8 +32,8 @@ import java.io.File
 /**
  * This example shows how to add document tabs in the default [PdfActivity].
  */
-class DocumentTabsExample(context: Context) : SdkExample(context, R.string.documentTabsExampleTitle, R.string.documentTabsExampleDescription) {
-
+class DocumentTabsExample(context: Context) :
+    SdkExample(context, R.string.documentTabsExampleTitle, R.string.documentTabsExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // Make the tab bar always visible.
         configuration.setTabBarHidingMode(TabBarHidingMode.SHOW)
@@ -41,10 +41,12 @@ class DocumentTabsExample(context: Context) : SdkExample(context, R.string.docum
         // First, extract the initial document from the app's assets and place it in the device's internal storage.
         ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
             // Launch the custom example activity using the document and configuration.
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .configuration(configuration.build())
-                .activityClass(DocumentTabsActivity::class)
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    .configuration(configuration.build())
+                    .activityClass(DocumentTabsActivity::class)
+                    .build()
 
             // Start the activity for the extracted document.
             context.startActivity(intent)
@@ -116,24 +118,27 @@ class DocumentTabsActivity : PdfActivity() {
                 showDocumentInNewTab(uri, isImageFile)
             } else {
                 // Find the DownloadProgressFragment for showing download progress, or create a new one.
-                val downloadFragment = supportFragmentManager.findFragmentByTag(
-                    DOWNLOAD_PROGRESS_FRAGMENT
-                ) as DownloadProgressFragment? ?: run {
-                    val downloadRequest = DownloadRequest.Builder(this).uri(uri).build()
-                    val job = DownloadJob.startDownload(downloadRequest)
+                val downloadFragment =
+                    supportFragmentManager.findFragmentByTag(
+                        DOWNLOAD_PROGRESS_FRAGMENT,
+                    ) as DownloadProgressFragment? ?: run {
+                        val downloadRequest = DownloadRequest.Builder(this).uri(uri).build()
+                        val job = DownloadJob.startDownload(downloadRequest)
 
-                    val downloadFragment = DownloadProgressFragment()
-                    downloadFragment.show(supportFragmentManager, DOWNLOAD_PROGRESS_FRAGMENT)
-                    downloadFragment.job = job
-                    downloadFragment
-                }
+                        val downloadFragment = DownloadProgressFragment()
+                        downloadFragment.show(supportFragmentManager, DOWNLOAD_PROGRESS_FRAGMENT)
+                        downloadFragment.job = job
+                        downloadFragment
+                    }
 
                 // Once the download is complete we show the downloaded document in a new tab.
-                downloadFragment.job.setProgressListener(object : DownloadJob.ProgressListenerAdapter() {
-                    override fun onComplete(output: File) {
-                        showDocumentInNewTab(Uri.fromFile(output), isImageFile)
-                    }
-                })
+                downloadFragment.job.setProgressListener(
+                    object : DownloadJob.ProgressListenerAdapter() {
+                        override fun onComplete(output: File) {
+                            showDocumentInNewTab(Uri.fromFile(output), isImageFile)
+                        }
+                    },
+                )
             }
         }
     }
@@ -142,11 +147,12 @@ class DocumentTabsActivity : PdfActivity() {
      * Adds document from Uri to the [DocumentCoordinator] and makes it visible immediately.
      */
     private fun showDocumentInNewTab(uri: Uri, isImageDocument: Boolean) {
-        val documentDescriptor = if (isImageDocument) {
-            DocumentDescriptor.imageDocumentFromUri(uri)
-        } else {
-            DocumentDescriptor.fromUri(uri)
-        }
+        val documentDescriptor =
+            if (isImageDocument) {
+                DocumentDescriptor.imageDocumentFromUri(uri)
+            } else {
+                DocumentDescriptor.fromUri(uri)
+            }
         documentCoordinator.addDocument(documentDescriptor)
         documentCoordinator.setVisibleDocument(documentDescriptor)
     }

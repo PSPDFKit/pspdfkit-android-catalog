@@ -18,7 +18,6 @@ import kotlinx.coroutines.launch
  * This should be used in any place where we create/add annotations to page in onDocumentLoaded method to avoid duplicates
  */
 class AnnotationCreationViewModel : ViewModel() {
-
     private var multiPageObjectsCreated = HashSet<Int>()
 
     private var objectsCreated = false

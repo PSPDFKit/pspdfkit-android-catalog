@@ -91,13 +91,14 @@ class ViewPager2Activity : AppCompatActivity() {
 
         // Create a new adapter when initializing to ensure it uses the current theme
         // The callback restores fragment state after document loading
-        adapter = PdfFragmentAdapter(this, true) { position ->
-            scope.launch {
-                // Small delay to ensure document is fully loaded before restoring state
-                delay(DOCUMENT_LOAD_DELAY_MS)
-                restoreState(position)
+        adapter =
+            PdfFragmentAdapter(this, true) { position ->
+                scope.launch {
+                    // Small delay to ensure document is fully loaded before restoring state
+                    delay(DOCUMENT_LOAD_DELAY_MS)
+                    restoreState(position)
+                }
             }
-        }
         pager.adapter = adapter
 
         // Disable user input to prevent manual swiping (navigation via tabs only)
@@ -112,21 +113,23 @@ class ViewPager2Activity : AppCompatActivity() {
         }.attach()
 
         // Setup page change callback to track current page and refresh when idle
-        pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                super.onPageSelected(position)
-                // Update the globally tracked selected page
-                selectedPage = position
-            }
-
-            override fun onPageScrollStateChanged(state: Int) {
-                super.onPageScrollStateChanged(state)
-                // Refresh the current fragment when scrolling stops
-                if (state == ViewPager2.SCROLL_STATE_IDLE) {
-                    refresh(selectedPage)
+        pager.registerOnPageChangeCallback(
+            object : ViewPager2.OnPageChangeCallback() {
+                override fun onPageSelected(position: Int) {
+                    super.onPageSelected(position)
+                    // Update the globally tracked selected page
+                    selectedPage = position
                 }
-            }
-        })
+
+                override fun onPageScrollStateChanged(state: Int) {
+                    super.onPageScrollStateChanged(state)
+                    // Refresh the current fragment when scrolling stops
+                    if (state == ViewPager2.SCROLL_STATE_IDLE) {
+                        refresh(selectedPage)
+                    }
+                }
+            },
+        )
 
         // Setup UI controls (theme toggle button)
         setupButtons()
@@ -163,7 +166,7 @@ class ViewPager2Activity : AppCompatActivity() {
                         MODE_NIGHT_NO
                     } else {
                         MODE_NIGHT_YES
-                    }
+                    },
                 )
                 // Note: Activity will be recreated automatically when night mode changes
             }
@@ -189,9 +192,8 @@ class ViewPager2Activity : AppCompatActivity() {
 class PdfFragmentAdapter(
     private val context: FragmentActivity,
     private val usePdfFragment: Boolean = true,
-    private val onDocLoaded: (position: Int) -> Unit
+    private val onDocLoaded: (position: Int) -> Unit,
 ) : FragmentStateAdapter(context) {
-
     /** Returns the total number of pages/fragments */
     override fun getItemCount(): Int = FileRepo.size
 
@@ -205,31 +207,34 @@ class PdfFragmentAdapter(
         val path = FileRepo.getPdfPath(position)
 
         return if (usePdfFragment) {
-            PdfFragment.newInstance(
-                path.toUri(),
-                if (isDarkModeActive(context = context)) themeDark else themeLight
-            ).apply {
-                // Add listener to handle document loading completion
-                addDocumentListener(object : DocumentListener {
-                    override fun onDocumentLoaded(document: PdfDocument) {
-                        super.onDocumentLoaded(document)
-                        // Notify that this document has loaded so state can be restored
-                        onDocLoaded.invoke(position)
-                    }
-                })
-            }
+            PdfFragment
+                .newInstance(
+                    path.toUri(),
+                    if (isDarkModeActive(context = context)) themeDark else themeLight,
+                ).apply {
+                    // Add listener to handle document loading completion
+                    addDocumentListener(
+                        object : DocumentListener {
+                            override fun onDocumentLoaded(document: PdfDocument) {
+                                super.onDocumentLoaded(document)
+                                // Notify that this document has loaded so state can be restored
+                                onDocLoaded.invoke(position)
+                            }
+                        },
+                    )
+                }
         } else {
             PdfUiFragmentWrapper.paths[path] = position
-            PdfUiFragmentBuilder.fromUri(
-                context,
-                path.toUri()
-            )
-                .configuration(
-                    PdfActivityConfiguration.Builder(context)
+            PdfUiFragmentBuilder
+                .fromUri(
+                    context,
+                    path.toUri(),
+                ).configuration(
+                    PdfActivityConfiguration
+                        .Builder(context)
                         .configuration(if (isDarkModeActive(context = context)) themeDark else themeLight)
-                        .build()
-                )
-                .fragmentClass(PdfUiFragmentWrapper::class.java)
+                        .build(),
+                ).fragmentClass(PdfUiFragmentWrapper::class.java)
                 .build()
         }
     }
@@ -271,23 +276,27 @@ object NutrientHelper {
      * @param position The position index of the fragment in the ViewPager
      * @param bundle The Bundle containing the fragment's state data
      */
-    fun saveState(position: Int, bundle: Bundle) { bundleList.put(position, bundle) }
+    fun saveState(position: Int, bundle: Bundle) {
+        bundleList.put(position, bundle)
+    }
 
     /**
      * Retrieves the saved state bundle for a fragment at the specified position.
      * @param position The position index of the fragment in the ViewPager
      * @return The saved Bundle, or null if no state exists for this position
      */
-    fun getState(position: Int): Bundle? { return bundleList.get(position) }
+    fun getState(position: Int): Bundle? = bundleList.get(position)
 }
 
 /**
  * Base configuration for PDF viewer with vertical continuous scrolling.
  * This configuration is shared between dark and light themes.
  */
-private val baseConfig = PdfConfiguration.Builder()
-    .scrollMode(PageScrollMode.CONTINUOUS)
-    .scrollDirection(PageScrollDirection.VERTICAL)
+private val baseConfig =
+    PdfConfiguration
+        .Builder()
+        .scrollMode(PageScrollMode.CONTINUOUS)
+        .scrollDirection(PageScrollDirection.VERTICAL)
 
 /**
  * PDF configuration for dark theme with inverted colors.
@@ -306,14 +315,13 @@ val themeLight = baseConfig.invertColors(false).build()
  * @param position The position index of the fragment
  * @return The PdfFragment if found, null otherwise
  */
-fun AppCompatActivity.findFragment(position: Int): PdfFragment? =
-    supportFragmentManager.findFragmentByTag("f$position")?.let {
-        when (it) {
-            is PdfFragment -> it
-            is PdfUiFragment -> it.pdfFragment
-            else -> null
-        }
+fun AppCompatActivity.findFragment(position: Int): PdfFragment? = supportFragmentManager.findFragmentByTag("f$position")?.let {
+    when (it) {
+        is PdfFragment -> it
+        is PdfUiFragment -> it.pdfFragment
+        else -> null
     }
+}
 
 /**
  * Extension function to remove all Pdf(Ui) fragments from the activity's FragmentManager.
@@ -389,11 +397,9 @@ fun AppCompatActivity.refresh(position: Int) {
  * @param context The context used to access system resources and configuration
  * @return true if dark mode is currently active, false otherwise
  */
-fun isDarkModeActive(context: Context): Boolean {
-    return when (context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
-        Configuration.UI_MODE_NIGHT_YES -> true
-        else -> false
-    }
+fun isDarkModeActive(context: Context): Boolean = when (context.resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK) {
+    Configuration.UI_MODE_NIGHT_YES -> true
+    else -> false
 }
 
 /**
@@ -401,17 +407,17 @@ fun isDarkModeActive(context: Context): Boolean {
  * Provides methods to retrieve file names and their corresponding paths.
  */
 object FileRepo {
-    private val fileNames = listOf(
-        WELCOME_DOC,
-        "Scientific-paper.pdf",
-        "Teacher.pdf",
-        "The-Cosmic-Context-for-Life.pdf"
-    )
+    private val fileNames =
+        listOf(
+            WELCOME_DOC,
+            "Scientific-paper.pdf",
+            "Teacher.pdf",
+            "The-Cosmic-Context-for-Life.pdf",
+        )
 
     val size get() = fileNames.size
 
     fun getFileName(position: Int) = fileNames[position]
 
-    fun getPdfPath(position: Int): String =
-        "file:///android_asset/${getFileName(position)}"
+    fun getPdfPath(position: Int): String = "file:///android_asset/${getFileName(position)}"
 }

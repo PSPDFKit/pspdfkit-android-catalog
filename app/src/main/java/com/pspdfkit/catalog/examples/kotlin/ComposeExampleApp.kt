@@ -21,7 +21,7 @@ class ComposeExampleApp(context: Context) : SdkExample(context, R.string.compose
         context.startActivity(
             Intent(Intent.ACTION_VIEW).apply {
                 data = COMPOSE_EXAMPLE_LINK.toUri()
-            }
+            },
         )
     }
 }

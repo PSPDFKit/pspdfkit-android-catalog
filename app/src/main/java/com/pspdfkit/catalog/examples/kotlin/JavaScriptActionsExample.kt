@@ -21,13 +21,10 @@ import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
 
 /** This example shows how to create and execute JavaScript actions programmatically. */
-class JavaScriptActionsExample(context: Context) : SdkExample(context, R.string.javaScriptActionExampleTitle, R.string.javaScriptActionExampleDescription) {
-
+class JavaScriptActionsExample(context: Context) :
+    SdkExample(context, R.string.javaScriptActionExampleTitle, R.string.javaScriptActionExampleDescription) {
     @SuppressLint("SetJavaScriptEnabled")
-    override fun launchExample(
-        context: Context,
-        configuration: PdfActivityConfiguration.Builder
-    ) {
+    override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         configuration
             // JavaScript is enabled by default. It can be disabled in configuration.
             .setJavaScriptEnabled(true)
@@ -36,10 +33,12 @@ class JavaScriptActionsExample(context: Context) : SdkExample(context, R.string.
 
         extract(WELCOME_DOC, title, context) { documentFile ->
             // Launch the custom example activity using the document and configuration.
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .configuration(configuration.build())
-                .activityClass(JavaScriptActionsActivity::class.java)
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    .configuration(configuration.build())
+                    .activityClass(JavaScriptActionsActivity::class.java)
+                    .build()
             context.startActivity(intent)
         }
     }
@@ -51,7 +50,6 @@ class JavaScriptActionsExample(context: Context) : SdkExample(context, R.string.
  * @see JavaScriptActionsExample
  */
 class JavaScriptActionsActivity : PdfActivity() {
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         super.onCreateOptionsMenu(menu)
         menu.add(0, SHOW_ALERT, 0, "Show Alert")
@@ -61,26 +59,31 @@ class JavaScriptActionsActivity : PdfActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean =
-        when (item.itemId) {
-            SHOW_ALERT -> {
-                executeShowAlertAction()
-                true
-            }
-            GO_TO_NEXT_PAGE -> {
-                executeGoToNextPageAction()
-                true
-            }
-            SHOW_FORM_FIELDS -> {
-                executeShowFormFieldsAction()
-                true
-            }
-            MAIL_TO -> {
-                executeMailDocumentAction()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        SHOW_ALERT -> {
+            executeShowAlertAction()
+            true
         }
+
+        GO_TO_NEXT_PAGE -> {
+            executeGoToNextPageAction()
+            true
+        }
+
+        SHOW_FORM_FIELDS -> {
+            executeShowFormFieldsAction()
+            true
+        }
+
+        MAIL_TO -> {
+            executeMailDocumentAction()
+            true
+        }
+
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
+    }
 
     /** Shows simple alert dialog through JavaScript. */
     private fun executeShowAlertAction() {
@@ -101,7 +104,7 @@ class JavaScriptActionsActivity : PdfActivity() {
                message += 'Field[' + i + '] = ' + this.getNthFieldName(i) + '\n';
             };
             app.alert(message);
-            """.trimIndent()
+            """.trimIndent(),
         )
     }
 
@@ -115,7 +118,7 @@ class JavaScriptActionsActivity : PdfActivity() {
                 "bcc@nutrient.io",
                 "subject",
                 "This is a message");
-            """.trimIndent()
+            """.trimIndent(),
         )
     }
 

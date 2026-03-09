@@ -32,7 +32,8 @@ import java.net.URL
  * from the internet and open them in Nutrient.
  */
 
-class RemoteUrlExample(val context: Context) : SdkExample(context, R.string.remoteUrlDataProviderExampleTitle, R.string.remoteUrlDataProviderExampleDescription) {
+class RemoteUrlExample(val context: Context) :
+    SdkExample(context, R.string.remoteUrlDataProviderExampleTitle, R.string.remoteUrlDataProviderExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         val intent = Intent(context, WebViewActivity::class.java)
         // make the catalogs default pdf configuration available to the webview activity
@@ -58,11 +59,7 @@ class WebViewActivity : AppCompatActivity() {
             Webview(
                 "file:///android_asset/url-dataprovider-example/testpage.html",
                 object : WebViewClient() {
-
-                    override fun shouldOverrideUrlLoading(
-                        view: WebView?,
-                        request: WebResourceRequest?
-                    ): Boolean {
+                    override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
                         request?.url?.let { uri ->
                             // If a usable link was clicked, wrap the URL with a UrlDataProvider and open the document.
                             val scheme = uri.scheme
@@ -74,13 +71,14 @@ class WebViewActivity : AppCompatActivity() {
                                 !listOf("http", "https").contains(scheme) -> {
                                     null
                                 }
+
                                 ext.equals("pdf", ignoreCase = true) -> {
                                     // Using the URLDataProvider gives us more control over the download.
                                     // We can specify a target file to download the document to.
                                     // This avoids downloading the image everytime the URL is opened.
                                     PdfActivityIntentBuilder.fromDataProvider(
                                         this@WebViewActivity,
-                                        UrlDataProvider(URL(uriString), File(filesDir, "myDocumentDownloads/${uriFile.name}"))
+                                        UrlDataProvider(URL(uriString), File(filesDir, "myDocumentDownloads/${uriFile.name}")),
                                     )
                                 }
 
@@ -91,7 +89,9 @@ class WebViewActivity : AppCompatActivity() {
                                     PdfActivityIntentBuilder.fromImageUri(this@WebViewActivity, uri)
                                 }
 
-                                else -> null
+                                else -> {
+                                    null
+                                }
                             }?.let { intentBuilder ->
                                 configuration?.let {
                                     intentBuilder.configuration(it)
@@ -103,7 +103,7 @@ class WebViewActivity : AppCompatActivity() {
                         }
                         return super.shouldOverrideUrlLoading(view, request)
                     }
-                }
+                },
             )
         }
     }
@@ -115,12 +115,13 @@ class WebViewActivity : AppCompatActivity() {
 
     private fun extractConfiguration(bundle: Bundle?) {
         if (bundle == null) return
-        configuration = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            bundle.getParcelable(EXTRA_CONFIG, PdfActivityConfiguration::class.java)
-        } else {
-            @Suppress("DEPRECATION")
-            bundle.getParcelable(EXTRA_CONFIG)
-        }
+        configuration =
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                bundle.getParcelable(EXTRA_CONFIG, PdfActivityConfiguration::class.java)
+            } else {
+                @Suppress("DEPRECATION")
+                bundle.getParcelable(EXTRA_CONFIG)
+            }
     }
 
     /**
@@ -131,10 +132,11 @@ class WebViewActivity : AppCompatActivity() {
         AndroidView(
             factory = {
                 WebView(it).apply {
-                    layoutParams = ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT
-                    )
+                    layoutParams =
+                        ViewGroup.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                        )
                     if (client != null) {
                         webViewClient = client
                     }
@@ -142,7 +144,7 @@ class WebViewActivity : AppCompatActivity() {
             },
             update = {
                 it.loadUrl(url)
-            }
+            },
         )
     }
 }

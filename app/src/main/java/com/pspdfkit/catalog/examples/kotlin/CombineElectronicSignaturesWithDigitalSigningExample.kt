@@ -54,19 +54,20 @@ class CombineElectronicSignaturesWithDigitalSigningExample(context: Context) :
     SdkExample(
         context,
         R.string.CombineElectronicSignaturesWithDigitalSigningExampleTitle,
-        R.string.CombineElectronicSignaturesWithDigitalSigningExampleDescription
+        R.string.CombineElectronicSignaturesWithDigitalSigningExampleDescription,
     ) {
-
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // The form field for signing is on page with index 16.
         configuration.page(16)
 
         // Extract the document from the assets.
         extract(WELCOME_DOC, title, context) { documentFile ->
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .configuration(configuration.build())
-                .activityClass(CombineElectronicSignaturesWithDigitalSigningActivity::class)
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    .configuration(configuration.build())
+                    .activityClass(CombineElectronicSignaturesWithDigitalSigningActivity::class)
+                    .build()
 
             // Start the CombineElectronicSignaturesWithDigitalSigningActivity showing the demo document.
             context.startActivity(intent)
@@ -82,7 +83,6 @@ class CombineElectronicSignaturesWithDigitalSigningActivity :
     PdfActivity(),
     OnSignaturePickedListener,
     FragmentOnAttachListener {
-
     /** Name of the previously clicked signature form field (if any). Used to access it after a configuration change.  */
     private var signatureFormFieldName: String? = null
 
@@ -111,10 +111,7 @@ class CombineElectronicSignaturesWithDigitalSigningActivity :
      * [Fragment.getParentFragmentManager].
      * @param fragment Fragment that just received a callback to [Fragment.onAttach]
      */
-    override fun onAttachFragment(
-        fragmentManager: FragmentManager,
-        fragment: Fragment
-    ) {
+    override fun onAttachFragment(fragmentManager: FragmentManager, fragment: Fragment) {
         if (fragment is PdfFragment) {
             fragment.addOnFormElementClickedListener { formElement ->
                 when (formElement.type) {
@@ -128,8 +125,11 @@ class CombineElectronicSignaturesWithDigitalSigningActivity :
                             false
                         }
                     }
+
                     // This click event is not interesting for us. Return false to let Nutrient handle this event.
-                    else -> false
+                    else -> {
+                        false
+                    }
                 }
             }
         }
@@ -182,7 +182,8 @@ class CombineElectronicSignaturesWithDigitalSigningActivity :
         val signatureFormFieldName = this.signatureFormFieldName ?: return
 
         // Retrieve the previously clicked signature form element. We do this asynchronously to not block the UI thread.
-        document.formProvider.getFormFieldWithFullyQualifiedNameAsync(signatureFormFieldName)
+        document.formProvider
+            .getFormFieldWithFullyQualifiedNameAsync(signatureFormFieldName)
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe { formField ->
                 val clickedSignatureFormElement = formField.formElement as SignatureFormElement
@@ -220,16 +221,22 @@ class CombineElectronicSignaturesWithDigitalSigningActivity :
     private fun signDocumentWithSignatureBitmap(formElement: SignatureFormElement, signatureBitmap: Bitmap) {
         val outputFile = File(filesDir, "signedDocument.pdf")
 
-        val signatureAppearance = SignatureAppearance(
-            showWatermark = false,
-            signatureGraphic = SignatureGraphic.fromBitmap(getImageUri(signatureBitmap))
-        )
+        val signatureAppearance =
+            SignatureAppearance(
+                showWatermark = false,
+                signatureGraphic = SignatureGraphic.fromBitmap(getImageUri(signatureBitmap)),
+            )
 
         val key = getPrivateKeyEntry(this)
         val signedDocumentUri = Uri.fromFile(outputFile)
-        val signerOptions = SignerOptions.Builder(formElement.formField, signedDocumentUri).setSignatureMetadata(
-            DigitalSignatureMetadata(signatureAppearance = signatureAppearance)
-        ).setPrivateKey(key.privateKey).setCertificates(key.getX509Certificates()).build()
+        val signerOptions =
+            SignerOptions
+                .Builder(formElement.formField, signedDocumentUri)
+                .setSignatureMetadata(
+                    DigitalSignatureMetadata(signatureAppearance = signatureAppearance),
+                ).setPrivateKey(key.privateKey)
+                .setCertificates(key.getX509Certificates())
+                .build()
 
         // handles the signing process
         SigningManager.signDocument(
@@ -237,7 +244,7 @@ class CombineElectronicSignaturesWithDigitalSigningActivity :
             signerOptions = signerOptions,
             onFailure = { t ->
                 Toast.makeText(this, t.localizedMessage, Toast.LENGTH_LONG).show()
-            }
+            },
         ) {
             setDocumentFromUri(signedDocumentUri, null)
             // Signature page.

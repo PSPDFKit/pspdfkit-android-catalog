@@ -41,8 +41,8 @@ import java.io.File
 /**
  * This example shows how to persist list of opened documents/tabs between activity instances.
  */
-class PersistentTabsExample(context: Context) : SdkExample(context, R.string.persistentTabsExampleTitle, R.string.persistentTabsExampleDescription) {
-
+class PersistentTabsExample(context: Context) :
+    SdkExample(context, R.string.persistentTabsExampleTitle, R.string.persistentTabsExampleDescription) {
     @SuppressLint("CheckResult")
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         configuration
@@ -61,21 +61,24 @@ class PersistentTabsExample(context: Context) : SdkExample(context, R.string.per
             val pdfFiles = listOf(WELCOME_DOC, "Aviation.pdf", "Annotations.pdf")
             val imageFiles = listOf("images/android.png")
 
-            val extractAssetsObservable = Observable.concat(
-                Observable.fromIterable(pdfFiles)
-                    .flatMapSingle { assetName -> extractAsync(assetName, assetName, context, false, null) }
-                    // PdfActivity uses document descriptors to encapsulate all information required for opening a single document.
-                    // Create document descriptors for extracted files right away so we can pass them directly to PdfActivityIntentBuilder.
-                    .map { file -> DocumentDescriptor.fromUri(Uri.fromFile(file)) },
-                Observable.fromIterable(imageFiles)
-                    .flatMapSingle { assetName -> extractAsync(assetName, assetName, context, false, "png") }
-                    .map {
-                        val descriptor = DocumentDescriptor.imageDocumentFromUri(Uri.fromFile(it))
-                        // File name of the image document is used as document title. Override this with a custom title.
-                        descriptor.setTitle("Android Image Document")
-                        descriptor
-                    }
-            )
+            val extractAssetsObservable =
+                Observable.concat(
+                    Observable
+                        .fromIterable(pdfFiles)
+                        .flatMapSingle { assetName -> extractAsync(assetName, assetName, context, false, null) }
+                        // PdfActivity uses document descriptors to encapsulate all information required for opening a single document.
+                        // Create document descriptors for extracted files right away so we can pass them directly to PdfActivityIntentBuilder.
+                        .map { file -> DocumentDescriptor.fromUri(Uri.fromFile(file)) },
+                    Observable
+                        .fromIterable(imageFiles)
+                        .flatMapSingle { assetName -> extractAsync(assetName, assetName, context, false, "png") }
+                        .map {
+                            val descriptor = DocumentDescriptor.imageDocumentFromUri(Uri.fromFile(it))
+                            // File name of the image document is used as document title. Override this with a custom title.
+                            descriptor.setTitle("Android Image Document")
+                            descriptor
+                        },
+                )
 
             extractAssetsObservable
                 // Collect the document descriptors into a single list.
@@ -91,13 +94,20 @@ class PersistentTabsExample(context: Context) : SdkExample(context, R.string.per
         }
     }
 
-    private fun launchExampleActivity(context: Context, documentDescriptors: List<DocumentDescriptor>, configuration: PdfActivityConfiguration.Builder, visibleDocumentIndex: Int = 0) {
-        val intentBuilder = if (documentDescriptors.isEmpty()) {
-            PdfActivityIntentBuilder.emptyActivity(context)
-        } else {
-            PdfActivityIntentBuilder.fromDocumentDescriptor(context, *documentDescriptors.toTypedArray())
-        }
-        intentBuilder.visibleDocument(visibleDocumentIndex)
+    private fun launchExampleActivity(
+        context: Context,
+        documentDescriptors: List<DocumentDescriptor>,
+        configuration: PdfActivityConfiguration.Builder,
+        visibleDocumentIndex: Int = 0,
+    ) {
+        val intentBuilder =
+            if (documentDescriptors.isEmpty()) {
+                PdfActivityIntentBuilder.emptyActivity(context)
+            } else {
+                PdfActivityIntentBuilder.fromDocumentDescriptor(context, *documentDescriptors.toTypedArray())
+            }
+        intentBuilder
+            .visibleDocument(visibleDocumentIndex)
             .configuration(configuration.build())
             .activityClass(PersistentTabsActivity::class.java)
 
@@ -110,7 +120,6 @@ class PersistentTabsExample(context: Context) : SdkExample(context, R.string.per
  * This class encapsulates the required serialization/deserialization of [DocumentDescriptor] data to JSON.
  */
 class TabsPreferences(private val preferences: SharedPreferences) {
-
     companion object {
         // We use separate preferences
         const val PREFERENCES_NAME = "Nutrient.PersistentTabsExample"
@@ -160,8 +169,9 @@ class TabsPreferences(private val preferences: SharedPreferences) {
      * activity should be displayed and `null` if no previous state was stored in the preferences.
      */
     fun getDocumentDescriptors(context: Context): List<DocumentDescriptor>? {
-        val descriptorsJson = preferences.getString(PREF_DOCUMENT_DESCRIPTORS_JSON, null)
-            ?: return null
+        val descriptorsJson =
+            preferences.getString(PREF_DOCUMENT_DESCRIPTORS_JSON, null)
+                ?: return null
         val descriptorsArray = JSONArray(descriptorsJson)
 
         val documentDescriptors = mutableListOf<DocumentDescriptor>()
@@ -171,11 +181,12 @@ class TabsPreferences(private val preferences: SharedPreferences) {
             val title = if (descriptorJson.has(JSON_DESCRIPTOR_TITLE)) descriptorJson.getString(JSON_DESCRIPTOR_TITLE) else null
 
             val fileUri = uri.toUri()
-            val documentDescriptor = if (ImageDocumentUtils.isImageUri(context, fileUri)) {
-                DocumentDescriptor.imageDocumentFromUri(fileUri)
-            } else {
-                DocumentDescriptor.fromUri(fileUri)
-            }
+            val documentDescriptor =
+                if (ImageDocumentUtils.isImageUri(context, fileUri)) {
+                    DocumentDescriptor.imageDocumentFromUri(fileUri)
+                } else {
+                    DocumentDescriptor.fromUri(fileUri)
+                }
             if (title != null) {
                 documentDescriptor.setTitle(title)
             }
@@ -194,9 +205,7 @@ class TabsPreferences(private val preferences: SharedPreferences) {
     /**
      * Returns index of currently visible document in the list of stored document descriptors.
      */
-    fun getVisibleDocumentIndex(): Int {
-        return preferences.getInt(PREF_VISIBLE_DOCUMENT_INDEX, 0)
-    }
+    fun getVisibleDocumentIndex(): Int = preferences.getInt(PREF_VISIBLE_DOCUMENT_INDEX, 0)
 }
 
 /**
@@ -204,7 +213,6 @@ class TabsPreferences(private val preferences: SharedPreferences) {
  * currently opened documents to preferences once left by the user.
  */
 class PersistentTabsActivity : PdfActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -281,22 +289,25 @@ class PersistentTabsActivity : PdfActivity() {
                     // The Uri cannot be directly opened. Download the PDF document from the uri, for local access.
 
                     // Find the DownloadProgressFragment for showing download progress, or create a new one.
-                    val downloadFragment = supportFragmentManager.findFragmentByTag(
-                        DOWNLOAD_PROGRESS_FRAGMENT
-                    ) as? DownloadProgressFragment ?: run {
-                        val job = DownloadJob.startDownload(DownloadRequest.Builder(this).uri(uri).build())
-                        val downloadFragment1 = DownloadProgressFragment()
-                        downloadFragment1.show(supportFragmentManager, DOWNLOAD_PROGRESS_FRAGMENT)
-                        downloadFragment1.job = job
-                        downloadFragment1
-                    }
+                    val downloadFragment =
+                        supportFragmentManager.findFragmentByTag(
+                            DOWNLOAD_PROGRESS_FRAGMENT,
+                        ) as? DownloadProgressFragment ?: run {
+                            val job = DownloadJob.startDownload(DownloadRequest.Builder(this).uri(uri).build())
+                            val downloadFragment1 = DownloadProgressFragment()
+                            downloadFragment1.show(supportFragmentManager, DOWNLOAD_PROGRESS_FRAGMENT)
+                            downloadFragment1.job = job
+                            downloadFragment1
+                        }
 
                     // Once the download is complete we show the downloaded document in a new tab.
-                    downloadFragment.job.setProgressListener(object : DownloadJob.ProgressListenerAdapter() {
-                        override fun onComplete(output: File) {
-                            showDocumentInNewTab(Uri.fromFile(output), isImageFile)
-                        }
-                    })
+                    downloadFragment.job.setProgressListener(
+                        object : DownloadJob.ProgressListenerAdapter() {
+                            override fun onComplete(output: File) {
+                                showDocumentInNewTab(Uri.fromFile(output), isImageFile)
+                            }
+                        },
+                    )
                 }
             }
         }
@@ -306,11 +317,12 @@ class PersistentTabsActivity : PdfActivity() {
      * Adds document from Uri to the [DocumentCoordinator] and makes it visible immediately.
      */
     private fun showDocumentInNewTab(uri: Uri, isImageDocument: Boolean) {
-        val documentDescriptor = if (isImageDocument) {
-            DocumentDescriptor.imageDocumentFromUri(uri)
-        } else {
-            DocumentDescriptor.fromUri(uri)
-        }
+        val documentDescriptor =
+            if (isImageDocument) {
+                DocumentDescriptor.imageDocumentFromUri(uri)
+            } else {
+                DocumentDescriptor.fromUri(uri)
+            }
         documentCoordinator.addDocument(documentDescriptor)
         documentCoordinator.setVisibleDocument(documentDescriptor)
     }

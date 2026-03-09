@@ -26,7 +26,8 @@ import java.io.File
 /**
  * Shows how to dynamically change [PdfFragment] configuration at runtime when used with custom activity.
  */
-class CustomFragmentRuntimeConfigurationExample(context: Context) : SdkExample(context, R.string.runtimeConfigurationFragmentExampleTitle, R.string.runtimeConfigurationFragmentExampleDescription) {
+class CustomFragmentRuntimeConfigurationExample(context: Context) :
+    SdkExample(context, R.string.runtimeConfigurationFragmentExampleTitle, R.string.runtimeConfigurationFragmentExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile: File? ->
             val intent = Intent(context, CustomFragmentRuntimeConfigurationActivity::class.java)
@@ -40,7 +41,6 @@ class CustomFragmentRuntimeConfigurationExample(context: Context) : SdkExample(c
  * This activity shows how to change [PdfFragment] configuration at runtime when used with custom activity.
  */
 class CustomFragmentRuntimeConfigurationActivity : AppCompatActivity() {
-
     private lateinit var configuration: PdfConfiguration
     private lateinit var fragment: PdfFragment
 
@@ -48,8 +48,9 @@ class CustomFragmentRuntimeConfigurationActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         // Get the Uri provided when launching the activity.
-        val documentUri = intent.getSupportParcelableExtra(EXTRA_URI, Uri::class.java)
-            ?: throw IllegalStateException("Extras bundle was missing document URI")
+        val documentUri =
+            intent.getSupportParcelableExtra(EXTRA_URI, Uri::class.java)
+                ?: throw IllegalStateException("Extras bundle was missing document URI")
 
         // Extract the existing fragment. The fragment only exist if it has been created previously (like if the activity is recreated).
         // If no fragment was found, create a new one providing it with the configuration and document Uri.
@@ -95,9 +96,13 @@ class CustomFragmentRuntimeConfigurationActivity : AppCompatActivity() {
         val scrollDirection = fragment.configuration.scrollDirection
 
         // Copy existing configuration to a new configuration builder.
-        val newConfig = fragment.configuration.copy(
-            scrollDirection = if (scrollDirection == PageScrollDirection.HORIZONTAL) PageScrollDirection.VERTICAL else PageScrollDirection.HORIZONTAL
-        )
+        val newScrollDirection =
+            if (scrollDirection == PageScrollDirection.HORIZONTAL) {
+                PageScrollDirection.VERTICAL
+            } else {
+                PageScrollDirection.HORIZONTAL
+            }
+        val newConfig = fragment.configuration.copy(scrollDirection = newScrollDirection)
 
         // Create a new fragment based on the current fragment and the new configuration.
         // This copies the state (loaded document, scrolled page, selected annotations etc.) of the
@@ -117,10 +122,11 @@ class CustomFragmentRuntimeConfigurationActivity : AppCompatActivity() {
         val isNightModeActive = fragment.configuration.isInvertColors
 
         // Copy existing configuration to a new configuration builder.
-        val newConfig = fragment.configuration.copy(
-            // Toggle invert colors property.
-            isInvertColors = !isNightModeActive
-        )
+        val newConfig =
+            fragment.configuration.copy(
+                // Toggle invert colors property.
+                isInvertColors = !isNightModeActive,
+            )
 
         // Create a new fragment based on the current fragment and the new configuration.
         // This copies the state (loaded document, scrolled page, selected annotations etc.) of the
@@ -136,8 +142,7 @@ class CustomFragmentRuntimeConfigurationActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_URI = "CustomFragmentRuntimeConfigurationActivity.EXTRA_URI"
 
-        private fun getNightModeTheme(isNightMode: Boolean): Int {
-            return if (isNightMode) R.style.PSPDFCatalog_Theme_Dark else R.style.PSPDFCatalog_Theme
-        }
+        private fun getNightModeTheme(isNightMode: Boolean): Int =
+            if (isNightMode) R.style.PSPDFCatalog_Theme_Dark else R.style.PSPDFCatalog_Theme
     }
 }

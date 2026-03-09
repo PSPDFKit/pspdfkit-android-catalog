@@ -64,18 +64,21 @@ import io.nutrient.domain.ai.AiAssistantProvider
 /**
  * Shows how to implement AI Assistant for the DocumentView in a Compose way.
  */
-class AiAssistantComposeExample(context: Context) : SdkExample(
-    context,
-    R.string.jetpackAiAssistantExampleTitle,
-    R.string.jetpackAiAssistantExampleDescription
-) {
+class AiAssistantComposeExample(context: Context) :
+    SdkExample(
+        context,
+        R.string.jetpackAiAssistantExampleTitle,
+        R.string.jetpackAiAssistantExampleDescription,
+    ) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         val intent = Intent(context, AiAssistantComposeActivity::class.java)
         context.startActivity(intent)
     }
 }
 
-class AiAssistantComposeActivity : AppCompatActivity(), AiAssistantProvider {
+class AiAssistantComposeActivity :
+    AppCompatActivity(),
+    AiAssistantProvider {
     private lateinit var documentState: DocumentState
     private val sessionId = AiAssistantComposeActivity::class.java.simpleName
     private val assetProvider = AssetDataProvider(WELCOME_DOC)
@@ -93,42 +96,56 @@ class AiAssistantComposeActivity : AppCompatActivity(), AiAssistantProvider {
             var toolbarVisibility by remember { mutableStateOf(true) }
 
             CatalogTheme {
-                val activityConfiguration = PdfActivityConfiguration.Builder(LocalContext.current)
-                    .setAiAssistantEnabled(true)
-                    .defaultToolbarEnabled(false)
-                    .theme(R.style.PSPDFCatalog_AIAssistantDialog)
-                    .themeDark(R.style.PSPDFCatalog_AIAssistantDialog_Dark)
-                    .build()
+                val activityConfiguration =
+                    PdfActivityConfiguration
+                        .Builder(LocalContext.current)
+                        .setAiAssistantEnabled(true)
+                        .defaultToolbarEnabled(false)
+                        .theme(R.style.PSPDFCatalog_AIAssistantDialog)
+                        .themeDark(R.style.PSPDFCatalog_AIAssistantDialog_Dark)
+                        .build()
 
                 documentState = rememberDocumentState(assetProvider, activityConfiguration)
 
                 Box(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .fillMaxSize()
-                        .navigationBarsPadding()
+                        .navigationBarsPadding(),
                 ) {
                     DocumentView(
                         documentState = documentState,
-                        documentManager = getDefaultDocumentManager(
-                            documentListener = DefaultListeners.documentListeners(
+                        documentManager =
+                        getDefaultDocumentManager(
+                            documentListener =
+                            DefaultListeners.documentListeners(
                                 onDocumentLoaded = {
                                     enabled = true
-                                }
+                                },
                             ),
-                            uiListener = DefaultListeners.uiListeners(
-                                onImmersiveModeEnabled = { toolbarVisibility = !it }
-                            )
-                        )
+                            uiListener =
+                            DefaultListeners.uiListeners(
+                                onImmersiveModeEnabled = { toolbarVisibility = !it },
+                            ),
+                        ),
                     )
                 }
                 CustomToolbar(documentState, enabled, toolbarVisibility)
             }
         }
     }
+
     var assistant: AiAssistant? = null
 
     override fun getAiAssistant(): AiAssistant {
-        val documentDescriptor = DocumentDescriptor.fromDataProviders(listOf(assetProvider), listOf(), listOf())
+        // Prefer the currently opened document descriptor so runtime state is preserved
+        // (for example, a password-protected PDF that has already been unlocked in the viewer).
+        // Fall back to a source-based descriptor when the UI document is not available yet.
+        // For encrypted PDFs, this fallback path requires the password to be provided in DocumentSource.
+        val documentDescriptor =
+            runCatching { documentState.documentConnection.pdfUi.document?.let(DocumentDescriptor::fromDocument) }
+                .getOrNull()
+                ?: DocumentDescriptor.fromDataProviders(listOf(assetProvider), null, null)
 
         return assistant ?: run {
             createAiAssistant(
@@ -139,16 +156,18 @@ class AiAssistantComposeActivity : AppCompatActivity(), AiAssistantProvider {
                 jwtToken = { documentIds ->
                     JwtGenerator.generateJwtToken(
                         this@AiAssistantComposeActivity,
-                        claims = mapOf(
+                        claims =
+                        mapOf(
                             "document_ids" to documentIds,
                             "session_ids" to listOf(sessionId),
-                            "request_limit" to mapOf(
-                                "requests" to 160,
-                                "time_period_s" to 1000 * 60 * 10
-                            )
-                        )
+                            "request_limit" to
+                                mapOf(
+                                    "requests" to 160,
+                                    "time_period_s" to 1000 * 60 * 10,
+                                ),
+                        ),
                     )
-                }
+                },
             ).also {
                 // Enable/disable text selection in AI Assistant chat messages
                 // false = disable, true = enable (default)
@@ -158,11 +177,7 @@ class AiAssistantComposeActivity : AppCompatActivity(), AiAssistantProvider {
         }
     }
 
-    override fun navigateTo(
-        documentRect: List<RectF>,
-        pageIndex: Int,
-        documentIndex: Int
-    ) {
+    override fun navigateTo(documentRect: List<RectF>, pageIndex: Int, documentIndex: Int) {
         documentState.documentConnection.highlight(pageIndex, documentRect)
     }
 
@@ -182,27 +197,24 @@ class AiAssistantComposeActivity : AppCompatActivity(), AiAssistantProvider {
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CustomToolbar(
-    documentState: DocumentState,
-    enabled: Boolean,
-    toolbarVisibility: Boolean
-) {
+fun CustomToolbar(documentState: DocumentState, enabled: Boolean, toolbarVisibility: Boolean) {
     val localDensity = LocalDensity.current
 
     // Animate toolbar appearance/disappearance with slide, expand and fade effects
     AnimatedVisibility(
         visible = toolbarVisibility,
-        enter = slideInVertically { with(localDensity) { -40.dp.roundToPx() } } +
+        enter =
+        slideInVertically { with(localDensity) { -40.dp.roundToPx() } } +
             expandVertically(expandFrom = Alignment.Top) +
             fadeIn(initialAlpha = 0.3f),
-        exit = slideOutVertically() + shrinkVertically() + fadeOut()
+        exit = slideOutVertically() + shrinkVertically() + fadeOut(),
     ) {
         TopAppBar(
             title = {
                 // Display document title or empty string if null
                 Text(
                     text = documentState.getTitle().orEmpty(),
-                    color = Color.White
+                    color = Color.White,
                 )
             },
             actions = {
@@ -211,12 +223,12 @@ fun CustomToolbar(
                     onClick = {
                         documentState.toggleView(PdfActivity.MENU_OPTION_AI_ASSISTANT)
                     },
-                    enabled = enabled
+                    enabled = enabled,
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_ai_assistant),
                         contentDescription = "AI Assistant",
-                        tint = Color.White
+                        tint = Color.White,
                     )
                 }
 
@@ -225,19 +237,20 @@ fun CustomToolbar(
                     onClick = {
                         documentState.toggleView(PdfActivity.MENU_OPTION_SETTINGS)
                     },
-                    enabled = enabled
+                    enabled = enabled,
                 ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_topbar_settings),
                         contentDescription = "Settings",
-                        tint = Color.White
+                        tint = Color.White,
                     )
                 }
             },
-            colors = TopAppBarDefaults.topAppBarColors(
+            colors =
+            TopAppBarDefaults.topAppBarColors(
                 containerColor = MaterialTheme.colorScheme.primary,
-                titleContentColor = MaterialTheme.colorScheme.onPrimary
-            )
+                titleContentColor = MaterialTheme.colorScheme.onPrimary,
+            ),
         )
     }
 }

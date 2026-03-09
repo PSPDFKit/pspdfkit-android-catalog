@@ -40,7 +40,9 @@ import io.nutrient.domain.ai.AiAssistantProvider
  * An example activity that demonstrates how to use the InstantDocumentView composable to display an Instant document.
  */
 
-class InstantComposeExampleActivity : AppCompatActivity(), AiAssistantProvider {
+class InstantComposeExampleActivity :
+    AppCompatActivity(),
+    AiAssistantProvider {
     private lateinit var documentState: DocumentState
     private lateinit var aiAssistantInstance: AiAssistant
 
@@ -49,42 +51,46 @@ class InstantComposeExampleActivity : AppCompatActivity(), AiAssistantProvider {
         enableEdgeToEdge()
         // Extract the PSPDFKit bundle holding all internal extras.
         val extra = intent.extras ?: throw IllegalArgumentException("Intent extras are required")
-        val instantDocumentSource: InstantExampleDocumentDescriptor = extra.getParcelable(DOCUMENT_DESCRIPTOR)
-            ?: throw IllegalArgumentException("InstantExampleDocumentDescriptor is required")
+        val instantDocumentSource: InstantExampleDocumentDescriptor =
+            extra.getParcelable(DOCUMENT_DESCRIPTOR)
+                ?: throw IllegalArgumentException("InstantExampleDocumentDescriptor is required")
         val configuration: PdfActivityConfiguration = extra.getParcelable(CONFIGURATION) ?: PdfActivityConfiguration.Builder(this).build()
         // only initialise if AI Assistant is enabled
         if (configuration.configuration.isAiAssistantEnabled) aiAssistantInstance = createAiAssistantInstance(instantDocumentSource)
         setContent {
             CatalogTheme {
-                documentState = rememberInstantDocumentState(
-                    serverUrl = instantDocumentSource.serverUrl,
-                    jwt = instantDocumentSource.jwt,
-                    configuration = configuration
-                )
+                documentState =
+                    rememberInstantDocumentState(
+                        serverUrl = instantDocumentSource.serverUrl,
+                        jwt = instantDocumentSource.jwt,
+                        configuration = configuration,
+                    )
                 @Suppress("UnusedMaterial3ScaffoldPaddingParameter")
                 Scaffold(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .background(color = MaterialTheme.colorScheme.onPrimary)
                         .navigationBarsPadding(),
                     floatingActionButton = {
                         FloatingActionButton(
                             onClick = {
                                 documentState.documentConnection.save()
-                            }
+                            },
                         ) {
                             Icon(imageVector = Icons.Default.Save, contentDescription = "save")
                         }
-                    }
+                    },
                 ) {
                     InstantDocumentView(
                         documentState = documentState,
                         modifier = Modifier.fillMaxSize(),
-                        instantDocumentManager = getDefaultInstantDocumentManager()
+                        instantDocumentManager = getDefaultInstantDocumentManager(),
                     )
                 }
             }
         }
     }
+
     val sessionId = "my-session-id"
 
     override fun getAiAssistant(): AiAssistant = aiAssistantInstance
@@ -94,18 +100,20 @@ class InstantComposeExampleActivity : AppCompatActivity(), AiAssistantProvider {
         documentDescriptor.serverUrl,
         listOf(documentDescriptor.jwt),
         "http://192.168.1.6:4000",
-        sessionId
+        sessionId,
     ) { instantDocumentIds ->
         JwtGenerator.generateJwtToken(
             this@InstantComposeExampleActivity,
-            claims = mapOf(
+            claims =
+            mapOf(
                 "document_ids" to instantDocumentIds,
                 "session_ids" to listOf(sessionId),
-                "request_limit" to mapOf(
-                    "requests" to 160,
-                    "time_period_s" to 1000 * 60 * 10
-                )
-            )
+                "request_limit" to
+                    mapOf(
+                        "requests" to 160,
+                        "time_period_s" to 1000 * 60 * 10,
+                    ),
+            ),
         )
     }
 

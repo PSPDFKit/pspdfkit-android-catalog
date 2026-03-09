@@ -17,24 +17,20 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.launch
 
-internal class ScannerRepoImpl(
-    private val scanner: GmsBarcodeScanner
-) : ScannerRepo {
-
-    override fun startScanning(): Flow<ScanResult> {
-        return callbackFlow {
-            scanner.startScan()
-                .addOnSuccessListener { barcode ->
-                    launch {
-                        send(getBarcodeData(barcode))
-                    }
-                }.addOnFailureListener {
-                    launch {
-                        send(ScanResult.Error(it))
-                    }
+internal class ScannerRepoImpl(private val scanner: GmsBarcodeScanner) : ScannerRepo {
+    override fun startScanning(): Flow<ScanResult> = callbackFlow {
+        scanner
+            .startScan()
+            .addOnSuccessListener { barcode ->
+                launch {
+                    send(getBarcodeData(barcode))
                 }
-            awaitClose()
-        }
+            }.addOnFailureListener {
+                launch {
+                    send(ScanResult.Error(it))
+                }
+            }
+        awaitClose()
     }
 
     private fun getBarcodeData(barcode: Barcode): ScanResult {
@@ -49,7 +45,9 @@ internal class ScannerRepoImpl(
                 }
             }
 
-            else -> ScanResult.Error(Exception())
+            else -> {
+                ScanResult.Error(Exception())
+            }
         }
     }
 }

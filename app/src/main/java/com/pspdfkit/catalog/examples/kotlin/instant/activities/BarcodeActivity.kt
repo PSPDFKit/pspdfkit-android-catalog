@@ -10,6 +10,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.lifecycle.ViewModelProvider
 import com.google.mlkit.vision.barcode.common.Barcode
@@ -22,21 +23,33 @@ import com.pspdfkit.catalog.barcodescanner.ScannerViewModel
  * recognized encoded data with the BARCODE_ENCODED_KEY. Requires Manifest.permission.CAMERA.
  */
 class BarcodeActivity : ComponentActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        val options = GmsBarcodeScannerOptions.Builder()
-            .setBarcodeFormats(Barcode.FORMAT_AZTEC, Barcode.FORMAT_QR_CODE)
-            .build()
+        val options =
+            GmsBarcodeScannerOptions
+                .Builder()
+                .setBarcodeFormats(Barcode.FORMAT_AZTEC, Barcode.FORMAT_QR_CODE)
+                .build()
         val scanner = GmsBarcodeScanning.getClient(this, options)
         val vm = ViewModelProvider(this, ScannerViewModel.provideFactory(scanner))[ScannerViewModel::class.java]
 
         setContent {
-            val state = vm.scanStateStateFlow.collectAsState()
+            val state = vm.scanState.collectAsState()
+            val qrValue = state.value.qrValue
+            val error = state.value.error
 
-            state.value.qrValue?.let { handleResult(it) }
-            state.value.error?.message.equals("Failed to scan code.").let { handleResult(null) }
+            LaunchedEffect(qrValue) {
+                if (qrValue != null) {
+                    handleResult(qrValue)
+                }
+            }
+
+            LaunchedEffect(error) {
+                if (error?.message == "Failed to scan code.") {
+                    handleResult(null)
+                }
+            }
         }
     }
 

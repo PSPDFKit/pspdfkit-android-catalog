@@ -30,8 +30,8 @@ import java.security.cert.X509Certificate
  * An example that shows how to digitally sign a PDF document using [SigningManager].
  * This is a Simple implementation where user provides Private key in [SignerOptions].
  */
-class DigitalSignatureExample(context: Context) : SdkExample(context, R.string.digitalSignatureExampleTitle, R.string.digitalSignatureExampleDescription) {
-
+class DigitalSignatureExample(context: Context) :
+    SdkExample(context, R.string.digitalSignatureExampleTitle, R.string.digitalSignatureExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         val assetName = "Form_example.pdf"
 
@@ -41,26 +41,30 @@ class DigitalSignatureExample(context: Context) : SdkExample(context, R.string.d
         val signatureFormFields = unsignedDocument.documentSignatureInfo.signatureFormFields
         val outputFile = File(context.filesDir, "signedDocument.pdf")
         outputFile.delete() // make sure output is deleted from previous runs.
-        val signerOptions = SignerOptions.Builder(signatureFormFields[0], Uri.fromFile(outputFile))
-            .setPrivateKey(privateKey)
-            .setCertificates(listOf(certificate))
-            .setType(digitalSignatureType)
-            .build()
+        val signerOptions =
+            SignerOptions
+                .Builder(signatureFormFields[0], Uri.fromFile(outputFile))
+                .setPrivateKey(privateKey)
+                .setCertificates(listOf(certificate))
+                .setType(digitalSignatureType)
+                .build()
 
-        /** [SignerOptions] contains all the required configuration for [SigningManager]*/
+        // [SignerOptions] contains all the required configuration for [SigningManager]
         SigningManager.signDocument(
             context = context,
             signerOptions = signerOptions,
             onFailure = { e ->
                 Toast.makeText(context, "Error launching example. See logcat for details.", Toast.LENGTH_SHORT).show()
                 PdfLog.e("DigitalSignatureExample", e, "Error while launching example.")
-            }
+            },
         ) {
             val signedDocument = Uri.fromFile(outputFile)
             // Load and show the signed document.
-            val intent = PdfActivityIntentBuilder.fromUri(context, signedDocument)
-                .configuration(configuration.build())
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, signedDocument)
+                    .configuration(configuration.build())
+                    .build()
             context.startActivity(intent)
         }
     }
@@ -69,6 +73,7 @@ class DigitalSignatureExample(context: Context) : SdkExample(context, R.string.d
         val privateKeyFile = context.assets.open("digital-signatures/self-signed/demo.pkcs8")
         return getPrivateKeyFromFile(privateKeyFile)
     }
+
     private fun getCertificate(context: Context): X509Certificate {
         val certificateFile = context.assets.open("digital-signatures/self-signed/demo.cer")
         return loadCertificateFromStream(certificateFile)

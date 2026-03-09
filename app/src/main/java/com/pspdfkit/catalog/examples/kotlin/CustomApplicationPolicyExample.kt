@@ -20,8 +20,8 @@ import com.pspdfkit.ui.PdfActivityIntentBuilder
 /**
  * Example of how to customize application policy preventing copy/paste action.
  */
-class CustomApplicationPolicyExample(context: Context) : SdkExample(context, R.string.customApplicationPolicyExampleTitle, R.string.customApplicationPolicyExampleDescription) {
-
+class CustomApplicationPolicyExample(context: Context) :
+    SdkExample(context, R.string.customApplicationPolicyExampleTitle, R.string.customApplicationPolicyExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // To customize the application policy we extend ApplicationPolicy.
         val customApplicationPolicy = CustomApplicationPolicy()
@@ -32,9 +32,11 @@ class CustomApplicationPolicyExample(context: Context) : SdkExample(context, R.s
         // We use a custom utility class to extract the example document from the assets.
         ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
             // Open the example document in PdfActivity.
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .configuration(configuration.build())
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    .configuration(configuration.build())
+                    .build()
             context.startActivity(intent)
         }
     }
@@ -44,15 +46,15 @@ class CustomApplicationPolicyExample(context: Context) : SdkExample(context, R.s
  * Custom Application policy that disables text copy and paste.
  */
 class CustomApplicationPolicy : ApplicationPolicy() {
-    override fun hasPermissionForEvent(event: PolicyEvent): Boolean {
-        return when (event) {
-            PolicyEvent.TEXT_COPY_PASTE ->
-                // Disable text copy/paste policy.
-                false
-            else -> {
-                // Enable remaining policies.
-                true
-            }
+    override fun hasPermissionForEvent(event: PolicyEvent): Boolean = when (event) {
+        PolicyEvent.TEXT_COPY_PASTE -> {
+            // Disable text copy/paste policy.
+            false
+        }
+
+        else -> {
+            // Enable remaining policies.
+            true
         }
     }
 }

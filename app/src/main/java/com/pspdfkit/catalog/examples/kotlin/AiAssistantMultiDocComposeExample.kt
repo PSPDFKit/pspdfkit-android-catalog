@@ -86,18 +86,21 @@ import kotlinx.coroutines.launch
 /**
  * An example that demonstrates how to implement AI Assistant with multiple documents for the DocumentView in a Compose way.
  */
-class AiAssistantMultiDocComposeExample(context: Context) : SdkExample(
-    context,
-    R.string.jetpackAiAssistantMultiDocExampleTitle,
-    R.string.jetpackAiAssistantMultiDocExampleDescription
-) {
+class AiAssistantMultiDocComposeExample(context: Context) :
+    SdkExample(
+        context,
+        R.string.jetpackAiAssistantMultiDocExampleTitle,
+        R.string.jetpackAiAssistantMultiDocExampleDescription,
+    ) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         val intent = Intent(context, AiAssistantMultiDocComposeActivity::class.java)
         context.startActivity(intent)
     }
 }
 
-class AiAssistantMultiDocComposeActivity : AppCompatActivity(), AiAssistantProvider {
+class AiAssistantMultiDocComposeActivity :
+    AppCompatActivity(),
+    AiAssistantProvider {
     val assetFiles = listOf(WELCOME_DOC, "Scientific-paper.pdf", "Teacher.pdf", "The-Cosmic-Context-for-Life.pdf")
     val documentDescriptors = assetFiles.map { DocumentDescriptor.fromDataProviders(listOf(AssetDataProvider(it)), listOf(), listOf()) }
     private lateinit var activityConfiguration: PdfActivityConfiguration
@@ -117,21 +120,24 @@ class AiAssistantMultiDocComposeActivity : AppCompatActivity(), AiAssistantProvi
 
         setContent {
             var toolbarVisibility by remember { mutableStateOf(true) }
-            activityConfiguration = PdfActivityConfiguration.Builder(LocalContext.current)
-                .setAiAssistantEnabled(true)
-                .defaultToolbarEnabled(false)
-                .scrollDirection(PageScrollDirection.VERTICAL)
-                .theme(R.style.PSPDFCatalog_AIAssistantDialog)
-                .themeDark(R.style.PSPDFCatalog_AIAssistantDialog_Dark)
-                .build()
+            activityConfiguration =
+                PdfActivityConfiguration
+                    .Builder(LocalContext.current)
+                    .setAiAssistantEnabled(true)
+                    .defaultToolbarEnabled(false)
+                    .scrollDirection(PageScrollDirection.VERTICAL)
+                    .theme(R.style.PSPDFCatalog_AIAssistantDialog)
+                    .themeDark(R.style.PSPDFCatalog_AIAssistantDialog_Dark)
+                    .build()
 
             CatalogTheme {
                 val currentIndex by currentDocumentIndex.collectAsState()
 
                 Box(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .fillMaxSize()
-                        .navigationBarsPadding()
+                        .navigationBarsPadding(),
                 ) {
                     val pagerState = rememberPagerState(currentIndex) { documentDescriptors.size }
                     LaunchedEffect(currentIndex) {
@@ -141,25 +147,33 @@ class AiAssistantMultiDocComposeActivity : AppCompatActivity(), AiAssistantProvi
                         state = pagerState,
                         userScrollEnabled = false,
                         beyondViewportPageCount = documentDescriptors.size,
-                        modifier = Modifier
-                            .fillMaxSize()
+                        modifier =
+                        Modifier
+                            .fillMaxSize(),
                     ) { page ->
                         if (page < documentDescriptors.size) {
                             key(page) {
-                                val dataProvider = remember(page) {
-                                    documentDescriptors[page].documentSource.getDataProviderFromDocumentSource()
-                                }
+                                val dataProvider =
+                                    remember(page) {
+                                        documentDescriptors[page].documentSource.getDataProviderFromDocumentSource()
+                                    }
                                 // Create or retrieve the DocumentState for the current page.
-                                val documentState = documentStateMap[page] ?: rememberDocumentState(dataProvider, activityConfiguration).also { documentStateMap.put(page, it) }
+                                val documentState =
+                                    documentStateMap[page]
+                                        ?: rememberDocumentState(dataProvider, activityConfiguration).also {
+                                            documentStateMap.put(page, it)
+                                        }
                                 Box(modifier = Modifier.fillMaxSize()) {
                                     DocumentView(
                                         modifier = Modifier.fillMaxSize(),
                                         documentState = documentState,
-                                        documentManager = getDefaultDocumentManager(
-                                            uiListener = DefaultListeners.uiListeners(
-                                                onImmersiveModeEnabled = { toolbarVisibility = !it }
-                                            )
-                                        )
+                                        documentManager =
+                                        getDefaultDocumentManager(
+                                            uiListener =
+                                            DefaultListeners.uiListeners(
+                                                onImmersiveModeEnabled = { toolbarVisibility = !it },
+                                            ),
+                                        ),
                                     )
                                 }
                             }
@@ -172,7 +186,7 @@ class AiAssistantMultiDocComposeActivity : AppCompatActivity(), AiAssistantProvi
                         },
                         toolbarVisibility = toolbarVisibility,
                         documentDescriptors = documentDescriptors,
-                        currentIndex
+                        currentIndex,
                     ) {
                         _currentDocumentIndex.value = it
                     }
@@ -180,39 +194,36 @@ class AiAssistantMultiDocComposeActivity : AppCompatActivity(), AiAssistantProvi
             }
         }
     }
+
     var assistant: AiAssistant? = null
 
-    override fun getAiAssistant(): AiAssistant {
-        return assistant ?: run {
-            createAiAssistant(
-                context = this@AiAssistantMultiDocComposeActivity,
-                documentsDescriptors = documentDescriptors,
-                serverUrl = "http://$ipAddressValue:4000",
-                sessionId = sessionId,
-                jwtToken = { documentIds ->
-                    JwtGenerator.generateJwtToken(
-                        this@AiAssistantMultiDocComposeActivity,
-                        claims = mapOf(
-                            "document_ids" to documentIds,
-                            "session_ids" to listOf(sessionId),
-                            "request_limit" to mapOf(
+    override fun getAiAssistant(): AiAssistant = assistant ?: run {
+        createAiAssistant(
+            context = this@AiAssistantMultiDocComposeActivity,
+            documentsDescriptors = documentDescriptors,
+            serverUrl = "http://$ipAddressValue:4000",
+            sessionId = sessionId,
+            jwtToken = { documentIds ->
+                JwtGenerator.generateJwtToken(
+                    this@AiAssistantMultiDocComposeActivity,
+                    claims =
+                    mapOf(
+                        "document_ids" to documentIds,
+                        "session_ids" to listOf(sessionId),
+                        "request_limit" to
+                            mapOf(
                                 "requests" to 160,
-                                "time_period_s" to 1000 * 60 * 10
-                            )
-                        )
-                    )
-                }
-            ).also {
-                assistant = it
-            }
+                                "time_period_s" to 1000 * 60 * 10,
+                            ),
+                    ),
+                )
+            },
+        ).also {
+            assistant = it
         }
     }
 
-    override fun navigateTo(
-        documentRect: List<RectF>,
-        pageIndex: Int,
-        documentIndex: Int
-    ) {
+    override fun navigateTo(documentRect: List<RectF>, pageIndex: Int, documentIndex: Int) {
         _currentDocumentIndex.value = documentIndex
         documentStateMap[documentIndex]?.documentConnection?.highlight(pageIndex, documentRect)
     }
@@ -234,7 +245,7 @@ fun CustomToolbar(
     toolbarVisibility: Boolean,
     documentDescriptors: List<DocumentDescriptor>,
     currentIndex: Int,
-    onPagerIndexChange: suspend (Int) -> Unit = {}
+    onPagerIndexChange: suspend (Int) -> Unit = {},
 ) {
     val localDensity = LocalDensity.current
     val context = LocalContext.current
@@ -243,10 +254,11 @@ fun CustomToolbar(
     // Animate toolbar appearance/disappearance with slide, expand and fade effects
     AnimatedVisibility(
         visible = toolbarVisibility,
-        enter = slideInVertically { with(localDensity) { -40.dp.roundToPx() } } +
+        enter =
+        slideInVertically { with(localDensity) { -40.dp.roundToPx() } } +
             expandVertically(expandFrom = Alignment.Top) +
             fadeIn(initialAlpha = 0.3f),
-        exit = slideOutVertically() + shrinkVertically() + fadeOut()
+        exit = slideOutVertically() + shrinkVertically() + fadeOut(),
     ) {
         Column {
             TopAppBar(
@@ -255,32 +267,34 @@ fun CustomToolbar(
                         Text(
                             text = documentDescriptors[currentIndex].getTitle(context),
                             color = Color.White,
-                            style = TextStyle(
+                            style =
+                            TextStyle(
                                 fontSize = 16.sp,
-                                fontWeight = FontWeight.Medium
-                            )
+                                fontWeight = FontWeight.Medium,
+                            ),
                         )
                     }
                 },
                 actions = {
                     IconButton(
-                        onClick = onClick
+                        onClick = onClick,
                     ) {
                         Icon(
                             painter = painterResource(id = R.drawable.ic_ai_assistant),
                             contentDescription = "AI Assistant",
-                            tint = Color.White
+                            tint = Color.White,
                         )
                     }
                 },
-                colors = TopAppBarDefaults.topAppBarColors(
+                colors =
+                TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary
-                )
+                    titleContentColor = MaterialTheme.colorScheme.onPrimary,
+                ),
             )
             PrimaryTabRow(
                 selectedTabIndex = currentIndex,
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth(),
             ) {
                 documentDescriptors.forEachIndexed { index, descriptor ->
                     Tab(
@@ -294,9 +308,9 @@ fun CustomToolbar(
                             Text(
                                 text = descriptor.getTitle(context),
                                 maxLines = 1,
-                                overflow = TextOverflow.Ellipsis
+                                overflow = TextOverflow.Ellipsis,
                             )
-                        }
+                        },
                     )
                 }
             }

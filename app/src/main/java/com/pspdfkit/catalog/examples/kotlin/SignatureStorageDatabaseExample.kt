@@ -28,7 +28,7 @@ class SignatureStorageDatabaseExample(context: Context) :
     SdkExample(
         context,
         R.string.signatureStorageDatabaseExampleTitle,
-        R.string.signatureStorageDatabaseExampleDescription
+        R.string.signatureStorageDatabaseExampleDescription,
     ) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // When setting [SignatureSavingStrategy.SAVE_IF_SELECTED], the signature saving
@@ -38,17 +38,18 @@ class SignatureStorageDatabaseExample(context: Context) :
         // Extract the document to the Catalog's private files, so that examples can freely modify the file.
         ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
             // Create an intent for showing the SignatureStorageDatabaseActivity.
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                // Signature form field on page index 16.
-                .configuration(
-                    configuration
-                        .page(16)
-                        // An example of changing the default signing colors is here as well.
-                        .signatureColorOptions(SignatureColorOptions.fromColorInt(Color.BLACK, Color.GRAY, Color.RED))
-                        .build()
-                )
-                .activityClass(SignatureStorageDatabaseActivity::class)
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    // Signature form field on page index 16.
+                    .configuration(
+                        configuration
+                            .page(16)
+                            // An example of changing the default signing colors is here as well.
+                            .signatureColorOptions(SignatureColorOptions.fromColorInt(Color.BLACK, Color.GRAY, Color.RED))
+                            .build(),
+                    ).activityClass(SignatureStorageDatabaseActivity::class)
+                    .build()
 
             // Start the SignatureStorageDatabaseActivity showing the demo document.
             context.startActivity(intent)
@@ -60,17 +61,17 @@ class SignatureStorageDatabaseExample(context: Context) :
  * Shows how to initialize a signature storage database in custom [PdfActivity].
  */
 class SignatureStorageDatabaseActivity : PdfActivity() {
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // Initialize a signature storage database that uses SQLite to store signatures.
-        requirePdfFragment().signatureStorage = DatabaseSignatureStorage.withName(
-            this,
-            // You can use any name for your database signature storage. Here, the default one
-            // suggested by Nutrient. For example, if your app supports multiple users, you can
-            // have a separate database signature storage for every user.
-            DatabaseSignatureStorage.SIGNATURE_DB_NAME
-        )
+        requirePdfFragment().signatureStorage =
+            DatabaseSignatureStorage.withName(
+                this,
+                // You can use any name for your database signature storage. Here, the default one
+                // suggested by Nutrient. For example, if your app supports multiple users, you can
+                // have a separate database signature storage for every user.
+                DatabaseSignatureStorage.SIGNATURE_DB_NAME,
+            )
     }
 }

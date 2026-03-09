@@ -39,11 +39,12 @@ import com.pspdfkit.ui.toolbar.grouping.presets.MenuItem
 import com.pspdfkit.ui.toolbar.grouping.presets.PresetMenuItemGroupingRule
 import kotlinx.coroutines.launch
 
-class ConstructionExample(context: Context) : AssetExample(
-    context,
-    R.string.constructionExampleTitle,
-    R.string.constructionExampleDescription
-) {
+class ConstructionExample(context: Context) :
+    AssetExample(
+        context,
+        R.string.constructionExampleTitle,
+        R.string.constructionExampleDescription,
+    ) {
     override val assetPath: String = "Floor Plan.pdf"
 
     override fun prepareConfiguration(configuration: PdfActivityConfiguration.Builder) {
@@ -65,10 +66,12 @@ class ConstructionExample(context: Context) : AssetExample(
         ExtractAssetTask.extract(assetPath, title, context) { documentFile ->
             // Now, as the PDF document file is sitting in the internal device storage, we can
             // start the ConstructionExampleActivity activity by passing it the Uri of the file.
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .activityClass(ConstructionExampleActivity::class.java)
-                .configuration(configuration.build())
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    .activityClass(ConstructionExampleActivity::class.java)
+                    .configuration(configuration.build())
+                    .build()
             context.startActivity(intent)
         }
     }
@@ -79,12 +82,12 @@ class ConstructionExampleActivity :
     ToolbarCoordinatorLayout.OnContextualToolbarLifecycleListener,
     OnAnnotationSelectedListener,
     OnAnnotationEditingModeChangeListener {
-
     var annotationsHidden = false
-    val desiredAnnotationTypes = AnnotationType.entries.toMutableSet().apply {
-        // ignore LINK annotations
-        remove(AnnotationType.LINK)
-    }
+    val desiredAnnotationTypes =
+        AnnotationType.entries.toMutableSet().apply {
+            // ignore LINK annotations
+            remove(AnnotationType.LINK)
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -127,14 +130,19 @@ class ConstructionExampleActivity :
             AppCompatResources.getDrawable(this, R.drawable.ic_pin_drop)?.toBitmap() ?: return
 
         // First we create our custom StampPickerItem
-        val pinStamp = StampPickerItem.fromBitmap(pinBitmap).withSize(50f, 50f)
-            .build()
+        val pinStamp =
+            StampPickerItem
+                .fromBitmap(pinBitmap)
+                .withSize(50f, 50f)
+                .build()
 
         // Then put it into a StampAnnotationConfiguration
-        val stampConfig = StampAnnotationConfiguration.builder(this)
-            // Here we return list of stamp picker items that are going to be available in the stamp picker.
-            .setAvailableStampPickerItems(listOf(pinStamp))
-            .build()
+        val stampConfig =
+            StampAnnotationConfiguration
+                .builder(this)
+                // Here we return list of stamp picker items that are going to be available in the stamp picker.
+                .setAvailableStampPickerItems(listOf(pinStamp))
+                .build()
 
         // Replace the default StampAnnotationConfiguration with our custom one
         fragment
@@ -164,17 +172,19 @@ class ConstructionExampleActivity :
         // Let's say we want to tint icons same as the default ones. We can read the color
         // from the theme, or specify the same color we have in theme. Reading from theme is a bit
         // more complex but a better way to do it, so here's how to:
-        val a = theme
-            .obtainStyledAttributes(
-                null,
-                com.pspdfkit.R.styleable.pspdf__ActionBarIcons,
-                com.pspdfkit.R.attr.pspdf__actionBarIconsStyle,
-                com.pspdfkit.R.style.PSPDFKit_ActionBarIcons
+        val a =
+            theme
+                .obtainStyledAttributes(
+                    null,
+                    com.pspdfkit.R.styleable.pspdf__ActionBarIcons,
+                    com.pspdfkit.R.attr.pspdf__actionBarIconsStyle,
+                    com.pspdfkit.R.style.PSPDFKit_ActionBarIcons,
+                )
+        val mainToolbarIconsColor =
+            a.getColor(
+                com.pspdfkit.R.styleable.pspdf__ActionBarIcons_pspdf__iconsColor,
+                ContextCompat.getColor(this, com.pspdfkit.R.color.pspdf__onPrimary),
             )
-        val mainToolbarIconsColor = a.getColor(
-            com.pspdfkit.R.styleable.pspdf__ActionBarIcons_pspdf__iconsColor,
-            ContextCompat.getColor(this, com.pspdfkit.R.color.pspdf__onPrimary)
-        )
         a.recycle()
 
         // setup our custom menu items for showing and hiding annotations
@@ -182,13 +192,13 @@ class ConstructionExampleActivity :
             menu.findItem(R.id.custom_action_hide),
             "Hide",
             R.drawable.ic_hide,
-            mainToolbarIconsColor
+            mainToolbarIconsColor,
         )
         setupCustomMenuItem(
             menu.findItem(R.id.custom_action_show),
             "Show",
             R.drawable.ic_show,
-            mainToolbarIconsColor
+            mainToolbarIconsColor,
         )
 
         return true
@@ -218,7 +228,8 @@ class ConstructionExampleActivity :
     override fun onOptionsItemSelected(item: android.view.MenuItem): Boolean {
         when (item.itemId) {
             R.id.custom_action_hide,
-            R.id.custom_action_show -> {
+            R.id.custom_action_show,
+            -> {
                 // show/hide annotations accordingly and update the option menu
                 annotationsHidden = !annotationsHidden
                 setAnnotationVisibility(annotationsHidden)
@@ -226,8 +237,9 @@ class ConstructionExampleActivity :
                 return true
             }
 
-            else ->
+            else -> {
                 return super.onOptionsItemSelected(item)
+            }
         }
     }
 
@@ -235,9 +247,10 @@ class ConstructionExampleActivity :
     private fun setAnnotationVisibility(shouldHide: Boolean) {
         val doc = document ?: return
         lifecycleScope.launch {
-            val annotations = doc
-                .annotationProvider
-                .getAllAnnotationsOfType(desiredAnnotationTypes)
+            val annotations =
+                doc
+                    .annotationProvider
+                    .getAllAnnotationsOfType(desiredAnnotationTypes)
 
             pdfFragment?.executeAction(HideAction(annotations, null, shouldHide))
         }
@@ -248,12 +261,13 @@ class ConstructionExampleActivity :
         if (toolbar is AnnotationCreationToolbar) {
             // Register grouping rule to tell toolbar how to group menu items.
             toolbar.setMenuItemGroupingRule(
-                CustomAnnotationCreationToolbarGroupingRule(this)
+                CustomAnnotationCreationToolbarGroupingRule(this),
             )
         }
     }
 
     override fun onDisplayContextualToolbar(toolbar: ContextualToolbar<*>) {}
+
     override fun onRemoveContextualToolbar(toolbar: ContextualToolbar<*>) {}
     //endregion
 
@@ -263,7 +277,7 @@ class ConstructionExampleActivity :
     override fun onPrepareAnnotationSelection(
         controller: AnnotationSelectionController,
         annotation: Annotation,
-        annotationCreated: Boolean
+        annotationCreated: Boolean,
     ): Boolean {
         // since our custom pin is the only stamp that we create in this example we can just use the type for detection
         newPinAnnotationCreated = annotationCreated && annotation.type == AnnotationType.STAMP
@@ -285,6 +299,7 @@ class ConstructionExampleActivity :
     }
 
     override fun onChangeAnnotationEditingMode(controller: AnnotationEditingController) {}
+
     override fun onExitAnnotationEditingMode(controller: AnnotationEditingController) {}
     //endregion
 
@@ -299,22 +314,23 @@ class ConstructionExampleActivity :
             private const val LOW_CAPACITY_ITEMS_COUNT = 5
             private const val HIGH_CAPACITY_ITEMS_COUNT = 7
         }
-        private val LOW_CAPACITY_ITEMS_GROUPING: MutableList<MenuItem> = ArrayList(LOW_CAPACITY_ITEMS_COUNT)
-        private val HIGH_CAPACITY_ITEMS_GROUPING: MutableList<MenuItem> = ArrayList(HIGH_CAPACITY_ITEMS_COUNT)
-        override fun getGroupPreset(capacity: Int, itemsCount: Int): List<MenuItem> =
-            when {
-                capacity >= HIGH_CAPACITY_ITEMS_COUNT -> HIGH_CAPACITY_ITEMS_GROUPING
-                capacity >= LOW_CAPACITY_ITEMS_COUNT -> LOW_CAPACITY_ITEMS_GROUPING
-                // in case we don't have enough capacity, return an empty list
-                else -> ArrayList(capacity)
-            }
 
-        override fun areGeneratedGroupItemsSelectable(): Boolean {
-            return true
+        private val lowCapacityItemsGrouping: MutableList<MenuItem> = ArrayList(LOW_CAPACITY_ITEMS_COUNT)
+        private val highCapacityItemsGrouping: MutableList<MenuItem> = ArrayList(HIGH_CAPACITY_ITEMS_COUNT)
+
+        override fun getGroupPreset(capacity: Int, itemsCount: Int): List<MenuItem> = when {
+            capacity >= HIGH_CAPACITY_ITEMS_COUNT -> highCapacityItemsGrouping
+
+            capacity >= LOW_CAPACITY_ITEMS_COUNT -> lowCapacityItemsGrouping
+
+            // in case we don't have enough capacity, return an empty list
+            else -> ArrayList(capacity)
         }
 
+        override fun areGeneratedGroupItemsSelectable(): Boolean = true
+
         init {
-            LOW_CAPACITY_ITEMS_GROUPING.addAll(
+            lowCapacityItemsGrouping.addAll(
                 listOf(
                     MenuItem(
                         com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_group_drawing,
@@ -331,8 +347,8 @@ class ConstructionExampleActivity :
                             com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_measurement_area_polygon,
                             com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_measurement_area_rect,
                             com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_measurement_area_ellipse,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_measurement_scale_calibration
-                        )
+                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_measurement_scale_calibration,
+                        ),
                     ),
                     MenuItem(
                         com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_group_markup,
@@ -342,8 +358,8 @@ class ConstructionExampleActivity :
                             com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_dashed_square,
                             com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_dashed_circle,
                             com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_square,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_circle
-                        )
+                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_circle,
+                        ),
                     ),
                     MenuItem(com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_image),
                     MenuItem(com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_stamp),
@@ -352,12 +368,12 @@ class ConstructionExampleActivity :
                         com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_group_undo_redo,
                         intArrayOf(
                             com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_undo,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_redo
-                        )
-                    )
-                )
+                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_redo,
+                        ),
+                    ),
+                ),
             )
-            HIGH_CAPACITY_ITEMS_GROUPING.addAll(
+            highCapacityItemsGrouping.addAll(
                 listOf(
                     MenuItem(
                         com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_group_measurement,
@@ -367,8 +383,8 @@ class ConstructionExampleActivity :
                             com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_measurement_area_polygon,
                             com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_measurement_area_rect,
                             com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_measurement_area_ellipse,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_measurement_scale_calibration
-                        )
+                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_measurement_scale_calibration,
+                        ),
                     ),
                     MenuItem(
                         com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_group_drawing,
@@ -376,8 +392,8 @@ class ConstructionExampleActivity :
                             com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_line,
                             com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_line_arrow,
                             com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_ink_pen,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_magic_ink
-                        )
+                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_magic_ink,
+                        ),
                     ),
                     MenuItem(
                         com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_group_markup,
@@ -387,16 +403,16 @@ class ConstructionExampleActivity :
                             com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_dashed_square,
                             com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_dashed_circle,
                             com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_square,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_circle
-                        )
+                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_circle,
+                        ),
                     ),
                     MenuItem(
                         com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_group_writing,
                         intArrayOf(
                             com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_freetext,
                             com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_freetext_callout,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_note
-                        )
+                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_note,
+                        ),
                     ),
                     MenuItem(com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_image),
                     MenuItem(com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_stamp),
@@ -405,10 +421,10 @@ class ConstructionExampleActivity :
                         com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_group_undo_redo,
                         intArrayOf(
                             com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_undo,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_redo
-                        )
-                    )
-                )
+                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_redo,
+                        ),
+                    ),
+                ),
             )
         }
     }

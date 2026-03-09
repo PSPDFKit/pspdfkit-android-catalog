@@ -54,7 +54,7 @@ fun <Item, Section : List<Item>, Key> ExpandableList(
     sectionFooterLayout: @Composable (() -> Unit)? = null,
     bottomFooterLayout: @Composable (() -> Unit)? = null,
     areSectionHeadersSticky: Boolean = true,
-    searchQuery: String
+    searchQuery: String,
 ) {
     val lazyListState = rememberLazyListState()
     val keyboardController = LocalSoftwareKeyboardController.current
@@ -109,7 +109,7 @@ fun <Item, Section : List<Item>, Key> ExpandableList(
 
     LazyColumn(
         state = lazyListState,
-        modifier = modifier
+        modifier = modifier,
     ) {
         item {
             topHeaderLayout?.invoke()
@@ -149,7 +149,7 @@ fun <Item, Section : List<Item>, Key> ExpandableList(
                     sectionHeaderLayout?.invoke(
                         sectionIndex,
                         sectionIsOpen,
-                        currentHeaderIndex
+                        currentHeaderIndex,
                     )
                 }
             } else {
@@ -158,7 +158,7 @@ fun <Item, Section : List<Item>, Key> ExpandableList(
                         sectionIndex,
                         sectionIsOpen,
                         // This info is only relevant if the headers are sticky.
-                        -1
+                        -1,
                     )
                 }
             }

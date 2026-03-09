@@ -35,15 +35,16 @@ import java.util.EnumSet
  */
 class AnnotationConfigurationExample(context: Context) :
     SdkExample(context, R.string.annotationConfigurationExampleTitle, R.string.annotationConfigurationExampleDescription) {
-
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // Extract the example document from the app's assets.
         ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
             // To start the AnnotationConfigurationExampleActivity create a launch intent using the builder.
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .configuration(configuration.build())
-                .activityClass(AnnotationConfigurationExampleActivity::class)
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    .configuration(configuration.build())
+                    .activityClass(AnnotationConfigurationExampleActivity::class)
+                    .build()
 
             context.startActivity(intent)
         }
@@ -60,7 +61,6 @@ class AnnotationConfigurationExample(context: Context) :
  * to extend [PdfActivity] and call the approriate APIs on the hosted fragment.
  */
 class AnnotationConfigurationExampleActivity : PdfActivity() {
-
     @UiThread
     override fun onDocumentLoaded(document: PdfDocument) {
         super.onDocumentLoaded(document)
@@ -78,7 +78,8 @@ class AnnotationConfigurationExampleActivity : PdfActivity() {
         // The annotation configuration can be configured through `PdfFragment` for each annotation type.
         requirePdfFragment().annotationConfiguration.put(
             AnnotationType.FREETEXT,
-            FreeTextAnnotationConfiguration.builder(this)
+            FreeTextAnnotationConfiguration
+                .builder(this)
                 // Configure which color is used when creating free-text annotations.
                 .setDefaultColor(Color.rgb(0, 0, 0))
                 // Configure which colors are going to be available in the color picker.
@@ -88,8 +89,8 @@ class AnnotationConfigurationExampleActivity : PdfActivity() {
                         Color.rgb(224, 224, 224),
                         Color.rgb(158, 158, 158),
                         Color.rgb(66, 66, 66),
-                        Color.rgb(0, 0, 0)
-                    )
+                        Color.rgb(0, 0, 0),
+                    ),
                 )
                 // Configure the custom font to use
                 .setForceDefaults(true)
@@ -100,7 +101,7 @@ class AnnotationConfigurationExampleActivity : PdfActivity() {
                 .setSupportedProperties(EnumSet.of(AnnotationProperty.COLOR, AnnotationProperty.FONT))
                 // Disable the annotation preview for free-text annotation.
                 .setPreviewEnabled(false)
-                .build()
+                .build(),
         )
     }
 
@@ -112,7 +113,8 @@ class AnnotationConfigurationExampleActivity : PdfActivity() {
         // defines default properties, and the set of modifiable properties.
         requirePdfFragment().annotationConfiguration.put(
             AnnotationTool.INK,
-            InkAnnotationConfiguration.builder(this)
+            InkAnnotationConfiguration
+                .builder(this)
                 // Configure which color is used when creating ink annotations.
                 .setDefaultColor(Color.rgb(252, 237, 140))
                 // Configure which colors are going to be available in the color picker.
@@ -122,8 +124,8 @@ class AnnotationConfigurationExampleActivity : PdfActivity() {
                         Color.rgb(139, 195, 74), // LIGHT GREEN
                         Color.rgb(33, 150, 243), // BLUE
                         Color.rgb(252, 237, 140), // YELLOW
-                        Color.rgb(233, 30, 99) // PINK
-                    )
+                        Color.rgb(233, 30, 99), // PINK
+                    ),
                 )
                 // Configure thickness picker range and default thickness.
                 .setDefaultThickness(5f)
@@ -134,14 +136,15 @@ class AnnotationConfigurationExampleActivity : PdfActivity() {
                 // configuration is used only when creating annotation for the first time.
                 .setForceDefaults(true)
                 .setPreviewEnabled(false)
-                .build()
+                .build(),
         )
 
         // Annotation configuration can be also specified for the annotation tool variant.
         requirePdfFragment().annotationConfiguration.put(
             AnnotationTool.INK,
             AnnotationToolVariant.fromPreset(AnnotationToolVariant.Preset.HIGHLIGHTER),
-            InkAnnotationConfiguration.builder(this)
+            InkAnnotationConfiguration
+                .builder(this)
                 // Configure which color is used when creating ink annotations.
                 .setDefaultColor(Color.rgb(252, 237, 140))
                 // Configure which colors are going to be available in the color picker.
@@ -151,8 +154,8 @@ class AnnotationConfigurationExampleActivity : PdfActivity() {
                         Color.rgb(139, 195, 74), // LIGHT GREEN
                         Color.rgb(33, 150, 243), // BLUE
                         Color.rgb(252, 237, 140), // YELLOW
-                        Color.rgb(233, 30, 99) // PINK
-                    )
+                        Color.rgb(233, 30, 99), // PINK
+                    ),
                 )
                 // Configure thickness picker range and default thickness.
                 .setDefaultThickness(5f)
@@ -160,7 +163,7 @@ class AnnotationConfigurationExampleActivity : PdfActivity() {
                 .setMaxThickness(20f)
                 .setForceDefaults(true)
                 .setPreviewEnabled(false)
-                .build()
+                .build(),
         )
     }
 
@@ -170,12 +173,13 @@ class AnnotationConfigurationExampleActivity : PdfActivity() {
     private fun configureHighlightWithNoEditableProperties() {
         requirePdfFragment().annotationConfiguration.put(
             AnnotationType.HIGHLIGHT,
-            MarkupAnnotationConfiguration.builder(this, AnnotationType.HIGHLIGHT)
+            MarkupAnnotationConfiguration
+                .builder(this, AnnotationType.HIGHLIGHT)
                 // Makes yellow default highlight color.
                 .setDefaultColor(Color.rgb(252, 237, 140))
                 // Configure no supported properties. This disables annotation inspector.
                 .setSupportedProperties(EnumSet.noneOf(AnnotationProperty::class.java))
-                .build()
+                .build(),
         )
     }
 }

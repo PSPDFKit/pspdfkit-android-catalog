@@ -38,22 +38,27 @@ import io.nutrient.domain.ai.AiAssistantProvider
 /**
  * Shows how to implement AI Assistant chat supporting multiple documents analysis and interaction inside a ViewPager.
  */
-class AiAssistantViewPagerExample(context: Context) : SdkExample(context, R.string.aiAssistantViewPagerExampleTitle, R.string.aiAssistantViewPagerExampleDescription) {
-
+class AiAssistantViewPagerExample(context: Context) :
+    SdkExample(
+        context,
+        R.string.aiAssistantViewPagerExampleTitle,
+        R.string.aiAssistantViewPagerExampleDescription,
+    ) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         val intent = Intent(context, AiAssistantViewPagerActivity::class.java)
         configuration.setAiAssistantEnabled(true)
         intent.putExtra(
             EXTRA_CONFIGURATION,
-            configuration.build().configuration
+            configuration.build().configuration,
         )
 
         context.startActivity(intent)
     }
 }
 
-class AiAssistantViewPagerActivity : AppCompatActivity(), AiAssistantProvider {
-
+class AiAssistantViewPagerActivity :
+    AppCompatActivity(),
+    AiAssistantProvider {
     private lateinit var pager: ViewPager2
     private lateinit var fragmentAdapter: ViewPagerPdfFragmentAdapter
     private var selectedPage = 0
@@ -72,70 +77,75 @@ class AiAssistantViewPagerActivity : AppCompatActivity(), AiAssistantProvider {
         val preferences = getSharedPreferences(PREFERENCES_NAME, MODE_PRIVATE)
         ipAddressValue = preferences.getString(PREF_AI_IP_ADDRESS, "") ?: ""
         fragmentAdapter = ViewPagerPdfFragmentAdapter(this@AiAssistantViewPagerActivity, documentDescriptors)
-        pager = findViewById<ViewPager2>(R.id.view_pager).apply {
-            this.adapter = fragmentAdapter
-            isUserInputEnabled = false
-            registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-                override fun onPageSelected(position: Int) {
-                    super.onPageSelected(position)
-                    selectedPage = position // Save the selected page.
-                }
+        pager =
+            findViewById<ViewPager2>(R.id.view_pager).apply {
+                this.adapter = fragmentAdapter
+                isUserInputEnabled = false
+                registerOnPageChangeCallback(
+                    object : ViewPager2.OnPageChangeCallback() {
+                        override fun onPageSelected(position: Int) {
+                            super.onPageSelected(position)
+                            selectedPage = position // Save the selected page.
+                        }
 
-                override fun onPageScrollStateChanged(state: Int) {
-                    super.onPageScrollStateChanged(state)
-                    // Refresh the fragment when the user stops scrolling.
-                    if (state == 0) supportFragmentManager.findFragmentByTag("f$selectedPage")?.let { if (it is PdfFragment) it.refreshPages() }
-                }
-            })
-        }
+                        override fun onPageScrollStateChanged(state: Int) {
+                            super.onPageScrollStateChanged(state)
+                            // Refresh the fragment when the user stops scrolling.
+                            if (state == 0) {
+                                supportFragmentManager.findFragmentByTag("f$selectedPage")?.let {
+                                    if (it is PdfFragment) it.refreshPages()
+                                }
+                            }
+                        }
+                    },
+                )
+            }
 
-        TabLayoutMediator(findViewById(R.id.tab_layout), pager) { tab, position -> tab.text = "Tab ${position + 1}" }.attach()
+        TabLayoutMediator(findViewById(R.id.tab_layout), pager) { tab, position ->
+            tab.text = "Tab ${position + 1}"
+        }.attach()
     }
 
     companion object {
         val assetFiles = listOf(WELCOME_DOC, "Scientific-paper.pdf", "Teacher.pdf", "The-Cosmic-Context-for-Life.pdf")
         internal const val EXTRA_CONFIGURATION = "Nutrient.AIAssistantViewPagerActivity.configuration"
     }
+
     var assistant: AiAssistant? = null
 
-    override fun getAiAssistant(): AiAssistant {
-        return assistant ?: initialiseAiAssistant().also {
-            assistant = it
+    override fun getAiAssistant(): AiAssistant = assistant ?: initialiseAiAssistant().also {
+        assistant = it
+    }
+
+    val documentDescriptors =
+        assetFiles.map {
+            DocumentDescriptor.fromDataProviders(listOf(AssetDataProvider(it)), listOf(), listOf())
         }
-    }
 
-    val documentDescriptors = assetFiles.map {
-        DocumentDescriptor.fromDataProviders(listOf(AssetDataProvider(it)), listOf(), listOf())
-    }
-
-    fun initialiseAiAssistant(): AiAssistant {
-        return com.pspdfkit.ai.createAiAssistant(
-            context = this,
-            documentsDescriptors = documentDescriptors,
-            serverUrl = "http://$ipAddressValue:4000",
-            sessionId = sessionId,
-            jwtToken = { documentIds ->
-                JwtGenerator.generateJwtToken(
-                    this@AiAssistantViewPagerActivity,
-                    claims = mapOf(
-                        "document_ids" to documentIds,
-                        "session_ids" to listOf(sessionId),
-                        "request_limit" to mapOf(
+    fun initialiseAiAssistant(): AiAssistant = com.pspdfkit.ai.createAiAssistant(
+        context = this,
+        documentsDescriptors = documentDescriptors,
+        serverUrl = "http://$ipAddressValue:4000",
+        sessionId = sessionId,
+        jwtToken = { documentIds ->
+            JwtGenerator.generateJwtToken(
+                this@AiAssistantViewPagerActivity,
+                claims =
+                mapOf(
+                    "document_ids" to documentIds,
+                    "session_ids" to listOf(sessionId),
+                    "request_limit" to
+                        mapOf(
                             "requests" to 160,
-                            "time_period_s" to 1000 * 60 * 10
-                        )
-                    )
-                )
-            }
-        )
-    }
+                            "time_period_s" to 1000 * 60 * 10,
+                        ),
+                ),
+            )
+        },
+    )
 
     @OptIn(ExperimentalStdlibApi::class)
-    override fun navigateTo(
-        documentRect: List<RectF>,
-        pageIndex: Int,
-        documentIndex: Int
-    ) {
+    override fun navigateTo(documentRect: List<RectF>, pageIndex: Int, documentIndex: Int) {
         val fragment = fragmentAdapter.fragments[documentIndex]
         pager.setCurrentItem(documentIndex, true)
         fragment.highlight(this@AiAssistantViewPagerActivity, documentRect, pageIndex)
@@ -143,17 +153,19 @@ class AiAssistantViewPagerActivity : AppCompatActivity(), AiAssistantProvider {
 }
 
 /** Minimal [FragmentStateAdapter] to provide [PdfFragment] for each page. */
-class ViewPagerPdfFragmentAdapter(val activity: AiAssistantViewPagerActivity, descriptors: List<DocumentDescriptor>) : FragmentStateAdapter(activity) {
-
-    val configuration = activity.intent.getSupportParcelableExtra(EXTRA_CONFIGURATION, PdfConfiguration::class.java) ?: throw IllegalStateException("Activity Intent was missing configuration extra!")
+class ViewPagerPdfFragmentAdapter(val activity: AiAssistantViewPagerActivity, descriptors: List<DocumentDescriptor>) :
+    FragmentStateAdapter(activity) {
+    val configuration =
+        activity.intent.getSupportParcelableExtra(EXTRA_CONFIGURATION, PdfConfiguration::class.java)
+            ?: throw IllegalStateException("Activity Intent was missing configuration extra!")
 
     override fun getItemCount(): Int = 4
-    val fragments = descriptors.map {
-        val dataProvider = it.documentSource.getDataProviderFromDocumentSource()
-        PdfFragment.newInstance(dataProvider, null, configuration)
-    }
 
-    override fun createFragment(position: Int): Fragment {
-        return fragments[position]
-    }
+    val fragments =
+        descriptors.map {
+            val dataProvider = it.documentSource.getDataProviderFromDocumentSource()
+            PdfFragment.newInstance(dataProvider, null, configuration)
+        }
+
+    override fun createFragment(position: Int): Fragment = fragments[position]
 }

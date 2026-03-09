@@ -22,29 +22,25 @@ import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.ui.theming.Animations
 
 @Composable
-fun ExpandSectionButton(
-    sectionTitle: String,
-    iconSize: Dp,
-    expanded: Boolean,
-    onExpandButtonClicked: () -> Unit
-) {
+fun ExpandSectionButton(sectionTitle: String, iconSize: Dp, expanded: Boolean, onExpandButtonClicked: () -> Unit) {
     // The icon is rotated outwards when expanding.
     val rotateAnimation: Float by Animations.expandSectionButtonRotation(
-        expanded = expanded
+        expanded = expanded,
     )
 
     IconToggleButton(
         modifier = Modifier.defaultMinSize(iconSize),
         checked = expanded,
-        onCheckedChange = { onExpandButtonClicked() }
+        onCheckedChange = { onExpandButtonClicked() },
     ) {
         Icon(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .defaultMinSize(iconSize)
                 .rotate(rotateAnimation),
             painter = painterResource(id = R.drawable.ic_expand_arrow),
             tint = MaterialTheme.colorScheme.onBackground,
-            contentDescription = stringResource(R.string.section_button_content_desc, sectionTitle)
+            contentDescription = stringResource(R.string.section_button_content_desc, sectionTitle),
         )
     }
 }

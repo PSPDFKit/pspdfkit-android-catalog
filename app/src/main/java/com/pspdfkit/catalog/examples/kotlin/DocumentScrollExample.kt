@@ -32,16 +32,18 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 /**
  * An example that shows how to use the onDocumentScrolled() callback to detect when the page has reached its end.
  */
-class DocumentScrollExample(context: Context) : SdkExample(context, R.string.documentScrollExampleTitle, R.string.documentScrollExampleDescription) {
-
+class DocumentScrollExample(context: Context) :
+    SdkExample(context, R.string.documentScrollExampleTitle, R.string.documentScrollExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // We use a custom utility class to extract the example document from the assets.
         ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
             // To start the `CustomLayoutActivity` create a launch intent using the builder.
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .configuration(configuration.build())
-                .activityClass(DocumentScrollActivity::class)
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    .configuration(configuration.build())
+                    .activityClass(DocumentScrollActivity::class)
+                    .build()
             context.startActivity(intent)
         }
     }
@@ -51,7 +53,6 @@ class DocumentScrollExample(context: Context) : SdkExample(context, R.string.doc
  * Shows how to determine whether the document has been scrolled to the end
  */
 class DocumentScrollActivity : PdfActivity() {
-
     private var currentZoom = 1f
     private var currentScroll = 0
     private var maxScroll = 0
@@ -71,54 +72,58 @@ class DocumentScrollActivity : PdfActivity() {
         val pageScrollDirection = configuration.configuration.scrollDirection
         val scrollMode = configuration.configuration.scrollMode
 
-        requirePdfFragment().addDocumentScrollListener(object : DocumentScrollListener {
-            override fun onScrollStateChanged(state: ScrollState) {}
+        requirePdfFragment().addDocumentScrollListener(
+            object : DocumentScrollListener {
+                override fun onScrollStateChanged(state: ScrollState) {}
 
-            override fun onDocumentScrolled(currX: Int, currY: Int, maxX: Int, maxY: Int, extendX: Int, extendY: Int) {
-                val isVerticalScroll = pageScrollDirection == PageScrollDirection.VERTICAL
-                val isHorizontalScroll = pageScrollDirection == PageScrollDirection.HORIZONTAL
-                val isNoZoomOrContinuousScroll = currentZoom == 1f || scrollMode == PageScrollMode.CONTINUOUS
-                val isPerPage = scrollMode == PageScrollMode.PER_PAGE
+                override fun onDocumentScrolled(currX: Int, currY: Int, maxX: Int, maxY: Int, extendX: Int, extendY: Int) {
+                    val isVerticalScroll = pageScrollDirection == PageScrollDirection.VERTICAL
+                    val isHorizontalScroll = pageScrollDirection == PageScrollDirection.HORIZONTAL
+                    val isNoZoomOrContinuousScroll = currentZoom == 1f || scrollMode == PageScrollMode.CONTINUOUS
+                    val isPerPage = scrollMode == PageScrollMode.PER_PAGE
 
-                if (isVerticalScroll && isNoZoomOrContinuousScroll) {
-                    currentScroll = currY
-                    maxScroll = maxY
-                    extend = extendY
-                } else if (isHorizontalScroll && isNoZoomOrContinuousScroll) {
-                    currentScroll = currX
-                    maxScroll = maxX
-                    extend = extendX
-                }
-
-                // Handle cases for when this is the last page and the document has been zoomed in and the user tries swiping to access the next page
-                // If you do not care about the zoom, then you can get rid of this section as well as onDocumentZoomed() and onPageChanged() above
-                if (isLastPage && isPerPage && currentZoom > 1.0f) {
-                    if (isVerticalScroll) {
+                    if (isVerticalScroll && isNoZoomOrContinuousScroll) {
                         currentScroll = currY
                         maxScroll = maxY
                         extend = extendY
-                    } else {
+                    } else if (isHorizontalScroll && isNoZoomOrContinuousScroll) {
                         currentScroll = currX
                         maxScroll = maxX
                         extend = extendX
                     }
-                }
 
-                val scrollRange = maxScroll - extend
-                if (currentScroll == scrollRange) {
-                    PdfLog.d(TAG, "Document end: Current scroll : $currentScroll Scroll range: $scrollRange")
-                    addNewPageToDocument(document)
+                    // Handle cases for when this is the last page and the document has been zoomed in and the user tries swiping to access the next page
+                    // If you do not care about the zoom, then you can get rid of this section as well as onDocumentZoomed() and onPageChanged() above
+                    if (isLastPage && isPerPage && currentZoom > 1.0f) {
+                        if (isVerticalScroll) {
+                            currentScroll = currY
+                            maxScroll = maxY
+                            extend = extendY
+                        } else {
+                            currentScroll = currX
+                            maxScroll = maxX
+                            extend = extendX
+                        }
+                    }
+
+                    val scrollRange = maxScroll - extend
+                    if (currentScroll == scrollRange) {
+                        PdfLog.d(TAG, "Document end: Current scroll : $currentScroll Scroll range: $scrollRange")
+                        addNewPageToDocument(document)
+                    }
                 }
-            }
-        })
+            },
+        )
     }
 
     @SuppressLint("CheckResult")
     private fun addNewPageToDocument(document: PdfDocument) {
         val editor = PdfDocumentEditorFactory.createForDocument(document)
-        val newPage = NewPage.patternPage(NewPage.PAGE_SIZE_A5, PagePattern.LINES_7MM)
-            .backgroundColor(Color.rgb(241, 236, 121))
-            .build()
+        val newPage =
+            NewPage
+                .patternPage(NewPage.PAGE_SIZE_A5, PagePattern.LINES_7MM)
+                .backgroundColor(Color.rgb(241, 236, 121))
+                .build()
 
         // Add a new page at the end of the document
         editor.addPage(document.pageCount, newPage).blockingSubscribe()
@@ -134,7 +139,7 @@ class DocumentScrollActivity : PdfActivity() {
                 },
                 { e ->
                     PdfLog.e(TAG, e, "Document couldn't be saved.")
-                }
+                },
             )
     }
 

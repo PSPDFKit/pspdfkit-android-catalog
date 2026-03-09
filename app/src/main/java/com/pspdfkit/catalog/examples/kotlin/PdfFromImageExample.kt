@@ -25,7 +25,8 @@ import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.utils.Size
 import com.pspdfkit.utils.getSupportParcelableExtra
 
-class PdfFromImageExample(context: Context) : SdkExample(context, R.string.pdfFromImageExampleTitle, R.string.pdfFromImageExampleDescription) {
+class PdfFromImageExample(context: Context) :
+    SdkExample(context, R.string.pdfFromImageExampleTitle, R.string.pdfFromImageExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         val intent = Intent(context, PdfFromImageActivity::class.java)
         intent.putExtra(PdfFromImageActivity.EXTRA_CONFIGURATION, configuration.build())
@@ -34,7 +35,6 @@ class PdfFromImageExample(context: Context) : SdkExample(context, R.string.pdfFr
 }
 
 class PdfFromImageActivity : Activity() {
-
     private lateinit var configuration: PdfActivityConfiguration
 
     private var waitingForResult = false
@@ -46,7 +46,7 @@ class PdfFromImageActivity : Activity() {
         configuration = intent.getSupportParcelableExtra(EXTRA_CONFIGURATION, PdfActivityConfiguration::class.java)
             ?: throw ExceptionInInitializerError(
                 PdfFromImageActivity::class.java.simpleName +
-                    " was started without a PdfActivityConfiguration."
+                    " was started without a PdfActivityConfiguration.",
             )
 
         // Prevent the example from requesting multiple documents at the same time.
@@ -92,27 +92,30 @@ class PdfFromImageActivity : Activity() {
      */
     private fun createPdfFromImageTask(imageUri: Uri): PdfProcessorTask {
         // First obtain the size of the image.
-        val options = BitmapFactory.Options().apply {
-            // By setting this we won't actually load the image but only figure out the size.
-            inJustDecodeBounds = true
-        }
+        val options =
+            BitmapFactory.Options().apply {
+                // By setting this we won't actually load the image but only figure out the size.
+                inJustDecodeBounds = true
+            }
         BitmapFactory.decodeStream(contentResolver.openInputStream(imageUri), null, options)
         val imageHeight: Int = options.outHeight
         val imageWidth: Int = options.outWidth
 
         // We take A4 as a baseline, and alter the page's aspect ratio based on the given bitmap.
-        val pageSize: Size = if (imageWidth <= imageHeight) {
-            Size(NewPage.PAGE_SIZE_A4.width, imageHeight * (NewPage.PAGE_SIZE_A4.width / imageWidth))
-        } else {
-            Size(NewPage.PAGE_SIZE_A4.height, imageHeight * NewPage.PAGE_SIZE_A4.height / imageWidth)
-        }
+        val pageSize: Size =
+            if (imageWidth <= imageHeight) {
+                Size(NewPage.PAGE_SIZE_A4.width, imageHeight * (NewPage.PAGE_SIZE_A4.width / imageWidth))
+            } else {
+                Size(NewPage.PAGE_SIZE_A4.height, imageHeight * NewPage.PAGE_SIZE_A4.height / imageWidth)
+            }
 
         // Now that we know the desired size we can create a PdfProcessorTask which will create a document containing a single page.
         return PdfProcessorTask.newPage(
-            NewPage.emptyPage(pageSize)
+            NewPage
+                .emptyPage(pageSize)
                 // We initialize our new page using the passed in image URI and calculated page size.
                 .withPageItem(PageImage(this, imageUri, RectF(0f, pageSize.height, pageSize.width, 0f)))
-                .build()
+                .build(),
         )
     }
 

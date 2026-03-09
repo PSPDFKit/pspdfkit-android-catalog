@@ -41,17 +41,18 @@ class FormFillingExample(context: Context) : SdkExample(context, R.string.formFi
 
         // Extract the example document from the assets.
         ExtractAssetTask.extract("Form_example.pdf", title, context) { documentFile ->
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .configuration(configuration.build())
-                .activityClass(FormFillingActivity::class)
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    .configuration(configuration.build())
+                    .activityClass(FormFillingActivity::class)
+                    .build()
             context.startActivity(intent)
         }
     }
 }
 
 class FormFillingActivity : PdfActivity() {
-
     /** Holds disposables for all async operations done in this example. We dispose this when destroying the activity. */
     private val disposables = CompositeDisposable()
 
@@ -66,22 +67,32 @@ class FormFillingActivity : PdfActivity() {
      */
     private fun fillAllFormFields() {
         val document = document ?: return
-        document.formProvider.formElementsAsync.subscribe { formElements ->
-            for (formElement in formElements) {
-                when (formElement.type) {
-                    FormType.TEXT -> {
-                        val textFormElement = formElement as TextFormElement
-                        when (textFormElement.inputFormat) {
-                            TextInputFormat.DATE -> textFormElement.setText("03/14/1994")
-                            else -> textFormElement.setText("Example " + formElement.getName())
+        document.formProvider.formElementsAsync
+            .subscribe { formElements ->
+                for (formElement in formElements) {
+                    when (formElement.type) {
+                        FormType.TEXT -> {
+                            val textFormElement = formElement as TextFormElement
+                            when (textFormElement.inputFormat) {
+                                TextInputFormat.DATE -> textFormElement.setText("03/14/1994")
+                                else -> textFormElement.setText("Example " + formElement.getName())
+                            }
+                        }
+
+                        FormType.CHECKBOX -> {
+                            (formElement as CheckBoxFormElement).toggleSelection()
+                        }
+
+                        FormType.RADIOBUTTON -> {
+                            (formElement as RadioButtonFormElement).toggleSelection()
+                        }
+
+                        else -> {
+                            Unit
                         }
                     }
-                    FormType.CHECKBOX -> (formElement as CheckBoxFormElement).toggleSelection()
-                    FormType.RADIOBUTTON -> (formElement as RadioButtonFormElement).toggleSelection()
-                    else -> Unit
                 }
-            }
-        }.addToDisposables()
+            }.addToDisposables()
     }
 
     /**
@@ -90,11 +101,12 @@ class FormFillingActivity : PdfActivity() {
     private fun resetForm() {
         val document = document ?: return
 
-        document.formProvider.formFieldsAsync.subscribe { formFields ->
-            for (formField in formFields) {
-                formField.reset()
-            }
-        }.addToDisposables()
+        document.formProvider.formFieldsAsync
+            .subscribe { formFields ->
+                for (formField in formFields) {
+                    formField.reset()
+                }
+            }.addToDisposables()
     }
 
     /**
@@ -107,43 +119,52 @@ class FormFillingActivity : PdfActivity() {
         // Each form field can have multiple child form elements that are
         // the widget annotations that are visually representing actionable
         // controls inside the form field.
-        document.formProvider.getFormFieldWithFullyQualifiedNameAsync("Sex").subscribe { formField ->
-            val formElement = formField as RadioButtonFormField
-            // Sex radio button field has 2 child form elements. These represent 2 radio buttons in the radio group.
-            // First radio element has the name "Sex.0" and represents the MALE option.
-            //      formElement.getFormElements().get(0)
-            // Second radio element has name "Sex.1" and represents the FEMALE option.
-            //      formElement.getFormElements().get(1)
-            // Select the MALE radio option.
-            formElement.formElements[0].select()
-        }.addToDisposables()
+        document.formProvider
+            .getFormFieldWithFullyQualifiedNameAsync("Sex")
+            .subscribe { formField ->
+                val formElement = formField as RadioButtonFormField
+                // Sex radio button field has 2 child form elements. These represent 2 radio buttons in the radio group.
+                // First radio element has the name "Sex.0" and represents the MALE option.
+                //      formElement.getFormElements().get(0)
+                // Second radio element has name "Sex.1" and represents the FEMALE option.
+                //      formElement.getFormElements().get(1)
+                // Select the MALE radio option.
+                formElement.formElements[0].select()
+            }.addToDisposables()
 
         // Form elements (visible portion of the form field) can be queried by their name and filled that way.
-        document.formProvider.getFormElementWithNameAsync("First Name").subscribe { formElement ->
-            (formElement as TextFormElement).setText("John")
-        }.addToDisposables()
-        document.formProvider.getFormElementWithNameAsync("Last Name").subscribe { formElement ->
-            (formElement as TextFormElement).setText("Appleseed")
-        }.addToDisposables()
+        document.formProvider
+            .getFormElementWithNameAsync("First Name")
+            .subscribe { formElement ->
+                (formElement as TextFormElement).setText("John")
+            }.addToDisposables()
+        document.formProvider
+            .getFormElementWithNameAsync("Last Name")
+            .subscribe { formElement ->
+                (formElement as TextFormElement).setText("Appleseed")
+            }.addToDisposables()
 
         // Querying form elements by name can be slow. If you need to fill many form elements
         // at once, retrieve list of all form fields/elements first and iterate through it.
-        document.formProvider.formElementsAsync.subscribe { formElements ->
-            // For the sake of example we'll fill only address fields here.
-            val formFillMap = mapOf(
-                "Address_1" to "7440-7498 S Hanna St.",
-                "Address_2" to "",
-                "City" to "Fort Wayne",
-                "STATE" to "IN",
-                "ZIP" to "46774"
-            )
+        document.formProvider.formElementsAsync
+            .subscribe { formElements ->
+                // For the sake of example we'll fill only address fields here.
+                val formFillMap =
+                    mapOf(
+                        "Address_1" to "7440-7498 S Hanna St.",
+                        "Address_2" to "",
+                        "City" to "Fort Wayne",
+                        "STATE" to "IN",
+                        "ZIP" to "46774",
+                    )
 
-            formElements.asSequence()
-                .filterIsInstance(TextFormElement::class.java)
-                .forEach { textElement ->
-                    formFillMap[textElement.name]?.let { textElement.setText(it) }
-                }
-        }.addToDisposables()
+                formElements
+                    .asSequence()
+                    .filterIsInstance(TextFormElement::class.java)
+                    .forEach { textElement ->
+                        formFillMap[textElement.name]?.let { textElement.setText(it) }
+                    }
+            }.addToDisposables()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -153,17 +174,19 @@ class FormFillingActivity : PdfActivity() {
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            RESET_FORM_MENU_ITEM_ID -> {
-                resetForm()
-                true
-            }
-            FILL_BY_FIELD_NAME -> {
-                fillByName()
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        RESET_FORM_MENU_ITEM_ID -> {
+            resetForm()
+            true
+        }
+
+        FILL_BY_FIELD_NAME -> {
+            fillByName()
+            true
+        }
+
+        else -> {
+            super.onOptionsItemSelected(item)
         }
     }
 

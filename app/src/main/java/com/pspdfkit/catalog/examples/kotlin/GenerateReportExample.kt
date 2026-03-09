@@ -50,8 +50,8 @@ import java.util.EnumSet
 /**
  * This example shows how to programmatically create a PDF report.
  */
-class GenerateReportExample(context: Context) : SdkExample(context, R.string.generateReportExampleTitle, R.string.generateReportExampleDescription) {
-
+class GenerateReportExample(context: Context) :
+    SdkExample(context, R.string.generateReportExampleTitle, R.string.generateReportExampleDescription) {
     /**
      * Disposable used to cancel the [com.pspdfkit.document.processor.PdfProcessor]
      * report generation when canceling the progress dialog.
@@ -59,70 +59,75 @@ class GenerateReportExample(context: Context) : SdkExample(context, R.string.gen
     private var generationDisposable: Disposable? = null
 
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
-        val dialog = ProgressDialog.show(context, "Generating Report", "Please wait", true, true) {
-            generationDisposable?.dispose()
-        }
-
-        generationDisposable = Single.fromCallable {
-            // Open the document we are going to take the first and last page from.
-            val sourceDocument = PdfDocumentLoader.openDocument(context, DocumentSource(AssetDataProvider("AnnualReport.pdf")))
-            val pageSize = sourceDocument.getPageSize(0)
-
-            // Create PDF processor task from the document.
-            val task = PdfProcessorTask.fromDocument(sourceDocument)
-
-            // Keep only the first and the last page of the original document.
-            // Keep only the first and the last page of the original document.
-            val pagesToRemove = mutableSetOf<Int>()
-            for (i in 1 until sourceDocument.pageCount - 1) {
-                pagesToRemove.add(i)
+        val dialog =
+            ProgressDialog.show(context, "Generating Report", "Please wait", true, true) {
+                generationDisposable?.dispose()
             }
-            task.removePages(pagesToRemove)
 
-            // Add a newly created single-paged document as the second page of the report
-            val secondPageDocument = generateSecondPage(pageSize, context)
-            task.addNewPage(NewPage.fromPage(secondPageDocument, 0).build(), 1)
+        generationDisposable =
+            Single
+                .fromCallable {
+                    // Open the document we are going to take the first and last page from.
+                    val sourceDocument = PdfDocumentLoader.openDocument(context, DocumentSource(AssetDataProvider("AnnualReport.pdf")))
+                    val pageSize = sourceDocument.getPageSize(0)
 
-            // Add a new page with a pattern grid as the third page of the report.
-            task.addNewPage(
-                NewPage.patternPage(pageSize, PagePattern.GRID_5MM)
-                    .backgroundColor(Color.WHITE)
-                    .build(),
-                2
-            )
+                    // Create PDF processor task from the document.
+                    val task = PdfProcessorTask.fromDocument(sourceDocument)
 
-            // Add a page from an existing document.
-            val importDocument = PdfDocumentLoader.openDocument(context, DocumentSource(AssetDataProvider("Aviation.pdf")))
-            task.addNewPage(NewPage.fromPage(importDocument, 0).build(), 3)
+                    // Keep only the first and the last page of the original document.
+                    // Keep only the first and the last page of the original document.
+                    val pagesToRemove = mutableSetOf<Int>()
+                    for (i in 1 until sourceDocument.pageCount - 1) {
+                        pagesToRemove.add(i)
+                    }
+                    task.removePages(pagesToRemove)
 
-            // Scale the recently added page to the first page size
-            task.resizePage(3, pageSize)
+                    // Add a newly created single-paged document as the second page of the report
+                    val secondPageDocument = generateSecondPage(pageSize, context)
+                    task.addNewPage(NewPage.fromPage(secondPageDocument, 0).build(), 1)
 
-            // Draw "Generated for John Doe. Page X" watermark on every page
-            drawWatermark("John Doe", task, pageSize, 5)
+                    // Add a new page with a pattern grid as the third page of the report.
+                    task.addNewPage(
+                        NewPage
+                            .patternPage(pageSize, PagePattern.GRID_5MM)
+                            .backgroundColor(Color.WHITE)
+                            .build(),
+                        2,
+                    )
 
-            // Flatten all annotations.
-            task.changeAllAnnotations(PdfProcessorTask.AnnotationProcessingMode.FLATTEN)
+                    // Add a page from an existing document.
+                    val importDocument = PdfDocumentLoader.openDocument(context, DocumentSource(AssetDataProvider("Aviation.pdf")))
+                    task.addNewPage(NewPage.fromPage(importDocument, 0).build(), 3)
 
-            // Only allow opening by users that know the password.
-            val password = "password"
-            val saveOptions = DocumentSaveOptions(
-                password,
-                EnumSet.of(DocumentPermissions.PRINTING),
-                false,
-                null
-            )
+                    // Scale the recently added page to the first page size
+                    task.resizePage(3, pageSize)
 
-            // Finally create the resulting document.
-            val generatedReportFile = File(context.getDir("documents", Context.MODE_PRIVATE), "generated-report.pdf")
-            PdfProcessor.processDocument(task, generatedReportFile, saveOptions)
+                    // Draw "Generated for John Doe. Page X" watermark on every page
+                    drawWatermark("John Doe", task, pageSize, 5)
 
-            return@fromCallable Uri.fromFile(generatedReportFile)
-        }.subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doFinally { dialog.cancel() }
-            // Open the produced document in PdfActivity.
-            .subscribe { uri -> PdfActivity.showDocument(context, uri, configuration.build()) }
+                    // Flatten all annotations.
+                    task.changeAllAnnotations(PdfProcessorTask.AnnotationProcessingMode.FLATTEN)
+
+                    // Only allow opening by users that know the password.
+                    val password = "password"
+                    val saveOptions =
+                        DocumentSaveOptions(
+                            password,
+                            EnumSet.of(DocumentPermissions.PRINTING),
+                            false,
+                            null,
+                        )
+
+                    // Finally create the resulting document.
+                    val generatedReportFile = File(context.getDir("documents", Context.MODE_PRIVATE), "generated-report.pdf")
+                    PdfProcessor.processDocument(task, generatedReportFile, saveOptions)
+
+                    return@fromCallable Uri.fromFile(generatedReportFile)
+                }.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doFinally { dialog.cancel() }
+                // Open the produced document in PdfActivity.
+                .subscribe { uri -> PdfActivity.showDocument(context, uri, configuration.build()) }
     }
 
     @Throws(IOException::class)
@@ -143,7 +148,7 @@ class GenerateReportExample(context: Context) : SdkExample(context, R.string.gen
         FreeTextAnnotation(
             0,
             RectF(228f, 1024f, 828f, 964f),
-            "Some Annotations"
+            "Some Annotations",
         ).apply {
             textSize = 40f
 
@@ -154,7 +159,7 @@ class GenerateReportExample(context: Context) : SdkExample(context, R.string.gen
         StampAnnotation(
             0,
             RectF(50f, 724f, 250f, 524f),
-            "Stamp with custom AP stream"
+            "Stamp with custom AP stream",
         ).apply {
             // Set PDF from assets containing vector logo as annotation's appearance stream generator.
             appearanceStreamGenerator = AssetAppearanceStreamGenerator("images/Nutrient_Logo.pdf")
@@ -166,7 +171,7 @@ class GenerateReportExample(context: Context) : SdkExample(context, R.string.gen
         FreeTextAnnotation(
             0,
             RectF(67f, 520f, 667f, 420f),
-            "The logo above is a vector stamp annotation."
+            "The logo above is a vector stamp annotation.",
         ).apply {
             textSize = 18f
             runBlocking { pageDocument.annotationProvider.addAnnotationToPage(this@apply) }
@@ -177,14 +182,14 @@ class GenerateReportExample(context: Context) : SdkExample(context, R.string.gen
         StampAnnotation(
             0,
             RectF(60f, 400f, (60 + image.width / 4).toFloat(), (400 - image.height / 4).toFloat()),
-            image
+            image,
         ).let { runBlocking { pageDocument.annotationProvider.addAnnotationToPage(it) } }
 
         // Create a free-text annotation as a label of the image stamp
         FreeTextAnnotation(
             0,
             RectF(67f, 240f, 667f, 160f),
-            "The image above is an image stamp annotation."
+            "The image above is an image stamp annotation.",
         ).apply {
             textSize = 18f
             runBlocking { pageDocument.annotationProvider.addAnnotationToPage(this@apply) }
@@ -200,21 +205,23 @@ class GenerateReportExample(context: Context) : SdkExample(context, R.string.gen
     }
 
     private fun drawWatermark(name: String, task: PdfProcessorTask, pageSize: Size, pageCount: Int) {
-        val textPaint = TextPaint().apply {
-            textSize = 30f
-            color = Color.argb(128, 255, 0, 0)
-            textAlign = Paint.Align.CENTER
-        }
+        val textPaint =
+            TextPaint().apply {
+                textSize = 30f
+                color = Color.argb(128, 255, 0, 0)
+                textAlign = Paint.Align.CENTER
+            }
 
         for (pageIndex in 0 until pageCount) {
-            val canvas = PageCanvas(pageSize) { canvas ->
-                canvas.drawText(
-                    "Generated for $name. Page ${pageIndex + 1}",
-                    pageSize.width / 2,
-                    pageSize.height - 100,
-                    textPaint
-                )
-            }
+            val canvas =
+                PageCanvas(pageSize) { canvas ->
+                    canvas.drawText(
+                        "Generated for $name. Page ${pageIndex + 1}",
+                        pageSize.width / 2,
+                        pageSize.height - 100,
+                        textPaint,
+                    )
+                }
             task.addCanvasDrawingToPage(canvas, pageIndex)
         }
     }

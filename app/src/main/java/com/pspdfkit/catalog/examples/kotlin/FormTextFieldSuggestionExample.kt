@@ -22,7 +22,8 @@ import com.pspdfkit.ui.PdfActivityIntentBuilder
 /**
  * Showcases how to provide suggestions for text form fields.
  */
-class FormTextFieldSuggestionExample(context: Context) : SdkExample(context, R.string.formTextFieldSuggestionsExampleTitle, R.string.formTextFieldSuggestionsExampleDescription) {
+class FormTextFieldSuggestionExample(context: Context) :
+    SdkExample(context, R.string.formTextFieldSuggestionsExampleTitle, R.string.formTextFieldSuggestionsExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // Turn off saving, so we have the clean original document every time the example is launched.
         configuration.autosaveEnabled(false)
@@ -32,10 +33,12 @@ class FormTextFieldSuggestionExample(context: Context) : SdkExample(context, R.s
 
         // Extract the example document from the assets.
         ExtractAssetTask.extract("Form_example.pdf", title, context) { documentFile ->
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .configuration(configuration.build())
-                .activityClass(FormTextFieldSuggestionsActivity::class)
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    .configuration(configuration.build())
+                    .activityClass(FormTextFieldSuggestionsActivity::class)
+                    .build()
             context.startActivity(intent)
         }
     }
@@ -55,18 +58,31 @@ class FormTextFieldSuggestionsActivity : PdfActivity() {
                 when (formElement.name) {
                     "First Name" -> {
                         listOf(
-                            "Alice", "Andrew", "Anna", "Anthony",
-                            "Bob", "Barbara", "Brian",
-                            "Catherine", "Charles",
-                            "Diana", "David",
-                            "Emily", "Emma",
+                            "Alice",
+                            "Andrew",
+                            "Anna",
+                            "Anthony",
+                            "Bob",
+                            "Barbara",
+                            "Brian",
+                            "Catherine",
+                            "Charles",
+                            "Diana",
+                            "David",
+                            "Emily",
+                            "Emma",
                             "Frank",
                             "George",
                             "Helen",
-                            "Jack", "Jane", "John", "Julia",
+                            "Jack",
+                            "Jane",
+                            "John",
+                            "Julia",
                             "Katherine",
                             "Linda",
-                            "Mark", "Mary", "Michael",
+                            "Mark",
+                            "Mary",
+                            "Michael",
                             "Nancy",
                             "Oliver",
                             "Patricia",
@@ -75,9 +91,10 @@ class FormTextFieldSuggestionsActivity : PdfActivity() {
                             "Thomas",
                             "Victoria",
                             "William",
-                            "Agent"
+                            "Agent",
                         )
                     }
+
                     "Last Name" -> {
                         listOf(
                             "A. Anderson",
@@ -85,17 +102,28 @@ class FormTextFieldSuggestionsActivity : PdfActivity() {
                             "Davis",
                             "Doe",
                             "Garcia",
-                            "Johnson", "Jones",
+                            "Johnson",
+                            "Jones",
                             "Lee",
-                            "Martin", "Martinez",
-                            "Mayer", "Miller", "Moore",
+                            "Martin",
+                            "Martinez",
+                            "Mayer",
+                            "Miller",
+                            "Moore",
                             "Rodriguez",
                             "Smith",
-                            "Taylor", "Thomas", "Thompson",
-                            "White", "Williams", "Wilson"
+                            "Taylor",
+                            "Thomas",
+                            "Thompson",
+                            "White",
+                            "Williams",
+                            "Wilson",
                         )
                     }
-                    else -> emptyList()
+
+                    else -> {
+                        emptyList()
+                    }
                 }
             }
         }

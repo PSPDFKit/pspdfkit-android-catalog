@@ -22,11 +22,9 @@ import com.pspdfkit.ui.PdfActivityIntentBuilder
 import java.io.File
 
 /** Shows how to fill forms via JavaScript.  */
-class JavaScriptFormFillingExample(context: Context) : SdkExample(context, R.string.formFillingJavaScriptExampleTitle, R.string.formFillingJavaScriptExampleDescription) {
-    override fun launchExample(
-        context: Context,
-        configuration: PdfActivityConfiguration.Builder
-    ) {
+class JavaScriptFormFillingExample(context: Context) :
+    SdkExample(context, R.string.formFillingJavaScriptExampleTitle, R.string.formFillingJavaScriptExampleDescription) {
+    override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         configuration // Turn off saving, so we have the clean original document every time the example is launched.
             .autosaveEnabled(false)
             .formEditingEnabled(true)
@@ -34,10 +32,12 @@ class JavaScriptFormFillingExample(context: Context) : SdkExample(context, R.str
 
         // Extract the document from the assets.
         ExtractAssetTask.extract("Form_example.pdf", title, context) { documentFile: File? ->
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .configuration(configuration.build())
-                .activityClass(JavaScriptFormFillingActivity::class.java)
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    .configuration(configuration.build())
+                    .activityClass(JavaScriptFormFillingActivity::class.java)
+                    .build()
             context.startActivity(intent)
         }
     }
@@ -45,7 +45,6 @@ class JavaScriptFormFillingExample(context: Context) : SdkExample(context, R.str
 
 /** This activity shows how to fill document forms via JavaScript */
 class JavaScriptFormFillingActivity : PdfActivity() {
-
     companion object {
         private const val RESET_FORM_MENU_ITEM_ID = 1
     }
@@ -61,7 +60,10 @@ class JavaScriptFormFillingActivity : PdfActivity() {
             resetForm()
             true
         }
-        else -> super.onOptionsItemSelected(item)
+
+        else -> {
+            super.onOptionsItemSelected(item)
+        }
     }
 
     @UiThread

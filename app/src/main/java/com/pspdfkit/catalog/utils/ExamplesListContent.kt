@@ -45,6 +45,7 @@ import com.pspdfkit.catalog.examples.kotlin.AnnotationOverlayVisibilityExample
 import com.pspdfkit.catalog.examples.kotlin.AnnotationRenderingExample
 import com.pspdfkit.catalog.examples.kotlin.AnnotationSelectionViewStylingExample
 import com.pspdfkit.catalog.examples.kotlin.AnnotationWithAlphaCreationExample
+import com.pspdfkit.catalog.examples.kotlin.BackButtonExample
 import com.pspdfkit.catalog.examples.kotlin.BookmarkHighlightingExample
 import com.pspdfkit.catalog.examples.kotlin.CombineElectronicSignaturesWithDigitalSigningExample
 import com.pspdfkit.catalog.examples.kotlin.ComposeExampleApp
@@ -141,16 +142,14 @@ fun getSectionsWithExamples(context: Context) = listOf(
         KioskExample(context),
         InstantExample(context),
         DocumentTabsExample(context),
-        EmptyActivityExample(context)
+        EmptyActivityExample(context),
     ),
-
     SdkExample.Section(
         context.getString(R.string.example_section_industry),
         R.drawable.ic_industry,
         ELearningExample(context),
-        ConstructionExample(context)
+        ConstructionExample(context),
     ),
-
     SdkExample.Section(
         context.getString(R.string.example_section_opening_documents),
         R.drawable.ic_opening_documents,
@@ -161,9 +160,8 @@ fun getSectionsWithExamples(context: Context) = listOf(
         PasswordExample(context),
         AesEncryptedFileExample(context),
         ImageDocumentExample(context),
-        RemoteUrlExample(context)
+        RemoteUrlExample(context),
     ),
-
     SdkExample.Section(
         context.getString(R.string.example_section_behaviour_customization),
         R.drawable.ic_behaviour_customization,
@@ -176,9 +174,8 @@ fun getSectionsWithExamples(context: Context) = listOf(
         CustomApplicationPolicyExample(context),
         CustomAnnotationNoteHinterProviderExample(context),
         RotatePageExample(context),
-        OutlineProviderExample(context)
+        OutlineProviderExample(context),
     ),
-
     SdkExample.Section(
         context.getString(R.string.example_section_annotations),
         R.drawable.ic_annotations,
@@ -197,9 +194,8 @@ fun getSectionsWithExamples(context: Context) = listOf(
         InstantJsonAttachmentExample(context),
         XfdfExample(context),
         HideRevealAnnotationsCreationExample(context),
-        SoundAnnotationDataExtractionExample(context)
+        SoundAnnotationDataExtractionExample(context),
     ),
-
     SdkExample.Section(
         context.getString(R.string.example_section_forms),
         R.drawable.ic_forms,
@@ -207,9 +203,8 @@ fun getSectionsWithExamples(context: Context) = listOf(
         FormCreationExample(context),
         FormClickInterceptExample(context),
         CustomFormHighlightColorExample(context),
-        FormTextFieldSuggestionExample(context)
+        FormTextFieldSuggestionExample(context),
     ),
-
     SdkExample.Section(
         context.getString(R.string.example_section_digital_signing),
         R.drawable.ic_digital_signatures,
@@ -219,43 +214,38 @@ fun getSectionsWithExamples(context: Context) = listOf(
         ThirdPartySigningExample(context),
         LongTermValidationExample(context),
         LongTermValidationAfterSigningExample(context),
-        CombineElectronicSignaturesWithDigitalSigningExample(context)
+        CombineElectronicSignaturesWithDigitalSigningExample(context),
     ),
-
     SdkExample.Section(
         context.getString(R.string.example_section_electronic_signatures),
         R.drawable.ic_signing,
         CombineElectronicSignaturesWithDigitalSigningExample(context),
         CustomElectronicSignatureExample(context),
         SignatureStorageDatabaseExample(context),
-        CustomSignatureParseExample(context)
+        CustomSignatureParseExample(context),
     ),
-
     SdkExample.Section(
         context.getString(R.string.example_section_ai_assistant),
         R.drawable.ic_ai_assistant,
         AiAssistantComposeExample(context),
         AiAssistantDocumentTabsExample(context),
         AiAssistantViewPagerExample(context),
-        AiAssistantMultiDocComposeExample(context)
+        AiAssistantMultiDocComposeExample(context),
     ),
-
     SdkExample.Section(
         context.getString(R.string.example_section_components),
         R.drawable.ic_components,
         ReaderViewExample(context),
-        MeasurementToolsExample(context)
+        MeasurementToolsExample(context),
     ),
-
     SdkExample.Section(
         context.getString(R.string.example_section_javascript),
         R.drawable.ic_javascript,
         JavaScriptActionsExample(context),
         JavaScriptFormFillingExample(context),
         FormsJavaScriptExample(context),
-        JavaScriptCalculatorExample(context)
+        JavaScriptCalculatorExample(context),
     ),
-
     SdkExample.Section(
         context.getString(R.string.example_section_document_processing),
         R.drawable.ic_document_processing,
@@ -267,9 +257,8 @@ fun getSectionsWithExamples(context: Context) = listOf(
         DocumentComparisonExample(context),
         ConvertHtmlToPdfExample(context),
         CustomPageTemplatesExample(context),
-        PdfFromImageExample(context)
+        PdfFromImageExample(context),
     ),
-
     SdkExample.Section(
         context.getString(R.string.example_section_layout_customization),
         R.drawable.ic_layout_customization,
@@ -284,9 +273,8 @@ fun getSectionsWithExamples(context: Context) = listOf(
         SplitDocumentExample(context),
         PersistentAnnotationSidebarExample(context),
         AnnotationSelectionViewStylingExample(context),
-        DocumentScrollExample(context)
+        DocumentScrollExample(context),
     ),
-
     SdkExample.Section(
         context.getString(R.string.example_section_toolbar_customization),
         R.drawable.ic_toolbar_customization,
@@ -295,26 +283,24 @@ fun getSectionsWithExamples(context: Context) = listOf(
         CustomToolbarIconGroupingExample(context),
         CustomAnnotationCreationToolbarExample(context),
         DisabledAnnotationPropertyExample(context),
-        TextHighlightPopupCustomisationExample(context)
+        TextHighlightPopupCustomisationExample(context),
+        BackButtonExample(context),
     ),
-
     SdkExample.Section(
         context.getString(R.string.example_section_search),
         R.drawable.ic_topbar_search,
         CustomInlineSearchExample(context),
         CustomSearchUiExample(context),
         IndexedFullTextSearchExample(context),
-        IndexedFullTextSearchLegacyExample(context)
+        IndexedFullTextSearchLegacyExample(context),
     ),
-
     SdkExample.Section(
         context.getString(R.string.example_section_sharing),
         R.drawable.ic_sharing,
         DocumentSharingExample(context),
         CustomSharingMenuExample(context),
-        CustomShareDialogExample(context)
+        CustomShareDialogExample(context),
     ),
-
     SdkExample.Section(
         context.getString(R.string.example_section_jc_examples),
         R.drawable.ic_jetpack_compose,
@@ -322,9 +308,8 @@ fun getSectionsWithExamples(context: Context) = listOf(
         CustomSearchUiComposeExample(context),
         JetpackComposeExample(context),
         JetpackComposeImageExample(context),
-        NavHostExample(context)
+        NavHostExample(context),
     ),
-
     SdkExample.Section(
         context.getString(R.string.example_section_misc_examples),
         R.drawable.ic_misc_examples,
@@ -340,6 +325,6 @@ fun getSectionsWithExamples(context: Context) = listOf(
         RandomDocumentReplacementExample(context),
         DocumentPagerExample(context),
         ViewPager2Example(context),
-        SimplePdfViewPagerExample(context)
-    )
+        SimplePdfViewPagerExample(context),
+    ),
 )

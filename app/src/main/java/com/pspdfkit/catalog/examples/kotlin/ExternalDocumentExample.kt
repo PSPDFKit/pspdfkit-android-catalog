@@ -37,7 +37,6 @@ import java.io.File
  */
 class ExternalDocumentExample(context: Context) :
     SdkExample(context, R.string.externalDocumentExampleTitle, R.string.externalDocumentExampleDescription) {
-
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // Let's not save any changes to the opened file system documents in this example.
         configuration.autosaveEnabled(false)
@@ -49,7 +48,6 @@ class ExternalDocumentExample(context: Context) :
 }
 
 class ExternalExampleActivity : FragmentActivity() {
-
     private lateinit var configuration: PdfActivityConfiguration
 
     private var waitingForResult = false
@@ -61,7 +59,7 @@ class ExternalExampleActivity : FragmentActivity() {
         configuration = intent.getSupportParcelableExtra(EXTRA_CONFIGURATION, PdfActivityConfiguration::class.java)
             ?: throw ExceptionInInitializerError(
                 ExternalExampleActivity::class.java.simpleName +
-                    " was started without a PdfActivityConfiguration."
+                    " was started without a PdfActivityConfiguration.",
             )
 
         // Check if the activity was recreated, and see if the user already started document picking.
@@ -95,23 +93,26 @@ class ExternalExampleActivity : FragmentActivity() {
                     finish()
                 } else {
                     // Find the DownloadProgressFragment for showing download progress, or create a new one.
-                    val downloadFragment = supportFragmentManager.findFragmentByTag(
-                        DOWNLOAD_PROGRESS_FRAGMENT
-                    ) as DownloadProgressFragment? ?: run {
-                        DownloadProgressFragment().apply {
-                            val request = DownloadRequest.Builder(this@ExternalExampleActivity).uri(uri).build()
-                            this.job = DownloadJob.startDownload(request)
-                            show(supportFragmentManager, DOWNLOAD_PROGRESS_FRAGMENT)
+                    val downloadFragment =
+                        supportFragmentManager.findFragmentByTag(
+                            DOWNLOAD_PROGRESS_FRAGMENT,
+                        ) as DownloadProgressFragment? ?: run {
+                            DownloadProgressFragment().apply {
+                                val request = DownloadRequest.Builder(this@ExternalExampleActivity).uri(uri).build()
+                                this.job = DownloadJob.startDownload(request)
+                                show(supportFragmentManager, DOWNLOAD_PROGRESS_FRAGMENT)
+                            }
                         }
-                    }
 
                     // Once the download is complete we launch the PdfActivity from the downloaded file.
-                    downloadFragment.job.setProgressListener(object : DownloadJob.ProgressListenerAdapter() {
-                        override fun onComplete(output: File) {
-                            startActivity(createActivityIntent(Uri.fromFile(output), configuration, isImageFile))
-                            finish()
-                        }
-                    })
+                    downloadFragment.job.setProgressListener(
+                        object : DownloadJob.ProgressListenerAdapter() {
+                            override fun onComplete(output: File) {
+                                startActivity(createActivityIntent(Uri.fromFile(output), configuration, isImageFile))
+                                finish()
+                            }
+                        },
+                    )
                 }
             } else if (resultCode == Activity.RESULT_CANCELED) {
                 // If the user cancelled document selection, we just close the activity.
@@ -122,7 +123,8 @@ class ExternalExampleActivity : FragmentActivity() {
                 if (Environment.isExternalStorageManager()) {
                     showOpenFileDialog()
                 } else {
-                    Toast.makeText(this, "Allow permission for storage access!", Toast.LENGTH_SHORT)
+                    Toast
+                        .makeText(this, "Allow permission for storage access!", Toast.LENGTH_SHORT)
                         .show()
                 }
             }
@@ -162,17 +164,16 @@ class ExternalExampleActivity : FragmentActivity() {
     }
 
     private fun showPermissionExplanationDialog() {
-        AlertDialog.Builder(this)
+        AlertDialog
+            .Builder(this)
             .setMessage(R.string.externalDocumentExamplePermissionExplanation)
             .setCancelable(false)
             .setPositiveButton(R.string.grantAccess) { _, _ ->
                 Utils.requestExternalStorageRwPermission(this, REQUEST_ASK_FOR_PERMISSION)
-            }
-            .setNegativeButton(R.string.continueWithout) { dialog, _ ->
+            }.setNegativeButton(R.string.continueWithout) { dialog, _ ->
                 dialog.cancel()
                 Toast.makeText(this, "Allow permission for storage access!", Toast.LENGTH_SHORT).show()
-            }
-            .show()
+            }.show()
     }
 
     // We're temporarily suppressing the warning for startActivityForResult being deprecated.

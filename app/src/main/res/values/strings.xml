@@ -123,7 +123,7 @@
     <string name="annotationConfigurationExampleTitle">Annotation Configuration</string>
     <string name="annotationConfigurationExampleDescription">Shows how to customize annotation configuration.</string>
     <string name="annotationSelectionViewStylingExampleTitle">Annotation Selection Layout</string>
-    <string name="annotationSelectionViewStylingExampleDescription">Shows how to customize the annotation selection layout.</string>
+    <string name="annotationSelectionViewStylingExampleDescription">Shows how to customize annotation selection handle drawables and colors.</string>
     <string name="annotationFlagsExampleTitle">Annotation Flags</string>
     <string name="annotationFlagsExampleDescription">Showcases annotation flags.</string>
     <string name="annotationCustomInspectorExampleTitle">Custom Annotation Inspector</string>
@@ -150,6 +150,8 @@
     <string name="disabledAnnotationPropertyExampleDescription">Shows how to disable annotation note option in the annotation editing toolbar.</string>
     <string name="customInlineSearchExampleTitle">Custom Inline Search</string>
     <string name="customInlineSearchExampleDescription">Example of how to use the PdfSearchViewInline in a custom layout.</string>
+    <string name="backButtonExampleTitle">Toolbar Back Button</string>
+    <string name="backButtonExampleDescription">Shows how to enable the back button in the toolbar for closing the activity.</string>
     <string name="screenReaderExampleTitle">Screen Reader Example</string>
     <string name="screenReaderExampleDescription">A small screen reader that uses TTS to speak words on the document while highlighting them.</string>
     <string name="documentDownloadExampleTitle">Document Download Example</string>

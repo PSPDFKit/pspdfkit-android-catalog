@@ -15,8 +15,8 @@ import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 /**
  * This example shows how to configure [com.pspdfkit.ui.PdfActivity] to only render a custom set of annotation types.
  */
-class AnnotationRenderingExample(context: Context) : AssetExample(context, R.string.annotationRenderingExampleTitle, R.string.annotationRenderingExampleDescription) {
-
+class AnnotationRenderingExample(context: Context) :
+    AssetExample(context, R.string.annotationRenderingExampleTitle, R.string.annotationRenderingExampleDescription) {
     override val assetPath: String = ANNOTATIONS_EXAMPLE
 
     override fun prepareConfiguration(configuration: PdfActivityConfiguration.Builder) {

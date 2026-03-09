@@ -30,8 +30,8 @@ import java.io.IOException
 /**
  * This example shows how to create a document from [Canvas] drawing.
  */
-class DocumentFromCanvasExample(context: Context) : SdkExample(context, R.string.documentFromCanvasExampleTitle, R.string.documentFromCanvasExampleDescription) {
-
+class DocumentFromCanvasExample(context: Context) :
+    SdkExample(context, R.string.documentFromCanvasExampleTitle, R.string.documentFromCanvasExampleDescription) {
     private var documentProcessingDisposable: Disposable? = null
 
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
@@ -39,41 +39,50 @@ class DocumentFromCanvasExample(context: Context) : SdkExample(context, R.string
         configuration.autosaveEnabled(false)
 
         // Create a canvas based on a A4 page.
-        val pageCanvas = NewPage.fromCanvas(NewPage.PAGE_SIZE_A4) { canvas ->
-            val paint = Paint().apply {
-                style = Paint.Style.STROKE
-            }
+        val pageCanvas =
+            NewPage
+                .fromCanvas(NewPage.PAGE_SIZE_A4) { canvas ->
+                    val paint =
+                        Paint().apply {
+                            style = Paint.Style.STROKE
+                        }
 
-            val path = Path().apply {
-                cubicTo(0f, 0f, 100f, 300f, 400f, 300f)
-            }
+                    val path =
+                        Path().apply {
+                            cubicTo(0f, 0f, 100f, 300f, 400f, 300f)
+                        }
 
-            canvas.drawPath(path, paint)
-        }.build()
+                    canvas.drawPath(path, paint)
+                }.build()
 
         val task = PdfProcessorTask.newPage(pageCanvas)
-        val outputFile = try {
-            File(getCatalogCacheDirectory(context), "Canvas.pdf").canonicalFile
-        } catch (exception: IOException) {
-            throw IllegalStateException("Couldn't create Canvas.pdf file.", exception)
-        }
+        val outputFile =
+            try {
+                File(getCatalogCacheDirectory(context), "Canvas.pdf").canonicalFile
+            } catch (exception: IOException) {
+                throw IllegalStateException("Couldn't create Canvas.pdf file.", exception)
+            }
 
-        documentProcessingDisposable = PdfProcessor.processDocumentAsync(task, outputFile)
-            // Ignore PdfProcessor progress.
-            .ignoreElements()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(outputFile))
-                        .configuration(configuration.build())
-                        .build()
-                    context.startActivity(intent)
-                },
-                { throwable ->
-                    Log.e(TAG, "Error while trying to create PDF document.", throwable)
-                }
-            )
+        documentProcessingDisposable =
+            PdfProcessor
+                .processDocumentAsync(task, outputFile)
+                // Ignore PdfProcessor progress.
+                .ignoreElements()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                    {
+                        val intent =
+                            PdfActivityIntentBuilder
+                                .fromUri(context, Uri.fromFile(outputFile))
+                                .configuration(configuration.build())
+                                .build()
+                        context.startActivity(intent)
+                    },
+                    { throwable ->
+                        Log.e(TAG, "Error while trying to create PDF document.", throwable)
+                    },
+                )
     }
 
     override fun onDestroy() {

@@ -23,15 +23,18 @@ import com.pspdfkit.ui.PdfActivityIntentBuilder
 /**
  * This example shows how to change [PdfActivityConfiguration] dynamically when [PdfActivity] is displayed.
  */
-class RuntimeConfigurationExample(context: Context) : SdkExample(context, R.string.runtimeConfigurationChangeExampleTitle, R.string.runtimeConfigurationChangeExampleDescription) {
+class RuntimeConfigurationExample(context: Context) :
+    SdkExample(context, R.string.runtimeConfigurationChangeExampleTitle, R.string.runtimeConfigurationChangeExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // We use a custom utility class to extract the example document from the assets.
         ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
             // Launch the custom example activity using the document and configuration.
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .configuration(configuration.build())
-                .activityClass(RuntimeConfigurationActivity::class)
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    .configuration(configuration.build())
+                    .activityClass(RuntimeConfigurationActivity::class)
+                    .build()
 
             // Start the DynamicConfigurationActivity for the extracted document.
             context.startActivity(intent)
@@ -40,7 +43,6 @@ class RuntimeConfigurationExample(context: Context) : SdkExample(context, R.stri
 }
 
 class RuntimeConfigurationActivity : PdfActivity() {
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         super.onCreateOptionsMenu(menu)
 
@@ -52,36 +54,57 @@ class RuntimeConfigurationActivity : PdfActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         // Create the new configuration based on the clicked menu item.
-        val newConfiguration = when (item.itemId) {
-            R.id.toggle_night_mode -> {
-                // This example toggles activity display between day and night modes.
-                // We'll base our state on the invert colors property of the configuration.
-                val isNightMode = configuration.configuration.isInvertColors
-                val themeId = if (!isNightMode) R.style.PSPDFCatalog_Theme_Dark else R.style.PSPDFCatalog_Theme
+        val newConfiguration =
+            when (item.itemId) {
+                R.id.toggle_night_mode -> {
+                    // This example toggles activity display between day and night modes.
+                    // We'll base our state on the invert colors property of the configuration.
+                    val isNightMode = configuration.configuration.isInvertColors
+                    val themeId = if (!isNightMode) R.style.PSPDFCatalog_Theme_Dark else R.style.PSPDFCatalog_Theme
 
-                // Provide theme resource id when constructing the configuration builder.
-                PdfActivityConfiguration.Builder(configuration)
-                    // Invert document colors in night mode.
-                    .invertColors(!isNightMode)
-                    .theme(themeId)
-                    .build()
-            }
-            R.id.toggle_scroll_direction -> {
-                // This example toggles between horizontal and vertical page scroll direction.
-                PdfActivityConfiguration.Builder(configuration)
-                    .scrollDirection(
-                        if (configuration.configuration.scrollDirection == PageScrollDirection.HORIZONTAL) PageScrollDirection.VERTICAL else PageScrollDirection.HORIZONTAL
-                    )
-                    .build()
-            }
-            R.id.toggle_scroll_mode -> {
-                // This example toggles between paginated and continuous scroll mode.
-                PdfActivityConfiguration.Builder(configuration)
-                    .scrollMode(if (configuration.configuration.scrollMode == PageScrollMode.PER_PAGE) PageScrollMode.CONTINUOUS else PageScrollMode.PER_PAGE)
-                    .build()
-            }
-            else -> null
-        } ?: return super.onOptionsItemSelected(item)
+                    // Provide theme resource id when constructing the configuration builder.
+                    PdfActivityConfiguration
+                        .Builder(configuration)
+                        // Invert document colors in night mode.
+                        .invertColors(!isNightMode)
+                        .theme(themeId)
+                        .build()
+                }
+
+                R.id.toggle_scroll_direction -> {
+                    // This example toggles between horizontal and vertical page scroll direction.
+                    PdfActivityConfiguration
+                        .Builder(configuration)
+                        .scrollDirection(
+                            if (configuration.configuration.scrollDirection ==
+                                PageScrollDirection.HORIZONTAL
+                            ) {
+                                PageScrollDirection.VERTICAL
+                            } else {
+                                PageScrollDirection.HORIZONTAL
+                            },
+                        ).build()
+                }
+
+                R.id.toggle_scroll_mode -> {
+                    // This example toggles between paginated and continuous scroll mode.
+                    PdfActivityConfiguration
+                        .Builder(configuration)
+                        .scrollMode(
+                            if (configuration.configuration.scrollMode ==
+                                PageScrollMode.PER_PAGE
+                            ) {
+                                PageScrollMode.CONTINUOUS
+                            } else {
+                                PageScrollMode.PER_PAGE
+                            },
+                        ).build()
+                }
+
+                else -> {
+                    null
+                }
+            } ?: return super.onOptionsItemSelected(item)
 
         // Set configuration on the activity. This will recreate the
         // activity similar to changing the screen orientation or language.

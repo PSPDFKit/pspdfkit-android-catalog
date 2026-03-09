@@ -46,7 +46,6 @@ import kotlin.getValue
  */
 class MeasurementToolsExample(context: Context) :
     SdkExample(context, R.string.measurementToolsExampleTitle, R.string.measurementToolsExampleDescription) {
-
     companion object {
         const val MEASUREMENTS_PDF = "Measurements.pdf"
     }
@@ -90,15 +89,17 @@ class MeasurementToolsExample(context: Context) :
                     AnnotationTool.MEASUREMENT_AREA_POLYGON,
                     AnnotationTool.MEASUREMENT_AREA_ELLIPSE,
                     AnnotationTool.MEASUREMENT_AREA_RECT,
-                    AnnotationTool.MEASUREMENT_SCALE_CALIBRATION
-                )
+                    AnnotationTool.MEASUREMENT_SCALE_CALIBRATION,
+                ),
             )
 
         ExtractAssetTask.extract(MEASUREMENTS_PDF, title, context) { documentFile ->
-            val intent = PdfActivityIntentBuilder.fromUri(context, Uri.fromFile(documentFile))
-                .configuration(configuration.build())
-                .activityClass(MeasurementToolsActivity::class)
-                .build()
+            val intent =
+                PdfActivityIntentBuilder
+                    .fromUri(context, Uri.fromFile(documentFile))
+                    .configuration(configuration.build())
+                    .activityClass(MeasurementToolsActivity::class)
+                    .build()
 
             // Start the MeasurementToolsActivity for the extracted document.
             context.startActivity(intent)
@@ -110,8 +111,9 @@ class MeasurementToolsExample(context: Context) :
  * This subclass of [PdfActivity] adds a listener for newly created and updated measurements, and reads existing measurements from the
  * document when it's loaded.
  */
-class MeasurementToolsActivity : PdfActivity(), AnnotationProvider.OnAnnotationUpdatedListener {
-
+class MeasurementToolsActivity :
+    PdfActivity(),
+    AnnotationProvider.OnAnnotationUpdatedListener {
     private val viewModel: AnnotationCreationViewModel by viewModels()
 
     /** We hold a list of all the measurements created for this activity. */
@@ -156,13 +158,14 @@ class MeasurementToolsActivity : PdfActivity(), AnnotationProvider.OnAnnotationU
             processAllMeasurements()
 
             // Let's create a distance measurement annotation programmatically.
-            val distanceMeasurement = LineAnnotation(
-                0, // Page number
-                PointF(56.693f, 460f), // Start point.
-                PointF(150f, 460f), // End point.
-                pageScale, // We can specify the scale. Let's use the same one set on the document.
-                MeasurementPrecision.THREE_DP // We can use a different precision for this measurement.
-            )
+            val distanceMeasurement =
+                LineAnnotation(
+                    0, // Page number
+                    PointF(56.693f, 460f), // Start point.
+                    PointF(150f, 460f), // End point.
+                    pageScale, // We can specify the scale. Let's use the same one set on the document.
+                    MeasurementPrecision.THREE_DP, // We can use a different precision for this measurement.
+                )
             distanceMeasurement.color = Color.BLUE
             pdfFragment?.addAnnotationToPage(distanceMeasurement, false)
         }
@@ -186,7 +189,7 @@ class MeasurementToolsActivity : PdfActivity(), AnnotationProvider.OnAnnotationU
         PdfLog.i(
             "MeasurementExample",
             "Processing measurement...\n" +
-                "Type: ${info.measurementMode.name}; Raw value: ${info.value} ${info.scale.unitTo}; Label: ${info.label}"
+                "Type: ${info.measurementMode.name}; Raw value: ${info.value} ${info.scale.unitTo}; Label: ${info.label}",
         )
     }
 

@@ -58,6 +58,11 @@ open class InstantExampleActivity :
     InstantPdfActivity(),
     ActionMenuListener,
     AiAssistantProvider {
+
+    companion object {
+        private const val LOG_TAG = "InstantExampleActivity"
+    }
+
     /** Descriptor for the displayed document.  */
     private lateinit var documentDescriptor: InstantExampleDocumentDescriptor
     private lateinit var aiAssistantInstance: AiAssistant
@@ -78,6 +83,13 @@ open class InstantExampleActivity :
     private val instantErrorListener =
         object : InstantDocumentListener {
             override fun onSyncError(instantDocument: InstantPdfDocument, error: InstantException) {
+                if (error.isRetriable) {
+                    // Transient error (e.g. HTTP 502) — the SDK will automatically retry
+                    // with exponential backoff, so just log it instead of showing an alert.
+                    Log.w(LOG_TAG, "Transient sync error (will retry): ${error.errorCode}", error)
+                    return
+                }
+
                 if (error.errorCode == InstantErrorCode.INVALID_REQUEST && !resetTriggeredForSyncError) {
                     resetTriggeredForSyncError = true
                     showResetCacheDialog()

@@ -4,6 +4,7 @@
  *   The PSPDFKit Sample applications are licensed with a modified BSD license.
  *   Please see License for details. This notice may not be removed from this file.
  */
+@file:Suppress("DEPRECATION")
 
 package com.pspdfkit.catalog.examples.kotlin
 
@@ -28,11 +29,11 @@ import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.document.PdfDocument
 import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
-import com.pspdfkit.ui.annotations.OnAnnotationEditingModeChangeListener
+import com.pspdfkit.ui.annotations.OnAnnotatingModeChangeListener
 import com.pspdfkit.ui.annotations.OnAnnotationSelectedListener
-import com.pspdfkit.ui.special_mode.controller.AnnotationEditingController
+import com.pspdfkit.ui.special_mode.controller.AnnotatingController
 import com.pspdfkit.ui.special_mode.controller.AnnotationSelectionController
-import com.pspdfkit.ui.toolbar.AnnotationCreationToolbar
+import com.pspdfkit.ui.toolbar.AnnotationToolbar
 import com.pspdfkit.ui.toolbar.ContextualToolbar
 import com.pspdfkit.ui.toolbar.ToolbarCoordinatorLayout
 import com.pspdfkit.ui.toolbar.grouping.presets.MenuItem
@@ -81,7 +82,7 @@ class ConstructionExampleActivity :
     PdfActivity(),
     ToolbarCoordinatorLayout.OnContextualToolbarLifecycleListener,
     OnAnnotationSelectedListener,
-    OnAnnotationEditingModeChangeListener {
+    OnAnnotatingModeChangeListener {
     var annotationsHidden = false
     val desiredAnnotationTypes =
         AnnotationType.entries.toMutableSet().apply {
@@ -154,7 +155,7 @@ class ConstructionExampleActivity :
         // Therefore we need two listeners which inform us when an annotation is created and when
         // the editing mode is invoked (both events happen right one after the other)
         fragment.addOnAnnotationSelectedListener(this)
-        fragment.addOnAnnotationEditingModeChangeListener(this)
+        fragment.addOnAnnotatingModeChangeListener(this)
     }
 
     override fun onGenerateMenuItemIds(menuItems: MutableList<Int>): MutableList<Int> {
@@ -258,7 +259,7 @@ class ConstructionExampleActivity :
 
     //region OnContextualToolbarLifecycleListener
     override fun onPrepareContextualToolbar(toolbar: ContextualToolbar<*>) {
-        if (toolbar is AnnotationCreationToolbar) {
+        if (toolbar is AnnotationToolbar) {
             // Register grouping rule to tell toolbar how to group menu items.
             toolbar.setMenuItemGroupingRule(
                 CustomAnnotationCreationToolbarGroupingRule(this),
@@ -287,20 +288,19 @@ class ConstructionExampleActivity :
     override fun onAnnotationSelected(annotation: Annotation, annotationCreated: Boolean) {}
     //endregion
 
-    //region OnAnnotationEditingModeChangeListener
-    // this method is called directly after create/selection
-    override fun onEnterAnnotationEditingMode(controller: AnnotationEditingController) {
+    //region OnAnnotatingModeChangeListener
+    override fun onEnterAnnotatingMode(controller: AnnotatingController) {
         // in case the last annotation selection was in context with a pin creation, invoke the note editor
-        if (newPinAnnotationCreated) {
+        if (newPinAnnotationCreated && controller.hasCurrentlySelectedAnnotations()) {
             controller.currentSingleSelectedAnnotation?.let {
                 controller.showAnnotationEditor(it)
             }
         }
     }
 
-    override fun onChangeAnnotationEditingMode(controller: AnnotationEditingController) {}
+    override fun onChangeAnnotatingMode(controller: AnnotatingController) {}
 
-    override fun onExitAnnotationEditingMode(controller: AnnotationEditingController) {}
+    override fun onExitAnnotatingMode(controller: AnnotatingController) {}
     //endregion
 
     /**
@@ -333,42 +333,42 @@ class ConstructionExampleActivity :
             lowCapacityItemsGrouping.addAll(
                 listOf(
                     MenuItem(
-                        com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_group_drawing,
+                        com.pspdfkit.R.id.pspdf__annotation_toolbar_group_drawing,
                         intArrayOf(
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_line,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_line_arrow,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_ink_pen,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_magic_ink,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_freetext,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_freetext_callout,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_note,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_measurement_distance,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_measurement_perimeter,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_measurement_area_polygon,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_measurement_area_rect,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_measurement_area_ellipse,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_measurement_scale_calibration,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_line,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_line_arrow,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_ink_pen,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_magic_ink,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_freetext,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_freetext_callout,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_note,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_measurement_distance,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_measurement_perimeter,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_measurement_area_polygon,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_measurement_area_rect,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_measurement_area_ellipse,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_measurement_scale_calibration,
                         ),
                     ),
                     MenuItem(
-                        com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_group_markup,
+                        com.pspdfkit.R.id.pspdf__annotation_toolbar_group_markup,
                         intArrayOf(
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_cloudy_square,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_cloudy_circle,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_dashed_square,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_dashed_circle,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_square,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_circle,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_cloudy_square,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_cloudy_circle,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_dashed_square,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_dashed_circle,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_square,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_circle,
                         ),
                     ),
-                    MenuItem(com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_image),
-                    MenuItem(com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_stamp),
-                    MenuItem(com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_picker),
+                    MenuItem(com.pspdfkit.R.id.pspdf__annotation_toolbar_item_image),
+                    MenuItem(com.pspdfkit.R.id.pspdf__annotation_toolbar_item_stamp),
+                    MenuItem(com.pspdfkit.R.id.pspdf__annotation_toolbar_item_picker),
                     MenuItem(
-                        com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_group_undo_redo,
+                        com.pspdfkit.R.id.pspdf__annotation_toolbar_group_undo_redo,
                         intArrayOf(
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_undo,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_redo,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_undo,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_redo,
                         ),
                     ),
                 ),
@@ -376,52 +376,52 @@ class ConstructionExampleActivity :
             highCapacityItemsGrouping.addAll(
                 listOf(
                     MenuItem(
-                        com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_group_measurement,
+                        com.pspdfkit.R.id.pspdf__annotation_toolbar_group_measurement,
                         intArrayOf(
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_measurement_distance,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_measurement_perimeter,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_measurement_area_polygon,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_measurement_area_rect,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_measurement_area_ellipse,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_measurement_scale_calibration,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_measurement_distance,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_measurement_perimeter,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_measurement_area_polygon,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_measurement_area_rect,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_measurement_area_ellipse,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_measurement_scale_calibration,
                         ),
                     ),
                     MenuItem(
-                        com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_group_drawing,
+                        com.pspdfkit.R.id.pspdf__annotation_toolbar_group_drawing,
                         intArrayOf(
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_line,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_line_arrow,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_ink_pen,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_magic_ink,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_line,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_line_arrow,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_ink_pen,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_magic_ink,
                         ),
                     ),
                     MenuItem(
-                        com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_group_markup,
+                        com.pspdfkit.R.id.pspdf__annotation_toolbar_group_markup,
                         intArrayOf(
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_cloudy_square,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_cloudy_circle,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_dashed_square,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_dashed_circle,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_square,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_circle,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_cloudy_square,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_cloudy_circle,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_dashed_square,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_dashed_circle,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_square,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_circle,
                         ),
                     ),
                     MenuItem(
-                        com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_group_writing,
+                        com.pspdfkit.R.id.pspdf__annotation_toolbar_group_writing,
                         intArrayOf(
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_freetext,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_freetext_callout,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_note,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_freetext,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_freetext_callout,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_note,
                         ),
                     ),
-                    MenuItem(com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_image),
-                    MenuItem(com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_stamp),
-                    MenuItem(com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_picker),
+                    MenuItem(com.pspdfkit.R.id.pspdf__annotation_toolbar_item_image),
+                    MenuItem(com.pspdfkit.R.id.pspdf__annotation_toolbar_item_stamp),
+                    MenuItem(com.pspdfkit.R.id.pspdf__annotation_toolbar_item_picker),
                     MenuItem(
-                        com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_group_undo_redo,
+                        com.pspdfkit.R.id.pspdf__annotation_toolbar_group_undo_redo,
                         intArrayOf(
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_undo,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_redo,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_undo,
+                            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_redo,
                         ),
                     ),
                 ),

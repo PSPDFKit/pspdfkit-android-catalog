@@ -15,7 +15,15 @@ import android.graphics.PixelFormat
 import android.graphics.Rect
 import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.os.Bundle
+import android.view.Gravity
+import android.view.ViewGroup
+import android.widget.FrameLayout
+import android.widget.Toast
 import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.pspdfkit.bookmarks.Bookmark
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
@@ -29,16 +37,19 @@ import com.pspdfkit.ui.drawable.PdfDrawable
 import com.pspdfkit.ui.drawable.PdfDrawableProvider
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
+import kotlin.math.roundToInt
+
+private val initialThumbnailBarMode = ThumbnailBarMode.THUMBNAIL_BAR_MODE_SCROLLABLE
 
 /**
  * Example showing how to use the drawable API to put a drawn highlight on all pages that contain a bookmark.
  */
-class BookmarkHighlightingExample(private val context: Context) :
+class BookmarkHighlightingExample(context: Context) :
     SdkExample(context, R.string.bookmarkHighlightingExampleTitle, R.string.bookmarkHighlightingExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // This uses larger thumbnails making our bookmark indicator more easily visible.
         configuration
-            .setThumbnailBarMode(ThumbnailBarMode.THUMBNAIL_BAR_MODE_SCROLLABLE)
+            .setThumbnailBarMode(initialThumbnailBarMode)
             .title("Bookmark Indicator")
 
         // Start the activity once the example document has been extracted from the app's assets.
@@ -61,8 +72,13 @@ class BookmarkHighlightingExample(private val context: Context) :
 }
 
 class BookmarkHighlightingActivity : PdfActivity() {
+    private lateinit var toggleThumbnailBarModeFab: FloatingActionButton
+
     /** List of bookmarks that current exist in the document. */
     private val currentBookmarks = mutableListOf<Bookmark>()
+
+    private var currentThumbnailBarMode = initialThumbnailBarMode
+    private var currentToast: Toast? = null
 
     /** Drawable provider that will put a bookmark icon on bookmarked pages. */
     private val drawableProvider =
@@ -80,6 +96,56 @@ class BookmarkHighlightingActivity : PdfActivity() {
 
     /** Used to stop the bookmark loading process when closing the activity. */
     private var bookmarkLoadingDisposable: Disposable? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        currentThumbnailBarMode =
+            savedInstanceState?.getString(KEY_THUMBNAIL_BAR_MODE)
+                ?.let(ThumbnailBarMode::valueOf)
+                ?: initialThumbnailBarMode
+
+        toggleThumbnailBarModeFab =
+            FloatingActionButton(this).apply {
+                setImageResource(R.drawable.ic_layout_customization)
+                val margin = (16 * resources.displayMetrics.density).roundToInt()
+                layoutParams =
+                    FrameLayout.LayoutParams(
+                        FrameLayout.LayoutParams.WRAP_CONTENT,
+                        FrameLayout.LayoutParams.WRAP_CONTENT,
+                    ).apply {
+                        gravity = Gravity.BOTTOM or Gravity.END
+                        setMargins(margin, margin, margin, margin)
+                    }
+                setOnClickListener {
+                    currentThumbnailBarMode = nextThumbnailBarMode(currentThumbnailBarMode)
+                    applyThumbnailBarMode()
+                    currentToast?.cancel()
+                    currentToast =
+                        Toast
+                            .makeText(
+                                this@BookmarkHighlightingActivity,
+                                getString(
+                                    R.string.thumbnail_bar_mode_changed,
+                                    getString(currentThumbnailBarMode.labelRes),
+                                ),
+                                Toast.LENGTH_SHORT,
+                            ).also { it.show() }
+                }
+            }
+        findViewById<FrameLayout>(android.R.id.content).addView(toggleThumbnailBarModeFab)
+        ViewCompat.setOnApplyWindowInsetsListener(toggleThumbnailBarModeFab) { view, insets ->
+            val navigationBarsInsets = insets.getInsets(WindowInsetsCompat.Type.navigationBars())
+            (view.layoutParams as? ViewGroup.MarginLayoutParams)?.let { params ->
+                params.bottomMargin = (16 * resources.displayMetrics.density).roundToInt() + navigationBarsInsets.bottom
+                view.layoutParams = params
+            }
+            insets
+        }
+        ViewCompat.requestApplyInsets(toggleThumbnailBarModeFab)
+
+        applyThumbnailBarMode()
+    }
 
     override fun onDocumentLoaded(document: PdfDocument) {
         super.onDocumentLoaded(document)
@@ -99,6 +165,8 @@ class BookmarkHighlightingActivity : PdfActivity() {
             // This is always called on the UI thread so no need for special concurrency handling.
             updateBookmarkDrawables(it)
         }
+
+        applyThumbnailBarMode()
     }
 
     private fun updateBookmarkDrawables(newBookmarks: List<Bookmark>) {
@@ -116,10 +184,39 @@ class BookmarkHighlightingActivity : PdfActivity() {
         }
     }
 
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(KEY_THUMBNAIL_BAR_MODE, currentThumbnailBarMode.name)
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         // Make sure to dispose of this before closing the activity.
         bookmarkLoadingDisposable?.dispose()
+    }
+
+    private fun applyThumbnailBarMode() {
+        pspdfKitViews.thumbnailBarView?.setThumbnailBarMode(currentThumbnailBarMode)
+        toggleThumbnailBarModeFab.contentDescription =
+            getString(R.string.toggle_thumbnail_bar_mode, getString(currentThumbnailBarMode.labelRes))
+    }
+
+    private fun nextThumbnailBarMode(currentMode: ThumbnailBarMode): ThumbnailBarMode {
+        val modes = enumValues<ThumbnailBarMode>()
+        return modes[(currentMode.ordinal + 1) % modes.size]
+    }
+
+    private val ThumbnailBarMode.labelRes: Int
+        get() =
+            when (this) {
+                ThumbnailBarMode.THUMBNAIL_BAR_MODE_FLOATING -> R.string.thumbnail_bar_mode_floating
+                ThumbnailBarMode.THUMBNAIL_BAR_MODE_PINNED -> R.string.thumbnail_bar_mode_pinned
+                ThumbnailBarMode.THUMBNAIL_BAR_MODE_SCROLLABLE -> R.string.thumbnail_bar_mode_scrollable
+                ThumbnailBarMode.THUMBNAIL_BAR_MODE_NONE -> R.string.thumbnail_bar_mode_none
+            }
+
+    private companion object {
+        private const val KEY_THUMBNAIL_BAR_MODE = "thumbnail_bar_mode"
     }
 }
 

@@ -17,11 +17,9 @@ import android.graphics.Paint
 import android.graphics.PixelFormat
 import android.graphics.RectF
 import android.net.Uri
-import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.MotionEvent
-import android.view.View
 import androidx.annotation.IntRange
 import androidx.annotation.UiThread
 import androidx.lifecycle.lifecycleScope
@@ -39,9 +37,6 @@ import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
 import com.pspdfkit.ui.drawable.PdfDrawable
 import com.pspdfkit.ui.drawable.PdfDrawableProvider
-import com.pspdfkit.ui.toolbar.AnnotationEditingToolbar
-import com.pspdfkit.ui.toolbar.ContextualToolbar
-import com.pspdfkit.ui.toolbar.ToolbarCoordinatorLayout.OnContextualToolbarLifecycleListener
 import com.pspdfkit.utils.Size
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
@@ -83,9 +78,7 @@ class HideRevealAnnotationsCreationExample(context: Context) :
     }
 }
 
-class HideRevealAnnotationsCreationActivity :
-    PdfActivity(),
-    OnContextualToolbarLifecycleListener {
+class HideRevealAnnotationsCreationActivity : PdfActivity() {
     /**
      * A square annotation representing an area to hide on the page. Once the document is loaded,
      * we extract any existing hide area annotation from the document and store its reference here. When no
@@ -176,22 +169,6 @@ class HideRevealAnnotationsCreationActivity :
         else -> {
             super.onOptionsItemSelected(item)
         }
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        // For the example, we deactivate the annotation editing toolbar, i.e. the toolbar that is shown when
-        // selecting an annotation on the page. We do this by registering a contextual toolbar listener that hides
-        // the annotation editing toolbar, whenever it would become visible.
-        setOnContextualToolbarLifecycleListener(this)
-    }
-
-    /**
-     * Called whenever a toolbar is about to become visible. We use this callback to hide the annotation editing toolbar
-     * when selecting reveal and hide areas. This is part of the example, and should be changed as needed.
-     */
-    override fun onPrepareContextualToolbar(toolbar: ContextualToolbar<*>) {
-        (toolbar as? AnnotationEditingToolbar)?.visibility = View.GONE
     }
 
     /** Adds a drawable provider which will serve the reveal area drawable for covering the page in black. */
@@ -428,11 +405,6 @@ class HideRevealAnnotationsCreationActivity :
         @Deprecated("Deprecated in Java")
         override fun getOpacity(): Int = PixelFormat.TRANSLUCENT
     }
-
-    // These methods are part of the [ContextualToolbarLifecycleListener] interface, but are not required for this example.
-    override fun onDisplayContextualToolbar(toolbar: ContextualToolbar<*>) = Unit
-
-    override fun onRemoveContextualToolbar(toolbar: ContextualToolbar<*>) = Unit
 
     companion object {
         private const val HIDE_ITEM_ID = 1234

@@ -139,7 +139,7 @@ public class CustomShareDialogExample extends SdkExample {
         }
 
         @Override
-        protected void onCreate(Bundle savedInstanceState) {
+        public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             // Tell the activity about our dialog creators.
             setDocumentSharingDialogFactory(CustomSharingDialog::new);

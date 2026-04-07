@@ -65,39 +65,26 @@ fun <Item, Section : List<Item>, Key> ExpandableList(
         }
     }
 
-    // Auto-scroll when sections are expanded
+    // Auto-scroll to the newly opened section header
     LaunchedEffect(expandedSectionsState) {
+        if (expandedSectionsState.isEmpty() || searchQuery.isNotBlank()) return@LaunchedEffect
+
         delay(100) // Small delay to let the layout settle
-        val layoutInfo = lazyListState.layoutInfo
-        val visibleItemsInfo = layoutInfo.visibleItemsInfo
-        val viewportHeight = layoutInfo.viewportEndOffset - layoutInfo.viewportStartOffset
 
-        if (visibleItemsInfo.isNotEmpty()) {
-            var itemIndex = 1 // Start after top header
-
-            itemsInSections.forEachIndexed { sectionIndex, section ->
-                val sectionKey = sectionKey(section)
-                val sectionIsOpen = searchQuery.isNotBlank() || expandedSectionsState.contains(sectionKey)
-
-                // Check if this section header is visible and near the bottom
-                val headerItemInfo = visibleItemsInfo.find { it.index == itemIndex }
-                if (headerItemInfo != null && sectionIsOpen) {
-                    val headerBottomOffset = headerItemInfo.offset + headerItemInfo.size
-                    val availableSpace = viewportHeight - headerBottomOffset
-
-                    // If the header is in the bottom third of the screen and there's not much space below
-                    if (headerBottomOffset > viewportHeight * 0.67f && availableSpace < viewportHeight * 0.3f && section.isNotEmpty()) {
-                        // Scroll to show the first few items of the expanded section
-                        val targetItemIndex = itemIndex + minOf(2, section.size) // Show up to 2 items
-                        lazyListState.animateScrollToItem(targetItemIndex)
-                    }
-                }
-
-                itemIndex++ // Section header
-                if (sectionIsOpen) {
-                    itemIndex += section.size // Items in section
-                    itemIndex++ // Section footer
-                }
+        // Find the LazyColumn item index of the expanded section header
+        var itemIndex = 1 // Start after top header
+        for (section in itemsInSections) {
+            val key = sectionKey(section)
+            if (expandedSectionsState.contains(key)) {
+                // Scroll so the section header is at the top of the viewport
+                lazyListState.animateScrollToItem(itemIndex)
+                break
+            }
+            itemIndex++ // Section header
+            val sectionIsOpen = expandedSectionsState.contains(key)
+            if (sectionIsOpen) {
+                itemIndex += section.size // Items in section
+                itemIndex++ // Section footer
             }
         }
     }

@@ -12,11 +12,11 @@
 
     <dimen name="drawer_max_width">280dp</dimen>
     <dimen name="drawer_margin">56dp</dimen>
-    <dimen name="custom_search_ui_previewimage_width">72dp</dimen>
 
     <!-- Drawable padding for the ScreenReaderExample -->
     <dimen name="screenreaderexample_drawable_padding">4dp</dimen>
 
+    <dimen name="custom_search_ui_previewimage_width">72dp</dimen>
     <dimen name="custom_scrollbar_handle_size">48dp</dimen>
 
     <dimen name="kiosk_grid_column_width">116dp</dimen>

@@ -65,7 +65,7 @@ public class CustomDocumentDownloadExample extends SdkExample {
 
         @NonNull
         @Override
-        protected Dialog createDialog() {
+        public Dialog createDialog() {
             View root = LayoutInflater.from(getContext()).inflate(R.layout.custom_download_dialog, null);
             // Setup our views.
             downloadDescription = root.findViewById(R.id.downloadDescription);
@@ -80,7 +80,7 @@ public class CustomDocumentDownloadExample extends SdkExample {
         }
 
         @Override
-        protected void updateProgress(@NonNull Progress progress) {
+        public void updateProgress(@NonNull Progress progress) {
             double percent = ((double) progress.bytesReceived / (double) progress.totalBytes) * 100;
             // Update the displayed progress.
             downloadPercent.setText(String.format(Locale.getDefault(), "%.0f%%", percent));
@@ -89,7 +89,7 @@ public class CustomDocumentDownloadExample extends SdkExample {
         }
 
         @Override
-        protected void configureDialog(@NonNull Progress progress, boolean isIndeterminate) {
+        public void configureDialog(@NonNull Progress progress, boolean isIndeterminate) {
             if (!isIndeterminate) {
                 // If the progress isn't indeterminate we can show the exact progress.
                 downloadPercent.setVisibility(View.VISIBLE);

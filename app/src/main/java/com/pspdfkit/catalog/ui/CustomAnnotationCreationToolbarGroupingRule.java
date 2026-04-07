@@ -28,26 +28,25 @@ public class CustomAnnotationCreationToolbarGroupingRule extends PresetMenuItemG
     static {
         // Make sure our custom item is included.
         FOUR_ITEMS_GROUPING.add(new MenuItem(R.id.pspdf_menu_custom));
-        FOUR_ITEMS_GROUPING.add(
-                new MenuItem(com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_group_markup, new int[] {
-                    com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_highlight,
-                    com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_squiggly,
-                    com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_strikeout,
-                    com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_underline
-                }));
-        FOUR_ITEMS_GROUPING.add(new MenuItem(com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_picker));
-        FOUR_ITEMS_GROUPING.add(new MenuItem(com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_image));
+        FOUR_ITEMS_GROUPING.add(new MenuItem(com.pspdfkit.R.id.pspdf__annotation_toolbar_group_markup, new int[] {
+            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_highlight,
+            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_squiggly,
+            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_strikeout,
+            com.pspdfkit.R.id.pspdf__annotation_toolbar_item_underline
+        }));
+        FOUR_ITEMS_GROUPING.add(new MenuItem(com.pspdfkit.R.id.pspdf__annotation_toolbar_item_picker));
+        FOUR_ITEMS_GROUPING.add(new MenuItem(com.pspdfkit.R.id.pspdf__annotation_toolbar_item_image));
     }
 
     static {
         // Make sure our custom item is included.
         SEVEN_ELEMENTS_GROUPING.add(new MenuItem(R.id.pspdf_menu_custom));
-        SEVEN_ELEMENTS_GROUPING.add(new MenuItem(com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_highlight));
-        SEVEN_ELEMENTS_GROUPING.add(new MenuItem(com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_squiggly));
-        SEVEN_ELEMENTS_GROUPING.add(new MenuItem(com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_strikeout));
-        SEVEN_ELEMENTS_GROUPING.add(new MenuItem(com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_underline));
-        SEVEN_ELEMENTS_GROUPING.add(new MenuItem(com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_picker));
-        SEVEN_ELEMENTS_GROUPING.add(new MenuItem(com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_image));
+        SEVEN_ELEMENTS_GROUPING.add(new MenuItem(com.pspdfkit.R.id.pspdf__annotation_toolbar_item_highlight));
+        SEVEN_ELEMENTS_GROUPING.add(new MenuItem(com.pspdfkit.R.id.pspdf__annotation_toolbar_item_squiggly));
+        SEVEN_ELEMENTS_GROUPING.add(new MenuItem(com.pspdfkit.R.id.pspdf__annotation_toolbar_item_strikeout));
+        SEVEN_ELEMENTS_GROUPING.add(new MenuItem(com.pspdfkit.R.id.pspdf__annotation_toolbar_item_underline));
+        SEVEN_ELEMENTS_GROUPING.add(new MenuItem(com.pspdfkit.R.id.pspdf__annotation_toolbar_item_picker));
+        SEVEN_ELEMENTS_GROUPING.add(new MenuItem(com.pspdfkit.R.id.pspdf__annotation_toolbar_item_image));
     }
 
     public CustomAnnotationCreationToolbarGroupingRule(@NonNull Context context) {
@@ -61,7 +60,7 @@ public class CustomAnnotationCreationToolbarGroupingRule extends PresetMenuItemG
         // Let's say we want to have all items at the beginning(start) of the toolbar, and only our
         // item and image at the end.
         for (ContextualToolbarMenuItem item : flatItems) {
-            if (item.getId() == com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_image
+            if (item.getId() == com.pspdfkit.R.id.pspdf__annotation_toolbar_item_image
                     || item.getId() == R.id.pspdf_menu_custom) {
                 item.setPosition(ContextualToolbarMenuItem.Position.END);
             } else {

@@ -31,12 +31,12 @@ import com.pspdfkit.ui.PdfActivityIntentBuilder;
 import com.pspdfkit.ui.PdfFragment;
 import com.pspdfkit.ui.inspector.PropertyInspector;
 import com.pspdfkit.ui.inspector.PropertyInspectorView;
-import com.pspdfkit.ui.inspector.annotation.AnnotationCreationInspectorController;
+import com.pspdfkit.ui.inspector.annotation.AnnotatingInspectorController;
 import com.pspdfkit.ui.inspector.annotation.DefaultAnnotationEditingInspectorController;
 import com.pspdfkit.ui.inspector.views.ColorPickerInspectorDetailView;
 import com.pspdfkit.ui.inspector.views.PropertyInspectorDividerDecoration;
 import com.pspdfkit.ui.inspector.views.SliderPickerInspectorView;
-import com.pspdfkit.ui.special_mode.controller.AnnotationCreationController;
+import com.pspdfkit.ui.special_mode.controller.AnnotatingController;
 import com.pspdfkit.ui.special_mode.controller.AnnotationInspectorController;
 import com.pspdfkit.ui.special_mode.controller.AnnotationTool;
 import com.pspdfkit.ui.special_mode.controller.AnnotationToolVariant;
@@ -99,7 +99,7 @@ public class CustomAnnotationInspectorExample extends SdkExample {
                 Color.rgb(233, 30, 99)); // PINK
 
         @Override
-        protected void onCreate(Bundle savedInstanceState) {
+        public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
 
             // Create custom annotation creation inspector displaying custom UI in modal dialog.
@@ -150,8 +150,8 @@ public class CustomAnnotationInspectorExample extends SdkExample {
                     };
 
             // Set custom annotation inspector controllers to the activity.
-            setAnnotationCreationInspectorController(customAnnotationCreationInspector);
-            setAnnotationEditingInspectorController(customAnnotationEditingInspector);
+            setCreationInspectorController(customAnnotationCreationInspector);
+            setEditingInspectorController(customAnnotationEditingInspector);
 
             // Restore inspectors state.
             if (savedInstanceState != null) {
@@ -166,15 +166,15 @@ public class CustomAnnotationInspectorExample extends SdkExample {
         }
 
         /**
-         * Custom implementation of the {@link AnnotationCreationInspectorController} showing simplified
+         * Custom implementation of the {@link AnnotatingInspectorController} showing simplified
          * annotation inspector in a dialog.
          */
-        private class CustomAnnotationCreationInspector implements AnnotationCreationInspectorController {
+        private class CustomAnnotationCreationInspector implements AnnotatingInspectorController {
 
             private static final String STATE_INSPECTOR_DIALOG_VISIBLE = "STATE_INSPECTOR_DIALOG_VISIBLE";
 
             @Nullable
-            private AnnotationCreationController controller;
+            private AnnotatingController controller;
 
             @Nullable
             private AlertDialog dialog;
@@ -182,7 +182,7 @@ public class CustomAnnotationInspectorExample extends SdkExample {
             @Nullable
             private Bundle restoredInstanceState;
 
-            public void bindAnnotationCreationController(@NonNull AnnotationCreationController controller) {
+            public void bindController(@NonNull AnnotatingController controller) {
                 this.controller = controller;
 
                 // Bind to annotation creation controller.
@@ -192,7 +192,7 @@ public class CustomAnnotationInspectorExample extends SdkExample {
                 onRestoreState();
             }
 
-            public void unbindAnnotationCreationController() {
+            public void unbindController() {
                 cancel();
                 if (controller != null) {
                     controller.unbindAnnotationInspectorController();

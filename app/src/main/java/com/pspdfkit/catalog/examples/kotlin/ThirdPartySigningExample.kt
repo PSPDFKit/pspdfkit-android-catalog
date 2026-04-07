@@ -37,6 +37,8 @@ import java.security.KeyStore
  * */
 class ThirdPartySigningExample(context: Context) :
     SdkExample(context, R.string.thirdPartySigningExampleTitle, R.string.thirdPartySigningExampleDescription) {
+    override val launchRequirements = setOf(SdkExample.LaunchRequirement.DIGITAL_SIGNATURE_TYPE)
+
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         val assetName = "Form_example.pdf"
 

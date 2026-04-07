@@ -57,7 +57,7 @@ public class CustomPageTemplatesExample extends SdkExample {
         private List<PageTemplate> pageTemplates;
 
         @Override
-        protected void onCreate(Bundle savedInstanceState) {
+        public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
 
             pageTemplates = new ArrayList<>();

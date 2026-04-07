@@ -39,6 +39,8 @@ import java.security.Signature
  * */
 class ManualSigningExample(context: Context) :
     SdkExample(context, R.string.manualSigningExampleTitle, R.string.manualSigningExampleDescription) {
+    override val launchRequirements = setOf(SdkExample.LaunchRequirement.DIGITAL_SIGNATURE_TYPE)
+
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         val assetName = "Form_example.pdf"
 

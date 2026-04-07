@@ -68,7 +68,7 @@ public class CustomInlineSearchExample extends SdkExample {
     public static class CustomInlineSearchExampleActivity extends PdfActivity {
 
         @Override
-        protected void onCreate(Bundle savedInstanceState) {
+        public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
 
             setSupportActionBar(null);

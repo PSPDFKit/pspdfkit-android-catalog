@@ -11,7 +11,6 @@
 
 plugins {
     id("com.android.application")
-    id("kotlin-android")
     id("org.jetbrains.kotlin.plugin.parcelize")
     id("org.jetbrains.kotlin.plugin.compose")
 }
@@ -25,8 +24,8 @@ android {
         minSdk = 26
         targetSdk = compileSdk
 
-        versionName = "11.2.1"
-        versionCode = 146620
+        versionName = "11.3.0"
+        versionCode = 146949
 
         vectorDrawables {
             useSupportLibrary = true
@@ -43,6 +42,7 @@ android {
     buildFeatures {
         compose = true
         buildConfig = true
+        resValues = true
     }
 
     packaging {
@@ -67,11 +67,11 @@ dependencies {
 
     // Nutrient is integrated from the Nutrient Maven repository. See the `repositories` block at the beginning
     // of this file, which shows how to set up the repository in your app.
-    implementation("io.nutrient:nutrient:11.2.1")
+    implementation("io.nutrient:nutrient:11.3.0")
 
     // OCR library + English language pack.
-    implementation("io.nutrient:nutrient-ocr:11.2.1")
-    implementation("io.nutrient:nutrient-ocr-english:11.2.1")
+    implementation("io.nutrient:nutrient-ocr:11.3.0")
+    implementation("io.nutrient:nutrient-ocr-english:11.3.0")
 
 
     // Androidx

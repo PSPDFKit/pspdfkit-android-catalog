@@ -11,7 +11,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import androidx.annotation.NonNull;
@@ -76,7 +75,7 @@ public class DocumentSwitcherExample extends SdkExample {
 
         @SuppressWarnings("ConstantConditions")
         @Override
-        protected void onCreate(Bundle savedInstanceState) {
+        public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
 
             // Extract the drawer views from the layout.
@@ -129,30 +128,18 @@ public class DocumentSwitcherExample extends SdkExample {
 
             drawerDrawable.setColor(toolbarIconsColor);
 
-            // Get toolbar and set navigation icon directly
+            // Get toolbar and set navigation icon with click listener to toggle the drawer.
             final Toolbar toolbar = findViewById(com.pspdfkit.R.id.pspdf__toolbar_main);
             if (toolbar != null) {
                 toolbar.setNavigationIcon(drawerDrawable);
+                toolbar.setNavigationOnClickListener(v -> {
+                    if (drawerLayout.isDrawerOpen(drawerListView)) {
+                        drawerLayout.closeDrawer(drawerListView);
+                    } else {
+                        drawerLayout.openDrawer(drawerListView);
+                    }
+                });
             }
-        }
-
-        /**
-         * If the user presses the navigation drawer icon, we toggle the drawer visibility. Otherwise we
-         * pass the event on to the default implementation.
-         */
-        @Override
-        public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-            if (item.getItemId() == android.R.id.home) {
-                if (drawerLayout.isDrawerOpen(drawerListView)) {
-                    drawerLayout.closeDrawer(drawerListView);
-                } else {
-                    drawerLayout.openDrawer(drawerListView);
-                }
-
-                return true;
-            }
-
-            return super.onOptionsItemSelected(item);
         }
 
         private void showDocument(@NonNull final DocumentDescriptor visibleItem) {

@@ -55,7 +55,7 @@
         <item name="pspdf__noteEditorStyle">@style/PSPDFKit.NoteEditorView</item>
         <item name="pspdf__textSelectionStyle">@style/PSPDFCatalog.TextSelection</item>
         <item name="pspdf__annotationCreationToolbarIconsStyle">@style/PSPDFKit.AnnotationCreationToolbarIcons</item>
-        <item name="pspdf__annotationEditingToolbarIconsStyle">@style/PSPDFKit.AnnotationEditingToolbarIcons</item>
+        <item name="pspdf__noteEditorToolbarIconsStyle">@style/PSPDFKit.NoteEditorToolbarIcons</item>
         <item name="pspdf__textSelectionToolbarIconsStyle">@style/PSPDFKit.TextSelectionToolbarIcons</item>
         <item name="pspdf__documentEditingToolbarIconsStyle">@style/PSPDFKit.DocumentEditingToolbarIcons</item>
         <item name="pspdf__toolbarCoordinatorLayoutStyle">@style/PSPDFKit.ToolbarCoordinatorLayout</item>
@@ -147,8 +147,6 @@
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowNoTitle">true</item>
     </style>
-
-    <style name="Theme_CustomSearchUi" parent="Theme.AppCompat.NoActionBar" />
 
     <style name="PSPDFCatalog.Theme.FormSelectionNoHighlight">
         <item name="pspdf__formSelectionStyle">@style/PSPDFKit.FormSelection.NoHighlight</item>

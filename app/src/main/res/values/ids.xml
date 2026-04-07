@@ -17,7 +17,9 @@
     <item name="instant_reset_cache" type="id"/>
     <item name="share_document_code" type="id"/>
 
+    <item name="annotation_flags_popup_button" type="id" />
     <item name="toggle_annotation_overlay" type="id" />
+    <item name="fab_toggle_annotation_overlay" type="id" />
     <item name="fire_low_memory_notification" type="id"/>
     <item name="toggle_overlay_rendering_strategy" type="id" />
 
@@ -27,6 +29,12 @@
     <item name="custom_action3" type="id"/>
     <item name="custom_action_show" type="id"/>
     <item name="custom_action_hide" type="id"/>
+
+    <!-- Custom popup toolbar menu items. -->
+    <item name="popup_custom_word_count" type="id" />
+    <item name="popup_custom_annotation_info" type="id" />
+    <item name="popup_custom_add_note" type="id" />
+    <item name="popup_custom_select_all" type="id" />
 
     <!-- Custom annotation creation toolbar menu items. -->
     <item name="line_group" type="id"/>

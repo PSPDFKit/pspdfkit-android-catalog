@@ -64,7 +64,7 @@ public class AnnotationSelectionCustomizationExample extends SdkExample {
         }
 
         @Override
-        protected void onDestroy() {
+        public void onDestroy() {
             super.onDestroy();
             getPdfFragment().removeOnAnnotationSelectedListener(this);
         }

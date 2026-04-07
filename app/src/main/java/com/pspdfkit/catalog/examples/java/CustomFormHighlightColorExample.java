@@ -60,7 +60,7 @@ public class CustomFormHighlightColorExample extends SdkExample {
         private static final int TOGGLE_FORM_HIGHLIGHT_COLOR_MENU_ITEM_ID = 1;
 
         @Override
-        protected void onCreate(Bundle savedInstanceState) {
+        public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
         }
 

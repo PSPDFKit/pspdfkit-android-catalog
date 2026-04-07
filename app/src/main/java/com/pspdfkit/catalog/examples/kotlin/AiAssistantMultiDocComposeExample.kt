@@ -92,6 +92,8 @@ class AiAssistantMultiDocComposeExample(context: Context) :
         R.string.jetpackAiAssistantMultiDocExampleTitle,
         R.string.jetpackAiAssistantMultiDocExampleDescription,
     ) {
+    override val launchRequirements = setOf(SdkExample.LaunchRequirement.AI_ASSISTANT_SERVER)
+
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         val intent = Intent(context, AiAssistantMultiDocComposeActivity::class.java)
         context.startActivity(intent)

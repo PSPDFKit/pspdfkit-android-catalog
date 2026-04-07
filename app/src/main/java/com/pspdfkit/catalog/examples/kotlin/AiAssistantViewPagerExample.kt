@@ -44,6 +44,8 @@ class AiAssistantViewPagerExample(context: Context) :
         R.string.aiAssistantViewPagerExampleTitle,
         R.string.aiAssistantViewPagerExampleDescription,
     ) {
+    override val launchRequirements = setOf(SdkExample.LaunchRequirement.AI_ASSISTANT_SERVER)
+
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         val intent = Intent(context, AiAssistantViewPagerActivity::class.java)
         configuration.setAiAssistantEnabled(true)
@@ -71,7 +73,7 @@ class AiAssistantViewPagerActivity :
         findViewById<Toolbar>(R.id.main_toolbar).let {
             it.setOnMenuItemClickListener { _ ->
                 showAiAssistant(this@AiAssistantViewPagerActivity)
-                false
+                true
             }
         }
         val preferences = getSharedPreferences(PREFERENCES_NAME, MODE_PRIVATE)
@@ -159,7 +161,7 @@ class ViewPagerPdfFragmentAdapter(val activity: AiAssistantViewPagerActivity, de
         activity.intent.getSupportParcelableExtra(EXTRA_CONFIGURATION, PdfConfiguration::class.java)
             ?: throw IllegalStateException("Activity Intent was missing configuration extra!")
 
-    override fun getItemCount(): Int = 4
+    override fun getItemCount(): Int = fragments.size
 
     val fragments =
         descriptors.map {

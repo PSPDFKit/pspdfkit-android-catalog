@@ -86,7 +86,7 @@ public class ScreenReaderExample extends SdkExample {
         private ScreenReader screenReader;
 
         @Override
-        protected void onCreate(Bundle savedInstanceState) {
+        public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
 
             // Creating the screen reader will require a callback for when initialization failed.
@@ -122,7 +122,7 @@ public class ScreenReaderExample extends SdkExample {
         }
 
         @Override
-        protected void onStop() {
+        public void onStop() {
             super.onStop();
             // When the activity goes to the background we stop any running TTS process and clean up
             // drawable providers.
@@ -130,7 +130,7 @@ public class ScreenReaderExample extends SdkExample {
         }
 
         @Override
-        protected void onDestroy() {
+        public void onDestroy() {
             super.onDestroy();
             getPdfFragment().removeDrawableProvider(screenReader.getDrawableProvider());
             screenReader.shutdown();

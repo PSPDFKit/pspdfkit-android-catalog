@@ -70,6 +70,8 @@ class AiAssistantComposeExample(context: Context) :
         R.string.jetpackAiAssistantExampleTitle,
         R.string.jetpackAiAssistantExampleDescription,
     ) {
+    override val launchRequirements = setOf(SdkExample.LaunchRequirement.AI_ASSISTANT_SERVER)
+
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         val intent = Intent(context, AiAssistantComposeActivity::class.java)
         context.startActivity(intent)

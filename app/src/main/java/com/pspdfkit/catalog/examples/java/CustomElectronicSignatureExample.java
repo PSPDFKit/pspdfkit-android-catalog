@@ -38,13 +38,9 @@ import com.pspdfkit.signatures.Signature;
 import com.pspdfkit.signatures.listeners.OnSignaturePickedListener;
 import com.pspdfkit.signatures.storage.DatabaseSignatureStorage;
 import com.pspdfkit.ui.PdfFragment;
-import com.pspdfkit.ui.annotations.OnAnnotationEditingModeChangeListener;
 import com.pspdfkit.ui.signatures.ElectronicSignatureFragment;
 import com.pspdfkit.ui.signatures.ElectronicSignatureOptions;
-import com.pspdfkit.ui.special_mode.controller.AnnotationEditingController;
 import com.pspdfkit.ui.special_mode.manager.FormManager;
-import com.pspdfkit.ui.toolbar.AnnotationEditingToolbar;
-import com.pspdfkit.ui.toolbar.ToolbarCoordinatorLayout;
 import java.util.Arrays;
 
 /**
@@ -79,7 +75,7 @@ public class CustomElectronicSignatureExample extends SdkExample {
      * element.
      */
     public static class CustomElectronicSignatureActivity extends AppCompatActivity
-            implements OnAnnotationEditingModeChangeListener, OnSignaturePickedListener {
+            implements OnSignaturePickedListener {
 
         public static final String EXTRA_URI = "CustomElectronicSignatureActivity.DocumentUri";
 
@@ -87,10 +83,7 @@ public class CustomElectronicSignatureExample extends SdkExample {
         private static final String STATE_TOUCHED_POINT = "STATE_TOUCHED_POINT";
 
         private PdfFragment fragment;
-        private ToolbarCoordinatorLayout toolbarCoordinatorLayout;
         private Button annotationCreationButton;
-
-        private AnnotationEditingToolbar annotationEditingToolbar;
 
         private DocumentListener documentListener;
 
@@ -111,9 +104,6 @@ public class CustomElectronicSignatureExample extends SdkExample {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_custom_ink_signature);
             setSupportActionBar(null);
-
-            toolbarCoordinatorLayout = findViewById(R.id.toolbarCoordinatorLayout);
-            annotationEditingToolbar = new AnnotationEditingToolbar(this);
 
             // The actual document Uri is provided with the launching intent. You can simply change that
             // inside the CustomSearchUiExample class.
@@ -174,10 +164,6 @@ public class CustomElectronicSignatureExample extends SdkExample {
             };
             fragment.addDocumentListener(documentListener);
 
-            // Register annotation editing mode change listener for showing editing toolbar when
-            // entering annotation editing mode.
-            fragment.addOnAnnotationEditingModeChangeListener(this);
-
             // For the sake of this example we toggle ink signature creation via simple button.
             annotationCreationButton = findViewById(R.id.createInkSignature);
             annotationCreationButton.setOnClickListener(
@@ -213,7 +199,6 @@ public class CustomElectronicSignatureExample extends SdkExample {
         @Override
         protected void onDestroy() {
             super.onDestroy();
-            fragment.removeOnAnnotationEditingModeChangeListener(this);
             if (documentListener != null) {
                 fragment.removeDocumentListener(documentListener);
             }
@@ -264,40 +249,6 @@ public class CustomElectronicSignatureExample extends SdkExample {
         public void onDismiss() {
             // In this example we leave signature creation mode when dismissing signature picker.
             setSignatureCreationModeActive(false);
-        }
-
-        /**
-         * Called when annotation editing mode has been entered.
-         *
-         * @param controller Controller for managing annotation editing.
-         */
-        @Override
-        public void onEnterAnnotationEditingMode(@NonNull AnnotationEditingController controller) {
-            annotationEditingToolbar.bindController(controller);
-            toolbarCoordinatorLayout.displayContextualToolbar(annotationEditingToolbar, true);
-        }
-
-        /**
-         * Called then annotation editing mode changes, meaning another annotation is being selected for
-         * editing.
-         *
-         * @param controller Controller for managing annotation editing.
-         */
-        @Override
-        public void onChangeAnnotationEditingMode(@NonNull AnnotationEditingController controller) {
-            // Nothing to be done here, if toolbar is bound to the controller it will pick up the
-            // changes.
-        }
-
-        /**
-         * Called when annotation editing mode has been exited.
-         *
-         * @param controller Controller for managing annotation editing.
-         */
-        @Override
-        public void onExitAnnotationEditingMode(@NonNull AnnotationEditingController controller) {
-            toolbarCoordinatorLayout.removeContextualToolbar(true);
-            annotationEditingToolbar.unbindController();
         }
 
         private void updateButtonText() {

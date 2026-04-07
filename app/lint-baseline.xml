@@ -1,654 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<issues format="6" by="lint 8.10.1" type="baseline" client="gradle" dependencies="false" name="AGP (8.10.1)" variant="all" version="8.10.1">
-
-    <issue
-        id="CheckResult"
-        message="The result of `subscribe` is not used"
-        errorLine1="        getDocument()"
-        errorLine2="        ^">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/AnnotationFlagsActivity.java"
-            line="208"
-            column="9"/>
-    </issue>
-
-    <issue
-        id="CheckResult"
-        message="The result of `subscribe` is not used"
-        errorLine1="        DocumentSharingProviderProcessor.prepareFileForSharing(this, new ContentResolverDataProvider(imageUri), null)"
-        errorLine2="        ^">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/CopyToClipboardActivity.java"
-            line="89"
-            column="9"/>
-    </issue>
-
-    <issue
-        id="CheckResult"
-        message="The result of `subscribe` is not used"
-        errorLine1="        Observable.defer((Supplier&lt;ObservableSource&lt;String>>) () -> {"
-        errorLine2="        ^">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/CustomSearchUiActivity.java"
-            line="354"
-            column="9"/>
-    </issue>
-
-    <issue
-        id="CheckResult"
-        message="The result of `subscribe` is not used"
-        errorLine1="        document.getFormProvider().getFormElementsAsync().subscribe((formElements, throwable) -> {"
-        errorLine2="        ^">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="44"
-            column="9"/>
-    </issue>
-
-    <issue
-        id="CheckResult"
-        message="The result of `subscribe` is not used"
-        errorLine1="        PdfProcessor.processDocumentAsync(task, outputFile)"
-        errorLine2="        ^">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/FormsJavaScriptExample.java"
-            line="69"
-            column="9"/>
-    </issue>
-
-    <issue
-        id="CheckResult"
-        message="The result of `subscribe` is not used"
-        errorLine1="            findUnitByUid(spokenUnits, utteranceId)"
-        errorLine2="            ^">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/screenreader/ScreenReader.java"
-            line="132"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="Range"
-        message="Value must be ≥ 0 but `getPageIndex` can be -1"
-        errorLine1="                        this, getDocument(), getPageIndex())"
-        errorLine2="                                             ~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/DocumentSharingExampleActivity.java"
-            line="42"
-            column="46"/>
-    </issue>
-
-    <issue
-        id="Range"
-        message="Value must be ≥ 0 but `getPageIndex` can be -1"
-        errorLine1="                    screenReader.readSentencesOnPage(getDocument(), getPageIndex());"
-        errorLine2="                                                                    ~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/ScreenReaderExampleActivity.java"
-            line="37"
-            column="69"/>
-    </issue>
-
-    <issue
-        id="Range"
-        message="Value must be ≥ 0 but `getPageIndex` can be -1"
-        errorLine1="            screenReader.readSentencesOnPage(document, getPageIndex());"
-        errorLine2="                                                       ~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/ScreenReaderExampleActivity.java"
-            line="81"
-            column="56"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                .setAdditionalAction("
-        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="68"
-            column="34"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                        AnnotationTriggerEvent.FORM_CHANGED,"
-        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="71"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                        new JavaScriptAction(&quot;AFNumber_Keystroke(2, 0, 0, 0, &apos;&apos;, true);&quot;))"
-        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="74"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                .setAdditionalAction("
-        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="75"
-            column="34"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                        AnnotationTriggerEvent.FIELD_FORMAT,"
-        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="78"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                        new JavaScriptAction(&quot;AFNumber_Format(2, 0, 0, 0, &apos;&apos;, true);&quot;))"
-        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="81"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                .setAdditionalAction("
-        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="90"
-            column="34"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                        AnnotationTriggerEvent.FORM_CHANGED,"
-        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="91"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                        new JavaScriptAction(&quot;AFNumber_Keystroke(0, 1, 0, 0, &apos;&apos;, true);&quot;))"
-        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="94"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                .setAdditionalAction("
-        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="95"
-            column="34"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                        AnnotationTriggerEvent.FIELD_FORMAT,"
-        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="96"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                        new JavaScriptAction(&quot;AFNumber_Format(0, 1, 0, 0, &apos;&apos;, true);&quot;))"
-        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="97"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                .setAdditionalAction("
-        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="106"
-            column="34"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                        AnnotationTriggerEvent.FORM_CALCULATE,"
-        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="109"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                        new JavaScriptAction("
-        errorLine2="                                        ^">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="114"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                .setAdditionalAction("
-        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="116"
-            column="34"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                        AnnotationTriggerEvent.FIELD_FORMAT,"
-        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="117"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                        new JavaScriptAction(&quot;AFNumber_Format(2, 1, 0, 0, &apos;&apos;, true);&quot;))"
-        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="120"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setReadOnly can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                .setReadOnly(true)"
-        errorLine2="                                 ~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="122"
-            column="34"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                .setAdditionalAction("
-        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="152"
-            column="34"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                        AnnotationTriggerEvent.FORM_CALCULATE,"
-        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="155"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                        new JavaScriptAction(&quot;&quot;"
-        errorLine2="                                        ^">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="158"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setReadOnly can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                .setReadOnly(true)"
-        errorLine2="                                 ~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="164"
-            column="34"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                .setAdditionalAction("
-        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="183"
-            column="34"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                        AnnotationTriggerEvent.FORM_CHANGED,"
-        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="186"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                        new JavaScriptAction(&quot;AFNumber_Keystroke(2, 0, 0, 0, &apos;&apos;, true);&quot;))"
-        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="189"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                .setAdditionalAction("
-        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="190"
-            column="34"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                        AnnotationTriggerEvent.FIELD_FORMAT,"
-        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="193"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                        new JavaScriptAction(&quot;AFNumber_Format(2, 0, 0, 0, &apos;&apos;, true);&quot;))"
-        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="195"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                .setAdditionalAction("
-        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="204"
-            column="34"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                        AnnotationTriggerEvent.FORM_CHANGED,"
-        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="205"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                        new JavaScriptAction(&quot;AFNumber_Keystroke(2, 3, 0, 0, &apos;€&apos;, true);&quot;))"
-        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="206"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                .setAdditionalAction("
-        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="207"
-            column="34"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                        AnnotationTriggerEvent.FIELD_FORMAT,"
-        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="208"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                        new JavaScriptAction(&quot;AFNumber_Format(2, 3, 0, 0, &apos;€&apos;, true);&quot;))"
-        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="209"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                .setAdditionalAction("
-        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="218"
-            column="34"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                        AnnotationTriggerEvent.FORM_CHANGED,"
-        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="219"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                        new JavaScriptAction(&quot;AFDate_KeystrokeEx(&apos;mm/dd/yyyy&apos;);&quot;))"
-        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="220"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                .setAdditionalAction("
-        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="221"
-            column="34"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                        AnnotationTriggerEvent.FIELD_FORMAT,"
-        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="222"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                        new JavaScriptAction(&quot;AFDate_FormatEx(&apos;mm/dd/yyyy&apos;);&quot;))"
-        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="223"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                .setAdditionalAction("
-        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="232"
-            column="34"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                        AnnotationTriggerEvent.FORM_CHANGED,"
-        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="233"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                        new JavaScriptAction(&quot;AFTime_Keystroke(&apos;HH:MM::ss&apos;);&quot;))"
-        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="234"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                .setAdditionalAction("
-        errorLine2="                                 ~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="235"
-            column="34"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                        AnnotationTriggerEvent.FIELD_FORMAT,"
-        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="236"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                                        new JavaScriptAction(&quot;AFTime_Format(&apos;HH:MM::ss&apos;);&quot;))"
-        errorLine2="                                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="237"
-            column="41"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                .setAdditionalAction("
-        errorLine2="                 ~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="269"
-            column="18"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                        AnnotationTriggerEvent.MOUSE_UP,"
-        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="272"
-            column="25"/>
-    </issue>
-
-    <issue
-        id="RestrictedApi"
-        message="BaseBuilder.setAdditionalAction can only be called from within the same library (android:sdk-nutrient)"
-        errorLine1="                        new JavaScriptAction(&quot;&quot;"
-        errorLine2="                        ^">
-        <location
-            file="src/main/java/com/pspdfkit/catalog/examples/java/activities/FormsJavaScriptActivity.java"
-            line="274"
-            column="25"/>
-    </issue>
+<issues format="6" by="lint 9.0.1" type="baseline" client="gradle" dependencies="false" name="AGP (9.0.1)" variant="all" version="9.0.1">
 
     <issue
         id="UseCompoundDrawables"
@@ -659,17 +10,6 @@
             file="src/main/res/layout/item_kiosk_item.xml"
             line="9"
             column="2"/>
-    </issue>
-
-    <issue
-        id="VectorPath"
-        message="Very long vector path (2252 characters), which is bad for performance. Considering reducing precision, removing minor details or rasterizing vector."
-        errorLine1="      android:pathData=&quot;M15.8822,4.8221C14.6763,4.3189 13.3701,3.9967 12,3.9967C8.6301,3.9967 5.6468,5.9458 3.5915,7.7441C2.5467,8.6583 1.7006,9.5698 1.1157,10.2522C0.8227,10.5941 0.5936,10.8803 0.4363,11.0831C0.3577,11.1845 0.2968,11.2653 0.2549,11.3218C0.2339,11.35 0.2176,11.3723 0.2061,11.388L0.1925,11.4067L0.1885,11.4124L0.1866,11.4149C-0.0617,11.7626 -0.0621,12.2302 0.1863,12.5779L1,11.9967C0.1863,12.5779 0.1869,12.5789 0.1871,12.5792L0.1885,12.581L0.1925,12.5867L0.2061,12.6054C0.2176,12.6212 0.2339,12.6434 0.2549,12.6716C0.2968,12.7282 0.3577,12.8089 0.4363,12.9103C0.5936,13.1131 0.8227,13.3993 1.1157,13.7412C1.7006,14.4236 2.5467,15.3351 3.5915,16.2493C3.741,16.3801 3.8953,16.5116 4.0544,16.6432L5.476,15.2224C5.282,15.0651 5.0927,14.9053 4.9085,14.7441C3.9533,13.9083 3.1743,13.0698 2.6342,12.4397C2.4942,12.2762 2.3706,12.1273 2.2646,11.9967C2.3706,11.8661 2.4942,11.7172 2.6342,11.5537C3.1743,10.9236 3.9533,10.0851 4.9085,9.2493C6.8532,7.5476 9.3698,5.9967 12,5.9967C12.7895,5.9967 13.5687,6.1364 14.3254,6.3781L15.8822,4.8221ZM18.5208,8.7685L19.9416,7.3469C20.1021,7.4796 20.2578,7.6122 20.4085,7.7441C21.4533,8.6583 22.2993,9.5698 22.8842,10.2522C23.1773,10.5941 23.4064,10.8803 23.5637,11.0831C23.6423,11.1845 23.7031,11.2653 23.7451,11.3218C23.7661,11.35 23.7824,11.3723 23.7939,11.388L23.8075,11.4067L23.8115,11.4124L23.8129,11.4142C23.8131,11.4145 23.8137,11.4155 23,11.9967L23.8133,12.5785L23.8115,12.581L23.8075,12.5867L23.7939,12.6054C23.7824,12.6212 23.7661,12.6434 23.7451,12.6716C23.7031,12.7282 23.6423,12.8089 23.5637,12.9103C23.4064,13.1131 23.1773,13.3993 22.8842,13.7412C22.2993,14.4236 21.4533,15.3351 20.4085,16.2493C18.3532,18.0477 15.3698,19.9967 12,19.9967C10.6315,19.9967 9.3268,19.6753 8.1221,19.1731L9.6779,17.6164C10.4335,17.8574 11.2116,17.9967 12,17.9967C14.6301,17.9967 17.1468,16.4458 19.0915,14.7441C20.0467,13.9083 20.8256,13.0698 21.3657,12.4397C21.5058,12.2762 21.6294,12.1273 21.7354,11.9967C21.6294,11.8661 21.5058,11.7172 21.3657,11.5537C20.8256,10.9236 20.0467,10.0851 19.0915,9.2493C18.9063,9.0872 18.716,8.9266 18.5208,8.7685ZM23.8133,12.5785C23.8135,12.5782 23.8137,12.5779 23,11.9967L23.8137,11.4155C24.0621,11.7632 24.0617,12.2308 23.8133,12.5785ZM1,11.9967L0.1866,11.4149C0.1864,11.4152 0.1863,11.4155 1,11.9967Z&quot;"
-        errorLine2="                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/drawable/ic_hide.xml"
-            line="7"
-            column="25"/>
     </issue>
 
     <issue
@@ -700,17 +40,6 @@
         errorLine1="&lt;FrameLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
         errorLine2="^">
         <location
-            file="src/main/res/layout/activity_custom_fragment.xml"
-            line="8"
-            column="1"/>
-    </issue>
-
-    <issue
-        id="MergeRootFrame"
-        message="This `&lt;FrameLayout>` can be replaced with a `&lt;merge>` tag"
-        errorLine1="&lt;FrameLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
-        errorLine2="^">
-        <location
             file="src/main/res/layout/activity_custom_fragment_runtime_configuration.xml"
             line="9"
             column="1"/>
@@ -724,17 +53,6 @@
         <location
             file="src/main/res/layout/activity_custom_ink_signature.xml"
             line="8"
-            column="1"/>
-    </issue>
-
-    <issue
-        id="MergeRootFrame"
-        message="This `&lt;FrameLayout>` can be replaced with a `&lt;merge>` tag"
-        errorLine1="&lt;FrameLayout"
-        errorLine2="^">
-        <location
-            file="src/main/res/layout/activity_custom_search_ui.xml"
-            line="9"
             column="1"/>
     </issue>
 
@@ -784,17 +102,6 @@
 
     <issue
         id="Overdraw"
-        message="Possible overdraw: Root element paints background `?colorPrimaryDark` with a theme that also paints a background (inferred theme is `@style/Theme.Catalog.SplashScreen`)"
-        errorLine1="                android:background=&quot;?colorPrimaryDark&quot;"
-        errorLine2="                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/activity_custom_search_ui_navigationbar.xml"
-            line="13"
-            column="17"/>
-    </issue>
-
-    <issue
-        id="Overdraw"
         message="Possible overdraw: Root element paints background `?android:windowBackground` with a theme that also paints a background (inferred theme is `@style/Theme.Catalog.SplashScreen`)"
         errorLine1="    android:background=&quot;?android:windowBackground&quot;>"
         errorLine2="    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
@@ -802,17 +109,6 @@
             file="src/main/res/layout/item_section.xml"
             line="11"
             column="5"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.layout.activity_custom_search_ui_navigationbar` appears to be unused"
-        errorLine1="&lt;RelativeLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
-        errorLine2="^">
-        <location
-            file="src/main/res/layout/activity_custom_search_ui_navigationbar.xml"
-            line="9"
-            column="1"/>
     </issue>
 
     <issue
@@ -855,7 +151,7 @@
         errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/dimens.xml"
-            line="20"
+            line="19"
             column="12"/>
     </issue>
 
@@ -866,7 +162,7 @@
         errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/dimens.xml"
-            line="26"
+            line="25"
             column="12"/>
     </issue>
 
@@ -877,7 +173,7 @@
         errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/dimens.xml"
-            line="27"
+            line="26"
             column="12"/>
     </issue>
 
@@ -888,8 +184,19 @@
         errorLine2="                                ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/dimens.xml"
-            line="35"
+            line="34"
             column="33"/>
+    </issue>
+
+    <issue
+        id="UnusedResources"
+        message="The resource `R.menu.flags_example` appears to be unused"
+        errorLine1="&lt;menu xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;"
+        errorLine2="^">
+        <location
+            file="src/main/res/menu/flags_example.xml"
+            line="9"
+            column="1"/>
     </issue>
 
     <issue
@@ -938,34 +245,12 @@
 
     <issue
         id="UnusedResources"
-        message="The resource `R.string.memoryDataProviderExampleTitle` appears to be unused"
-        errorLine1="    &lt;string name=&quot;memoryDataProviderExampleTitle&quot;>MemoryDataProvider&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="70"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.string.memoryDataProviderExampleDescription` appears to be unused"
-        errorLine1="    &lt;string name=&quot;memoryDataProviderExampleDescription&quot;>Loading a document from a byte-array using the MemoryDataProvider.&lt;/string>"
-        errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/strings.xml"
-            line="71"
-            column="13"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
         message="The resource `R.string.page_template_title_logo` appears to be unused"
         errorLine1="    &lt;string name=&quot;page_template_title_logo&quot;>Custom Pattern&lt;/string>"
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="261"
+            line="244"
             column="13"/>
     </issue>
 
@@ -976,7 +261,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="308"
+            line="291"
             column="13"/>
     </issue>
 
@@ -987,7 +272,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="309"
+            line="292"
             column="13"/>
     </issue>
 
@@ -998,7 +283,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="310"
+            line="293"
             column="13"/>
     </issue>
 
@@ -1009,7 +294,7 @@
         errorLine2="            ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/strings.xml"
-            line="381"
+            line="364"
             column="13"/>
     </issue>
 
@@ -1031,41 +316,8 @@
         errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
         <location
             file="src/main/res/values/styles.xml"
-            line="117"
+            line="144"
             column="12"/>
-    </issue>
-
-    <issue
-        id="UnusedResources"
-        message="The resource `R.style.Theme_CustomSearchUi` appears to be unused"
-        errorLine1="    &lt;style name=&quot;Theme_CustomSearchUi&quot; parent=&quot;Theme.AppCompat.NoActionBar&quot; />"
-        errorLine2="           ~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/values/styles.xml"
-            line="124"
-            column="12"/>
-    </issue>
-
-    <issue
-        id="TextFields"
-        message="This text field does not specify an `inputType`"
-        errorLine1="    &lt;EditText"
-        errorLine2="     ~~~~~~~~">
-        <location
-            file="src/main/res/layout/activity_enter_instant_document_link.xml"
-            line="12"
-            column="6"/>
-    </issue>
-
-    <issue
-        id="Autofill"
-        message="Missing `autofillHints` attribute"
-        errorLine1="    &lt;EditText"
-        errorLine2="     ~~~~~~~~">
-        <location
-            file="src/main/res/layout/activity_enter_instant_document_link.xml"
-            line="12"
-            column="6"/>
     </issue>
 
     <issue
@@ -1076,72 +328,6 @@
         <location
             file="src/main/res/layout/custom_document_sharing_dialog.xml"
             line="14"
-            column="6"/>
-    </issue>
-
-    <issue
-        id="Autofill"
-        message="Missing `autofillHints` attribute"
-        errorLine1="    &lt;EditText"
-        errorLine2="     ~~~~~~~~">
-        <location
-            file="src/main/res/layout/dialog_basic_auth.xml"
-            line="14"
-            column="6"/>
-    </issue>
-
-    <issue
-        id="Autofill"
-        message="Missing `autofillHints` attribute"
-        errorLine1="    &lt;EditText"
-        errorLine2="     ~~~~~~~~">
-        <location
-            file="src/main/res/layout/dialog_basic_auth.xml"
-            line="24"
-            column="6"/>
-    </issue>
-
-    <issue
-        id="ContentDescription"
-        message="Missing `contentDescription` attribute on image"
-        errorLine1="        &lt;ImageView"
-        errorLine2="         ~~~~~~~~~">
-        <location
-            file="src/main/res/layout/activity_custom_fragment.xml"
-            line="52"
-            column="10"/>
-    </issue>
-
-    <issue
-        id="ContentDescription"
-        message="Missing `contentDescription` attribute on image"
-        errorLine1="        &lt;ImageView"
-        errorLine2="         ~~~~~~~~~">
-        <location
-            file="src/main/res/layout/activity_custom_fragment.xml"
-            line="60"
-            column="10"/>
-    </issue>
-
-    <issue
-        id="ContentDescription"
-        message="Missing `contentDescription` attribute on image"
-        errorLine1="        &lt;ImageView"
-        errorLine2="         ~~~~~~~~~">
-        <location
-            file="src/main/res/layout/activity_custom_fragment.xml"
-            line="68"
-            column="10"/>
-    </issue>
-
-    <issue
-        id="ContentDescription"
-        message="Missing `contentDescription` attribute on image"
-        errorLine1="    &lt;ImageView"
-        errorLine2="     ~~~~~~~~~">
-        <location
-            file="src/main/res/layout/activity_custom_search_ui_item.xml"
-            line="16"
             column="6"/>
     </issue>
 
@@ -1165,28 +351,6 @@
             file="src/main/res/layout/custom_document_sharing_dialog.xml"
             line="14"
             column="6"/>
-    </issue>
-
-    <issue
-        id="HardcodedText"
-        message="Hardcoded string &quot;Enter Document Link&quot;, should use `@string` resource"
-        errorLine1="        android:hint=&quot;Enter Document Link&quot;/>"
-        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/activity_enter_instant_document_link.xml"
-            line="16"
-            column="9"/>
-    </issue>
-
-    <issue
-        id="HardcodedText"
-        message="Hardcoded string &quot;Open Document&quot;, should use `@string` resource"
-        errorLine1="        android:text=&quot;Open Document&quot;/>"
-        errorLine2="        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~">
-        <location
-            file="src/main/res/layout/activity_enter_instant_document_link.xml"
-            line="24"
-            column="9"/>
     </issue>
 
     <issue
@@ -1429,28 +593,6 @@
             file="src/main/res/menu/sharing_example.xml"
             line="28"
             column="9"/>
-    </issue>
-
-    <issue
-        id="RelativeOverlap"
-        message="`@id/previousSearchResultButton` can overlap `@id/currentSearchResultTextView` if @id/currentSearchResultTextView, @string/previous grow due to localized text expansion"
-        errorLine1="        &lt;Button"
-        errorLine2="         ~~~~~~">
-        <location
-            file="src/main/res/layout/activity_custom_search_ui.xml"
-            line="54"
-            column="10"/>
-    </issue>
-
-    <issue
-        id="RelativeOverlap"
-        message="`@id/previousSearchResultButton` can overlap `@id/currentSearchResultTextView` if @id/currentSearchResultTextView, @string/previous grow due to localized text expansion"
-        errorLine1="    &lt;Button"
-        errorLine2="     ~~~~~~">
-        <location
-            file="src/main/res/layout/activity_custom_search_ui_navigationbar.xml"
-            line="37"
-            column="6"/>
     </issue>
 
     <issue

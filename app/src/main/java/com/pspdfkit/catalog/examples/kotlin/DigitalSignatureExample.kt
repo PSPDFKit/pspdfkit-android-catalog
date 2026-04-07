@@ -32,6 +32,8 @@ import java.security.cert.X509Certificate
  */
 class DigitalSignatureExample(context: Context) :
     SdkExample(context, R.string.digitalSignatureExampleTitle, R.string.digitalSignatureExampleDescription) {
+    override val launchRequirements = setOf(SdkExample.LaunchRequirement.DIGITAL_SIGNATURE_TYPE)
+
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         val assetName = "Form_example.pdf"
 

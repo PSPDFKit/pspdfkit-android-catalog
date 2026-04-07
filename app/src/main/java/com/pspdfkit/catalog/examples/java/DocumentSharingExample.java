@@ -109,7 +109,7 @@ public class DocumentSharingExample extends SdkExample {
         }
 
         @Override
-        protected void onResume() {
+        public void onResume() {
             super.onResume();
 
             // As sharing dialog listener can't be retained, restore it in dialog after rotation.

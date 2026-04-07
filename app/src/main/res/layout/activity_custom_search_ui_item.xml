@@ -19,6 +19,8 @@
         android:layout_height="match_parent"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
+        android:contentDescription="@null"
+        android:importantForAccessibility="no"
         android:scaleType="centerInside"
         tools:src="@drawable/mock_page"/>
 

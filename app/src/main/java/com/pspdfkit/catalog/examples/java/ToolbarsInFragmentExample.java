@@ -22,19 +22,15 @@ import com.pspdfkit.catalog.tasks.ExtractAssetTask;
 import com.pspdfkit.configuration.PdfConfiguration;
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration;
 import com.pspdfkit.ui.PdfFragment;
-import com.pspdfkit.ui.annotations.OnAnnotationCreationModeChangeListener;
-import com.pspdfkit.ui.annotations.OnAnnotationEditingModeChangeListener;
+import com.pspdfkit.ui.annotations.OnAnnotatingModeChangeListener;
 import com.pspdfkit.ui.inspector.PropertyInspectorCoordinatorLayout;
-import com.pspdfkit.ui.inspector.annotation.AnnotationCreationInspectorController;
-import com.pspdfkit.ui.inspector.annotation.AnnotationEditingInspectorController;
+import com.pspdfkit.ui.inspector.annotation.AnnotatingInspectorController;
 import com.pspdfkit.ui.inspector.annotation.DefaultAnnotationCreationInspectorController;
 import com.pspdfkit.ui.inspector.annotation.DefaultAnnotationEditingInspectorController;
-import com.pspdfkit.ui.special_mode.controller.AnnotationCreationController;
-import com.pspdfkit.ui.special_mode.controller.AnnotationEditingController;
+import com.pspdfkit.ui.special_mode.controller.AnnotatingController;
 import com.pspdfkit.ui.special_mode.controller.TextSelectionController;
 import com.pspdfkit.ui.special_mode.manager.TextSelectionManager;
-import com.pspdfkit.ui.toolbar.AnnotationCreationToolbar;
-import com.pspdfkit.ui.toolbar.AnnotationEditingToolbar;
+import com.pspdfkit.ui.toolbar.AnnotationToolbar;
 import com.pspdfkit.ui.toolbar.ContextualToolbar;
 import com.pspdfkit.ui.toolbar.TextSelectionToolbar;
 import com.pspdfkit.ui.toolbar.ToolbarCoordinatorLayout;
@@ -68,9 +64,7 @@ public class ToolbarsInFragmentExample extends SdkExample {
      * ToolbarCoordinatorLayout}.
      */
     public static class ToolbarsInFragmentActivity extends AppCompatActivity
-            implements OnAnnotationCreationModeChangeListener,
-                    OnAnnotationEditingModeChangeListener,
-                    TextSelectionManager.OnTextSelectionModeChangeListener {
+            implements OnAnnotatingModeChangeListener, TextSelectionManager.OnTextSelectionModeChangeListener {
 
         public static final String EXTRA_URI = "ToolbarsInFragmentActivity.DocumentUri";
         public static final String EXTRA_CONFIGURATION = "ToolbarsInFragmentActivity.PdfConfiguration";
@@ -79,15 +73,18 @@ public class ToolbarsInFragmentExample extends SdkExample {
         private ToolbarCoordinatorLayout toolbarCoordinatorLayout;
         private Button annotationCreationButton;
 
-        private AnnotationCreationToolbar annotationCreationToolbar;
+        private AnnotationToolbar annotationToolbar;
         private TextSelectionToolbar textSelectionToolbar;
-        private AnnotationEditingToolbar annotationEditingToolbar;
 
         private boolean annotationCreationActive = false;
 
         private PropertyInspectorCoordinatorLayout inspectorCoordinatorLayout;
-        private AnnotationEditingInspectorController annotationEditingInspectorController;
-        private AnnotationCreationInspectorController annotationCreationInspectorController;
+        private AnnotatingInspectorController annotationEditingInspectorController;
+        private AnnotatingInspectorController annotationCreationInspectorController;
+
+        // Track state for the unified listener
+        private boolean creationToolbarShown = false;
+        private boolean editingInspectorBound = false;
 
         @Override
         protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -97,9 +94,8 @@ public class ToolbarsInFragmentExample extends SdkExample {
 
             toolbarCoordinatorLayout = findViewById(R.id.toolbarCoordinatorLayout);
 
-            annotationCreationToolbar = new AnnotationCreationToolbar(this);
+            annotationToolbar = new AnnotationToolbar(this);
             textSelectionToolbar = new TextSelectionToolbar(this);
-            annotationEditingToolbar = new AnnotationEditingToolbar(this);
 
             // Use this if you want to use annotation inspector with annotation creation and editing
             // toolbars.
@@ -143,7 +139,7 @@ public class ToolbarsInFragmentExample extends SdkExample {
                 if (annotationCreationActive) {
                     fragment.exitCurrentlyActiveMode();
                 } else {
-                    fragment.enterAnnotationCreationMode();
+                    fragment.enterAnnotatingMode();
                 }
             });
 
@@ -160,81 +156,77 @@ public class ToolbarsInFragmentExample extends SdkExample {
                         .commit();
             }
 
-            fragment.addOnAnnotationCreationModeChangeListener(this);
-            fragment.addOnAnnotationEditingModeChangeListener(this);
+            // Use the new unified listener for annotation mode changes
+            fragment.addOnAnnotatingModeChangeListener(this);
             fragment.addOnTextSelectionModeChangeListener(this);
         }
 
         @Override
         protected void onDestroy() {
             super.onDestroy();
-            fragment.removeOnAnnotationCreationModeChangeListener(this);
-            fragment.removeOnAnnotationEditingModeChangeListener(this);
+            fragment.removeOnAnnotatingModeChangeListener(this);
             fragment.removeOnTextSelectionModeChangeListener(this);
         }
 
         @Override
-        public void onEnterAnnotationCreationMode(@NonNull AnnotationCreationController controller) {
-            // When entering the annotation creation mode we bind the creation inspector to the provided
-            // controller.
-            // Controller handles request for toggling annotation inspector.
-            annotationCreationInspectorController.bindAnnotationCreationController(controller);
+        public void onEnterAnnotatingMode(@NonNull AnnotatingController controller) {
+            // Check if we need to show creation toolbar (annotation tool is active)
+            if (controller.getActiveAnnotationTool() != null && !creationToolbarShown) {
+                // When entering the annotation creation mode we bind the creation inspector to the provided
+                // controller.
+                // Controller handles request for toggling annotation inspector.
+                annotationCreationInspectorController.bindController(controller);
 
-            // When entering the annotation creation mode we bind the toolbar to the provided
-            // controller, and
-            // issue the coordinator layout to animate the toolbar in place.
-            // Whenever the user presses an action, the toolbar forwards this command to the controller.
-            // Instead of using the `AnnotationEditingToolbar` you could use a custom UI that operates
-            // on the controller.
-            // Same principle is used on all other toolbars.
-            annotationCreationToolbar.bindController(controller);
-            toolbarCoordinatorLayout.displayContextualToolbar(annotationCreationToolbar, true);
-            annotationCreationActive = true;
-            updateButtonText();
+                // When entering the annotation creation mode we bind the toolbar to the provided
+                // controller, and issue the coordinator layout to animate the toolbar in place.
+                // Whenever the user presses an action, the toolbar forwards this command to the controller.
+                // Instead of using the `AnnotationToolbar` you could use a custom UI that operates
+                // on the controller.
+                annotationToolbar.bindController(controller);
+                toolbarCoordinatorLayout.displayContextualToolbar(annotationToolbar, true);
+                creationToolbarShown = true;
+                annotationCreationActive = true;
+                updateButtonText();
+            }
+
+            // Check if we need to bind editing inspector (annotations are selected)
+            if (controller.hasCurrentlySelectedAnnotations() && !editingInspectorBound) {
+                annotationEditingInspectorController.bindController(controller);
+                editingInspectorBound = true;
+            }
         }
 
         @Override
-        public void onChangeAnnotationCreationMode(@NonNull AnnotationCreationController controller) {
-            // Nothing to be done here, if toolbar is bound to the controller it will pick up the
-            // changes.
+        public void onChangeAnnotatingMode(@NonNull AnnotatingController controller) {
+            // Handle state changes - check if editing mode was entered or exited
+            if (controller.hasCurrentlySelectedAnnotations() && !editingInspectorBound) {
+                annotationEditingInspectorController.bindController(controller);
+                editingInspectorBound = true;
+            } else if (!controller.hasCurrentlySelectedAnnotations() && editingInspectorBound) {
+                annotationEditingInspectorController.unbindController();
+                editingInspectorBound = false;
+            }
         }
 
         @Override
-        public void onExitAnnotationCreationMode(@NonNull AnnotationCreationController controller) {
-            // Once we're done with editing, unbind the controller from the toolbar, and remove it from
-            // the
-            // toolbar coordinator layout (with animation in this case).
-            // Same principle is used on all other toolbars.
-            toolbarCoordinatorLayout.removeContextualToolbar(true);
-            annotationCreationToolbar.unbindController();
-            annotationCreationActive = false;
+        public void onExitAnnotatingMode(@NonNull AnnotatingController controller) {
+            // Check if creation mode exited (no active tool)
+            if (controller.getActiveAnnotationTool() == null && creationToolbarShown) {
+                // Once we're done with editing, unbind the controller from the toolbar, and remove it from
+                // the toolbar coordinator layout (with animation in this case).
+                toolbarCoordinatorLayout.removeContextualToolbar(true);
+                annotationToolbar.unbindController();
+                annotationCreationInspectorController.unbindController();
+                creationToolbarShown = false;
+                annotationCreationActive = false;
+                updateButtonText();
+            }
 
-            // Also unbind the annotation creation controller from the inspector controller.
-            annotationCreationInspectorController.unbindAnnotationCreationController();
-
-            updateButtonText();
-        }
-
-        @Override
-        public void onEnterAnnotationEditingMode(@NonNull AnnotationEditingController controller) {
-            annotationEditingInspectorController.bindAnnotationEditingController(controller);
-
-            annotationEditingToolbar.bindController(controller);
-            toolbarCoordinatorLayout.displayContextualToolbar(annotationEditingToolbar, true);
-        }
-
-        @Override
-        public void onChangeAnnotationEditingMode(@NonNull AnnotationEditingController controller) {
-            // Nothing to be done here, if toolbar is bound to the controller it will pick up the
-            // changes.
-        }
-
-        @Override
-        public void onExitAnnotationEditingMode(@NonNull AnnotationEditingController controller) {
-            toolbarCoordinatorLayout.removeContextualToolbar(true);
-            annotationEditingToolbar.unbindController();
-
-            annotationEditingInspectorController.unbindAnnotationEditingController();
+            // Check if editing mode exited (no selected annotations)
+            if (!controller.hasCurrentlySelectedAnnotations() && editingInspectorBound) {
+                annotationEditingInspectorController.unbindController();
+                editingInspectorBound = false;
+            }
         }
 
         @Override

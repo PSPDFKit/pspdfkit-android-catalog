@@ -12,6 +12,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -31,7 +32,8 @@ import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.captionBar
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.imePadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.pager.HorizontalPager
@@ -43,8 +45,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableStateOf
@@ -76,6 +79,8 @@ import com.pspdfkit.jetpack.compose.interactors.DocumentState
 import com.pspdfkit.jetpack.compose.interactors.getDefaultDocumentManager
 import com.pspdfkit.jetpack.compose.interactors.rememberDocumentState
 import com.pspdfkit.jetpack.compose.views.DocumentView
+import com.pspdfkit.ui.toolbar.ContextualToolbar
+import com.pspdfkit.ui.toolbar.ToolbarCoordinatorLayout
 import kotlinx.coroutines.launch
 import java.io.File
 import java.lang.ref.WeakReference
@@ -287,43 +292,81 @@ private fun PdfDocumentPage(
     val context = LocalContext.current
     val documentState = documentStateManager.getOrCreateDocumentState(page)
 
-    // State for toolbar visibility and height
-    var toolbarVisibility by remember { mutableStateOf(true) }
-    var toolbarHeight by remember { mutableStateOf(0.dp) }
+    var immersiveModeEnabled by remember { mutableStateOf(false) }
+    var contextualToolbarShown by remember { mutableStateOf(false) }
+    val searchViewShown by documentState.searchViewShown.collectAsState()
+    val toolbarVisibility = !immersiveModeEnabled && !contextualToolbarShown && !searchViewShown
+    val tabRowVisibility = !immersiveModeEnabled && !searchViewShown
 
-    // Calculate spacer height based on view overlap state
+    LaunchedEffect(documentState) {
+        documentState.setOnContextualToolbarLifecycleListener(object : ToolbarCoordinatorLayout.OnContextualToolbarLifecycleListener {
+            override fun onPrepareContextualToolbar(toolbar: ContextualToolbar<*>) = Unit
+            override fun onDisplayContextualToolbar(toolbar: ContextualToolbar<*>) {
+                contextualToolbarShown = true
+            }
+            override fun onRemoveContextualToolbar(toolbar: ContextualToolbar<*>) {
+                contextualToolbarShown = false
+                immersiveModeEnabled = false
+            }
+        })
+    }
+
+    LaunchedEffect(searchViewShown) {
+        if (!searchViewShown) immersiveModeEnabled = false
+    }
+
+    LaunchedEffect(tabRowVisibility) {
+        updateTopBarVisibility(tabRowVisibility)
+    }
+
     val enableViewSpacer by documentState.viewWithOverlappingToolbarShown.collectAsState()
-    val viewSpacerHeight by remember {
-        derivedStateOf { if (enableViewSpacer && toolbarVisibility) toolbarHeight else 0.dp }
+
+    // Manage the content view's top padding (which offsets the thumbnail grid below the visible
+    // toolbar) entirely from Compose via SideEffect. This runs synchronously after every
+    // recomposition and calls into the SDK's setContentViewTopPadding, which suppresses the
+    // automatic Java-side adjustments in ToolbarCoordinatorLayout so the two don't race.
+    //
+    // Crucially, enableViewSpacer is true both during normal grid mode AND editing mode, so the
+    // padding value stays constant across that transition — no grid jump, no thumbnail recycling.
+    //
+    // We use the SDK's own contextual toolbar height (toolbarSizePx) rather than deriving it from
+    // the Compose MainToolbar's measured height. The measured height can be stale by one frame
+    // when showTitleBar changes (e.g. as the grid opens), which would cause a 1-frame spike that
+    // pushes the grid too low. The SDK value is always correct and matches adjustContentViewTopPadding.
+    val contextualToolbarSizePx = documentState.getContextualToolbarSizePx()
+    SideEffect {
+        documentState.setContentViewTopPadding(if (enableViewSpacer) contextualToolbarSizePx else 0)
+    }
+
+    val imeVisible = WindowInsets.ime.getBottom(LocalDensity.current) > 0
+    BackHandler(enabled = (contextualToolbarShown || enableViewSpacer) && !imeVisible) {
+        documentState.handleBackPress()
     }
 
     Box(
         contentAlignment = Alignment.TopCenter,
     ) {
-        Column {
-            // Spacer to prevent content from being covered by toolbar
-            Box(modifier = Modifier.height(viewSpacerHeight).padding(top = paddingValues.calculateTopPadding()))
-
+        Column(modifier = Modifier.padding(top = paddingValues.calculateTopPadding())) {
             // PDF Document View
             DocumentView(
                 documentState = documentState,
-                modifier = Modifier.weight(1f),
+                modifier = Modifier.weight(1f).imePadding(),
                 documentManager =
                 createDocumentManager(context) {
-                    toolbarVisibility = !it
-                    updateTopBarVisibility.invoke(!it)
+                    immersiveModeEnabled = it
                 },
             )
         }
 
-        // Animated toolbar
+        // Animated toolbar. When the contextual (editing) toolbar is taking over, skip the slide
+        // and shrink — a plain fade avoids visual noise while the editing toolbar slides in.
         AnimatedVisibility(
             visible = toolbarVisibility,
             enter =
             slideInVertically { with(localDensity) { -40.dp.roundToPx() } } +
                 expandVertically(expandFrom = Alignment.Top) +
                 fadeIn(initialAlpha = 0.3f),
-            exit = slideOutVertically() + shrinkVertically() + fadeOut(),
+            exit = if (contextualToolbarShown) fadeOut() else slideOutVertically() + shrinkVertically() + fadeOut(),
         ) {
             // Common toolbar for all pages
             MainToolbar(
@@ -331,9 +374,7 @@ private fun PdfDocumentPage(
                 documentState = documentState,
                 windowInsets = WindowInsets.captionBar,
                 colorScheme = createCustomUiColors(),
-                onHeightChanged = { height ->
-                    toolbarHeight = with(localDensity) { height.toDp() }
-                },
+                showTitleBar = !enableViewSpacer,
             )
         }
     }

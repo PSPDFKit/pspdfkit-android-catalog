@@ -9,7 +9,6 @@ package com.pspdfkit.catalog.examples.java;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.ContextMenu;
@@ -17,21 +16,17 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.pspdfkit.annotations.Annotation;
 import com.pspdfkit.annotations.AnnotationType;
 import com.pspdfkit.catalog.R;
 import com.pspdfkit.catalog.SdkExample;
 import com.pspdfkit.catalog.tasks.ExtractAssetTask;
-import com.pspdfkit.catalog.ui.CustomAnnotationEditingToolbarGroupingRule;
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration;
 import com.pspdfkit.ui.PdfActivity;
 import com.pspdfkit.ui.PdfActivityIntentBuilder;
+import com.pspdfkit.ui.annotations.OnAnnotationSelectedListener;
 import com.pspdfkit.ui.rendering.AnnotationOverlayRenderStrategy;
-import com.pspdfkit.ui.toolbar.AnnotationEditingToolbar;
-import com.pspdfkit.ui.toolbar.ContextualToolbar;
-import com.pspdfkit.ui.toolbar.ContextualToolbarMenuItem;
-import com.pspdfkit.ui.toolbar.ToolbarCoordinatorLayout;
 import java.util.EnumSet;
 import java.util.List;
 
@@ -45,6 +40,9 @@ public class AnnotationOverlayExample extends SdkExample {
     @Override
     public void launchExample(
             @NonNull final Context context, @NonNull final PdfActivityConfiguration.Builder configuration) {
+        // Use custom layout with FAB for per-annotation overlay toggle.
+        configuration.layout(R.layout.activity_annotation_overlay);
+
         // Extract the document from the assets.
         ExtractAssetTask.extract(ANNOTATIONS_EXAMPLE, getTitle(), context, documentFile -> {
             // To start the example create a launch intent using the builder.
@@ -58,12 +56,14 @@ public class AnnotationOverlayExample extends SdkExample {
     }
 
     /** Showcases how to enable overlay mode for annotations. */
-    public static class AnnotationOverlayActivity extends PdfActivity
-            implements ToolbarCoordinatorLayout.OnContextualToolbarLifecycleListener {
+    public static class AnnotationOverlayActivity extends PdfActivity implements OnAnnotationSelectedListener {
 
-        /** Holds annotation types that should be rendered in overlay while overlay is disabled. */
+        /**
+         * Holds per-type overlay overrides. When overlay is globally off, these types are
+         * included in overlay. When overlay is globally on, these types are excluded from overlay.
+         */
         @NonNull
-        private final EnumSet<AnnotationType> manuallyOverlaidAnnotationTypes = EnumSet.noneOf(AnnotationType.class);
+        private final EnumSet<AnnotationType> perTypeOverrides = EnumSet.noneOf(AnnotationType.class);
 
         /** Current strategy used for rendering annotations in overlay. */
         @NonNull
@@ -73,9 +73,20 @@ public class AnnotationOverlayExample extends SdkExample {
         /** Flag indicating whether annotation overlay is enabled. */
         private boolean annotationOverlayEnabled = false;
 
+        /** FAB for toggling overlay on selected annotations. */
+        private FloatingActionButton overlayFab;
+
         @Override
-        protected void onCreate(Bundle savedInstanceState) {
+        public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
+
+            // Set up the FAB for toggling overlay on selected annotation types.
+            overlayFab = findViewById(R.id.fab_toggle_annotation_overlay);
+            registerForContextMenu(overlayFab);
+            overlayFab.setOnClickListener(View::showContextMenu);
+
+            // Listen for annotation selection changes to show/hide the FAB.
+            requirePdfFragment().addOnAnnotationSelectedListener(this);
 
             // We'll set overlay render strategy that just returns currently configured strategy for all
             // annotations.
@@ -85,6 +96,24 @@ public class AnnotationOverlayExample extends SdkExample {
             // creation.
             enableOverlayForSupportedAnnotationTypes();
             invalidateOptionsMenu();
+        }
+
+        @Override
+        public void onDestroy() {
+            super.onDestroy();
+            requirePdfFragment().removeOnAnnotationSelectedListener(this);
+        }
+
+        @Override
+        public void onAnnotationSelected(@NonNull Annotation annotation, boolean annotationCreated) {
+            overlayFab.setVisibility(View.VISIBLE);
+        }
+
+        @Override
+        public void onAnnotationDeselected(@NonNull Annotation annotation, boolean reselected) {
+            if (!reselected) {
+                overlayFab.setVisibility(View.GONE);
+            }
         }
 
         @Override
@@ -119,33 +148,28 @@ public class AnnotationOverlayExample extends SdkExample {
 
         private void disableOverlayForAllAnnotationTypes() {
             annotationOverlayEnabled = false;
-            applyManuallyOverlaidAnnotationTypes();
+            perTypeOverrides.clear();
+            applyOverlayTypes();
         }
 
         private void enableOverlayForSupportedAnnotationTypes() {
-            // Passing all annotation types enables overlay mode for all types that support overlay.
-            requirePdfFragment().setOverlaidAnnotationTypes(EnumSet.allOf(AnnotationType.class));
             annotationOverlayEnabled = true;
+            perTypeOverrides.clear();
+            applyOverlayTypes();
         }
 
-        private void applyManuallyOverlaidAnnotationTypes() {
-            final EnumSet<AnnotationType> overlayTypes = EnumSet.noneOf(AnnotationType.class);
-            overlayTypes.addAll(manuallyOverlaidAnnotationTypes);
+        private void applyOverlayTypes() {
+            final EnumSet<AnnotationType> overlayTypes;
+            if (annotationOverlayEnabled) {
+                // Start with all types, then remove manually excluded ones.
+                overlayTypes = EnumSet.allOf(AnnotationType.class);
+                overlayTypes.removeAll(perTypeOverrides);
+            } else {
+                // Start with none, then add manually included ones.
+                overlayTypes = EnumSet.noneOf(AnnotationType.class);
+                overlayTypes.addAll(perTypeOverrides);
+            }
             requirePdfFragment().setOverlaidAnnotationTypes(overlayTypes);
-        }
-
-        @Override
-        protected void onResume() {
-            super.onResume();
-            // Register toolbar listener so we can add custom buttons for enabling/disabling overlay for
-            // selected annotations.
-            setOnContextualToolbarLifecycleListener(this);
-        }
-
-        @Override
-        protected void onPause() {
-            super.onPause();
-            setOnContextualToolbarLifecycleListener(null);
         }
 
         @Override
@@ -174,11 +198,9 @@ public class AnnotationOverlayExample extends SdkExample {
             if (selectedAnnotations.size() != 1) return;
 
             final AnnotationType annotationType = selectedAnnotations.get(0).getType();
-            if (manuallyOverlaidAnnotationTypes.contains(annotationType)) {
-                menu.add(0, R.id.toggle_annotation_overlay, 0, "Disable overlay");
-            } else {
-                menu.add(0, R.id.toggle_annotation_overlay, 0, "Enable overlay");
-            }
+            // The effective overlay state for this type is: globally on XOR overridden.
+            final boolean effectivelyOverlaid = annotationOverlayEnabled ^ perTypeOverrides.contains(annotationType);
+            menu.add(0, R.id.toggle_annotation_overlay, 0, effectivelyOverlaid ? "Disable overlay" : "Enable overlay");
         }
 
         @Override
@@ -192,67 +214,15 @@ public class AnnotationOverlayExample extends SdkExample {
 
             final int itemId = item.getItemId();
             if (itemId == R.id.toggle_annotation_overlay) {
-                if (manuallyOverlaidAnnotationTypes.contains(annotationType)) {
-                    manuallyOverlaidAnnotationTypes.remove(annotationType);
+                if (perTypeOverrides.contains(annotationType)) {
+                    perTypeOverrides.remove(annotationType);
                 } else {
-                    manuallyOverlaidAnnotationTypes.add(annotationType);
+                    perTypeOverrides.add(annotationType);
                 }
-                applyManuallyOverlaidAnnotationTypes();
+                applyOverlayTypes();
                 return true;
             }
             return super.onContextItemSelected(item);
-        }
-
-        @Override
-        public void onPrepareContextualToolbar(@NonNull ContextualToolbar toolbar) {
-            // Add item to annotation editing toolbar that shows our context menu for toggling
-            // overlay for selected annotation if the annotation overlay is disabled.
-            if (annotationOverlayEnabled) return;
-            if (toolbar instanceof AnnotationEditingToolbar) {
-                if (requirePdfFragment().getSelectedAnnotations().size() != 1) return;
-
-                // Set custom grouping rule for our extended editing toolbar.
-                toolbar.setMenuItemGroupingRule(new CustomAnnotationEditingToolbarGroupingRule(this));
-
-                // Get the existing menu items so we can add our item later.
-                final List<ContextualToolbarMenuItem> menuItems = ((AnnotationEditingToolbar) toolbar).getMenuItems();
-
-                // Create custom menu item.
-                final ContextualToolbarMenuItem customItem = ContextualToolbarMenuItem.createSingleItem(
-                        this,
-                        R.id.pspdf_menu_custom,
-                        ContextCompat.getDrawable(this, R.drawable.ic_settings),
-                        "Annotation Overlay",
-                        Color.WHITE,
-                        Color.WHITE,
-                        ContextualToolbarMenuItem.Position.END,
-                        false);
-                // Registers a context menu to be shown for the custom item.
-                registerForContextMenu(customItem);
-
-                // Add the custom item to our toolbar.
-                menuItems.add(customItem);
-                toolbar.setMenuItems(menuItems);
-
-                // Add a click listener so we can handle clicks on custom item.
-                toolbar.setOnMenuItemClickListener((toolbar1, menuItem) -> {
-                    if (menuItem.getId() == R.id.pspdf_menu_custom) {
-                        menuItem.showContextMenu();
-                        return true;
-                    }
-                    return false;
-                });
-            }
-        }
-
-        @Override
-        public void onDisplayContextualToolbar(@NonNull ContextualToolbar toolbar) {
-            // no-op
-        }
-
-        @Override
-        public void onRemoveContextualToolbar(@NonNull ContextualToolbar toolbar) {
-            // no-op
         }
     }
 }

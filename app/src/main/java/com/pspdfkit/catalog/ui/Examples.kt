@@ -54,8 +54,6 @@ import com.pspdfkit.catalog.ui.theming.Animations
 import com.pspdfkit.catalog.ui.theming.Dimens
 import com.pspdfkit.catalog.utils.filterBySearchState
 import com.pspdfkit.catalog.utils.firstCharacterUpperCase
-import com.pspdfkit.catalog.utils.isAiAssistantExample
-import com.pspdfkit.catalog.utils.isDigitalSignatureExample
 
 @Composable
 @ExperimentalComposeUiApi
@@ -123,13 +121,13 @@ fun Examples(state: State, dispatcher: Dispatcher) {
             Box(
                 modifier =
                 Modifier.clickable {
-                    if (psExample.isDigitalSignatureExample(context)) {
+                    if (SdkExample.LaunchRequirement.DIGITAL_SIGNATURE_TYPE in psExample.launchRequirements) {
                         // If the example is a digital signature example, we want to show the dialog first.
                         selectedClass = psExample
                         signatureDialogVisibility = true
                         return@clickable
                     }
-                    if (psExample.isAiAssistantExample(context)) {
+                    if (SdkExample.LaunchRequirement.AI_ASSISTANT_SERVER in psExample.launchRequirements) {
                         // If the example is an AI Assistant example, we want to show the IP address dialog first.
                         selectedClass = psExample
                         aiAssistantDialogVisibility = true

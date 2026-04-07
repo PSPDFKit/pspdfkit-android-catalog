@@ -39,8 +39,18 @@ abstract class SdkExample(
         KOTLIN,
     }
 
+    enum class LaunchRequirement {
+        DIGITAL_SIGNATURE_TYPE,
+        AI_ASSISTANT_SERVER,
+    }
+
     /** DigitalSignatureType to for changing signature type in digital signature examples.  */
     var digitalSignatureType: DigitalSignatureType = DigitalSignatureType.CADES
+
+    /**
+     * Extra setup the catalog should perform before launching this example.
+     */
+    open val launchRequirements: Set<LaunchRequirement> = emptySet()
 
     /** A section is a named list of examples grouped together (e.g. "Multimedia examples").  */
     class Section(val name: String, val iconId: Int, examples: Collection<SdkExample>) :

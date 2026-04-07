@@ -81,7 +81,7 @@ public class VerticalScrollbarExample extends SdkExample {
         private VerticalScrollBar verticalScrollBar;
 
         @Override
-        protected void onCreate(Bundle savedInstanceState) {
+        public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
 
             // The scrollbar widget has already been inflated from the layout file defined via the

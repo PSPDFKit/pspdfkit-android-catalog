@@ -31,7 +31,7 @@ import com.pspdfkit.ui.PdfActivityIntentBuilder;
 import com.pspdfkit.ui.PdfFragment;
 import com.pspdfkit.ui.special_mode.controller.AnnotationTool;
 import com.pspdfkit.ui.special_mode.controller.AnnotationToolVariant;
-import com.pspdfkit.ui.toolbar.AnnotationCreationToolbar;
+import com.pspdfkit.ui.toolbar.AnnotationToolbar;
 import com.pspdfkit.ui.toolbar.ContextualToolbar;
 import com.pspdfkit.ui.toolbar.ContextualToolbarMenuItem;
 import com.pspdfkit.ui.toolbar.ToolbarCoordinatorLayout;
@@ -73,7 +73,7 @@ public class CustomAnnotationCreationToolbarExample extends SdkExample {
      */
     public static class CustomAnnotationCreationToolbarActivity extends PdfActivity
             implements ToolbarCoordinatorLayout.OnContextualToolbarLifecycleListener,
-                    AnnotationCreationToolbar.ItemToAnnotationToolMapper {
+                    AnnotationToolbar.ItemToAnnotationToolMapper {
 
         // Variants of the line tool that we will add.
         private static final String VARIANT_NAME_LINE_BLUE = "blue_line";
@@ -91,7 +91,7 @@ public class CustomAnnotationCreationToolbarExample extends SdkExample {
         private Drawable yellowLineIcon;
 
         @Override
-        protected void onCreate(final Bundle savedInstanceState) {
+        public void onCreate(final Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
 
             // First we set the listener for the toolbar lifecycle changes so we
@@ -153,13 +153,12 @@ public class CustomAnnotationCreationToolbarExample extends SdkExample {
 
         @Override // ToolbarCoordinatorLayout.OnContextualToolbarLifecycleListener
         public void onPrepareContextualToolbar(@NonNull final ContextualToolbar toolbar) {
-            if (toolbar instanceof AnnotationCreationToolbar annotationCreationToolbar) {
+            if (toolbar instanceof AnnotationToolbar annotationToolbar) {
                 // Register this class as a mapper (see implemented methods below).
-                annotationCreationToolbar.setItemToAnnotationToolMapper(this);
+                annotationToolbar.setItemToAnnotationToolMapper(this);
 
                 // Register grouping rule to tell toolbar how to group menu items.
-                annotationCreationToolbar.setMenuItemGroupingRule(
-                        new CustomAnnotationCreationToolbarGroupingRule(this));
+                annotationToolbar.setMenuItemGroupingRule(new CustomAnnotationCreationToolbarGroupingRule(this));
 
                 final List<ContextualToolbarMenuItem> customMenuItems = new ArrayList<>();
 
@@ -206,8 +205,8 @@ public class CustomAnnotationCreationToolbarExample extends SdkExample {
                 }
 
                 // Before we pass custom items, we need to include our default ones as well.
-                customMenuItems.addAll(annotationCreationToolbar.getMenuItems());
-                annotationCreationToolbar.setMenuItems(customMenuItems);
+                customMenuItems.addAll(annotationToolbar.getMenuItems());
+                annotationToolbar.setMenuItems(customMenuItems);
             }
         }
 
@@ -218,7 +217,7 @@ public class CustomAnnotationCreationToolbarExample extends SdkExample {
         public void onRemoveContextualToolbar(@NonNull final ContextualToolbar toolbar) {}
 
         @NonNull
-        @Override // AnnotationCreationToolbar.ItemToAnnotationToolMapper
+        @Override // AnnotationToolbar.ItemToAnnotationToolMapper
         public SparseArray<Pair<AnnotationTool, AnnotationToolVariant>> getItemToAnnotationToolMapping() {
             // We need to add mappings to let toolbar know which item should handle which tool/variant.
             final SparseArray<Pair<AnnotationTool, AnnotationToolVariant>> itemToAnnotationToolMapping =
@@ -235,7 +234,7 @@ public class CustomAnnotationCreationToolbarExample extends SdkExample {
             return itemToAnnotationToolMapping;
         }
 
-        @Override // AnnotationCreationToolbar.ItemToAnnotationToolMapper
+        @Override // AnnotationToolbar.ItemToAnnotationToolMapper
         public boolean isStyleIndicatorCircleEnabled(final int itemId) {
             // We want to show style indicators for all our custom items and not show it for all the
             // default ones.
@@ -256,28 +255,26 @@ public class CustomAnnotationCreationToolbarExample extends SdkExample {
                 super(context);
 
                 // This adds our default markup items under out default markup group item.
-                CUSTOM_GROUPING.add(
-                        new MenuItem(com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_group_markup, new int[] {
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_highlight,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_squiggly,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_strikeout,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_underline,
-                            com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_line
-                        }));
+                CUSTOM_GROUPING.add(new MenuItem(com.pspdfkit.R.id.pspdf__annotation_toolbar_group_markup, new int[] {
+                    com.pspdfkit.R.id.pspdf__annotation_toolbar_item_highlight,
+                    com.pspdfkit.R.id.pspdf__annotation_toolbar_item_squiggly,
+                    com.pspdfkit.R.id.pspdf__annotation_toolbar_item_strikeout,
+                    com.pspdfkit.R.id.pspdf__annotation_toolbar_item_underline,
+                    com.pspdfkit.R.id.pspdf__annotation_toolbar_item_line
+                }));
 
                 // This adds line items under our group item ('writing' in this case). You can also use
                 // your own
                 // but then you need to add them to the menu items.
                 CUSTOM_GROUPING.add(new MenuItem(
-                        com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_group_writing,
+                        com.pspdfkit.R.id.pspdf__annotation_toolbar_group_writing,
                         new int[] {R.id.line_blue, R.id.line_red, R.id.line_yellow}));
 
                 // Some standalone item from the default framework implementation.
-                CUSTOM_GROUPING.add(
-                        new MenuItem(com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_ink_highlighter));
+                CUSTOM_GROUPING.add(new MenuItem(com.pspdfkit.R.id.pspdf__annotation_toolbar_item_ink_highlighter));
 
                 // To access the property inspector, the color picker item needs to be added as well.
-                CUSTOM_GROUPING.add(new MenuItem(com.pspdfkit.R.id.pspdf__annotation_creation_toolbar_item_picker));
+                CUSTOM_GROUPING.add(new MenuItem(com.pspdfkit.R.id.pspdf__annotation_toolbar_item_picker));
             }
 
             @NonNull

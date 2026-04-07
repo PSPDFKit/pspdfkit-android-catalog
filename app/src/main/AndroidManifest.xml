@@ -171,10 +171,6 @@
             android:label="@string/customElectronicSignatureExampleTitle"
             android:windowSoftInputMode="adjustNothing"/>
 
-        <activity
-            android:name=".examples.java.RandomDocumentReplacementExample$RandomDocumentReplacementActivity"
-            android:label="@string/randomDocumentReplacementExampleTitle"
-            android:windowSoftInputMode="adjustNothing" />
 
         <activity
             android:name=".examples.kotlin.ELearningActivity"
@@ -266,11 +262,6 @@
             android:label="@string/documentSharingMenuExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
-        <activity
-            android:name=".examples.kotlin.IndexedFullTextSearchLegacyActivity"
-            android:label="@string/indexedFtsLegacyExampleTitle"
-            android:theme="@style/Theme.AppCompat.Light" />
-
 
         <activity
             android:name=".examples.kotlin.IndexedFullTextSearchActivity"
@@ -285,6 +276,7 @@
             android:name=".examples.java.CustomSearchUiExample$CustomSearchUiActivity"
             android:label="@string/customSearchUiExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
+
 
         <activity
             android:name=".examples.java.DisabledAnnotationPropertyExample$DisabledAnnotationPropertyActivity"
@@ -370,19 +362,15 @@
             android:label="@string/jetpackAiAssistantExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
+
         <activity
-            android:name=".examples.kotlin.AiAssistantDocumentTabsActivity"
-            android:label="@string/aiAssistantTabbedDocumentExampleTitle"
+            android:name=".examples.kotlin.AiAssistantMultiDocComposeActivity"
+            android:label="@string/jetpackAiAssistantMultiDocExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
             android:name=".examples.kotlin.AiAssistantViewPagerActivity"
             android:label="@string/aiAssistantViewPagerExampleTitle"
-            android:windowSoftInputMode="adjustNothing" />
-
-        <activity
-            android:name=".examples.kotlin.AiAssistantMultiDocComposeActivity"
-            android:label="@string/jetpackAiAssistantMultiDocExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
@@ -450,10 +438,6 @@
             android:label="@string/zoomExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
-        <activity
-            android:name=".examples.kotlin.BackButtonExampleActivity"
-            android:label="@string/backButtonExampleTitle"
-            android:windowSoftInputMode="adjustNothing" />
 
         <activity
             android:name=".examples.kotlin.CombineElectronicSignaturesWithDigitalSigningActivity"
@@ -484,10 +468,6 @@
             android:name=".examples.kotlin.CustomAnnotationNoteHinterProviderActivity"
             android:label="@string/customAnnotationNoteHinterProviderExampleTitle" />
 
-        <activity
-            android:name=".examples.kotlin.RotatePageActivity"
-            android:label="@string/rotatePageExampleTitle"
-            android:windowSoftInputMode="adjustNothing" />
 
         <activity
             android:name=".examples.kotlin.AnnotationCreationActivity"
@@ -534,10 +514,6 @@
             android:label="@string/customLayoutExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
-        <activity
-            android:name=".examples.kotlin.CustomFragmentActivity"
-            android:label="@string/fragmentExampleTitle"
-            android:windowSoftInputMode="adjustNothing" />
 
         <activity
             android:name=".examples.kotlin.SimpleFragmentActivity"
@@ -584,8 +560,8 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.kotlin.TextHighlightPopupCustomisationActivity"
-            android:label="@string/textHighlightPopupCustomisationTitle"
+            android:name=".examples.kotlin.PopupToolbarCustomisationActivity"
+            android:label="@string/popupToolbarCustomisationTitle"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
@@ -603,10 +579,6 @@
             android:label="@string/documentScrollExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
-        <activity
-            android:name=".examples.kotlin.ViewPager2Activity"
-            android:label="@string/viewPager2ExampleTitle"
-            android:windowSoftInputMode="adjustNothing" />
 
         <activity
             android:name=".examples.kotlin.WebViewActivity"
@@ -632,10 +604,6 @@
             android:label="@string/thumbnailBarExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
-        <activity
-            android:name=".examples.kotlin.SimplePdfViewPagerActivity"
-            android:label="@string/simplePdfViewPagerExampleTitle"
-            android:windowSoftInputMode="adjustNothing" />
 
     </application>
 

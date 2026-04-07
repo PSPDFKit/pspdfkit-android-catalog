@@ -8,29 +8,24 @@
 package com.pspdfkit.catalog.examples.kotlin
 
 import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.Drawable
 import android.net.Uri
+import android.os.Bundle
 import android.util.Log
-import android.view.ContextMenu
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import androidx.core.content.ContextCompat
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.pspdfkit.annotations.Annotation
 import com.pspdfkit.annotations.AnnotationFlags
 import com.pspdfkit.annotations.AnnotationType
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.tasks.ExtractAssetTask
-import com.pspdfkit.catalog.ui.CustomAnnotationEditingToolbarGroupingRule
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
+import com.pspdfkit.listeners.OnPreparePopupToolbarListener
 import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
-import com.pspdfkit.ui.toolbar.AnnotationEditingToolbar
-import com.pspdfkit.ui.toolbar.ContextualToolbar
-import com.pspdfkit.ui.toolbar.ContextualToolbarMenuItem
-import com.pspdfkit.ui.toolbar.ToolbarCoordinatorLayout
+import com.pspdfkit.ui.toolbar.popup.AnnotationPopupToolbar
+import com.pspdfkit.ui.toolbar.popup.PopupToolbarMenuItem
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -75,15 +70,11 @@ class AnnotationFlagsExample(context: Context) :
 /** This example showcases supported [AnnotationFlags]. */
 class AnnotationFlagsActivity :
     PdfActivity(),
-    ToolbarCoordinatorLayout.OnContextualToolbarLifecycleListener {
-    override fun onPause() {
-        super.onPause()
-        setOnContextualToolbarLifecycleListener(null)
-    }
+    OnPreparePopupToolbarListener {
 
-    override fun onResume() {
-        super.onResume()
-        setOnContextualToolbarLifecycleListener(this)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        pdfFragment?.setOnPreparePopupToolbarListener(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -100,154 +91,52 @@ class AnnotationFlagsActivity :
         return super.onOptionsItemSelected(item)
     }
 
-    override fun onCreateContextMenu(menu: ContextMenu, v: View, menuInfo: ContextMenu.ContextMenuInfo?) {
-        super.onCreateContextMenu(menu, v, menuInfo)
+    override fun onPrepareAnnotationPopupToolbar(toolbar: AnnotationPopupToolbar) {
+        // Only show the flags button for single annotation selection.
+        if (toolbar.annotations.size != 1) return
 
-        // In this example we handle only single annotation selection.
-        val fragment = pdfFragment ?: return
-        if (fragment.selectedAnnotations.size != 1) return
-        val annotation = fragment.selectedAnnotations[0]
+        val items = toolbar.menuItems.toMutableList()
+        items.add(PopupToolbarMenuItem(R.id.annotation_flags_popup_button, R.string.annotationFlagsExamplePopupButton))
+        toolbar.menuItems = items
 
-        // Populate contextual menu.
-        menuInflater.inflate(R.menu.flags_example, menu)
-
-        menu.findItem(R.id.toggle_read_only_flag).title =
-            if (!annotation.hasFlag(AnnotationFlags.READONLY)) "Enable Read-Only Flag" else "Disable Read-Only Flag"
-
-        menu.findItem(R.id.toggle_hidden_flag).title =
-            if (!annotation.hasFlag(AnnotationFlags.HIDDEN)) "Enable Hidden Flag" else "Disable Hidden Flag"
-
-        menu.findItem(R.id.toggle_print_flag).title =
-            if (!annotation.hasFlag(AnnotationFlags.PRINT)) "Enable Print Flag" else "Disable Print Flag"
-
-        menu.findItem(R.id.toggle_no_view_flag).title =
-            if (!annotation.hasFlag(AnnotationFlags.NOVIEW)) "Enable No-View Flag" else "Disable No-View Flag"
-
-        menu.findItem(R.id.toggle_locked_flag).title =
-            if (!annotation.hasFlag(AnnotationFlags.LOCKED)) "Enable Locked Flag" else "Disable Locked Flag"
-
-        menu.findItem(R.id.toggle_locked_contents_flag).title =
-            if (!annotation.hasFlag(AnnotationFlags.LOCKEDCONTENTS)) "Enable Locked-Contents Flag" else "Disable Locked-Contents Flag"
-
-        // No-zoom flag is supported only for Note, File and Stamp, and free-text annotations (but not callouts).
-        val noZoomMenuItem = menu.findItem(R.id.toggle_no_zoom_flag)
-        if (annotation.type == AnnotationType.NOTE ||
-            annotation.type == AnnotationType.FREETEXT ||
-            annotation.type == AnnotationType.FILE ||
-            annotation.type == AnnotationType.STAMP
-        ) {
-            noZoomMenuItem.isVisible = true
-            noZoomMenuItem.title =
-                if (!annotation.hasFlag(AnnotationFlags.NOZOOM)) "Enable No-Zoom Flag" else "Disable No-Zoom Flag"
-        } else {
-            noZoomMenuItem.isVisible = false
-        }
-    }
-
-    override fun onContextItemSelected(item: MenuItem): Boolean {
-        // In this example we handle only single annotation selection.
-        val fragment = pdfFragment ?: return super.onContextItemSelected(item)
-        if (fragment.selectedAnnotations.size != 1) return super.onContextItemSelected(item)
-        val annotation = fragment.selectedAnnotations[0]
-
-        return when (item.itemId) {
-            R.id.reset_all_flags -> {
-                annotation.flags = EnumSet.of(AnnotationFlags.PRINT, AnnotationFlags.NOZOOM)
+        toolbar.setOnPopupToolbarItemClickedListener { item ->
+            if (item.id == R.id.annotation_flags_popup_button) {
+                showAnnotationFlagsDialog(toolbar.annotations.first())
                 true
-            }
-
-            R.id.toggle_read_only_flag -> {
-                toggleAnnotationFlag(annotation, AnnotationFlags.READONLY)
-                true
-            }
-
-            R.id.toggle_hidden_flag -> {
-                toggleAnnotationFlag(annotation, AnnotationFlags.HIDDEN)
-                true
-            }
-
-            R.id.toggle_print_flag -> {
-                toggleAnnotationFlag(annotation, AnnotationFlags.PRINT)
-                true
-            }
-
-            R.id.toggle_no_view_flag -> {
-                toggleAnnotationFlag(annotation, AnnotationFlags.NOVIEW)
-                true
-            }
-
-            R.id.toggle_locked_flag -> {
-                toggleAnnotationFlag(annotation, AnnotationFlags.LOCKED)
-                true
-            }
-
-            R.id.toggle_locked_contents_flag -> {
-                toggleAnnotationFlag(annotation, AnnotationFlags.LOCKEDCONTENTS)
-                true
-            }
-
-            R.id.toggle_no_zoom_flag -> {
-                toggleAnnotationFlag(annotation, AnnotationFlags.NOZOOM)
-                true
-            }
-
-            else -> {
-                super.onContextItemSelected(item)
+            } else {
+                false
             }
         }
     }
 
-    override fun onPrepareContextualToolbar(toolbar: ContextualToolbar<*>) {
-        // Add item to annotation editing toolbar that will show our context menu for toggling flags
-        // on selected annotation.
-        if (toolbar is AnnotationEditingToolbar) {
-            // In this example we handle only single annotation selection.
-            val fragment = pdfFragment ?: return
-            if (fragment.selectedAnnotations.size != 1) return
-
-            // Set custom grouping rule for our extended editing toolbar.
-            toolbar.setMenuItemGroupingRule(CustomAnnotationEditingToolbarGroupingRule(this))
-
-            // Get the existing menu items so we can add our item later.
-            val menuItems = toolbar.menuItems
-
-            // Create our custom menu item.
-            val settingsDrawable: Drawable =
-                ContextCompat.getDrawable(this, R.drawable.ic_settings)
-                    ?: return
-            val customItem =
-                ContextualToolbarMenuItem.createSingleItem(
-                    this,
-                    R.id.pspdf_menu_custom,
-                    settingsDrawable,
-                    "Annotation flags",
-                    Color.MAGENTA,
-                    Color.CYAN,
-                    ContextualToolbarMenuItem.Position.END,
-                    false,
-                )
-            // Register it to for context menu.
-            registerForContextMenu(customItem)
-
-            // Tell the toolbar about our new item.
-            menuItems.add(customItem)
-            toolbar.setMenuItems(menuItems)
-
-            // Add a listener so we can handle clicking on our item.
-            toolbar.setOnMenuItemClickListener { _, menuItem ->
-                if (menuItem.id == R.id.pspdf_menu_custom) {
-                    menuItem.showContextMenu()
-                    true
-                } else {
-                    false
-                }
+    private fun showAnnotationFlagsDialog(annotation: Annotation) {
+        val flagEntries = buildList {
+            add(FlagEntry("Read-Only", AnnotationFlags.READONLY))
+            add(FlagEntry("Hidden", AnnotationFlags.HIDDEN))
+            add(FlagEntry("Print", AnnotationFlags.PRINT))
+            add(FlagEntry("No-View", AnnotationFlags.NOVIEW))
+            add(FlagEntry("Locked", AnnotationFlags.LOCKED))
+            add(FlagEntry("Locked-Contents", AnnotationFlags.LOCKEDCONTENTS))
+            if (annotation.type == AnnotationType.NOTE ||
+                annotation.type == AnnotationType.FREETEXT ||
+                annotation.type == AnnotationType.FILE ||
+                annotation.type == AnnotationType.STAMP
+            ) {
+                add(FlagEntry("No-Zoom", AnnotationFlags.NOZOOM))
             }
         }
+
+        val names = flagEntries.map { it.name }.toTypedArray()
+        val checked = flagEntries.map { annotation.hasFlag(it.flag) }.toBooleanArray()
+
+        MaterialAlertDialogBuilder(this)
+            .setTitle("Annotation Flags")
+            .setMultiChoiceItems(names, checked) { _, which, isChecked ->
+                setFlagOnAnnotation(annotation, flagEntries[which].flag, isChecked)
+            }
+            .setPositiveButton("Done", null)
+            .show()
     }
-
-    override fun onDisplayContextualToolbar(toolbar: ContextualToolbar<*>) {}
-
-    override fun onRemoveContextualToolbar(toolbar: ContextualToolbar<*>) {}
 
     /** Sets/unsets [AnnotationFlags] on single annotation. */
     private fun setFlagOnAnnotation(annotation: Annotation, flag: AnnotationFlags, isSet: Boolean) {
@@ -277,10 +166,7 @@ class AnnotationFlagsActivity :
         }
     }
 
-    /** Toggles single annotation flag. */
-    private fun toggleAnnotationFlag(annotation: Annotation, flag: AnnotationFlags) {
-        setFlagOnAnnotation(annotation, flag, !annotation.hasFlag(flag))
-    }
+    private data class FlagEntry(val name: String, val flag: AnnotationFlags)
 
     companion object {
         private const val LOG_TAG = "AnnotationFlagsActivity"

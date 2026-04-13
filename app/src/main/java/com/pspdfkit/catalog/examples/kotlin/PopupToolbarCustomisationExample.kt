@@ -101,7 +101,7 @@ class PopupToolbarCustomisationActivity :
             true,
         )
 
-        toolbar.menuItems = toolbar.menuItems + infoItem
+        toolbar.menuItems += infoItem
 
         toolbar.setOnPopupToolbarItemClickedListener { item ->
             if (item.id == R.id.popup_custom_annotation_info) {
@@ -119,16 +119,18 @@ class PopupToolbarCustomisationActivity :
 
     /**
      * Customise the long-press popup toolbar.
-     * This toolbar appears when long-pressing an empty area. By default it shows
-     * "Paste", "Annotate", and "Content Editing" items. Here we add a custom "Add Note" action
-     * using text only (no icon) that creates a note annotation at the long-press location.
+     * This toolbar appears when long-pressing an empty area. By default it shows icon-only items
+     * (Paste, Annotate, Content Editing). Here we add a custom "Add Note" action
+     * with both icon and text visible using [PopupToolbarMenuItem.isShowIconAndText].
      */
     override fun onPrepareLongPressPopupToolbar(toolbar: PopupToolbar, pageIndex: Int, pdfPoint: PointF) {
         val addNoteItem = PopupToolbarMenuItem(
             R.id.popup_custom_add_note,
             R.string.popupToolbarAddNote,
+            com.pspdfkit.R.drawable.pspdf__ic_note,
+            isShowIconAndText = true,
         )
-        toolbar.menuItems = toolbar.menuItems + addNoteItem
+        toolbar.menuItems += addNoteItem
 
         toolbar.setOnPopupToolbarItemClickedListener { item ->
             if (item.id == R.id.popup_custom_add_note) {

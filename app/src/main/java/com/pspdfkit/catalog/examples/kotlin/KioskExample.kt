@@ -104,10 +104,8 @@ class KioskActivity : AppCompatActivity() {
                 // The second observe on is necessary so opening the documents runs on a different thread as listing the assets.
                 .observeOn(Schedulers.io())
                 .flatMap { asset ->
-                    // Open the document with multithreaded rendering disabled (last parameter set to `false`).
-                    // This improves performance for single page (cover) rendering in most cases.
                     PdfDocumentLoader
-                        .openDocumentAsync(this@KioskActivity, DocumentSource(AssetDataProvider(asset)), false)
+                        .openDocumentAsync(this@KioskActivity, DocumentSource(AssetDataProvider(asset)))
                         .toFlowable()
                         .doOnError { throwable ->
                             // This example catches any error that happens while opening the document (e.g. if a password would be needed).

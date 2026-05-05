@@ -83,7 +83,6 @@ data class State(
             Pair(PreferenceKeys.ShowPrintAction, true),
             Pair(PreferenceKeys.ThemeMode, ThemeMode.DEFAULT.name),
             Pair(PreferenceKeys.EnableVolumeButtonsNavigation, false),
-            Pair(PreferenceKeys.MultiThreadedRendering, true),
             Pair(PreferenceKeys.LeakCanaryEnabled, true),
         ),
 )
@@ -112,7 +111,6 @@ fun State.getPdfActivityConfigurationBuilder(context: Context): PdfActivityConfi
             .setThumbnailBarMode(ThumbnailBarMode.valueOf(thumbnailBarMode))
             .annotationReplyFeatures(AnnotationReplyFeatures.valueOf(annotationReplies))
             .page(startPage)
-            .setMultithreadedRenderingEnabled(enableMultithreadingRendering)
 
     configuration.searchEnabled(showSearchAction)
     configuration.thumbnailGridEnabled(showThumbnailGrid)
@@ -252,10 +250,6 @@ val State.enableVolumeButtonNavigation: Boolean
 val State.startPage: Int
     get() =
         preferences[PreferenceKeys.StartPage] as Int
-
-val State.enableMultithreadingRendering: Boolean
-    get() =
-        preferences[PreferenceKeys.MultiThreadedRendering] as Boolean
 
 val State.enableLeakCanary: Boolean
     get() =

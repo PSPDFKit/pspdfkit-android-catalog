@@ -37,6 +37,7 @@ class PdfUiFragmentExample(context: Context) :
     SdkExample(context, R.string.pdfUiFragmentExampleTitle, R.string.pdfUiFragmentExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         extract(WELCOME_DOC, title, context) { documentFile ->
+            configuration.forceSignatureButtonPositionInMainToolbar(true)
             val intent = Intent(context, PdfUiFragmentExampleActivity::class.java)
             intent.putExtra(PdfUiFragmentExampleActivity.EXTRA_URI, Uri.fromFile(documentFile))
             intent.putExtra(PdfUiFragmentExampleActivity.EXTRA_CONFIGURATION, configuration.build())

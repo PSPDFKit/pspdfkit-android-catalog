@@ -23,9 +23,6 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.view.inputmethod.InputMethodManager;
 import androidx.activity.result.ActivityResultLauncher;
-import androidx.annotation.AttrRes;
-import androidx.annotation.ColorInt;
-import androidx.annotation.ColorRes;
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -166,26 +163,6 @@ public class Utils {
         final InputMethodManager imm =
                 (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         if (imm != null) imm.hideSoftInputFromWindow(windowToken, 0);
-    }
-
-    /**
-     * Extract color from theme attribute.
-     *
-     * @param context Android context.
-     * @param attribute Attribute with color.
-     * @param defaultColorResource Default color resource to use if attribute is not present in the
-     *     theme.
-     * @return color resource from theme
-     */
-    @ColorInt
-    public static int getThemeColor(
-            @NonNull final Context context, @AttrRes int attribute, @ColorRes int defaultColorResource) {
-        final TypedValue value = new TypedValue();
-        if (context.getTheme().resolveAttribute(attribute, value, true)) {
-            return value.data;
-        } else {
-            return ContextCompat.getColor(context, defaultColorResource);
-        }
     }
 
     /** Converts dip values to pixels on current device. */

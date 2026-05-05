@@ -43,6 +43,5 @@ object PreferenceKeys {
     val ShowPrintAction = booleanPreferencesKey("show_print_action")
     val ThemeMode = stringPreferencesKey("theme_mode")
     val EnableVolumeButtonsNavigation = booleanPreferencesKey("enable_volume_buttons_navigation")
-    val MultiThreadedRendering = booleanPreferencesKey("multi_threaded_rendering")
     val LeakCanaryEnabled = booleanPreferencesKey("leak_canary_enabled")
 }

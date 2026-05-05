@@ -389,7 +389,6 @@
     <string name="checkbox_preference_grayscale">Grayscale</string>
     <string name="checkbox_preference_enable_text_selection">Enable text selection</string>
     <string name="checkbox_preference_enable_volume_buttons_navigation">Enable volume buttons navigation</string>
-    <string name="checkbox_preference_multithreaded_rendering">Multithreaded rendering</string>
     <string name="checkbox_preference_enable_leakcanary">Enable LeakCanary</string>
     <string name="integer_preference_start_page">Start page</string>
     <string name="integer_preference_start_page_description">Start the document at page: </string>

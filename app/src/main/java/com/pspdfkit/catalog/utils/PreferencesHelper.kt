@@ -28,7 +28,6 @@ import com.pspdfkit.catalog.utils.CatalogPreferences.enableAnnotationRotation
 import com.pspdfkit.catalog.utils.CatalogPreferences.enableDocumentOutline
 import com.pspdfkit.catalog.utils.CatalogPreferences.enableFormEditing
 import com.pspdfkit.catalog.utils.CatalogPreferences.enableLeakCanary
-import com.pspdfkit.catalog.utils.CatalogPreferences.enableMultithreadingRendering
 import com.pspdfkit.catalog.utils.CatalogPreferences.enableTextSelection
 import com.pspdfkit.catalog.utils.CatalogPreferences.enableVolumeButtonNavigation
 import com.pspdfkit.catalog.utils.CatalogPreferences.fitPageToWidth
@@ -214,11 +213,6 @@ object CatalogPreferences {
         description = context.getString(R.string.integer_preference_start_page_description),
     )
 
-    fun enableMultithreadingRendering(context: Context) = CheckboxPreference(
-        title = context.getString(R.string.checkbox_preference_multithreaded_rendering),
-        key = PreferenceKeys.MultiThreadedRendering,
-    )
-
     fun enableLeakCanary(context: Context) = CheckboxPreference(
         title = context.getString(R.string.checkbox_preference_enable_leakcanary),
         key = PreferenceKeys.LeakCanaryEnabled,
@@ -323,7 +317,6 @@ fun preferenceSections(context: Context): List<PreferencesSection> = listOf(
             preferences =
             arrayOf(
                 startPage(context),
-                enableMultithreadingRendering(context),
                 enableLeakCanary(context),
                 clearCache(context),
                 clearAppData(context),

@@ -44,4 +44,5 @@ object PreferenceKeys {
     val ThemeMode = stringPreferencesKey("theme_mode")
     val EnableVolumeButtonsNavigation = booleanPreferencesKey("enable_volume_buttons_navigation")
     val LeakCanaryEnabled = booleanPreferencesKey("leak_canary_enabled")
+    val FreezeDetectorEnabled = booleanPreferencesKey("freeze_detector_enabled")
 }

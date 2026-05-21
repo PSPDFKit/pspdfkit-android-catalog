@@ -84,6 +84,7 @@ data class State(
             Pair(PreferenceKeys.ThemeMode, ThemeMode.DEFAULT.name),
             Pair(PreferenceKeys.EnableVolumeButtonsNavigation, false),
             Pair(PreferenceKeys.LeakCanaryEnabled, true),
+            Pair(PreferenceKeys.FreezeDetectorEnabled, false),
         ),
 )
 

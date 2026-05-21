@@ -17,8 +17,11 @@ import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.tasks.ExtractAssetTask
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.configuration.activity.ThumbnailBarMode
+import com.pspdfkit.listeners.scrolling.ScrollState
 import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
+import com.pspdfkit.ui.PdfThumbnailBar
+import com.pspdfkit.utils.PdfLog
 
 /**
  * This example demonstrates different thumbnail bar modes available in the SDK.
@@ -50,10 +53,22 @@ class ThumbnailBarExample(context: Context) :
  */
 class ThumbnailBarExampleActivity : PdfActivity() {
 
-    private var currentMode = ThumbnailBarMode.THUMBNAIL_BAR_MODE_FLOATING
-
     companion object {
         private const val KEY_THUMBNAIL_BAR_MODE = "thumbnail_bar_mode"
+        private const val KEY_THUMBNAIL_BAR_TAG = "thumbnail_bar"
+    }
+
+    private var currentMode = ThumbnailBarMode.THUMBNAIL_BAR_MODE_FLOATING
+    private val onScrollListener: PdfThumbnailBar.OnScrollListener = object : PdfThumbnailBar.OnScrollListener() {
+        override fun onScroll(firstVisiblePage: Int, firstVisibleOffsetPx: Int) {
+            super.onScroll(firstVisiblePage, firstVisibleOffsetPx)
+            PdfLog.i(KEY_THUMBNAIL_BAR_TAG, "firstVisiblePage $firstVisiblePage firstVisibleOffsetPx $firstVisibleOffsetPx")
+        }
+
+        override fun onScrollStateChanged(newState: ScrollState) {
+            super.onScrollStateChanged(newState)
+            PdfLog.i(KEY_THUMBNAIL_BAR_TAG, "ScrollState $newState")
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -90,6 +105,7 @@ class ThumbnailBarExampleActivity : PdfActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        val bar = pspdfKitViews.thumbnailBarView
         val newMode = when (item.itemId) {
             R.id.thumbnail_bar_mode_floating -> ThumbnailBarMode.THUMBNAIL_BAR_MODE_FLOATING
             R.id.thumbnail_bar_mode_pinned -> ThumbnailBarMode.THUMBNAIL_BAR_MODE_PINNED
@@ -99,7 +115,12 @@ class ThumbnailBarExampleActivity : PdfActivity() {
         } ?: return super.onOptionsItemSelected(item)
 
         currentMode = newMode
-        pspdfKitViews.thumbnailBarView?.setThumbnailBarMode(newMode)
+        bar?.setThumbnailBarMode(newMode)
+        if (newMode == ThumbnailBarMode.THUMBNAIL_BAR_MODE_SCROLLABLE) bar?.setOnScrollListener(onScrollListener)
+
+//        a custom outer margin can be added to the thumbnail bar by using
+//        bar?.setOuterMargin(100, 100, 100, 100)
+
         invalidateOptionsMenu()
         return true
     }

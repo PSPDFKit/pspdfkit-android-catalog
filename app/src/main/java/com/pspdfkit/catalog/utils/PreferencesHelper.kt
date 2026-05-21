@@ -27,6 +27,7 @@ import com.pspdfkit.catalog.utils.CatalogPreferences.enableAnnotationList
 import com.pspdfkit.catalog.utils.CatalogPreferences.enableAnnotationRotation
 import com.pspdfkit.catalog.utils.CatalogPreferences.enableDocumentOutline
 import com.pspdfkit.catalog.utils.CatalogPreferences.enableFormEditing
+import com.pspdfkit.catalog.utils.CatalogPreferences.enableFreezeDetector
 import com.pspdfkit.catalog.utils.CatalogPreferences.enableLeakCanary
 import com.pspdfkit.catalog.utils.CatalogPreferences.enableTextSelection
 import com.pspdfkit.catalog.utils.CatalogPreferences.enableVolumeButtonNavigation
@@ -218,6 +219,11 @@ object CatalogPreferences {
         key = PreferenceKeys.LeakCanaryEnabled,
     )
 
+    fun enableFreezeDetector(context: Context) = CheckboxPreference(
+        title = context.getString(R.string.checkbox_preference_enable_freeze_detector),
+        key = PreferenceKeys.FreezeDetectorEnabled,
+    )
+
     fun clearCache(context: Context) = ButtonPreference(
         title = context.getString(R.string.button_preference_clear_cache),
         key = PreferenceKeys.ClearCache,
@@ -318,6 +324,7 @@ fun preferenceSections(context: Context): List<PreferencesSection> = listOf(
             arrayOf(
                 startPage(context),
                 enableLeakCanary(context),
+                enableFreezeDetector(context),
                 clearCache(context),
                 clearAppData(context),
             ),

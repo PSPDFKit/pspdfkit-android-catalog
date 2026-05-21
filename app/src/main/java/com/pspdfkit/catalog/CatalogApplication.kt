@@ -8,17 +8,40 @@
 package com.pspdfkit.catalog
 
 import android.app.Application
-import com.pspdfkit.catalog.utils.startFreezeDetectorIfEnabled
+import com.pspdfkit.catalog.ui.model.PreferenceKeys
+import com.pspdfkit.catalog.utils.FreezeDetector
+import com.pspdfkit.catalog.utils.dataStore
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 
 /**
  * Application entry point for the Catalog app. Debug-only wiring happens inside
  * [NutrientReporting], which safely no-ops in release builds.
  */
 class CatalogApplication : Application() {
+    private val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
+
     override fun onCreate() {
         super.onCreate()
 
         NutrientReporting.initializeBugReporting(this)
-        startFreezeDetectorIfEnabled()
+        observeFreezeDetectorPreference()
+    }
+
+    private fun observeFreezeDetectorPreference() {
+        applicationScope.launch {
+            dataStore.data
+                .map { it[PreferenceKeys.FreezeDetectorEnabled] ?: false }
+                .distinctUntilChanged()
+                .onEach { enabled ->
+                    if (enabled) FreezeDetector.start() else FreezeDetector.stop()
+                }
+                .collect {}
+        }
     }
 }

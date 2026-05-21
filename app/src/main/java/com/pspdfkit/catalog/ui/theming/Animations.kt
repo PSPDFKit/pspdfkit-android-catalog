@@ -37,10 +37,17 @@ import androidx.compose.ui.unit.dp
 
 object Animations {
     private const val SECTION_EXPANDING_DURATION = 250
+    private const val PAGE_TRANSITION_DURATION = 300
 
-    fun catalogEnterAnimation() = slideInHorizontally()
+    fun catalogEnterAnimation() = slideInHorizontally(
+        initialOffsetX = { it },
+        animationSpec = tween(durationMillis = PAGE_TRANSITION_DURATION, easing = FastOutSlowInEasing),
+    )
 
-    fun catalogExitAnimation() = slideOutHorizontally()
+    fun catalogExitAnimation() = slideOutHorizontally(
+        targetOffsetX = { it },
+        animationSpec = tween(durationMillis = PAGE_TRANSITION_DURATION, easing = FastOutSlowInEasing),
+    )
 
     @Composable
     fun expandSectionButtonRotation(expanded: Boolean): State<Float> = animateFloatAsState(

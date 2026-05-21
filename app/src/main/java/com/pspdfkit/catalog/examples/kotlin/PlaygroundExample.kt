@@ -11,7 +11,6 @@ import android.content.Intent
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Toast
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.SdkExample.Companion.TAG
@@ -48,14 +47,22 @@ class PlaygroundActivity : PdfActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         super.onCreateOptionsMenu(menu)
         menu.add(0, CUSTOM_MENU_ITEM_ID, 0, "Custom Menu Item")
+        menu.add(0, FREEZE_UI_MENU_ITEM_ID, 0, "Freeze UI thread (15s)")
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = if (item.itemId == CUSTOM_MENU_ITEM_ID) {
-        menuItemClicked()
-        true
-    } else {
-        super.onOptionsItemSelected(item)
+    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        CUSTOM_MENU_ITEM_ID -> {
+            menuItemClicked()
+            true
+        }
+
+        FREEZE_UI_MENU_ITEM_ID -> {
+            freezeUiThread()
+            true
+        }
+
+        else -> super.onOptionsItemSelected(item)
     }
 
     override fun onDocumentLoaded(document: PdfDocument) {
@@ -65,10 +72,16 @@ class PlaygroundActivity : PdfActivity() {
     }
 
     private fun menuItemClicked() {
-        Toast.makeText(this, "Menu item clicked!", Toast.LENGTH_SHORT).show()
+        Log.d(TAG, "Menu item clicked.")
+    }
+
+    private fun freezeUiThread() {
+        Log.d(TAG, "Freezing UI thread for 15s — watch logcat for tag \"FreezeDetector\".")
+        Thread.sleep(15_000)
     }
 
     companion object {
         private const val CUSTOM_MENU_ITEM_ID = 1
+        private const val FREEZE_UI_MENU_ITEM_ID = 2
     }
 }

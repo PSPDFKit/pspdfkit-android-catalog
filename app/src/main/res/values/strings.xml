@@ -41,6 +41,8 @@
     <string name="passwordExampleDescription">Open a password-protected PDF document. Password is: test123</string>
     <string name="simpleFragmentExampleTitle">PdfFragment</string>
     <string name="simpleFragmentExampleDescription">Set up PdfFragment in a custom activity with a document listener.</string>
+    <string name="memoryPressureExampleTitle">Memory Pressure Recovery</string>
+    <string name="memoryPressureExampleDescription">Simulate critical memory pressure on heavy documents and observe render abort, backoff, and automatic recovery.</string>
     <string name="eLearningExampleTitle">E-Learning</string>
     <string name="eLearningExampleDescription">Switch between documents while preserving view state, annotations, and bookmarks.</string>
     <string name="javaScriptActionExampleTitle">JavaScript Actions</string>
@@ -49,6 +51,8 @@
     <string name="javaScriptCalculatorExampleDescription">Build a calculator entirely in PDF JavaScript to demonstrate advanced form interactions.</string>
     <string name="jetpackExampleTitle">DocumentView Composable</string>
     <string name="jetpackExampleDescription">Integrate the DocumentView composable into a Jetpack Compose app.</string>
+    <string name="documentViewInDialogExampleTitle">DocumentView in a Dialog</string>
+    <string name="documentViewInDialogExampleDescription">Preview a document with the DocumentView composable hosted in a Navigation Compose dialog destination.</string>
     <string name="jetpackImageExampleTitle">Compose Image Document</string>
     <string name="jetpackImageExampleDescription">Load and display an image document with the DocumentView composable.</string>
     <string name="thumbnailBarExampleTitle">Thumbnail Bar Modes</string>
@@ -391,6 +395,7 @@
     <string name="checkbox_preference_enable_volume_buttons_navigation">Enable volume buttons navigation</string>
     <string name="checkbox_preference_enable_leakcanary">Enable LeakCanary</string>
     <string name="checkbox_preference_enable_freeze_detector">Enable freeze detector</string>
+    <string name="checkbox_preference_enable_memory_trace_logging">Enable memory trace logging</string>
     <string name="integer_preference_start_page">Start page</string>
     <string name="integer_preference_start_page_description">Start the document at page: </string>
     <string name="button_preference_clear_cache">Clear cache</string>

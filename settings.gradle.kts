@@ -10,7 +10,6 @@ dependencyResolutionManagement {
     repositories {
         google()
         mavenCentral()
-        // The Nutrient library is loaded from the Nutrient Maven repository, added by this configuration.
         maven(url = "https://my.nutrient.io/maven/")
     }
 

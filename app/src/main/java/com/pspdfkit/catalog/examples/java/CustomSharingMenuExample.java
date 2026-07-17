@@ -158,7 +158,7 @@ public class CustomSharingMenuExample extends SdkExample {
 
         @NonNull
         private Intent getMailToIntent(@NonNull Uri shareUri) {
-            Intent mailToIntent = ShareCompat.IntentBuilder.from(CustomSharingMenuActivity.this)
+            Intent mailToIntent = new ShareCompat.IntentBuilder(CustomSharingMenuActivity.this)
                     // Use "application/pdf" as mime type.
                     .setType(DocumentSharingIntentHelper.MIME_TYPE_PDF)
                     // Add shared document uri as data stream.

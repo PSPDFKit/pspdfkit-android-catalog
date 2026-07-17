@@ -47,18 +47,12 @@ class PlaygroundActivity : PdfActivity() {
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         super.onCreateOptionsMenu(menu)
         menu.add(0, CUSTOM_MENU_ITEM_ID, 0, "Custom Menu Item")
-        menu.add(0, FREEZE_UI_MENU_ITEM_ID, 0, "Freeze UI thread (15s)")
         return true
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         CUSTOM_MENU_ITEM_ID -> {
             menuItemClicked()
-            true
-        }
-
-        FREEZE_UI_MENU_ITEM_ID -> {
-            freezeUiThread()
             true
         }
 
@@ -75,13 +69,7 @@ class PlaygroundActivity : PdfActivity() {
         Log.d(TAG, "Menu item clicked.")
     }
 
-    private fun freezeUiThread() {
-        Log.d(TAG, "Freezing UI thread for 15s — watch logcat for tag \"FreezeDetector\".")
-        Thread.sleep(15_000)
-    }
-
     companion object {
         private const val CUSTOM_MENU_ITEM_ID = 1
-        private const val FREEZE_UI_MENU_ITEM_ID = 2
     }
 }

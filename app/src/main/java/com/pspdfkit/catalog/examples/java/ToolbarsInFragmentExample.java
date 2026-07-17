@@ -16,6 +16,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.IntentCompat;
 import com.pspdfkit.catalog.R;
 import com.pspdfkit.catalog.SdkExample;
 import com.pspdfkit.catalog.tasks.ExtractAssetTask;
@@ -28,11 +29,8 @@ import com.pspdfkit.ui.inspector.annotation.AnnotatingInspectorController;
 import com.pspdfkit.ui.inspector.annotation.DefaultAnnotationCreationInspectorController;
 import com.pspdfkit.ui.inspector.annotation.DefaultAnnotationEditingInspectorController;
 import com.pspdfkit.ui.special_mode.controller.AnnotatingController;
-import com.pspdfkit.ui.special_mode.controller.TextSelectionController;
-import com.pspdfkit.ui.special_mode.manager.TextSelectionManager;
 import com.pspdfkit.ui.toolbar.AnnotationToolbar;
 import com.pspdfkit.ui.toolbar.ContextualToolbar;
-import com.pspdfkit.ui.toolbar.TextSelectionToolbar;
 import com.pspdfkit.ui.toolbar.ToolbarCoordinatorLayout;
 
 /**
@@ -63,8 +61,7 @@ public class ToolbarsInFragmentExample extends SdkExample {
      * {@link PdfFragment} with all the animations and dragging managed by the {@link
      * ToolbarCoordinatorLayout}.
      */
-    public static class ToolbarsInFragmentActivity extends AppCompatActivity
-            implements OnAnnotatingModeChangeListener, TextSelectionManager.OnTextSelectionModeChangeListener {
+    public static class ToolbarsInFragmentActivity extends AppCompatActivity implements OnAnnotatingModeChangeListener {
 
         public static final String EXTRA_URI = "ToolbarsInFragmentActivity.DocumentUri";
         public static final String EXTRA_CONFIGURATION = "ToolbarsInFragmentActivity.PdfConfiguration";
@@ -74,7 +71,6 @@ public class ToolbarsInFragmentExample extends SdkExample {
         private Button annotationCreationButton;
 
         private AnnotationToolbar annotationToolbar;
-        private TextSelectionToolbar textSelectionToolbar;
 
         private boolean annotationCreationActive = false;
 
@@ -95,7 +91,6 @@ public class ToolbarsInFragmentExample extends SdkExample {
             toolbarCoordinatorLayout = findViewById(R.id.toolbarCoordinatorLayout);
 
             annotationToolbar = new AnnotationToolbar(this);
-            textSelectionToolbar = new TextSelectionToolbar(this);
 
             // Use this if you want to use annotation inspector with annotation creation and editing
             // toolbars.
@@ -108,14 +103,15 @@ public class ToolbarsInFragmentExample extends SdkExample {
             // The actual document Uri is provided with the launching intent. You can simply change that
             // inside the ToolbarsInFragmentExample class.
             // This is a check that the example is not accidentally launched without a document Uri.
-            final Uri uri = getIntent().getParcelableExtra(EXTRA_URI);
+            final Uri uri = IntentCompat.getParcelableExtra(getIntent(), EXTRA_URI, Uri.class);
             if (uri == null) {
                 showNoDocumentUriDialog();
                 return;
             }
 
             // PdfFragment configuration is provided with the launching intent.
-            PdfConfiguration configuration = getIntent().getParcelableExtra(EXTRA_CONFIGURATION);
+            PdfConfiguration configuration =
+                    IntentCompat.getParcelableExtra(getIntent(), EXTRA_CONFIGURATION, PdfConfiguration.class);
             if (configuration == null) {
                 configuration = new PdfConfiguration.Builder().build();
             }
@@ -158,14 +154,12 @@ public class ToolbarsInFragmentExample extends SdkExample {
 
             // Use the new unified listener for annotation mode changes
             fragment.addOnAnnotatingModeChangeListener(this);
-            fragment.addOnTextSelectionModeChangeListener(this);
         }
 
         @Override
         protected void onDestroy() {
             super.onDestroy();
             fragment.removeOnAnnotatingModeChangeListener(this);
-            fragment.removeOnTextSelectionModeChangeListener(this);
         }
 
         @Override
@@ -227,18 +221,6 @@ public class ToolbarsInFragmentExample extends SdkExample {
                 annotationEditingInspectorController.unbindController();
                 editingInspectorBound = false;
             }
-        }
-
-        @Override
-        public void onEnterTextSelectionMode(@NonNull TextSelectionController controller) {
-            textSelectionToolbar.bindController(controller);
-            toolbarCoordinatorLayout.displayContextualToolbar(textSelectionToolbar, true);
-        }
-
-        @Override
-        public void onExitTextSelectionMode(@NonNull TextSelectionController controller) {
-            toolbarCoordinatorLayout.removeContextualToolbar(true);
-            textSelectionToolbar.unbindController();
         }
 
         private void updateButtonText() {

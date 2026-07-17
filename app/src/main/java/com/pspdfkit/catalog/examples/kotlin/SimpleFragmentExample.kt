@@ -14,7 +14,7 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
-import com.pspdfkit.catalog.tasks.ExtractAssetTask
+import com.pspdfkit.catalog.ui.DocumentPickerActivity
 import com.pspdfkit.configuration.PdfConfiguration
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.document.PdfDocument
@@ -29,21 +29,28 @@ import com.pspdfkit.utils.getSupportParcelableExtra
 class SimpleFragmentExample(context: Context) :
     SdkExample(context, R.string.simpleFragmentExampleTitle, R.string.simpleFragmentExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
-        ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
-            val intent = Intent(context, SimpleFragmentActivity::class.java)
-
-            // We pass the Uri for the PDF file that should be opened in `PdfFragment` via Intent extra.
-            intent.putExtra(SimpleFragmentActivity.EXTRA_URI, Uri.fromFile(documentFile))
-
-            // We pass the `PdfFragment` configuration via another extra.
-            intent.putExtra(
-                SimpleFragmentActivity.EXTRA_CONFIGURATION,
-                configuration.build().configuration,
-            )
-
-            context.startActivity(intent)
-        }
+        // Launch the picker activity to let users choose between default or custom document.
+        val intent = Intent(context, SimpleFragmentExamplePickerActivity::class.java)
+        intent.putExtra(DocumentPickerActivity.EXTRA_CONFIGURATION, configuration.build())
+        context.startActivity(intent)
     }
+}
+
+/**
+ * Picker that launches [SimpleFragmentActivity] with the selected document.
+ *
+ * [SimpleFragmentActivity] is a plain [AppCompatActivity] hosting a [PdfFragment],
+ * so we override [buildLaunchIntent] to build the intent ourselves instead of
+ * relying on the default [com.pspdfkit.ui.PdfActivityIntentBuilder] path.
+ */
+class SimpleFragmentExamplePickerActivity : DocumentPickerActivity() {
+    override val targetActivityClass = SimpleFragmentActivity::class.java
+
+    override fun buildLaunchIntent(uri: Uri, configuration: PdfActivityConfiguration, isImageFile: Boolean): Intent =
+        Intent(this, SimpleFragmentActivity::class.java).apply {
+            putExtra(SimpleFragmentActivity.EXTRA_URI, uri)
+            putExtra(SimpleFragmentActivity.EXTRA_CONFIGURATION, configuration.configuration)
+        }
 }
 
 class SimpleFragmentActivity :

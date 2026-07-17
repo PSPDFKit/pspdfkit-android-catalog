@@ -11,6 +11,7 @@ import android.app.Application
 import com.pspdfkit.catalog.ui.model.PreferenceKeys
 import com.pspdfkit.catalog.utils.FreezeDetector
 import com.pspdfkit.catalog.utils.dataStore
+import com.pspdfkit.preferences.PSPDFKitPreferences
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -31,6 +32,7 @@ class CatalogApplication : Application() {
 
         NutrientReporting.initializeBugReporting(this)
         observeFreezeDetectorPreference()
+        observeMemoryTraceLoggingPreference()
     }
 
     private fun observeFreezeDetectorPreference() {
@@ -40,6 +42,23 @@ class CatalogApplication : Application() {
                 .distinctUntilChanged()
                 .onEach { enabled ->
                     if (enabled) FreezeDetector.start() else FreezeDetector.stop()
+                }
+                .collect {}
+        }
+    }
+
+    /**
+     * Bridges the catalog's DataStore checkbox to the SDK-global [PSPDFKitPreferences] flag that
+     * `MemoryNotificationHandler` reads, so ticking "Enable memory trace logging" turns on the per-poll
+     * `Nutri.MemTrace` diagnostic. Mirrors how an integrator would enable it in their own app.
+     */
+    private fun observeMemoryTraceLoggingPreference() {
+        applicationScope.launch {
+            dataStore.data
+                .map { it[PreferenceKeys.MemoryTraceLoggingEnabled] ?: false }
+                .distinctUntilChanged()
+                .onEach { enabled ->
+                    PSPDFKitPreferences.get(this@CatalogApplication).setMemoryTraceLoggingEnabled(enabled)
                 }
                 .collect {}
         }

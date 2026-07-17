@@ -16,6 +16,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.IntentCompat;
 import com.pspdfkit.catalog.R;
 import com.pspdfkit.catalog.SdkExample;
 import com.pspdfkit.configuration.PdfConfiguration;
@@ -104,14 +105,15 @@ public class FormEditingInFragmentExample extends SdkExample {
 
             // The actual document Uri is provided with the launching intent.
             // This is a check that the example is not accidentally launched without a document Uri.
-            final Uri uri = getIntent().getParcelableExtra(EXTRA_URI);
+            final Uri uri = IntentCompat.getParcelableExtra(getIntent(), EXTRA_URI, Uri.class);
             if (uri == null) {
                 finish();
                 return;
             }
 
             // PdfFragment configuration is provided with the launching intent.
-            PdfConfiguration configuration = getIntent().getParcelableExtra(EXTRA_CONFIGURATION);
+            PdfConfiguration configuration =
+                    IntentCompat.getParcelableExtra(getIntent(), EXTRA_CONFIGURATION, PdfConfiguration.class);
             if (configuration == null) {
                 configuration = new PdfConfiguration.Builder().build();
             }

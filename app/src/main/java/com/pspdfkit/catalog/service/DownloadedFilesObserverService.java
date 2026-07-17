@@ -11,6 +11,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
 import android.os.FileObserver;
 import android.os.Handler;
@@ -20,6 +21,7 @@ import android.os.StrictMode;
 import android.webkit.MimeTypeMap;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import com.pspdfkit.ui.PdfActivity;
 import com.pspdfkit.ui.PdfActivityIntentBuilder;
 import java.io.File;
@@ -62,6 +64,10 @@ public class DownloadedFilesObserverService extends Service {
     @Nullable
     private FileObserver fileObserver;
 
+    /** Directory being watched for newly downloaded files. */
+    @Nullable
+    private File observedDir;
+
     @Nullable
     private Runnable openActivityRunnable;
 
@@ -71,7 +77,7 @@ public class DownloadedFilesObserverService extends Service {
     @Override
     public int onStartCommand(@NonNull final Intent intent, final int flags, final int startId) {
         if (isObserving.compareAndSet(false, true)) {
-            final File observedDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            observedDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
 
             final StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
             try {
@@ -89,57 +95,76 @@ public class DownloadedFilesObserverService extends Service {
             }
 
             // Start file observer for new files created in the downloads directory.
-            fileObserver =
-                    new FileObserver(
-                            observedDir.getAbsolutePath(),
-                            FileObserver.CLOSE_WRITE
-                                    | FileObserver.MODIFY
-                                    | FileObserver.MOVED_TO
-                                    | FileObserver.DELETE) {
-
-                        @Override
-                        public void onEvent(final int event, final String path) {
-                            if (path == null || !isObserving.get()) return;
-
-                            final Context context = getApplicationContext();
-                            if (context == null) return;
-
-                            final Uri fileUri = Uri.fromFile(new File(observedDir, path));
-                            if (ignoredFiles.contains(fileUri)) {
-                                // Un-ignore deleted files. This can happen when the file is
-                                // getting replaced by drag'n'dropping or pushing via adb.
-                                if (event == DELETE) {
-                                    ignoredFiles.remove(fileUri);
-                                }
-                                return;
-                            }
-
-                            if (!isSupportedFile(fileUri)) return;
-
-                            if (openActivityRunnable != null) {
-                                handler.removeCallbacks(openActivityRunnable);
-                            }
-                            openActivityRunnable = () -> {
-                                // Skip launching the activity if the file is already
-                                // ignored.
-                                if (ignoredFiles.contains(fileUri)) return;
-
-                                ignoredFiles.add(fileUri);
-
-                                final PdfActivityIntentBuilder builder = isImageFile(fileUri)
-                                        ? PdfActivityIntentBuilder.fromImageUri(context, fileUri)
-                                        : PdfActivityIntentBuilder.fromUri(context, fileUri);
-
-                                final Intent intent = builder.build();
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                                context.startActivity(intent);
-                            };
-                            handler.postDelayed(openActivityRunnable, OPEN_ACTIVITY_DELAY_MS);
-                        }
-                    };
+            final int mask =
+                    FileObserver.CLOSE_WRITE | FileObserver.MODIFY | FileObserver.MOVED_TO | FileObserver.DELETE;
+            fileObserver = createFileObserver(observedDir, mask);
             fileObserver.startWatching();
         }
         return Service.START_NOT_STICKY;
+    }
+
+    @NonNull
+    private FileObserver createFileObserver(@NonNull final File directory, final int mask) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            return new DownloadsFileObserver(directory, mask);
+        }
+        return new DownloadsFileObserver(directory.getAbsolutePath(), mask);
+    }
+
+    /** Watches a directory for newly downloaded files and opens supported ones in {@link PdfActivity}. */
+    private final class DownloadsFileObserver extends FileObserver {
+
+        @RequiresApi(api = Build.VERSION_CODES.Q)
+        DownloadsFileObserver(@NonNull final File directory, final int mask) {
+            super(directory, mask);
+        }
+
+        // The (String, int) constructor is deprecated since API 29 but is the only option on older
+        // versions, which this app still supports (minSdk 26).
+        @SuppressWarnings("deprecation")
+        DownloadsFileObserver(@NonNull final String directoryPath, final int mask) {
+            super(directoryPath, mask);
+        }
+
+        @Override
+        public void onEvent(final int event, final String path) {
+            if (path == null || !isObserving.get() || observedDir == null) return;
+
+            final Context context = getApplicationContext();
+            if (context == null) return;
+
+            final Uri fileUri = Uri.fromFile(new File(observedDir, path));
+            if (ignoredFiles.contains(fileUri)) {
+                // Un-ignore deleted files. This can happen when the file is
+                // getting replaced by drag'n'dropping or pushing via adb.
+                if (event == DELETE) {
+                    ignoredFiles.remove(fileUri);
+                }
+                return;
+            }
+
+            if (!isSupportedFile(fileUri)) return;
+
+            if (openActivityRunnable != null) {
+                handler.removeCallbacks(openActivityRunnable);
+            }
+            openActivityRunnable = () -> {
+                // Skip launching the activity if the file is already
+                // ignored.
+                if (ignoredFiles.contains(fileUri)) return;
+
+                ignoredFiles.add(fileUri);
+
+                final PdfActivityIntentBuilder builder = isImageFile(fileUri)
+                        ? PdfActivityIntentBuilder.fromImageUri(context, fileUri)
+                        : PdfActivityIntentBuilder.fromUri(context, fileUri);
+
+                final Intent intent = builder.build();
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            };
+            handler.postDelayed(openActivityRunnable, OPEN_ACTIVITY_DELAY_MS);
+        }
     }
 
     private boolean isSupportedFile(@NonNull final Uri fileUri) {

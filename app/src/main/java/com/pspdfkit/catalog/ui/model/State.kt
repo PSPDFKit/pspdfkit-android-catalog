@@ -85,6 +85,7 @@ data class State(
             Pair(PreferenceKeys.EnableVolumeButtonsNavigation, false),
             Pair(PreferenceKeys.LeakCanaryEnabled, true),
             Pair(PreferenceKeys.FreezeDetectorEnabled, false),
+            Pair(PreferenceKeys.MemoryTraceLoggingEnabled, false),
         ),
 )
 

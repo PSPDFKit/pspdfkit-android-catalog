@@ -22,6 +22,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.IntentCompat;
+import androidx.core.os.BundleCompat;
 import com.pspdfkit.annotations.Annotation;
 import com.pspdfkit.catalog.R;
 import com.pspdfkit.catalog.SdkExample;
@@ -108,7 +110,7 @@ public class CustomElectronicSignatureExample extends SdkExample {
             // The actual document Uri is provided with the launching intent. You can simply change that
             // inside the CustomSearchUiExample class.
             // This is a check that the example is not accidentally launched without a document Uri.
-            final Uri uri = getIntent().getParcelableExtra(EXTRA_URI);
+            final Uri uri = IntentCompat.getParcelableExtra(getIntent(), EXTRA_URI, Uri.class);
             if (uri == null) {
                 new AlertDialog.Builder(this)
                         .setTitle("Could not start example.")
@@ -173,7 +175,7 @@ public class CustomElectronicSignatureExample extends SdkExample {
             // Restore touched page index and touch point after configuration change.
             if (savedInstanceState != null) {
                 touchedPageIndex = savedInstanceState.getInt(STATE_TOUCHED_PAGE_INDEX);
-                touchedPoint = savedInstanceState.getParcelable(STATE_TOUCHED_POINT);
+                touchedPoint = BundleCompat.getParcelable(savedInstanceState, STATE_TOUCHED_POINT, PointF.class);
             }
 
             // Restore existing signature picker dialog fragment.

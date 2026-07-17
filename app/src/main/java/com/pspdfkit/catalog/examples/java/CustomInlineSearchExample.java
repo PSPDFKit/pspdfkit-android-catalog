@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import androidx.annotation.NonNull;
 import androidx.core.view.ViewCompat;
+import androidx.core.view.WindowInsetsCompat;
 import com.pspdfkit.catalog.R;
 import com.pspdfkit.catalog.SdkExample;
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration;
@@ -113,7 +114,7 @@ public class CustomInlineSearchExample extends SdkExample {
             // by the action bar or the status bar.
             ViewCompat.setOnApplyWindowInsetsListener(container, (v, insets) -> {
                 ((ViewGroup.MarginLayoutParams) container.getLayoutParams()).topMargin =
-                        insets.getSystemWindowInsetTop();
+                        insets.getInsets(WindowInsetsCompat.Type.systemBars()).top;
                 return insets;
             });
 

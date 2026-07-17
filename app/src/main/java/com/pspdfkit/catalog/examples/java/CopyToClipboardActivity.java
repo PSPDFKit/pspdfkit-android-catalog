@@ -8,7 +8,6 @@
 package com.pspdfkit.catalog.examples.java;
 
 import android.annotation.SuppressLint;
-import android.app.ProgressDialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.ComponentName;
@@ -17,9 +16,14 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import com.pspdfkit.document.providers.ContentResolverDataProvider;
 import com.pspdfkit.document.sharing.DocumentSharingProvider;
@@ -78,12 +82,7 @@ public class CopyToClipboardActivity extends AppCompatActivity {
         }
 
         // Show indeterminate progress dialog while the file is being prepared.
-        final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setIndeterminate(true);
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        progressDialog.setMessage("Copying image to clipboard...");
-        progressDialog.setCancelable(false);
-        progressDialog.setCanceledOnTouchOutside(false);
+        final AlertDialog progressDialog = createProgressDialog("Copying image to clipboard...");
         progressDialog.show();
 
         // Use DocumentSharingProviderProcessor helper to prepare file for sharing in
@@ -92,6 +91,8 @@ public class CopyToClipboardActivity extends AppCompatActivity {
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe((uri, throwable) -> {
+                    progressDialog.dismiss();
+
                     final ClipboardManager clipboardManager =
                             (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                     if (clipboardManager != null && uri != null) {
@@ -107,6 +108,36 @@ public class CopyToClipboardActivity extends AppCompatActivity {
                     }
                     showMessageAndFinish("Image could not be copied to clipboard.");
                 });
+    }
+
+    /** Builds an indeterminate progress dialog with a spinner and message. */
+    @NonNull
+    private AlertDialog createProgressDialog(@NonNull final String message) {
+        final int padding = (int) (24 * getResources().getDisplayMetrics().density);
+
+        final LinearLayout content = new LinearLayout(this);
+        content.setOrientation(LinearLayout.HORIZONTAL);
+        content.setGravity(Gravity.CENTER_VERTICAL);
+        content.setPadding(padding, padding, padding, padding);
+
+        final ProgressBar progressBar = new ProgressBar(this);
+        progressBar.setIndeterminate(true);
+        content.addView(progressBar);
+
+        final TextView messageView = new TextView(this);
+        messageView.setText(message);
+        final LinearLayout.LayoutParams messageParams = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+        messageParams.leftMargin = padding;
+        messageView.setLayoutParams(messageParams);
+        content.addView(messageView);
+
+        final AlertDialog dialog = new AlertDialog.Builder(this)
+                .setView(content)
+                .setCancelable(false)
+                .create();
+        dialog.setCanceledOnTouchOutside(false);
+        return dialog;
     }
 
     private void showMessageAndFinish(@NonNull String errorString) {

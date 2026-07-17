@@ -343,6 +343,11 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
+            android:name=".examples.kotlin.DocumentViewInDialogActivity"
+            android:label="@string/documentViewInDialogExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
             android:name=".examples.kotlin.FormInterceptActivity"
             android:label="@string/jetpackExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
@@ -518,6 +523,21 @@
         <activity
             android:name=".examples.kotlin.SimpleFragmentActivity"
             android:label="@string/simpleFragmentExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.SimpleFragmentExamplePickerActivity"
+            android:label="@string/simpleFragmentExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.MemoryPressureExamplePickerActivity"
+            android:label="@string/memoryPressureExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.MemoryPressureActivity"
+            android:label="@string/memoryPressureExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity

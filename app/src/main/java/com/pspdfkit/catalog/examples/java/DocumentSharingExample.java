@@ -200,7 +200,7 @@ public class DocumentSharingExample extends SdkExample {
                 if (context == null) return;
 
                 // Build share intent.
-                final Intent mailToIntent = ShareCompat.IntentBuilder.from(DocumentSharingExampleActivity.this)
+                final Intent mailToIntent = new ShareCompat.IntentBuilder(DocumentSharingExampleActivity.this)
                         // Use "application/pdf" as mime type.
                         .setType(DocumentSharingIntentHelper.MIME_TYPE_PDF)
                         // Add shared document uri as data stream.

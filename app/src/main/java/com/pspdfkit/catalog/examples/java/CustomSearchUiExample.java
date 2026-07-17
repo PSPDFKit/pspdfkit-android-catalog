@@ -16,7 +16,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
@@ -26,6 +25,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.StyleSpan;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -49,6 +49,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.IntentCompat;
 import androidx.core.graphics.drawable.DrawableCompat;
 import com.pspdfkit.catalog.R;
 import com.pspdfkit.catalog.SdkExample;
@@ -143,7 +144,7 @@ public class CustomSearchUiExample extends SdkExample {
             // The actual document Uri is provided with the launching intent. You can simply change that
             // inside the CustomSearchUiExample class.
             // This is a check that the example is not accidentally launched without a document Uri.
-            final Uri uri = getIntent().getParcelableExtra(EXTRA_URI);
+            final Uri uri = IntentCompat.getParcelableExtra(getIntent(), EXTRA_URI, Uri.class);
             if (uri == null) {
                 showCouldNotStartExample("No document Uri was provided with the launching intent.");
                 return;
@@ -352,8 +353,7 @@ public class CustomSearchUiExample extends SdkExample {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             hideSoftKeyboard();
 
-            //noinspection unchecked
-            currentSearchResults = (List<SearchResult>) parent.getAdapter().getItem(position);
+            currentSearchResults = adapter.getItem(position);
             selectedSearchResult = 0;
             updateSearchResultNavigationBar();
 
@@ -472,9 +472,10 @@ public class CustomSearchUiExample extends SdkExample {
         }
 
         private Animator createRevealAnimation(boolean showReveal) {
-            final Point screenSize = new Point();
-            getWindowManager().getDefaultDisplay().getSize(screenSize);
-            final float screenDiameter = (float) Math.sqrt(screenSize.x * screenSize.x + screenSize.y * screenSize.y);
+            final DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
+            final int screenWidth = displayMetrics.widthPixels;
+            final int screenHeight = displayMetrics.heightPixels;
+            final float screenDiameter = (float) Math.sqrt(screenWidth * screenWidth + screenHeight * screenHeight);
 
             final float startRadius, endRadius;
             if (showReveal) {
@@ -487,7 +488,7 @@ public class CustomSearchUiExample extends SdkExample {
 
             // Reveal is centered right below the action bar.
             return ViewAnimationUtils.createCircularReveal(
-                    listViewContainer, screenSize.x / 2, 0, startRadius, endRadius);
+                    listViewContainer, screenWidth / 2, 0, startRadius, endRadius);
         }
 
         private static class ViewHolder {

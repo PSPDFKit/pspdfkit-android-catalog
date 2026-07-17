@@ -217,6 +217,9 @@ public class ScreenReaderExample extends SdkExample {
                 setSpokenUnitHighlighted(utteranceId, false);
             }
 
+            // onError(String) is an abstract, deprecated method of UtteranceProgressListener that must
+            // still be implemented; the replacement onError(String, int) delegates to it by default.
+            @SuppressWarnings("deprecation")
             @Override
             public void onError(String utteranceId) {
                 setSpokenUnitHighlighted(utteranceId, false);
@@ -563,6 +566,9 @@ public class ScreenReaderExample extends SdkExample {
                 invalidateSelf();
             }
 
+            // getOpacity() is an abstract, deprecated method of Drawable that must still be implemented
+            // by custom drawables.
+            @SuppressWarnings("deprecation")
             @Override
             public int getOpacity() {
                 // The highlighted text lets the background shine through (it's semi-transparent). If

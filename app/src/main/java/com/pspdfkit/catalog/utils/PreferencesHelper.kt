@@ -29,6 +29,7 @@ import com.pspdfkit.catalog.utils.CatalogPreferences.enableDocumentOutline
 import com.pspdfkit.catalog.utils.CatalogPreferences.enableFormEditing
 import com.pspdfkit.catalog.utils.CatalogPreferences.enableFreezeDetector
 import com.pspdfkit.catalog.utils.CatalogPreferences.enableLeakCanary
+import com.pspdfkit.catalog.utils.CatalogPreferences.enableMemoryTraceLogging
 import com.pspdfkit.catalog.utils.CatalogPreferences.enableTextSelection
 import com.pspdfkit.catalog.utils.CatalogPreferences.enableVolumeButtonNavigation
 import com.pspdfkit.catalog.utils.CatalogPreferences.fitPageToWidth
@@ -224,6 +225,11 @@ object CatalogPreferences {
         key = PreferenceKeys.FreezeDetectorEnabled,
     )
 
+    fun enableMemoryTraceLogging(context: Context) = CheckboxPreference(
+        title = context.getString(R.string.checkbox_preference_enable_memory_trace_logging),
+        key = PreferenceKeys.MemoryTraceLoggingEnabled,
+    )
+
     fun clearCache(context: Context) = ButtonPreference(
         title = context.getString(R.string.button_preference_clear_cache),
         key = PreferenceKeys.ClearCache,
@@ -325,6 +331,7 @@ fun preferenceSections(context: Context): List<PreferencesSection> = listOf(
                 startPage(context),
                 enableLeakCanary(context),
                 enableFreezeDetector(context),
+                enableMemoryTraceLogging(context),
                 clearCache(context),
                 clearAppData(context),
             ),

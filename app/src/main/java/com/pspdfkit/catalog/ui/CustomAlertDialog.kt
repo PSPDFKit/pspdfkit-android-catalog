@@ -26,7 +26,9 @@ import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.produceState
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -43,6 +45,9 @@ import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.examples.kotlin.AiAssistantComposeActivity.Companion.PREFERENCES_NAME
 import com.pspdfkit.catalog.examples.kotlin.AiAssistantComposeActivity.Companion.PREF_AI_IP_ADDRESS
 import com.pspdfkit.signatures.DigitalSignatureType
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 @Composable
 fun SelectSignatureTypeDialog(dialogVisibility: Boolean, onDismissRequest: () -> Unit, action: (DigitalSignatureType) -> Unit) {
@@ -100,17 +105,28 @@ fun CustomAlertDialogPreview() {
 @Composable
 fun IpAddressDialog(dialogVisibility: Boolean, onDismissRequest: () -> Unit, action: () -> Unit) {
     val context = LocalContext.current
-    val preferences = context.getSharedPreferences(PREFERENCES_NAME, MODE_PRIVATE)
-    var ipAddressValue: String = preferences.getString(PREF_AI_IP_ADDRESS, "") ?: ""
+    val scope = rememberCoroutineScope()
 
-    var localIpAddress by remember { mutableStateOf(ipAddressValue) }
+    // Read the persisted value off the main thread so we don't block on disk during composition.
+    val savedIpAddress by produceState(initialValue = "") {
+        value = withContext(Dispatchers.IO) {
+            context.getSharedPreferences(PREFERENCES_NAME, MODE_PRIVATE).getString(PREF_AI_IP_ADDRESS, "").orEmpty()
+        }
+    }
+
+    var localIpAddress by remember(savedIpAddress) { mutableStateOf(savedIpAddress) }
 
     if (dialogVisibility) {
         AlertDialog(
             onDismissRequest = onDismissRequest,
             confirmButton = {
                 TextButton(onClick = {
-                    if (ipAddressValue != localIpAddress) preferences.edit { putString(PREF_AI_IP_ADDRESS, localIpAddress) }
+                    if (savedIpAddress != localIpAddress) {
+                        scope.launch(Dispatchers.IO) {
+                            context.getSharedPreferences(PREFERENCES_NAME, MODE_PRIVATE)
+                                .edit { putString(PREF_AI_IP_ADDRESS, localIpAddress) }
+                        }
+                    }
                     onDismissRequest.invoke()
                     action.invoke()
                 }) {

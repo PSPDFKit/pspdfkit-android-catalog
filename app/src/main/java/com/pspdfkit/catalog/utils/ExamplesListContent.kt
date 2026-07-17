@@ -67,6 +67,7 @@ import com.pspdfkit.catalog.examples.kotlin.DocumentPagerExample
 import com.pspdfkit.catalog.examples.kotlin.DocumentProcessingExample
 import com.pspdfkit.catalog.examples.kotlin.DocumentScrollExample
 import com.pspdfkit.catalog.examples.kotlin.DocumentTabsExample
+import com.pspdfkit.catalog.examples.kotlin.DocumentViewInDialogExample
 import com.pspdfkit.catalog.examples.kotlin.DynamicMultimediaAnnotationExample
 import com.pspdfkit.catalog.examples.kotlin.ELearningExample
 import com.pspdfkit.catalog.examples.kotlin.ExternalDocumentExample
@@ -93,6 +94,7 @@ import com.pspdfkit.catalog.examples.kotlin.LongTermValidationAfterSigningExampl
 import com.pspdfkit.catalog.examples.kotlin.LongTermValidationExample
 import com.pspdfkit.catalog.examples.kotlin.ManualSigningExample
 import com.pspdfkit.catalog.examples.kotlin.MeasurementToolsExample
+import com.pspdfkit.catalog.examples.kotlin.MemoryPressureExample
 import com.pspdfkit.catalog.examples.kotlin.MergeDocumentsExample
 import com.pspdfkit.catalog.examples.kotlin.NavHostExample
 import com.pspdfkit.catalog.examples.kotlin.OcrExample
@@ -154,6 +156,7 @@ fun getSectionsWithExamples(context: Context) = listOf(
         ZoomExample(context),
         RuntimeConfigurationExample(context),
         CustomFragmentRuntimeConfigurationExample(context),
+        MemoryPressureExample(context),
         UserInterfaceViewModesExample(context),
         ReaderViewExample(context),
         OutlineProviderExample(context),
@@ -312,6 +315,7 @@ fun getSectionsWithExamples(context: Context) = listOf(
         R.drawable.ic_jetpack_compose,
         ComposeExampleApp(context),
         JetpackComposeExample(context),
+        DocumentViewInDialogExample(context),
         JetpackComposeImageExample(context),
         NavHostExample(context),
     ),

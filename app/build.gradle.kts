@@ -24,8 +24,8 @@ android {
         minSdk = 26
         targetSdk = compileSdk
 
-        versionName = "11.6.4"
-        versionCode = 148619
+        versionName = "11.7.0"
+        versionCode = 148672
 
         vectorDrawables {
             useSupportLibrary = true
@@ -67,16 +67,16 @@ dependencies {
 
     // The Nutrient SDK is integrated from Maven Central (configured in the `repositories` block
     // of the settings file).
-    implementation("io.nutrient:nutrient-android-sdk:11.6.4")
+    implementation("io.nutrient:nutrient-android-sdk:11.7.0")
 
     // OCR library + English language pack. OCR is not yet on Maven Central, so it is loaded from
     // the Nutrient Maven repository during the transition period. Its POM lists the legacy
     // `io.nutrient:nutrient` artifact as a dependency; we exclude it so the SDK resolves from
     // Maven Central (`nutrient-android-sdk`) instead, avoiding duplicate classes on the classpath.
-    implementation("io.nutrient:nutrient-ocr:11.6.4") {
+    implementation("io.nutrient:nutrient-ocr:11.7.0") {
         exclude(group = "io.nutrient", module = "nutrient")
     }
-    implementation("io.nutrient:nutrient-ocr-english:11.6.4") {
+    implementation("io.nutrient:nutrient-ocr-english:11.7.0") {
         exclude(group = "io.nutrient", module = "nutrient")
     }
 

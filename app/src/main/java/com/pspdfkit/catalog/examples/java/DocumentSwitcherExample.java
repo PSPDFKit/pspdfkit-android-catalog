@@ -9,17 +9,16 @@ package com.pspdfkit.catalog.examples.java;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import androidx.annotation.NonNull;
-import androidx.appcompat.graphics.drawable.DrawerArrowDrawable;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import com.pspdfkit.catalog.R;
 import com.pspdfkit.catalog.SdkExample;
+import com.pspdfkit.compose.toolbar.state.ToolbarIcon;
+import com.pspdfkit.compose.toolbar.state.ToolbarItem;
+import com.pspdfkit.compose.toolbar.state.ToolbarItemState;
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration;
 import com.pspdfkit.configuration.activity.TabBarHidingMode;
 import com.pspdfkit.document.DocumentSource;
@@ -27,6 +26,8 @@ import com.pspdfkit.document.providers.AssetDataProvider;
 import com.pspdfkit.ui.DocumentDescriptor;
 import com.pspdfkit.ui.PdfActivity;
 import com.pspdfkit.ui.PdfActivityIntentBuilder;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This example extends the default `PdfActivity` and adds a side navigation drawer that allows to
@@ -111,35 +112,35 @@ public class DocumentSwitcherExample extends SdkExample {
                 }
             });
 
-            // Setup the navigation drawer menu icon.
-            final DrawerArrowDrawable drawerDrawable = new DrawerArrowDrawable(this);
+            // The main toolbar is Compose now: instead of setting a navigation icon on the legacy
+            // AppCompat Toolbar, declare a drawer item pinned to the toolbar's leading edge via the
+            // toolbar items provider. The icon picks up the toolbar's icon tint automatically.
+            setToolbarItemsProvider(defaultItems -> {
+                final List<ToolbarItem> items = new ArrayList<>(defaultItems.size() + 1);
+                items.add(new ToolbarItem.Button(
+                        "catalog.document_switcher.drawer",
+                        R.id.document_switcher_drawer,
+                        "Open document list",
+                        new ToolbarIcon.Resource(R.drawable.ic_drawer_menu),
+                        new ToolbarItemState(),
+                        ToolbarItem.ItemEdge.Start,
+                        ToolbarItem.OverflowBehavior.AlwaysShow));
+                items.addAll(defaultItems);
+                return items;
+            });
 
-            // We want to use the same color as the main toolbar items are tinted.
-            final TypedArray a = getTheme()
-                    .obtainStyledAttributes(
-                            null,
-                            com.pspdfkit.R.styleable.pspdf__ActionBarIcons,
-                            com.pspdfkit.R.attr.pspdf__actionBarIconsStyle,
-                            com.pspdfkit.R.style.PSPDFKit_ActionBarIcons);
-            int toolbarIconsColor = a.getColor(
-                    com.pspdfkit.R.styleable.pspdf__ActionBarIcons_pspdf__iconsColor,
-                    ContextCompat.getColor(this, com.pspdfkit.R.color.pspdf__onPrimaryLight));
-            a.recycle();
-
-            drawerDrawable.setColor(toolbarIconsColor);
-
-            // Get toolbar and set navigation icon with click listener to toggle the drawer.
-            final Toolbar toolbar = findViewById(com.pspdfkit.R.id.pspdf__toolbar_main);
-            if (toolbar != null) {
-                toolbar.setNavigationIcon(drawerDrawable);
-                toolbar.setNavigationOnClickListener(v -> {
+            // Toggle the drawer when the item is tapped; everything else keeps the SDK handling.
+            setOnToolbarItemClickListener(id -> {
+                if (id == R.id.document_switcher_drawer) {
                     if (drawerLayout.isDrawerOpen(drawerListView)) {
                         drawerLayout.closeDrawer(drawerListView);
                     } else {
                         drawerLayout.openDrawer(drawerListView);
                     }
-                });
-            }
+                    return true;
+                }
+                return false;
+            });
         }
 
         private void showDocument(@NonNull final DocumentDescriptor visibleItem) {

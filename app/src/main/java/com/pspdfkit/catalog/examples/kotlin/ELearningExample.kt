@@ -10,8 +10,6 @@ package com.pspdfkit.catalog.examples.kotlin
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import androidx.annotation.UiThread
 import androidx.lifecycle.lifecycleScope
 import com.pspdfkit.annotations.AnnotationType
@@ -19,6 +17,10 @@ import com.pspdfkit.bookmarks.Bookmark
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.tasks.ExtractAssetTask.extract
+import com.pspdfkit.compose.toolbar.state.ToolbarItem
+import com.pspdfkit.compose.toolbar.state.ToolbarItem.ItemEdge
+import com.pspdfkit.compose.toolbar.state.ToolbarItem.OverflowBehavior
+import com.pspdfkit.compose.toolbar.state.ToolbarItemState
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.configuration.page.PageLayoutMode
 import com.pspdfkit.configuration.sharing.ShareFeatures
@@ -111,35 +113,6 @@ class ELearningActivity : PdfActivity() {
     /** Flag to keep track of visibility of bookmark list view. */
     private var isBookmarkListDisplayed: Boolean = false
 
-    /**
-     * Create a button to switch between teacher and student documents.
-     */
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        super.onCreateOptionsMenu(menu)
-        if (document == null || serializedAnnotationsToTransfer.isNotEmpty()) {
-            return false
-        }
-        // Add a new switch button.
-        val switchItem = menu.add(0, SWITCH_ITEM_ID, 0, "Switch")
-        switchItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM or MenuItem.SHOW_AS_ACTION_WITH_TEXT)
-
-        return true
-    }
-
-    /**
-     * Set the corresponding action for every button.
-     */
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        SWITCH_ITEM_ID -> {
-            switchDocument()
-            true
-        }
-
-        else -> {
-            super.onOptionsItemSelected(item)
-        }
-    }
-
     override fun onPause() {
         switchDocumentJob?.cancel()
         transferDataJob?.cancel()
@@ -154,6 +127,30 @@ class ELearningActivity : PdfActivity() {
         }
         intent.getSupportParcelableExtra(TEACHER_URI_KEY, Uri::class.java)?.let {
             teacherUri = it
+        }
+
+        // Add a switch button to swap between teacher and student documents. The button is only
+        // visible once a document is loaded and no annotation transfer is in progress.
+        setToolbarItemsProvider { defaultItems ->
+            val switchVisible = document != null && serializedAnnotationsToTransfer.isEmpty()
+            defaultItems + ToolbarItem.Button(
+                id = SWITCH_ITEM_ID,
+                actionId = "switch_document",
+                contentDescription = "Switch",
+                position = ItemEdge.End,
+                overflowBehavior = OverflowBehavior.Never,
+                state = ToolbarItemState(isVisible = switchVisible),
+            )
+        }
+        setOnToolbarItemClickListener { itemId ->
+            when (itemId) {
+                SWITCH_ITEM_ID -> {
+                    switchDocument()
+                    true
+                }
+
+                else -> false
+            }
         }
     }
 
@@ -192,7 +189,7 @@ class ELearningActivity : PdfActivity() {
                     pspdfKitViews.outlineView?.show()
                 }
 
-                invalidateOptionsMenu()
+                invalidateToolbarItems()
             }
     }
 
@@ -218,10 +215,12 @@ class ELearningActivity : PdfActivity() {
 
                 withContext(Dispatchers.IO) {
                     // Fetch all annotations, serialize them, and collect them in a list. We keep them around in
-                    // memory, and will add them to the other document once it is loaded.
+                    // memory, and will add them to the other document once it is loaded. Widget annotations
+                    // are skipped: they belong to the form fields both documents already contain, and copying
+                    // them would add duplicate widgets with no form field behind them on every switch.
                     val annotations =
                         document.annotationProvider.getAllAnnotationsOfType(
-                            AnnotationType.entries.toSet(),
+                            AnnotationType.entries.toSet() - AnnotationType.WIDGET,
                         )
 
                     annotations.forEach { annotation ->
@@ -250,7 +249,7 @@ class ELearningActivity : PdfActivity() {
                 } else {
                     documentCoordinator.setDocument(DocumentDescriptor.fromUri(teacherUri))
                 }
-                invalidateOptionsMenu()
+                invalidateToolbarItems()
             }
     }
 

@@ -8,6 +8,7 @@
 package com.pspdfkit.catalog.ui
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -54,6 +55,7 @@ fun <Item, Section : List<Item>, Key> ExpandableList(
     sectionFooterLayout: @Composable (() -> Unit)? = null,
     bottomFooterLayout: @Composable (() -> Unit)? = null,
     areSectionHeadersSticky: Boolean = true,
+    contentPadding: PaddingValues = PaddingValues(),
     searchQuery: String,
 ) {
     val lazyListState = rememberLazyListState()
@@ -97,6 +99,7 @@ fun <Item, Section : List<Item>, Key> ExpandableList(
     LazyColumn(
         state = lazyListState,
         modifier = modifier,
+        contentPadding = contentPadding,
     ) {
         item {
             topHeaderLayout?.invoke()

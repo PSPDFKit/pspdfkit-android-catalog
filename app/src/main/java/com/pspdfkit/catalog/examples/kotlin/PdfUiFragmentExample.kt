@@ -95,7 +95,6 @@ class PdfUiFragmentExampleActivity :
         } else {
             pdfUiFragment = supportFragmentManager.findFragmentByTag("pdfUiFragment") as PdfUiFragment
         }
-
         observer = PdfUiFragmentLifecycleObserver(pdfUiFragment, this)
 
         // Handle back button presses using OnBackPressedDispatcher

@@ -13,6 +13,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -94,7 +95,7 @@ import java.util.Locale
 @Composable
 @ExperimentalComposeUiApi
 @ExperimentalFoundationApi
-fun Preferences(state: State, dispatcher: Dispatcher) {
+fun Preferences(state: State, dispatcher: Dispatcher, contentPadding: PaddingValues = PaddingValues()) {
     var preferences by remember { mutableStateOf(listOf<PreferencesSection>()) }
 
     // I'm using a LaunchedEffect here to filter the list in a background thread
@@ -116,6 +117,7 @@ fun Preferences(state: State, dispatcher: Dispatcher) {
             expandedSectionsState = state.expandedPreferenceSectionTitles,
             sectionKey = { it.title },
             areSectionHeadersSticky = false,
+            contentPadding = contentPadding,
             topHeaderLayout = {
                 Column(
                     modifier = Modifier.padding(Dimens.preferencesPageHeaderPadding),

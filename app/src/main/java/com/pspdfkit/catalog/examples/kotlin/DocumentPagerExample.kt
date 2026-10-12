@@ -66,21 +66,20 @@ import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.SdkExample.Companion.WELCOME_DOC
 import com.pspdfkit.catalog.ui.theming.CatalogTheme
 import com.pspdfkit.compose.theme.MainToolbarColors
+import com.pspdfkit.compose.theme.NutrientTheme
 import com.pspdfkit.compose.theme.ToolbarPopupColors
-import com.pspdfkit.compose.theme.getUiColors
+import com.pspdfkit.compose.toolbar.composables.NutrientMainToolbar
+import com.pspdfkit.compose.toolbar.composables.NutrientMainToolbarTitle
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.configuration.page.PageFitMode
 import com.pspdfkit.configuration.page.PageLayoutMode
 import com.pspdfkit.configuration.page.PageScrollDirection
 import com.pspdfkit.configuration.page.PageScrollMode
-import com.pspdfkit.jetpack.compose.components.MainToolbar
 import com.pspdfkit.jetpack.compose.interactors.DefaultListeners
 import com.pspdfkit.jetpack.compose.interactors.DocumentState
 import com.pspdfkit.jetpack.compose.interactors.getDefaultDocumentManager
 import com.pspdfkit.jetpack.compose.interactors.rememberDocumentState
 import com.pspdfkit.jetpack.compose.views.DocumentView
-import com.pspdfkit.ui.toolbar.ContextualToolbar
-import com.pspdfkit.ui.toolbar.ToolbarCoordinatorLayout
 import kotlinx.coroutines.launch
 import java.io.File
 import java.lang.ref.WeakReference
@@ -298,17 +297,17 @@ private fun PdfDocumentPage(
     val toolbarVisibility = !immersiveModeEnabled && !contextualToolbarShown && !searchViewShown
     val tabRowVisibility = !immersiveModeEnabled && !searchViewShown
 
-    LaunchedEffect(documentState) {
-        documentState.setOnContextualToolbarLifecycleListener(object : ToolbarCoordinatorLayout.OnContextualToolbarLifecycleListener {
-            override fun onPrepareContextualToolbar(toolbar: ContextualToolbar<*>) = Unit
-            override fun onDisplayContextualToolbar(toolbar: ContextualToolbar<*>) {
-                contextualToolbarShown = true
+    // Contextual-toolbar visibility from the coordinator's state flow — the successor of the
+    // removed OnContextualToolbarLifecycleListener display/remove callbacks.
+    val pagerToolbarCoordinator by documentState.toolbarCoordinator.collectAsState()
+    LaunchedEffect(pagerToolbarCoordinator) {
+        pagerToolbarCoordinator?.contextualToolbar?.collect { state ->
+            val shown = state != null
+            if (contextualToolbarShown != shown) {
+                contextualToolbarShown = shown
+                if (!shown) immersiveModeEnabled = false
             }
-            override fun onRemoveContextualToolbar(toolbar: ContextualToolbar<*>) {
-                contextualToolbarShown = false
-                immersiveModeEnabled = false
-            }
-        })
+        }
     }
 
     LaunchedEffect(searchViewShown) {
@@ -324,7 +323,7 @@ private fun PdfDocumentPage(
     // Manage the content view's top padding (which offsets the thumbnail grid below the visible
     // toolbar) entirely from Compose via SideEffect. This runs synchronously after every
     // recomposition and calls into the SDK's setContentViewTopPadding, which suppresses the
-    // automatic Java-side adjustments in ToolbarCoordinatorLayout so the two don't race.
+    // automatic content-padding adjustments in the SDK so the two don't race.
     //
     // Crucially, enableViewSpacer is true both during normal grid mode AND editing mode, so the
     // padding value stays constant across that transition — no grid jump, no thumbnail recycling.
@@ -368,14 +367,22 @@ private fun PdfDocumentPage(
                 fadeIn(initialAlpha = 0.3f),
             exit = if (contextualToolbarShown) fadeOut() else slideOutVertically() + shrinkVertically() + fadeOut(),
         ) {
-            // Common toolbar for all pages
-            MainToolbar(
-                modifier = Modifier.padding(top = paddingValues.calculateTopPadding()),
-                documentState = documentState,
-                windowInsets = WindowInsets.captionBar,
-                colorScheme = createCustomUiColors(),
-                showTitleBar = !enableViewSpacer,
-            )
+            // Common toolbar for all pages: the Compose NutrientMainToolbar bound to this page's
+            // coordinator (null until the document UI initializes). Themed via NutrientTheme; the
+            // title is suppressed while an overlay view needs the spacer.
+            val toolbarCoordinator by documentState.toolbarCoordinator.collectAsState()
+            NutrientTheme {
+                toolbarCoordinator?.let { coordinator ->
+                    NutrientMainToolbar(
+                        coordinator = coordinator,
+                        modifier = Modifier.fillMaxWidth().padding(top = paddingValues.calculateTopPadding()),
+                        // The spacer view needs the title row empty; the items stay either way.
+                        title = { if (!enableViewSpacer) NutrientMainToolbarTitle(coordinator) },
+                        windowInsets = WindowInsets.captionBar,
+                        colors = pagerToolbarColors(),
+                    )
+                }
+            }
         }
     }
 }
@@ -420,14 +427,11 @@ private fun createDocumentManager(context: Context, onImmersiveModeChanged: (Boo
  * Creates custom UI colors for the toolbar
  */
 @Composable
-private fun createCustomUiColors() = getUiColors().copy(
-    mainToolbar =
-    MainToolbarColors(
-        backgroundColor = MaterialTheme.colorScheme.primary,
-        textColor = MaterialTheme.colorScheme.onPrimary,
-        popup = ToolbarPopupColors(backgroundColor = MaterialTheme.colorScheme.primary),
-        titleTextColor = MaterialTheme.colorScheme.onPrimary,
-    ),
+private fun pagerToolbarColors() = MainToolbarColors(
+    backgroundColor = MaterialTheme.colorScheme.primary,
+    textColor = MaterialTheme.colorScheme.onPrimary,
+    popup = ToolbarPopupColors(backgroundColor = MaterialTheme.colorScheme.primary),
+    titleTextColor = MaterialTheme.colorScheme.onPrimary,
 )
 
 /**

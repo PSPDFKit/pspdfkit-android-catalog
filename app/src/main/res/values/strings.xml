@@ -15,10 +15,6 @@
     <string name="defaultExampleDescription">Open a PDF from assets in the default PdfActivity with no customization.</string>
     <string name="playgroundExampleTitle">Playground</string>
     <string name="playgroundExampleDescription">Configure PdfActivity interactively and preview the result.</string>
-    <string name="customActionsExampleTitle">Custom ActionBar Actions</string>
-    <string name="customActionsExampleDescription">Customize the default set of ActionBar icons to fit your app.</string>
-    <string name="toolbarsInFragmentExampleTitle">Custom Activity Toolbars</string>
-    <string name="toolbarsInFragmentExampleDescription">Add toolbars to a custom activity built around PdfFragment.</string>
     <string name="formEditingInFragmentExampleTitle">Custom Activity Form Editing</string>
     <string name="formEditingInFragmentExampleDescription">Add form editing UI to a custom activity built around PdfFragment.</string>
     <string name="runtimeConfigurationChangeExampleTitle">Runtime Configuration</string>
@@ -75,6 +71,9 @@
     <string name="documentTabsExampleDescription">Open multiple documents in a tabbed interface using DocumentCoordinator.</string>
     <string name="persistentTabsExampleTitle">Tabbed Documents (Persistent)</string>
     <string name="persistentTabsExampleDescription">Retain the list of open document tabs across activity recreation.</string>
+    <string name="documentTabsComposeExampleTitle">Tabbed Documents (Compose)</string>
+    <string name="documentTabsComposeExampleDescription">Render a floating-pill main toolbar with a rounded, spaced NutrientTabBar below it above a DocumentView, and open more documents into it.</string>
+    <string name="documentTabsComposeExampleAddTab">Open another document</string>
     <string name="customDataProviderExampleTitle">Custom Data Provider</string>
     <string name="customDataProviderExampleDescription">Implement a custom DataProvider to load a PDF from app resources.</string>
     <string name="remoteUrlDataProviderExampleTitle">Remote URL</string>
@@ -141,18 +140,12 @@
     <string name="customSearchUiComposeExampleDescription">Build a fully custom Compose search UI on top of the search APIs.</string>
     <string name="disabledAnnotationPropertyExampleTitle">Disabled Annotation Property</string>
     <string name="disabledAnnotationPropertyExampleDescription">Remove the annotation note option from the annotation editing toolbar.</string>
-    <string name="customInlineSearchExampleTitle">Inline Search</string>
-    <string name="customInlineSearchExampleDescription">Embed PdfSearchViewInline in a custom layout for integrated in-document search.</string>
     <string name="screenReaderExampleTitle">Screen Reader</string>
     <string name="screenReaderExampleDescription">Read document text aloud and highlight each word as it is spoken.</string>
     <string name="documentDownloadExampleTitle">Document Download</string>
     <string name="documentDownloadExampleDescription">Download a PDF from a URL and display download progress.</string>
     <string name="verticalScrollbarExampleTitle">Vertical Scrollbar</string>
     <string name="verticalScrollbarExampleDescription">Add a VerticalScrollBar widget for quick page navigation.</string>
-    <string name="customToolbarItemGroupingExampleTitle">Custom Toolbar Grouping</string>
-    <string name="customToolbarItemGroupingExampleDescription">Reorganize contextual menu items on the AnnotationToolbar.</string>
-    <string name="customAnnotationCreationToolbarExampleTitle">Custom Annotation Creation Toolbar</string>
-    <string name="customAnnotationCreationToolbarExampleDescription">Add custom items to the annotation creation toolbar bound to specific tools and variants.</string>
     <string name="scientificPaperExampleTitle">Scientific Paper</string>
     <string name="scientificPaperExampleDescription">Configure continuous scrolling, persistent UI, and page fit for reading long documents.</string>
     <string name="customApplicationPolicyExampleTitle">Application Policy</string>
@@ -181,8 +174,10 @@
     <string name="thirdPartySigningExampleDescription">Digitally sign a document with a PKCS#7 signature produced by an external signing provider.</string>
     <string name="watermarkExampleTitle">Watermarks</string>
     <string name="watermarkExampleDescription">Add page watermarks using the PdfDrawable API on the fragment, thumbnail bar, and grid.</string>
-    <string name="composeExampleTitle">Simple Compose App</string>
-    <string name="composeExampleDescription">Build and install a full Jetpack Compose PDF viewer app from examples/simple-compose/.</string>
+    <string name="customPdfSourceExampleTitle">Replace and Refresh Documents</string>
+    <string name="customPdfSourceExampleDescription">Swap the displayed document or reload the current one on a hoisted DocumentState with setCustomPdfSource — without recreating the DocumentView.</string>
+    <string name="composePdfViewerExampleTitle">Compose PDF Viewer</string>
+    <string name="composePdfViewerExampleDescription">A complete Compose viewer app: recent documents with page thumbnails, system file import, light/dark/dynamic-color settings, and a host-rendered main toolbar.</string>
     <string name="filterableThumbnailGridExampleTitle">Filterable Thumbnail Grid</string>
     <string name="filterableThumbnailGridExampleDescription">Filter the thumbnail grid to show all pages, annotated pages only, or bookmarked pages only.</string>
     <string name="documentJsonExampleTitle">Instant Document JSON</string>
@@ -223,8 +218,6 @@
     <string name="pdfFromImageExampleDescription">Capture an image with the camera and convert it to a PDF.</string>
     <string name="measurementToolsExampleTitle">Measurement Tools</string>
     <string name="measurementToolsExampleDescription">Create and read measurement annotations with scale calibration and precision settings.</string>
-    <string name="popupToolbarCustomisationTitle">Popup Toolbar Customization</string>
-    <string name="popupToolbarCustomisationDescription">Customize popup toolbars for text selection, annotation selection, long-press, and content editing.</string>
     <string name="popupToolbarWordCount">Word Count</string>
     <string name="popupToolbarAnnotationInfo">Info</string>
     <string name="popupToolbarAddNote">Add Note</string>
@@ -252,8 +245,6 @@
     <!-- Strings used by samples -->
     <string name="example_show_user_interface">Show user interface</string>
     <string name="example_hide_user_interface">Hide user interface</string>
-    <string name="open_editor">Open annotation editor</string>
-    <string name="close_editor">Close annotation editor</string>
     <string name="signature_creation_disabled">Signature creation disabled</string>
     <string name="signature_creation_enabled">Signature creation enabled</string>
 
@@ -398,6 +389,7 @@
     <string name="checkbox_preference_enable_leakcanary">Enable LeakCanary</string>
     <string name="checkbox_preference_enable_freeze_detector">Enable freeze detector</string>
     <string name="checkbox_preference_enable_memory_trace_logging">Enable memory trace logging</string>
+    <string name="checkbox_preference_enable_verbose_logging">Enable verbose SDK logging</string>
     <string name="integer_preference_start_page">Start page</string>
     <string name="integer_preference_start_page_description">Start the document at page: </string>
     <string name="button_preference_clear_cache">Clear cache</string>
@@ -405,8 +397,36 @@
     <string name="button_preference_clear_app_data_description">This will reset all stored app settings. It kills the app, requiring a restart.</string>
     <string name="instantJsonAttachmentTitle">Instant JSON Attachment</string>
     <string name="instantJsonAttachmentDescription">Export and import binary attachment data for image stamps in Instant JSON format.</string>
-    <string name="customMainToolbarExampleTitle">Custom Main Toolbar</string>
-    <string name="customMainToolbarExampleDescription">Use PdfUiFragment in an AppCompatActivity with custom main toolbar actions.</string>
+
+    <!-- Toolbars & Menus examples. Order matches the section in ExamplesListContent.kt, which records the ordering rule. -->
+    <string name="mainToolbarCustomizationExampleTitle">Main Toolbar: Custom Layout &amp; Items</string>
+    <string name="mainToolbarCustomizationExampleDescription">Mount the main toolbar in your own rounded, elevated container with a custom color scheme, and add a custom item that resizes it.</string>
+    <string name="mainToolbarFloatingExampleTitle">Main Toolbar: Floating Pill (M3 Expressive)</string>
+    <string name="mainToolbarFloatingExampleDescription">Material 3 Expressive floating toolbar: drag the pill to dock it at any window edge, horizontally or vertically — or switch it into the collapsible variant that shrinks to its active item after a tap.</string>
+    <string name="mainToolbarFloatingCollapsibleToggle">Collapsible</string>
+    <string name="mainToolbarFabMenuExampleTitle">Main Toolbar: FAB Menu (M3 Expressive)</string>
+    <string name="mainToolbarFabMenuExampleDescription">Toolbar actions as a Material 3 Expressive FAB menu: the collapsed FAB shows the active item, tapping it expands the labeled action list, and long-pressing drags it between the bottom corners.</string>
+    <string name="mainToolbarFabMenuOpen">Open menu</string>
+    <string name="mainToolbarFabMenuClose">Close menu</string>
+    <string name="annotationToolbarUserEditableExampleTitle">Annotation Toolbar: User-Editable Tools</string>
+    <string name="annotationToolbarUserEditableExampleDescription">Pick and arrange annotation tools with drag and drop: a bottom sheet lists every tool — tap to show or hide it on the bar, long-press and drag to place it exactly. The arrangement is saved permanently.</string>
+    <string name="annotationToolbarCustomItemsExampleTitle">Annotation Toolbar: Custom Items</string>
+    <string name="annotationToolbarCustomItemsExampleDescription">Add custom items to the annotation creation toolbar bound to specific tools and variants.</string>
+    <string name="annotationToolbarGroupingExampleTitle">Annotation Toolbar: Item Grouping</string>
+    <string name="annotationToolbarGroupingExampleDescription">Reorganize contextual menu items on the annotation toolbar.</string>
+    <string name="popupToolbarCustomItemsExampleTitle">Popup Toolbar: Custom Items</string>
+    <string name="popupToolbarCustomItemsExampleDescription">Customize popup toolbars for text selection, annotation selection, long-press, and content editing.</string>
+    <string name="customToolbarsPdfActivityExampleTitle">Custom Toolbars: PdfActivity</string>
+    <string name="customToolbarsPdfActivityExampleDescription">Disable the SDK toolbars and overlay your own Compose main and contextual bars on the activity\'s toolbar coordinator.</string>
+    <string name="customToolbarsPdfFragmentExampleTitle">Custom Toolbars: PdfFragment</string>
+    <string name="customToolbarsPdfFragmentExampleDescription">Host the SDK toolbars around a bare PdfFragment with NutrientToolbars — docking, drag chrome, annotation toolbar, and the annotation inspector.</string>
+    <string name="customToolbarsPdfFragmentMainToolbarTitle">Hosted Toolbars</string>
+    <string name="customToolbarsPdfFragmentViewExampleTitle">Custom Toolbars: PdfFragment (View Interop)</string>
+    <string name="customToolbarsPdfFragmentViewExampleDescription">Mount the SDK toolbar stack as a ComposeView in a classic View layout next to a bare PdfFragment.</string>
+    <string name="customToolbarsPdfFragmentViewMainToolbarTitle">View-Interop Toolbars</string>
+    <string name="customToolbarsDocumentViewExampleTitle">Custom Toolbars: DocumentView</string>
+    <string name="customToolbarsDocumentViewExampleDescription">Disable both SDK bars on the Compose DocumentView and render a custom main toolbar and a bottom-docked contextual bar.</string>
+
     <string name="constructionExampleTitle">Construction Floor Plan</string>
     <string name="constructionExampleDescription">Display a building floor plan with custom pin stamps, hide/show annotations, and a custom toolbar.</string>
 
@@ -429,4 +449,6 @@
     <string name="indexedFtsExampleTitle">Search Indexing</string>
     <string name="indexedFtsExampleDescription">Index PDF assets and search them with PdfLibrary and LibraryFileSystemDataSource.</string>
 
+    <string name="customSdkUiExampleTitle">Custom Settings, Info and Outline UI</string>
+    <string name="customSdkUiExampleDescription">Replaces the settings, document info and outline screens with your own UI, reading and writing the SDK data through public API only.</string>
 </resources>

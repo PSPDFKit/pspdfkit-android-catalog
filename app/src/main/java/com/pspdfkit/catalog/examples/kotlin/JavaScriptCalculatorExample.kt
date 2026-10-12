@@ -13,6 +13,7 @@ import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.configuration.activity.ThumbnailBarMode
 import com.pspdfkit.configuration.activity.UserInterfaceViewMode
 import com.pspdfkit.configuration.page.PageFitMode
+import com.pspdfkit.configuration.page.PageScrollMode
 import com.pspdfkit.configuration.sharing.ShareFeatures
 import java.util.EnumSet
 
@@ -26,9 +27,12 @@ class JavaScriptCalculatorExample(context: Context) :
 
     override fun prepareConfiguration(configuration: PdfActivityConfiguration.Builder) {
         configuration
-            .fitMode(PageFitMode.FIT_TO_WIDTH)
-            // Disable all Nutrient views.
+            // Show one whole page at a time, so the full calculator is visible on start.
+            .scrollMode(PageScrollMode.PER_PAGE)
+            .fitMode(PageFitMode.FIT_TO_SCREEN)
+            // Disable all Nutrient views except the view settings.
             .annotationEditingEnabled(false)
+            .contentEditingEnabled(false)
             .documentEditorEnabled(false)
             .searchEnabled(false)
             .outlineEnabled(false)
@@ -40,7 +44,6 @@ class JavaScriptCalculatorExample(context: Context) :
             .thumbnailGridEnabled(false)
             .setEnabledShareFeatures(EnumSet.noneOf(ShareFeatures::class.java))
             .printingEnabled(false)
-            .settingsMenuEnabled(false)
             // Force toolbar visibility.
             .setUserInterfaceViewMode(UserInterfaceViewMode.USER_INTERFACE_VIEW_MODE_VISIBLE)
             // Disable text selection.

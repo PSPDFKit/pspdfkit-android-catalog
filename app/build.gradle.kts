@@ -17,15 +17,16 @@ plugins {
 
 android {
     namespace = "com.pspdfkit.catalog"
-    compileSdk = 36
+    compileSdk = 37
+    compileSdkMinor = 1
 
     defaultConfig {
         applicationId = namespace
         minSdk = 26
         targetSdk = compileSdk
 
-        versionName = "11.7.0"
-        versionCode = 148672
+        versionName = "12.0.0"
+        versionCode = 150260
 
         vectorDrawables {
             useSupportLibrary = true
@@ -67,23 +68,23 @@ dependencies {
 
     // The Nutrient SDK is integrated from Maven Central (configured in the `repositories` block
     // of the settings file).
-    implementation("io.nutrient:nutrient-android-sdk:11.7.0")
+    implementation("io.nutrient:nutrient-android-sdk:12.0.0")
 
     // OCR library + English language pack. OCR is not yet on Maven Central, so it is loaded from
     // the Nutrient Maven repository during the transition period. Its POM lists the legacy
     // `io.nutrient:nutrient` artifact as a dependency; we exclude it so the SDK resolves from
     // Maven Central (`nutrient-android-sdk`) instead, avoiding duplicate classes on the classpath.
-    implementation("io.nutrient:nutrient-ocr:11.7.0") {
+    implementation("io.nutrient:nutrient-ocr:12.0.0") {
         exclude(group = "io.nutrient", module = "nutrient")
     }
-    implementation("io.nutrient:nutrient-ocr-english:11.7.0") {
+    implementation("io.nutrient:nutrient-ocr-english:12.0.0") {
         exclude(group = "io.nutrient", module = "nutrient")
     }
 
 
     // Androidx
     implementation("androidx.datastore:datastore-preferences:1.1.7")
-    implementation("androidx.fragment:fragment-ktx:1.8.9")
+    implementation("androidx.fragment:fragment-ktx:1.9.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.9.4")
     implementation("androidx.activity:activity-compose:1.11.0")
     implementation("androidx.core:core-splashscreen:1.0.1")

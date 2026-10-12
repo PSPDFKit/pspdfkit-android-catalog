@@ -63,7 +63,6 @@ import com.pspdfkit.document.search.SearchResult;
 import com.pspdfkit.document.search.TextSearch;
 import com.pspdfkit.listeners.DocumentListener;
 import com.pspdfkit.ui.PdfFragment;
-import com.pspdfkit.ui.search.PdfSearchViewInline;
 import com.pspdfkit.ui.search.SearchResultHighlighter;
 import com.pspdfkit.utils.Size;
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
@@ -80,7 +79,7 @@ import java.util.Locale;
 import java.util.Map;
 
 /**
- * This example takes the {@link PdfSearchViewInline} and places it inside a custom layout. To do so
+ * This example builds a fully custom inline search UI on top of {@link TextSearch}. To do so
  * it uses a custom activity {@link CustomSearchUiActivity} which will manage creation of the new
  * layout as well as showing and hiding of the inline search.
  */

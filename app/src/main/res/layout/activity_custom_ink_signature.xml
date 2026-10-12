@@ -30,8 +30,8 @@
         android:layout_height="match_parent"
         android:fitsSystemWindows="true">
 
-        <com.pspdfkit.ui.toolbar.ToolbarCoordinatorLayout
-            android:id="@+id/toolbarCoordinatorLayout"
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/toolbarComposeHost"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 

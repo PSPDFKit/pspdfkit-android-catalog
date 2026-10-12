@@ -24,7 +24,6 @@ object AlphaDefs {
     const val TITLE_SDK_VERSION = 0.7f
     const val HALF = 0.5f
     const val ICON_UNSELECTED = 0.65f
-    const val ON_SURFACE = 0.87f
 }
 
 private val lightScheme =

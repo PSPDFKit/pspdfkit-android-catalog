@@ -11,13 +11,11 @@ import android.content.Intent
 import android.graphics.RectF
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AlertDialog
+import androidx.compose.ui.graphics.Color
 import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.net.toUri
 import androidx.lifecycle.lifecycleScope
 import com.pspdfkit.ai.createAiAssistantForInstant
@@ -25,6 +23,10 @@ import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.examples.kotlin.instant.api.InstantExampleDocumentDescriptor
 import com.pspdfkit.catalog.examples.kotlin.instant.api.WebPreviewClient
 import com.pspdfkit.catalog.utils.JwtGenerator
+import com.pspdfkit.compose.toolbar.state.ToolbarIcon
+import com.pspdfkit.compose.toolbar.state.ToolbarItem
+import com.pspdfkit.compose.toolbar.state.ToolbarItem.OverflowBehavior
+import com.pspdfkit.compose.toolbar.state.ToolbarItemState
 import com.pspdfkit.document.sharing.DocumentSharingIntentHelper
 import com.pspdfkit.instant.client.InstantClient
 import com.pspdfkit.instant.document.InstantPdfDocument
@@ -128,6 +130,32 @@ open class InstantExampleActivity :
         initCollaborateMenu()
         // Hook into Instant sync errors so we can trigger recovery in this example.
         getPdfFragment().addInstantDocumentListener(instantErrorListener)
+
+        setToolbarItemsProvider { defaultItems ->
+            // Recompute enabled state each time so the item reflects the current connection state.
+            val isDocumentLoaded = document != null
+            defaultItems + ToolbarItem.Button(
+                id = R.id.instant_collaborate,
+                actionId = "instant_collaborate",
+                contentDescription = getString(R.string.instant_collaborate),
+                icon = ToolbarIcon.Resource(
+                    id = R.drawable.ic_collaborate,
+                    tint = Color(mainToolbarIconsColor),
+                ),
+                state = ToolbarItemState(isEnabled = isDocumentLoaded),
+                position = ToolbarItem.ItemEdge.End,
+                overflowBehavior = OverflowBehavior.IfRoom,
+            )
+        }
+
+        setOnToolbarItemClickListener { itemId ->
+            if (itemId == R.id.instant_collaborate) {
+                collaborateMenu.show()
+                true
+            } else {
+                false
+            }
+        }
     }
 
     override fun onStop() {
@@ -166,38 +194,6 @@ open class InstantExampleActivity :
         )
 
         collaborateMenu.addActionMenuListener(this)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        super.onCreateOptionsMenu(menu)
-
-        val collaborateMenuItem = menu.add(0, R.id.instant_collaborate, 0, getString(R.string.instant_collaborate))
-        collaborateMenuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM)
-
-        return true
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
-        super.onPrepareOptionsMenu(menu)
-
-        val collaborateMenuItem = menu.findItem(R.id.instant_collaborate)
-        collaborateMenuItem.isEnabled = document != null
-
-        collaborateMenuItem.icon =
-            ContextCompat.getDrawable(this, R.drawable.ic_collaborate)?.apply {
-                DrawableCompat.setTint(this, mainToolbarIconsColor)
-                alpha = if (document != null) 255 else 128
-            }
-
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.instant_collaborate) {
-            collaborateMenu.show()
-            return true
-        }
-        return super.onOptionsItemSelected(item)
     }
 
     override fun onPrepareActionMenu(actionMenu: ActionMenu): Boolean = true

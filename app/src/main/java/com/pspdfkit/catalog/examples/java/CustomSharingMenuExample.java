@@ -75,6 +75,8 @@ public class CustomSharingMenuExample extends SdkExample {
 
         private static final String STATE_SHOWING_MAIL_TO_SHARING_MENU = "STATE_SHOWING_MAIL_TO_SHARING_MENU";
 
+        private static final int ITEM_SEND_MAIL = 91;
+
         @Nullable
         private SharingMenu mailToActionMenu;
 
@@ -104,7 +106,7 @@ public class CustomSharingMenuExample extends SdkExample {
         public boolean onPrepareActionMenu(@NonNull ActionMenu actionMenu) {
             // Add fixed menu item to action menu.
             actionMenu.addMenuItem(
-                    new FixedActionMenuItem(this, R.id.item_send_mail, R.drawable.ic_custom_sharing, R.string.mail));
+                    new FixedActionMenuItem(this, ITEM_SEND_MAIL, R.drawable.ic_custom_sharing, R.string.mail));
             // Make sure to return true, if you want sharing menu to display your actions.
             return true;
         }
@@ -117,7 +119,7 @@ public class CustomSharingMenuExample extends SdkExample {
 
         @Override
         public boolean onActionMenuItemClicked(@NonNull ActionMenu actionMenu, @NonNull ActionMenuItem menuItem) {
-            if (menuItem.getItemId() == R.id.item_send_mail) {
+            if (menuItem.getItemId() == ITEM_SEND_MAIL) {
                 actionMenu.dismiss();
                 // Show new sharing menu with "Mail to" action.
                 showMailToSharingMenu();

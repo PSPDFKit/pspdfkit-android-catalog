@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.ContextMenu;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import androidx.annotation.NonNull;
@@ -22,11 +21,15 @@ import com.pspdfkit.annotations.AnnotationType;
 import com.pspdfkit.catalog.R;
 import com.pspdfkit.catalog.SdkExample;
 import com.pspdfkit.catalog.tasks.ExtractAssetTask;
+import com.pspdfkit.compose.toolbar.state.ToolbarIcon;
+import com.pspdfkit.compose.toolbar.state.ToolbarItem;
+import com.pspdfkit.compose.toolbar.state.ToolbarItemState;
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration;
 import com.pspdfkit.ui.PdfActivity;
 import com.pspdfkit.ui.PdfActivityIntentBuilder;
 import com.pspdfkit.ui.annotations.OnAnnotationSelectedListener;
 import com.pspdfkit.ui.rendering.AnnotationOverlayRenderStrategy;
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
@@ -92,10 +95,75 @@ public class AnnotationOverlayExample extends SdkExample {
             // annotations.
             requirePdfFragment().setAnnotationOverlayRenderStrategy(annotation -> currentOverlayRenderingStrategy);
 
+            // Add custom toolbar items, computing their labels/visibility from current state.
+            setToolbarItemsProvider(defaultItems -> {
+                final List<ToolbarItem> items = new ArrayList<>(defaultItems);
+                items.add(new ToolbarItem.Button(
+                        "toggle_annotation_overlay",
+                        R.id.toggle_annotation_overlay,
+                        annotationOverlayEnabled ? "Disable annotation overlay" : "Enable annotation overlay",
+                        ToolbarIcon.None.INSTANCE,
+                        new ToolbarItemState(true, false, true),
+                        ToolbarItem.ItemEdge.End,
+                        ToolbarItem.OverflowBehavior.Never));
+                // Toggling overlay strategy only makes sense when annotation overlay is enabled,
+                // so the item is hidden otherwise.
+                final String renderingStrategyTitle =
+                        currentOverlayRenderingStrategy == AnnotationOverlayRenderStrategy.Strategy.PLATFORM_RENDERING
+                                ? "Use AP stream rendering"
+                                : "Use platform rendering";
+                items.add(new ToolbarItem.Button(
+                        "toggle_overlay_rendering_strategy",
+                        R.id.toggle_overlay_rendering_strategy,
+                        renderingStrategyTitle,
+                        ToolbarIcon.None.INSTANCE,
+                        new ToolbarItemState(true, false, annotationOverlayEnabled),
+                        ToolbarItem.ItemEdge.End,
+                        ToolbarItem.OverflowBehavior.Never));
+                items.add(new ToolbarItem.Button(
+                        "fire_low_memory_notification",
+                        R.id.fire_low_memory_notification,
+                        "Fire low memory notification",
+                        ToolbarIcon.None.INSTANCE,
+                        new ToolbarItemState(true, false, true),
+                        ToolbarItem.ItemEdge.End,
+                        ToolbarItem.OverflowBehavior.Never));
+                return items;
+            });
+
+            setOnToolbarItemClickListener(id -> {
+                if (id == R.id.toggle_annotation_overlay) {
+                    if (annotationOverlayEnabled) {
+                        disableOverlayForAllAnnotationTypes();
+                    } else {
+                        enableOverlayForSupportedAnnotationTypes();
+                    }
+                    invalidateToolbarItems();
+                    return true;
+                } else if (id == R.id.fire_low_memory_notification) {
+                    // We fire low memory notification manually to showcase how annotation overlay
+                    // mode behaves when system is low on memory.
+                    requirePdfFragment().onLowMemory();
+                    return true;
+                } else if (id == R.id.toggle_overlay_rendering_strategy) {
+                    // Toggle the current overlay rendering strategy.
+                    if (currentOverlayRenderingStrategy
+                            == AnnotationOverlayRenderStrategy.Strategy.AP_STREAM_RENDERING) {
+                        currentOverlayRenderingStrategy = AnnotationOverlayRenderStrategy.Strategy.PLATFORM_RENDERING;
+                    } else {
+                        currentOverlayRenderingStrategy = AnnotationOverlayRenderStrategy.Strategy.AP_STREAM_RENDERING;
+                    }
+                    // Invalidate items to change button text to current state.
+                    invalidateToolbarItems();
+                    return true;
+                }
+                return false;
+            });
+
             // We'll enable overlay for all supported annotation types immediately after activity
             // creation.
             enableOverlayForSupportedAnnotationTypes();
-            invalidateOptionsMenu();
+            invalidateToolbarItems();
         }
 
         @Override
@@ -114,36 +182,6 @@ public class AnnotationOverlayExample extends SdkExample {
             if (!reselected) {
                 overlayFab.setVisibility(View.GONE);
             }
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-            final int itemId = item.getItemId();
-            if (itemId == R.id.toggle_annotation_overlay) {
-                if (annotationOverlayEnabled) {
-                    disableOverlayForAllAnnotationTypes();
-                } else {
-                    enableOverlayForSupportedAnnotationTypes();
-                }
-                invalidateOptionsMenu();
-                return true;
-            } else if (itemId == R.id.fire_low_memory_notification) { // We fire low memory notification manually
-                // to showcase how annotation overlay mode
-                // behaves when system is low on memory.
-                requirePdfFragment().onLowMemory();
-                return true;
-            } else if (itemId == R.id.toggle_overlay_rendering_strategy) {
-                // Toggle the current overlay rendering strategy.
-                if (currentOverlayRenderingStrategy == AnnotationOverlayRenderStrategy.Strategy.AP_STREAM_RENDERING) {
-                    currentOverlayRenderingStrategy = AnnotationOverlayRenderStrategy.Strategy.PLATFORM_RENDERING;
-                } else {
-                    currentOverlayRenderingStrategy = AnnotationOverlayRenderStrategy.Strategy.AP_STREAM_RENDERING;
-                }
-                // Invalidate options to change button text to current state.
-                invalidateOptionsMenu();
-                return true;
-            }
-            return super.onOptionsItemSelected(item);
         }
 
         private void disableOverlayForAllAnnotationTypes() {
@@ -170,24 +208,6 @@ public class AnnotationOverlayExample extends SdkExample {
                 overlayTypes.addAll(perTypeOverrides);
             }
             requirePdfFragment().setOverlaidAnnotationTypes(overlayTypes);
-        }
-
-        @Override
-        public boolean onCreateOptionsMenu(@NonNull Menu menu) {
-            super.onCreateOptionsMenu(menu);
-            if (annotationOverlayEnabled) {
-                menu.add(0, R.id.toggle_annotation_overlay, 0, "Disable annotation overlay");
-                // Toggling overlay strategy does not make sense when annotation overlay is disabled.
-                if (currentOverlayRenderingStrategy == AnnotationOverlayRenderStrategy.Strategy.PLATFORM_RENDERING) {
-                    menu.add(0, R.id.toggle_overlay_rendering_strategy, 0, "Use AP stream rendering");
-                } else {
-                    menu.add(0, R.id.toggle_overlay_rendering_strategy, 0, "Use platform rendering");
-                }
-            } else {
-                menu.add(0, R.id.toggle_annotation_overlay, 0, "Enable annotation overlay");
-            }
-            menu.add(0, R.id.fire_low_memory_notification, 0, "Fire low memory notification");
-            return true;
         }
 
         @Override

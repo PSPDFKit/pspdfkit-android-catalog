@@ -30,6 +30,7 @@ import com.pspdfkit.document.download.DownloadProgressFragment
 import com.pspdfkit.document.download.DownloadRequest
 import com.pspdfkit.ui.PdfActivityIntentBuilder
 import com.pspdfkit.utils.getSupportParcelableExtra
+import com.pspdfkit.utils.hasExternalStorageRwPermission
 import java.io.File
 
 /**
@@ -68,7 +69,7 @@ class ExternalExampleActivity : FragmentActivity() {
         // Prevent the example from requesting multiple documents at the same time.
         if (!waitingForResult) {
             waitingForResult = true
-            if (Utils.hasExternalStorageRwPermission(this)) {
+            if (hasExternalStorageRwPermission(this)) {
                 showOpenFileDialog()
             } else {
                 showPermissionExplanationDialog()

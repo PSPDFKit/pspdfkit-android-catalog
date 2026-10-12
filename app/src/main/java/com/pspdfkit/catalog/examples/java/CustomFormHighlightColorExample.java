@@ -11,20 +11,19 @@ import static com.pspdfkit.catalog.tasks.ExtractAssetTask.extract;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.drawable.DrawableCompat;
 import com.pspdfkit.catalog.R;
 import com.pspdfkit.catalog.SdkExample;
+import com.pspdfkit.compose.toolbar.state.ToolbarIcon;
+import com.pspdfkit.compose.toolbar.state.ToolbarItem;
+import com.pspdfkit.compose.toolbar.state.ToolbarItemState;
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration;
 import com.pspdfkit.ui.PdfActivity;
 import com.pspdfkit.ui.PdfActivityIntentBuilder;
+import java.util.ArrayList;
+import java.util.List;
 
 /** Shows how to toggle the form highlight color. */
 public class CustomFormHighlightColorExample extends SdkExample {
@@ -62,33 +61,31 @@ public class CustomFormHighlightColorExample extends SdkExample {
         @Override
         public void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
-        }
 
-        @Override
-        public boolean onCreateOptionsMenu(@NonNull Menu menu) {
-            super.onCreateOptionsMenu(menu);
-            MenuItem menuItem = menu.add(0, TOGGLE_FORM_HIGHLIGHT_COLOR_MENU_ITEM_ID, 0, "Toggle highlight color");
-            menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+            setToolbarItemsProvider(defaultItems -> {
+                final List<ToolbarItem> items = new ArrayList<>(defaultItems);
+                items.add(new ToolbarItem.Button(
+                        "toggle_form_highlight_color",
+                        TOGGLE_FORM_HIGHLIGHT_COLOR_MENU_ITEM_ID,
+                        "Toggle highlight color",
+                        new ToolbarIcon.Resource(com.pspdfkit.R.drawable.pspdf__ic_highlight),
+                        new ToolbarItemState(true, false, true),
+                        ToolbarItem.ItemEdge.End,
+                        ToolbarItem.OverflowBehavior.AlwaysShow));
+                return items;
+            });
 
-            final Drawable tintedDrawable =
-                    DrawableCompat.wrap(ContextCompat.getDrawable(this, com.pspdfkit.R.drawable.pspdf__ic_highlight));
-            DrawableCompat.setTint(tintedDrawable, Color.WHITE);
-            menuItem.setIcon(tintedDrawable);
-            return true;
-        }
-
-        @Override
-        public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-            if (item.getItemId() == TOGGLE_FORM_HIGHLIGHT_COLOR_MENU_ITEM_ID) {
-                toggleFormHighlightColor();
-                return true;
-            } else {
-                return super.onOptionsItemSelected(item);
-            }
+            setOnToolbarItemClickListener(id -> {
+                if (id == TOGGLE_FORM_HIGHLIGHT_COLOR_MENU_ITEM_ID) {
+                    toggleFormHighlightColor();
+                    return true;
+                }
+                return false;
+            });
         }
 
         /**
-         * Toggles form highlight color between {@link Color#TRANSPARENT} and highlight color set in the
+         * Toggles form highlight color between {@link android.graphics.Color#TRANSPARENT} and highlight color set in the
          * theme.
          */
         private void toggleFormHighlightColor() {

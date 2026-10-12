@@ -152,13 +152,8 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.kotlin.CustomActionsActivity"
-            android:label="@string/customActionsExampleTitle"
-            android:windowSoftInputMode="adjustNothing" />
-
-        <activity
-            android:name=".examples.java.CustomAnnotationCreationToolbarExample$CustomAnnotationCreationToolbarActivity"
-            android:label="@string/customAnnotationCreationToolbarExampleTitle"
+            android:name=".examples.java.AnnotationToolbarCustomItemsExample$AnnotationToolbarCustomItemsActivity"
+            android:label="@string/annotationToolbarCustomItemsExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
@@ -243,11 +238,6 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.java.ToolbarsInFragmentExample$ToolbarsInFragmentActivity"
-            android:label="@string/toolbarsInFragmentExampleTitle"
-            android:windowSoftInputMode="adjustNothing" />
-
-        <activity
             android:name=".examples.java.FormEditingInFragmentExample$FormEditingInFragmentActivity"
             android:label="@string/formEditingInFragmentExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
@@ -269,10 +259,6 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.java.CustomInlineSearchExample$CustomInlineSearchExampleActivity"
-            android:label="@string/customInlineSearchExampleTitle" />
-
-        <activity
             android:name=".examples.java.CustomSearchUiExample$CustomSearchUiActivity"
             android:label="@string/customSearchUiExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
@@ -284,8 +270,8 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.java.CustomToolbarIconGroupingExample$CustomToolbarIconGroupingActivity"
-            android:label="@string/customToolbarItemGroupingExampleTitle"
+            android:name=".examples.java.AnnotationToolbarGroupingExample$AnnotationToolbarGroupingActivity"
+            android:label="@string/annotationToolbarGroupingExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
@@ -389,8 +375,43 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.kotlin.CustomMainToolbarActivity"
-            android:label="@string/customMainToolbarExampleTitle"
+            android:name=".examples.kotlin.AnnotationToolbarUserEditableActivity"
+            android:label="@string/annotationToolbarUserEditableExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.composeviewer.ComposePdfViewerActivity"
+            android:label="@string/composePdfViewerExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.CustomPdfSourceActivity"
+            android:label="@string/customPdfSourceExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.CustomChromePdfActivity"
+            android:label="@string/customToolbarsPdfActivityExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.ScaffoldHostedFragmentActivity"
+            android:label="@string/customToolbarsPdfFragmentExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.CustomToolbarsDocumentViewActivity"
+            android:label="@string/customToolbarsDocumentViewExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.MainToolbarCustomizationActivity"
+            android:label="@string/mainToolbarCustomizationExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.DocumentTabsComposeActivity"
+            android:label="@string/documentTabsComposeExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
@@ -402,6 +423,11 @@
             android:name=".examples.kotlin.OutlineProviderActivity"
             android:label="@string/outlineProviderExample"
             android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.CustomSdkUiActivity"
+            android:label="@string/customSdkUiExampleTitle"
+            android:windowSoftInputMode="adjustResize" />
 
         <activity
             android:name=".examples.kotlin.OverlayViewsActivity"
@@ -585,8 +611,8 @@
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
-            android:name=".examples.kotlin.PopupToolbarCustomisationActivity"
-            android:label="@string/popupToolbarCustomisationTitle"
+            android:name=".examples.kotlin.PopupToolbarCustomItemsActivity"
+            android:label="@string/popupToolbarCustomItemsExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
         <activity
@@ -627,6 +653,15 @@
         <activity
             android:name=".examples.kotlin.ThumbnailBarExampleActivity"
             android:label="@string/thumbnailBarExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+        <activity
+            android:name=".examples.kotlin.MainToolbarFloatingActivity"
+            android:label="@string/mainToolbarFloatingExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.MainToolbarFabMenuActivity"
+            android:label="@string/mainToolbarFabMenuExampleTitle"
             android:windowSoftInputMode="adjustNothing" />
 
 

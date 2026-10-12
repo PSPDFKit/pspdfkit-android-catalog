@@ -27,6 +27,7 @@
     <item name="custom_action1" type="id"/>
     <item name="custom_action2" type="id"/>
     <item name="custom_action3" type="id"/>
+    <item name="document_switcher_drawer" type="id"/>
     <item name="custom_action_show" type="id"/>
     <item name="custom_action_hide" type="id"/>
 

@@ -10,13 +10,15 @@ package com.pspdfkit.catalog.examples.java;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.core.app.ShareCompat;
 import com.pspdfkit.catalog.R;
 import com.pspdfkit.catalog.SdkExample;
 import com.pspdfkit.catalog.tasks.ExtractAssetTask;
+import com.pspdfkit.compose.toolbar.state.ToolbarIcon;
+import com.pspdfkit.compose.toolbar.state.ToolbarItem;
+import com.pspdfkit.compose.toolbar.state.ToolbarItemState;
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration;
 import com.pspdfkit.configuration.sharing.ShareFeatures;
 import com.pspdfkit.datastructures.Range;
@@ -30,6 +32,7 @@ import com.pspdfkit.ui.PdfActivity;
 import com.pspdfkit.ui.PdfActivityIntentBuilder;
 import com.pspdfkit.ui.dialog.DocumentSharingDialog;
 import com.pspdfkit.ui.dialog.DocumentSharingDialogConfiguration;
+import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
@@ -69,6 +72,71 @@ public class DocumentSharingExample extends SdkExample {
      * declare {@link com.pspdfkit.document.sharing.DocumentSharingProvider} in your {@code AndroidManifest.xml}.
      */
     public static class DocumentSharingExampleActivity extends PdfActivity {
+
+        private static final int ITEM_SHARING_DIALOG = 90;
+        private static final int ITEM_SEND_MAIL = 91;
+        private static final int ITEM_EXTRACT_PAGES = 92;
+        private static final int ITEM_FLATTEN_ANNOTATIONS = 93;
+
+        @Override
+        public void onCreate(Bundle savedInstanceState) {
+            super.onCreate(savedInstanceState);
+
+            // Add custom overflow actions showcasing custom sharing.
+            setToolbarItemsProvider(defaultItems -> {
+                final List<ToolbarItem> items = new ArrayList<>(defaultItems);
+                items.add(new ToolbarItem.Button(
+                        "sharing_dialog",
+                        ITEM_SHARING_DIALOG,
+                        "Sharing dialog",
+                        ToolbarIcon.None.INSTANCE,
+                        new ToolbarItemState(true, false, true),
+                        ToolbarItem.ItemEdge.End,
+                        ToolbarItem.OverflowBehavior.Never));
+                items.add(new ToolbarItem.Button(
+                        "send_mail",
+                        ITEM_SEND_MAIL,
+                        "Send via mail",
+                        ToolbarIcon.None.INSTANCE,
+                        new ToolbarItemState(true, false, true),
+                        ToolbarItem.ItemEdge.End,
+                        ToolbarItem.OverflowBehavior.Never));
+                items.add(new ToolbarItem.Button(
+                        "extract_pages",
+                        ITEM_EXTRACT_PAGES,
+                        "Extract range",
+                        ToolbarIcon.None.INSTANCE,
+                        new ToolbarItemState(true, false, true),
+                        ToolbarItem.ItemEdge.End,
+                        ToolbarItem.OverflowBehavior.Never));
+                items.add(new ToolbarItem.Button(
+                        "flatten_annotations",
+                        ITEM_FLATTEN_ANNOTATIONS,
+                        "Flatten annotations",
+                        ToolbarIcon.None.INSTANCE,
+                        new ToolbarItemState(true, false, true),
+                        ToolbarItem.ItemEdge.End,
+                        ToolbarItem.OverflowBehavior.Never));
+                return items;
+            });
+
+            setOnToolbarItemClickListener(id -> {
+                if (id == ITEM_SHARING_DIALOG) {
+                    customSharingDialog();
+                    return true;
+                } else if (id == ITEM_SEND_MAIL) {
+                    shareViaMail();
+                    return true;
+                } else if (id == ITEM_FLATTEN_ANNOTATIONS) {
+                    shareWithFlattenedAnnotations();
+                    return true;
+                } else if (id == ITEM_EXTRACT_PAGES) {
+                    shareFromRange();
+                    return true;
+                }
+                return false;
+            });
+        }
 
         /** This example shows how to use {@link DocumentSharingDialog}. */
         private void customSharingDialog() {
@@ -114,39 +182,6 @@ public class DocumentSharingExample extends SdkExample {
 
             // As sharing dialog listener can't be retained, restore it in dialog after rotation.
             DocumentSharingDialog.restore(getSupportFragmentManager(), getCustomSharingDialogListener());
-        }
-
-        /** Creates menu items that will trigger document processing. */
-        @Override
-        public boolean onCreateOptionsMenu(@NonNull Menu menu) {
-            super.onCreateOptionsMenu(menu);
-
-            // Inflate menu with custom actions showcasing custom sharing.
-            getMenuInflater().inflate(R.menu.sharing_example, menu);
-
-            return true;
-        }
-
-        /** Triggered by selecting an action from the overflow menu in the action bar. */
-        @Override
-        public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-            boolean handled = false;
-
-            final int itemId = item.getItemId();
-            if (itemId == R.id.item_sharing_dialog) {
-                customSharingDialog();
-                handled = true;
-            } else if (itemId == R.id.item_send_mail) {
-                shareViaMail();
-                handled = true;
-            } else if (itemId == R.id.item_flatten_annotations) {
-                shareWithFlattenedAnnotations();
-                handled = true;
-            } else if (itemId == R.id.item_extract_pages) {
-                shareFromRange();
-                handled = true;
-            }
-            return handled || super.onOptionsItemSelected(item);
         }
 
         /** This example shows how to implement custom {@link com.pspdfkit.document.sharing.DocumentSharingController}. */

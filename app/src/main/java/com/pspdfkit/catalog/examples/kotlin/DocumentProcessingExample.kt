@@ -17,14 +17,16 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
+import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import com.pspdfkit.annotations.AnnotationType
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.SdkExample.Companion.TAG
 import com.pspdfkit.catalog.tasks.ExtractAssetTask
+import com.pspdfkit.compose.toolbar.state.ToolbarItem
+import com.pspdfkit.compose.toolbar.state.ToolbarItem.ItemEdge
+import com.pspdfkit.compose.toolbar.state.ToolbarItem.OverflowBehavior
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.document.processor.NewPage
 import com.pspdfkit.document.processor.PageImage
@@ -88,44 +90,77 @@ class DocumentProcessingExampleActivity : PdfActivity() {
     /**
      * Creates menu items that will trigger document processing.
      */
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        super.onCreateOptionsMenu(menu)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
         // This will add actions for all document processing examples provided by this activity.
-        menuInflater.inflate(R.menu.processor_example, menu)
-        return true
-    }
-
-    /**
-     * Triggered by selecting an action from the overflow menu in the action bar.
-     */
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        R.id.item_extract_range -> {
-            createDocumentFromRange()
-            true
+        setToolbarItemsProvider { defaultItems ->
+            defaultItems +
+                ToolbarItem.Button(
+                    id = ITEM_EXTRACT_RANGE,
+                    actionId = "item_extract_range",
+                    contentDescription = "Extract range",
+                    position = ItemEdge.End,
+                    overflowBehavior = OverflowBehavior.Never,
+                ) +
+                ToolbarItem.Button(
+                    id = ITEM_FLATTEN_ANNOTATIONS,
+                    actionId = "item_flatten_annotations",
+                    contentDescription = "Flatten annotations",
+                    position = ItemEdge.End,
+                    overflowBehavior = OverflowBehavior.Never,
+                ) +
+                ToolbarItem.Button(
+                    id = ITEM_REMOVE_LINK_ANNOTATIONS,
+                    actionId = "item_remove_link_annotations",
+                    contentDescription = "Remove link annotations",
+                    position = ItemEdge.End,
+                    overflowBehavior = OverflowBehavior.Never,
+                ) +
+                ToolbarItem.Button(
+                    id = ITEM_ROTATE_PAGES,
+                    actionId = "item_rotate_pages",
+                    contentDescription = "Rotate pages by 90°",
+                    position = ItemEdge.End,
+                    overflowBehavior = OverflowBehavior.Never,
+                ) +
+                ToolbarItem.Button(
+                    id = ITEM_NEW_PAGE,
+                    actionId = "item_new_page",
+                    contentDescription = "Add new pages",
+                    position = ItemEdge.End,
+                    overflowBehavior = OverflowBehavior.Never,
+                )
         }
+        setOnToolbarItemClickListener { id ->
+            when (id) {
+                ITEM_EXTRACT_RANGE -> {
+                    createDocumentFromRange()
+                    true
+                }
 
-        R.id.item_flatten_annotations -> {
-            createFlattenedDocument()
-            true
-        }
+                ITEM_FLATTEN_ANNOTATIONS -> {
+                    createFlattenedDocument()
+                    true
+                }
 
-        R.id.item_remove_link_annotations -> {
-            createDocumentWithoutLinkAnnotations()
-            true
-        }
+                ITEM_REMOVE_LINK_ANNOTATIONS -> {
+                    createDocumentWithoutLinkAnnotations()
+                    true
+                }
 
-        R.id.item_rotate_pages -> {
-            createDocumentWithRotatedPages()
-            true
-        }
+                ITEM_ROTATE_PAGES -> {
+                    createDocumentWithRotatedPages()
+                    true
+                }
 
-        R.id.item_new_page -> {
-            createDocumentWithNewPages()
-            true
-        }
+                ITEM_NEW_PAGE -> {
+                    createDocumentWithNewPages()
+                    true
+                }
 
-        else -> {
-            super.onOptionsItemSelected(item)
+                else -> false
+            }
         }
     }
 
@@ -320,5 +355,10 @@ class DocumentProcessingExampleActivity : PdfActivity() {
     }
 
     companion object {
+        private const val ITEM_EXTRACT_RANGE = 90
+        private const val ITEM_FLATTEN_ANNOTATIONS = 91
+        private const val ITEM_REMOVE_LINK_ANNOTATIONS = 92
+        private const val ITEM_ROTATE_PAGES = 93
+        private const val ITEM_NEW_PAGE = 94
     }
 }

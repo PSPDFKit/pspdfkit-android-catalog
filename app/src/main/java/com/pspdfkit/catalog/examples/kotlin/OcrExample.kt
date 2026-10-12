@@ -15,11 +15,13 @@ import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.content.Context
 import android.net.Uri
-import android.view.Menu
-import android.view.MenuItem
+import android.os.Bundle
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.tasks.ExtractAssetTask
+import com.pspdfkit.compose.toolbar.state.ToolbarItem
+import com.pspdfkit.compose.toolbar.state.ToolbarItem.ItemEdge
+import com.pspdfkit.compose.toolbar.state.ToolbarItem.OverflowBehavior
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.document.processor.PdfProcessor
 import com.pspdfkit.document.processor.PdfProcessorTask
@@ -72,6 +74,7 @@ class OcrExample(context: Context) : SdkExample(context, R.string.ocrExampleTitl
  */
 class OcrProcessingActivity : PdfActivity() {
     private val disposables = CompositeDisposable()
+    private val performOCR = 100
 
     /**
      * Perform OCR on the current document.
@@ -103,23 +106,28 @@ class OcrProcessingActivity : PdfActivity() {
     /**
      * Creates menu item that will enable document OCR processing.
      */
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        super.onCreateOptionsMenu(menu)
-        menuInflater.inflate(R.menu.ocr_example, menu)
-        return true
-    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    /**
-     * Triggered by selecting an action from the menu in the action bar.
-     */
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        R.id.item_perform_ocr -> {
-            performOcr()
-            true
+        setToolbarItemsProvider { defaultItems ->
+            defaultItems +
+                ToolbarItem.Button(
+                    id = performOCR,
+                    actionId = "item_perform_ocr",
+                    contentDescription = "Perform OCR",
+                    position = ItemEdge.End,
+                    overflowBehavior = OverflowBehavior.AlwaysAsText,
+                )
         }
+        setOnToolbarItemClickListener { id ->
+            when (id) {
+                performOCR -> {
+                    performOcr()
+                    true
+                }
 
-        else -> {
-            super.onOptionsItemSelected(item)
+                else -> false
+            }
         }
     }
 

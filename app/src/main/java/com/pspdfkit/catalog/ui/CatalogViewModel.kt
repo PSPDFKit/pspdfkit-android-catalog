@@ -193,9 +193,11 @@ class CatalogViewModel(application: Application, private val dataStore: DataStor
 
     private fun onSearchQueryChanged(searchQuery: String) {
         mutableState.mutate {
-            val oldQuery = (searchState as? SearchState.Visible)?.searchQuery ?: ""
+            // Ignore a stale debounced query that lands after search was cancelled/hidden — otherwise
+            // it would resurrect a dismissed search (and re-show the keyboard).
+            val currentSearch = searchState as? SearchState.Visible ?: return@mutate this
             copy(
-                searchState = SearchState.Visible(searchQuery, oldQuery),
+                searchState = SearchState.Visible(searchQuery, currentSearch.searchQuery),
             )
         }
     }

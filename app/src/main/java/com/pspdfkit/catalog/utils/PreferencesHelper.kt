@@ -31,6 +31,7 @@ import com.pspdfkit.catalog.utils.CatalogPreferences.enableFreezeDetector
 import com.pspdfkit.catalog.utils.CatalogPreferences.enableLeakCanary
 import com.pspdfkit.catalog.utils.CatalogPreferences.enableMemoryTraceLogging
 import com.pspdfkit.catalog.utils.CatalogPreferences.enableTextSelection
+import com.pspdfkit.catalog.utils.CatalogPreferences.enableVerboseLogging
 import com.pspdfkit.catalog.utils.CatalogPreferences.enableVolumeButtonNavigation
 import com.pspdfkit.catalog.utils.CatalogPreferences.fitPageToWidth
 import com.pspdfkit.catalog.utils.CatalogPreferences.grayscale
@@ -230,6 +231,11 @@ object CatalogPreferences {
         key = PreferenceKeys.MemoryTraceLoggingEnabled,
     )
 
+    fun enableVerboseLogging(context: Context) = CheckboxPreference(
+        title = context.getString(R.string.checkbox_preference_enable_verbose_logging),
+        key = PreferenceKeys.VerboseLoggingEnabled,
+    )
+
     fun clearCache(context: Context) = ButtonPreference(
         title = context.getString(R.string.button_preference_clear_cache),
         key = PreferenceKeys.ClearCache,
@@ -332,6 +338,7 @@ fun preferenceSections(context: Context): List<PreferencesSection> = listOf(
                 enableLeakCanary(context),
                 enableFreezeDetector(context),
                 enableMemoryTraceLogging(context),
+                enableVerboseLogging(context),
                 clearCache(context),
                 clearAppData(context),
             ),

@@ -27,13 +27,13 @@ import com.pspdfkit.ui.toolbar.popup.PopupToolbarMenuItem
 import com.pspdfkit.ui.toolbar.popup.TextSelectionPopupToolbar
 
 /**
- * Example showing how to customise all popup toolbar types using [OnPreparePopupToolbarListener].
+ * Example showing how to customize all popup toolbar types using [OnPreparePopupToolbarListener].
  */
-class PopupToolbarCustomisationExample(context: Context) :
+class PopupToolbarCustomItemsExample(context: Context) :
     SdkExample(
         context,
-        R.string.popupToolbarCustomisationTitle,
-        R.string.popupToolbarCustomisationDescription,
+        R.string.popupToolbarCustomItemsExampleTitle,
+        R.string.popupToolbarCustomItemsExampleDescription,
     ) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         ExtractAssetTask.extract(WELCOME_DOC, title, context) { documentFile ->
@@ -41,14 +41,14 @@ class PopupToolbarCustomisationExample(context: Context) :
                 PdfActivityIntentBuilder
                     .fromUri(context, Uri.fromFile(documentFile))
                     .configuration(configuration.build())
-                    .activityClass(PopupToolbarCustomisationActivity::class)
+                    .activityClass(PopupToolbarCustomItemsActivity::class)
                     .build()
             context.startActivity(intent)
         }
     }
 }
 
-class PopupToolbarCustomisationActivity :
+class PopupToolbarCustomItemsActivity :
     PdfActivity(),
     OnPreparePopupToolbarListener {
 

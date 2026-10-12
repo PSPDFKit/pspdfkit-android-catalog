@@ -10,7 +10,6 @@ package com.pspdfkit.catalog.examples.kotlin
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
-import android.view.MenuItem
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.annotation.UiThread
@@ -172,24 +171,27 @@ class CustomLayoutActivity : PdfActivity() {
                 }
             },
         )
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            MENU_OPTION_THUMBNAIL_GRID -> {
-                toggleThumbnailGrid()
-                hidePSPDFViews()
+        // Intercept clicks on the existing default toolbar items.
+        setOnToolbarItemClickListener { itemId ->
+            when (itemId) {
+                MENU_OPTION_THUMBNAIL_GRID -> {
+                    toggleThumbnailGrid()
+                    hidePSPDFViews()
 
-                // Consume the event, preventing the default behavior.
-                return true
-            }
+                    // Consume the event, preventing the default behavior.
+                    true
+                }
 
-            MENU_OPTION_OUTLINE, MENU_OPTION_SEARCH -> {
-                hideThumbnailGrid()
-                // Don't consume the event here since we want to fallback to default action handling.
+                MENU_OPTION_OUTLINE, MENU_OPTION_SEARCH -> {
+                    hideThumbnailGrid()
+                    // Don't consume the event here since we want to fallback to default action handling.
+                    false
+                }
+
+                else -> false
             }
         }
-        return super.onOptionsItemSelected(item)
     }
 
     /**

@@ -9,11 +9,13 @@ package com.pspdfkit.catalog.examples.kotlin
 
 import android.content.Context
 import android.net.Uri
-import android.view.Menu
-import android.view.MenuItem
+import android.os.Bundle
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.tasks.ExtractAssetTask
+import com.pspdfkit.compose.toolbar.state.ToolbarItem
+import com.pspdfkit.compose.toolbar.state.ToolbarItem.ItemEdge
+import com.pspdfkit.compose.toolbar.state.ToolbarItem.OverflowBehavior
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.configuration.page.PageScrollDirection
 import com.pspdfkit.configuration.page.PageScrollMode
@@ -43,20 +45,46 @@ class RuntimeConfigurationExample(context: Context) :
 }
 
 class RuntimeConfigurationActivity : PdfActivity() {
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        super.onCreateOptionsMenu(menu)
-
-        // We are adding menu items as specific examples of how to change activity configuration from within the UI.
-        menuInflater.inflate(R.menu.runtime_configuration_example_menu, menu)
-
-        return true
+    companion object {
+        private const val TOGGLE_NIGHT_MODE = 90
+        private const val TOGGLE_SCROLL_MODE = 91
+        private const val TOGGLE_SCROLL_DIRECTION = 92
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        // Create the new configuration based on the clicked menu item.
-        val newConfiguration =
-            when (item.itemId) {
-                R.id.toggle_night_mode -> {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        // We are adding toolbar items as specific examples of how to change activity configuration from within the UI.
+        setToolbarItemsProvider { defaultItems ->
+            defaultItems + ToolbarItem.Button(
+                id = TOGGLE_NIGHT_MODE,
+                actionId = "toggle_night_mode",
+                contentDescription = getString(R.string.runtime_configuration_change_toggle_night_mode),
+                position = ItemEdge.End,
+                overflowBehavior = OverflowBehavior.Never,
+            ) + ToolbarItem.Button(
+                id = TOGGLE_SCROLL_MODE,
+                actionId = "toggle_scroll_mode",
+                contentDescription = getString(R.string.runtime_configuration_change_toggle_scroll_mode),
+                position = ItemEdge.End,
+                overflowBehavior = OverflowBehavior.Never,
+            ) + ToolbarItem.Button(
+                id = TOGGLE_SCROLL_DIRECTION,
+                actionId = "toggle_scroll_direction",
+                contentDescription = getString(R.string.runtime_configuration_change_toggle_scroll_direction),
+                position = ItemEdge.End,
+                overflowBehavior = OverflowBehavior.Never,
+            )
+        }
+
+        setOnToolbarItemClickListener { itemId -> onToolbarItemClick(itemId) }
+    }
+
+    private fun onToolbarItemClick(itemId: Int): Boolean {
+        // Create the new configuration based on the clicked toolbar item.
+        val newConfiguration: PdfActivityConfiguration =
+            when (itemId) {
+                TOGGLE_NIGHT_MODE -> {
                     // This example toggles activity display between day and night modes.
                     // We'll base our state on the invert colors property of the configuration.
                     val isNightMode = configuration.configuration.isInvertColors
@@ -71,7 +99,7 @@ class RuntimeConfigurationActivity : PdfActivity() {
                         .build()
                 }
 
-                R.id.toggle_scroll_direction -> {
+                TOGGLE_SCROLL_DIRECTION -> {
                     // This example toggles between horizontal and vertical page scroll direction.
                     PdfActivityConfiguration
                         .Builder(configuration)
@@ -86,7 +114,7 @@ class RuntimeConfigurationActivity : PdfActivity() {
                         ).build()
                 }
 
-                R.id.toggle_scroll_mode -> {
+                TOGGLE_SCROLL_MODE -> {
                     // This example toggles between paginated and continuous scroll mode.
                     PdfActivityConfiguration
                         .Builder(configuration)
@@ -104,7 +132,7 @@ class RuntimeConfigurationActivity : PdfActivity() {
                 else -> {
                     null
                 }
-            } ?: return super.onOptionsItemSelected(item)
+            } ?: return false
 
         // Set configuration on the activity. This will recreate the
         // activity similar to changing the screen orientation or language.

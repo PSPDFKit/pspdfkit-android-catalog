@@ -96,7 +96,8 @@ class OutlineProviderActivity : PdfActivity() {
             OutlineElement
                 .Builder("Go to page 3")
                 .setAction(GoToAction(3))
-                // The page label is optional. If set, it will be displayed in addition to title.
+                // The page label is optional, and getPageLabel returns null for a document that
+                // carries none, so its result goes straight in.
                 .setPageLabel(document.getPageLabel(3, false))
                 .build(),
         )

@@ -131,14 +131,10 @@
                 android:visibility="invisible"/>
         </FrameLayout>
 
-        <com.pspdfkit.ui.toolbar.ToolbarCoordinatorLayout
-            android:id="@+id/pspdf__toolbar_coordinator"
+        <androidx.compose.ui.platform.ComposeView
+            android:id="@+id/pspdf__toolbar_compose_host"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <include layout="@layout/pspdf__toolbar_main"/>
-
-        </com.pspdfkit.ui.toolbar.ToolbarCoordinatorLayout>
+            android:layout_height="match_parent" />
 
         <com.pspdfkit.ui.inspector.PropertyInspectorCoordinatorLayout
             android:id="@+id/pspdf__inspector_coordinator"

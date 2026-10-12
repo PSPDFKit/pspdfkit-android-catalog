@@ -14,7 +14,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
@@ -29,22 +28,6 @@ import androidx.core.content.ContextCompat;
 import com.pspdfkit.catalog.R;
 
 public class Utils {
-    /**
-     * Returns {@code true} if the app has read and write permission to external storage.
-     *
-     * @param context The context used as context for permission request.
-     * @return {@code true} if the app has read and write access to external storage, otherwise
-     *     {@code false}.
-     */
-    public static boolean hasExternalStorageRwPermission(@NonNull final Context context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            return Environment.isExternalStorageManager();
-        } else {
-            return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_GRANTED;
-        }
-    }
-
     /**
      * Requests read and write permissions to external storage.
      *

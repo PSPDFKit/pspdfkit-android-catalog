@@ -86,6 +86,7 @@ data class State(
             Pair(PreferenceKeys.LeakCanaryEnabled, true),
             Pair(PreferenceKeys.FreezeDetectorEnabled, false),
             Pair(PreferenceKeys.MemoryTraceLoggingEnabled, false),
+            Pair(PreferenceKeys.VerboseLoggingEnabled, false),
         ),
 )
 

@@ -13,19 +13,6 @@
         <item name="android:colorBackground">@color/onPrimaryContainerLight</item>
     </style>
 
-    <!--
-        This theme is used as a workaround to make sure that material `Chip` class can be
-        inflated in Viewer since it expects theme to extend from `Theme.MaterialComponents`.
-        This is replaced with `PSPDFCatalog.Theme` after the catalog's main activity is created.
-
-        We'll probably move our catalog themes to material components theme sometime down the road and this workaround will be removed.
-    -->
-    <style name="PSPDFCatalog.Theme.MainActivity" parent="Theme.MaterialComponents.Light">
-        <item name="colorPrimary">@color/primaryLight</item>
-        <item name="colorPrimaryDark">@color/onPrimaryContainerLight</item>
-        <item name="colorAccent">@color/onPrimaryContainerLight</item>
-    </style>
-
     <style name="PSPDFCatalog.Theme" parent="PSPDFKit.Theme.Default">
         <item name="colorPrimary">@color/primaryLight</item>
         <item name="colorPrimaryDark">@color/onPrimaryContainerLight</item>
@@ -56,7 +43,6 @@
         <item name="pspdf__textSelectionStyle">@style/PSPDFCatalog.TextSelection</item>
         <item name="pspdf__annotationCreationToolbarIconsStyle">@style/PSPDFKit.AnnotationCreationToolbarIcons</item>
         <item name="pspdf__noteEditorToolbarIconsStyle">@style/PSPDFKit.NoteEditorToolbarIcons</item>
-        <item name="pspdf__textSelectionToolbarIconsStyle">@style/PSPDFKit.TextSelectionToolbarIcons</item>
         <item name="pspdf__documentEditingToolbarIconsStyle">@style/PSPDFKit.DocumentEditingToolbarIcons</item>
         <item name="pspdf__toolbarCoordinatorLayoutStyle">@style/PSPDFKit.ToolbarCoordinatorLayout</item>
         <item name="pspdf__signatureLayoutStyle">@style/PSPDFCatalog.SignatureLayout</item>
@@ -136,13 +122,6 @@
 
     <style name="PSPDFCatalog.Theme.MediaView">
         <item name="android:windowIsTranslucent">false</item>
-        <item name="android:windowBackground">@color/backgroundLight</item>
-        <item name="android:windowContentOverlay">@null</item>
-        <item name="android:windowNoTitle">true</item>
-    </style>
-
-    <style name="PSPDFCatalog.Theme.PageCreator">
-        <item name="android:windowIsTranslucent">true</item>
         <item name="android:windowBackground">@color/backgroundLight</item>
         <item name="android:windowContentOverlay">@null</item>
         <item name="android:windowNoTitle">true</item>

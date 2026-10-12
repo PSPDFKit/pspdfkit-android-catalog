@@ -12,6 +12,8 @@ import com.pspdfkit.catalog.ui.model.PreferenceKeys
 import com.pspdfkit.catalog.utils.FreezeDetector
 import com.pspdfkit.catalog.utils.dataStore
 import com.pspdfkit.preferences.PSPDFKitPreferences
+import com.pspdfkit.utils.LogCatLogger
+import com.pspdfkit.utils.PdfLog
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -27,12 +29,21 @@ import kotlinx.coroutines.launch
 class CatalogApplication : Application() {
     private val applicationScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
+    /**
+     * The SDK's default loggers, captured before we override them. In a debuggable build this emits
+     * [android.util.Log.DEBUG] and above; in a release build only [android.util.Log.INFO] and above.
+     * [PdfLog.getLoggers] returns an immutable snapshot, so this stays valid across toggles and is
+     * restored when verbose logging is turned back off.
+     */
+    private val defaultLoggers = PdfLog.getLoggers()
+
     override fun onCreate() {
         super.onCreate()
 
         NutrientReporting.initializeBugReporting(this)
         observeFreezeDetectorPreference()
         observeMemoryTraceLoggingPreference()
+        observeVerboseLoggingPreference()
     }
 
     private fun observeFreezeDetectorPreference() {
@@ -59,6 +70,32 @@ class CatalogApplication : Application() {
                 .distinctUntilChanged()
                 .onEach { enabled ->
                     PSPDFKitPreferences.get(this@CatalogApplication).setMemoryTraceLoggingEnabled(enabled)
+                }
+                .collect {}
+        }
+    }
+
+    /**
+     * Toggles verbose Nutrient logging at runtime. Both the Kotlin/Java SDK and the native (C++)
+     * core route their logs through [PdfLog], so this controls both.
+     *
+     * This toggle is purely additive on top of the SDK's normal behavior: a debuggable build
+     * already emits DEBUG logs by default. Registering a plain [LogCatLogger] removes the priority
+     * filter entirely, so every log — including native DEBUG and TRACE — is printed to Logcat; this
+     * is what you'd do to capture full logs from a *release* build. Disabling restores the SDK's
+     * default loggers captured at startup.
+     */
+    private fun observeVerboseLoggingPreference() {
+        applicationScope.launch {
+            dataStore.data
+                .map { it[PreferenceKeys.VerboseLoggingEnabled] ?: false }
+                .distinctUntilChanged()
+                .onEach { enabled ->
+                    if (enabled) {
+                        PdfLog.setLoggers(LogCatLogger())
+                    } else {
+                        PdfLog.setLoggers(defaultLoggers)
+                    }
                 }
                 .collect {}
         }

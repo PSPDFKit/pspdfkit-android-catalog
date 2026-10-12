@@ -39,6 +39,7 @@ import com.pspdfkit.document.ImageDocumentUtils
 import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
 import com.pspdfkit.utils.getSupportParcelableExtra
+import com.pspdfkit.utils.hasExternalStorageRwPermission
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -149,7 +150,7 @@ private fun DocumentPickerScreen(
 
     // Check permissions on first composition
     LaunchedEffect(Unit) {
-        if (Utils.hasExternalStorageRwPermission(context)) {
+        if (hasExternalStorageRwPermission(context)) {
             showDialog = true
         } else {
             showPermissionDialog = true

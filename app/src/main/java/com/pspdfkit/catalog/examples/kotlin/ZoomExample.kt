@@ -9,8 +9,7 @@ package com.pspdfkit.catalog.examples.kotlin
 
 import android.content.Context
 import android.content.Intent
-import android.view.Menu
-import android.view.MenuItem
+import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.annotation.UiThread
 import androidx.lifecycle.lifecycleScope
@@ -19,6 +18,10 @@ import com.pspdfkit.annotations.AnnotationType
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.ui.DocumentPickerActivity
+import com.pspdfkit.compose.toolbar.state.ToolbarIcon
+import com.pspdfkit.compose.toolbar.state.ToolbarItem
+import com.pspdfkit.compose.toolbar.state.ToolbarItem.ItemEdge
+import com.pspdfkit.compose.toolbar.state.ToolbarItem.OverflowBehavior
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.document.PdfDocument
 import com.pspdfkit.ui.PdfActivity
@@ -63,6 +66,8 @@ class ZoomExampleActivity : PdfActivity() {
     companion object {
         /** Padding around annotation bounding box used when zooming. */
         private const val ANNOTATION_BOUNDING_BOX_PADDING_PX = 16
+        private const val PREVIOUS_ANNOTATION = 98
+        private const val NEXT_ANNOTATION = 99
     }
 
     /**
@@ -108,33 +113,43 @@ class ZoomExampleActivity : PdfActivity() {
     /**
      * Creates our custom navigation menu.
      */
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        // It's important to call super before inflating the
-        // custom menu, or the custom menu won't be shown.
-        super.onCreateOptionsMenu(menu)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-        // Inflate our custom menu items, for navigation between annotations.
-        menuInflater.inflate(R.menu.activity_zoom_example, menu)
-
-        return true
-    }
-
-    /**
-     * Handles clicks on the navigation option menu items.
-     */
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        R.id.nextAnnotation -> {
-            zoomToNextAnnotation()
-            true
+        // Add our custom navigation items, for navigation between annotations.
+        setToolbarItemsProvider { defaultItems ->
+            defaultItems +
+                ToolbarItem.Button(
+                    id = PREVIOUS_ANNOTATION,
+                    actionId = "previousAnnotation",
+                    contentDescription = "Previous annotation",
+                    icon = ToolbarIcon.Resource(R.drawable.ic_arrow_left),
+                    position = ItemEdge.End,
+                    overflowBehavior = OverflowBehavior.Never,
+                ) +
+                ToolbarItem.Button(
+                    id = NEXT_ANNOTATION,
+                    actionId = "nextAnnotation",
+                    contentDescription = "Next annotation",
+                    icon = ToolbarIcon.Resource(R.drawable.ic_arrow_right),
+                    position = ItemEdge.End,
+                    overflowBehavior = OverflowBehavior.Never,
+                )
         }
+        setOnToolbarItemClickListener { id ->
+            when (id) {
+                NEXT_ANNOTATION -> {
+                    zoomToNextAnnotation()
+                    true
+                }
 
-        R.id.previousAnnotation -> {
-            zoomToPreviousAnnotation()
-            true
-        }
+                PREVIOUS_ANNOTATION -> {
+                    zoomToPreviousAnnotation()
+                    true
+                }
 
-        else -> {
-            super.onOptionsItemSelected(item)
+                else -> false
+            }
         }
     }
 

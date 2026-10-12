@@ -10,14 +10,16 @@ package com.pspdfkit.catalog.examples.kotlin
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
-import android.view.Menu
-import android.view.MenuItem
+import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.pspdfkit.annotations.AnnotationType
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.tasks.ExtractAssetTask.extract
+import com.pspdfkit.compose.toolbar.state.ToolbarItem
+import com.pspdfkit.compose.toolbar.state.ToolbarItem.ItemEdge
+import com.pspdfkit.compose.toolbar.state.ToolbarItem.OverflowBehavior
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.document.formatters.XfdfFormatter
 import com.pspdfkit.document.providers.ContentResolverDataProvider
@@ -53,26 +55,37 @@ class XfdfExample(context: Context) :
 
 /** This activity shows how to import and export annotations in XFDF format. */
 class XfdfExampleActivity : PdfActivity() {
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        super.onCreateOptionsMenu(menu)
-        menu.add(0, EXPORT_TO_XFDF_ITEM_ID, 0, "Export to XFDF")
-        menu.add(0, IMPORT_FROM_XFDF_ITEM_ID, 0, "Import from XFDF")
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        EXPORT_TO_XFDF_ITEM_ID -> {
-            pickFileForXfdfExport()
-            true
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setToolbarItemsProvider { defaultItems ->
+            defaultItems + ToolbarItem.Button(
+                id = EXPORT_TO_XFDF_ITEM_ID,
+                actionId = "export_to_xfdf",
+                contentDescription = "Export to XFDF",
+                position = ItemEdge.End,
+                overflowBehavior = OverflowBehavior.Never,
+            ) + ToolbarItem.Button(
+                id = IMPORT_FROM_XFDF_ITEM_ID,
+                actionId = "import_from_xfdf",
+                contentDescription = "Import from XFDF",
+                position = ItemEdge.End,
+                overflowBehavior = OverflowBehavior.Never,
+            )
         }
+        setOnToolbarItemClickListener { itemId ->
+            when (itemId) {
+                EXPORT_TO_XFDF_ITEM_ID -> {
+                    pickFileForXfdfExport()
+                    true
+                }
 
-        IMPORT_FROM_XFDF_ITEM_ID -> {
-            pickFileForXfdfImport()
-            true
-        }
+                IMPORT_FROM_XFDF_ITEM_ID -> {
+                    pickFileForXfdfImport()
+                    true
+                }
 
-        else -> {
-            super.onOptionsItemSelected(item)
+                else -> false
+            }
         }
     }
 

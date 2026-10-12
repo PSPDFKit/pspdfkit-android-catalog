@@ -13,25 +13,23 @@ import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.examples.java.AesEncryptedFileExample
 import com.pspdfkit.catalog.examples.java.AnnotationOverlayExample
 import com.pspdfkit.catalog.examples.java.AnnotationSelectionCustomizationExample
-import com.pspdfkit.catalog.examples.java.CustomAnnotationCreationToolbarExample
+import com.pspdfkit.catalog.examples.java.AnnotationToolbarCustomItemsExample
+import com.pspdfkit.catalog.examples.java.AnnotationToolbarGroupingExample
 import com.pspdfkit.catalog.examples.java.CustomAnnotationInspectorExample
 import com.pspdfkit.catalog.examples.java.CustomDocumentDownloadExample
 import com.pspdfkit.catalog.examples.java.CustomElectronicSignatureExample
 import com.pspdfkit.catalog.examples.java.CustomFormHighlightColorExample
-import com.pspdfkit.catalog.examples.java.CustomInlineSearchExample
 import com.pspdfkit.catalog.examples.java.CustomPageTemplatesExample
 import com.pspdfkit.catalog.examples.java.CustomSearchUiExample
 import com.pspdfkit.catalog.examples.java.CustomShareDialogExample
 import com.pspdfkit.catalog.examples.java.CustomSharingMenuExample
 import com.pspdfkit.catalog.examples.java.CustomStampAnnotationsExample
-import com.pspdfkit.catalog.examples.java.CustomToolbarIconGroupingExample
 import com.pspdfkit.catalog.examples.java.DisabledAnnotationPropertyExample
 import com.pspdfkit.catalog.examples.java.DocumentSharingExample
 import com.pspdfkit.catalog.examples.java.DocumentSwitcherExample
 import com.pspdfkit.catalog.examples.java.FormEditingInFragmentExample
 import com.pspdfkit.catalog.examples.java.ScreenReaderExample
 import com.pspdfkit.catalog.examples.java.SplitDocumentExample
-import com.pspdfkit.catalog.examples.java.ToolbarsInFragmentExample
 import com.pspdfkit.catalog.examples.java.VerticalScrollbarExample
 import com.pspdfkit.catalog.examples.kotlin.AiAssistantComposeExample
 import com.pspdfkit.catalog.examples.kotlin.AiAssistantMultiDocComposeExample
@@ -42,22 +40,26 @@ import com.pspdfkit.catalog.examples.kotlin.AnnotationFlagsExample
 import com.pspdfkit.catalog.examples.kotlin.AnnotationOverlayVisibilityExample
 import com.pspdfkit.catalog.examples.kotlin.AnnotationRenderingExample
 import com.pspdfkit.catalog.examples.kotlin.AnnotationSelectionViewStylingExample
+import com.pspdfkit.catalog.examples.kotlin.AnnotationToolbarUserEditableExample
 import com.pspdfkit.catalog.examples.kotlin.AnnotationWithAlphaCreationExample
 import com.pspdfkit.catalog.examples.kotlin.BookmarkHighlightingExample
 import com.pspdfkit.catalog.examples.kotlin.CombineElectronicSignaturesWithDigitalSigningExample
-import com.pspdfkit.catalog.examples.kotlin.ComposeExampleApp
 import com.pspdfkit.catalog.examples.kotlin.ComposeSplitScreenExample
 import com.pspdfkit.catalog.examples.kotlin.ConstructionExample
 import com.pspdfkit.catalog.examples.kotlin.ConvertHtmlToPdfExample
-import com.pspdfkit.catalog.examples.kotlin.CustomActionsExample
 import com.pspdfkit.catalog.examples.kotlin.CustomAnnotationNoteHinterProviderExample
 import com.pspdfkit.catalog.examples.kotlin.CustomApplicationPolicyExample
 import com.pspdfkit.catalog.examples.kotlin.CustomDataProviderExample
 import com.pspdfkit.catalog.examples.kotlin.CustomFragmentRuntimeConfigurationExample
 import com.pspdfkit.catalog.examples.kotlin.CustomLayoutExample
-import com.pspdfkit.catalog.examples.kotlin.CustomMainToolbarExample
+import com.pspdfkit.catalog.examples.kotlin.CustomPdfSourceExample
+import com.pspdfkit.catalog.examples.kotlin.CustomSdkUiExample
 import com.pspdfkit.catalog.examples.kotlin.CustomSearchUiComposeExample
 import com.pspdfkit.catalog.examples.kotlin.CustomSignatureParseExample
+import com.pspdfkit.catalog.examples.kotlin.CustomToolbarsDocumentViewExample
+import com.pspdfkit.catalog.examples.kotlin.CustomToolbarsPdfActivityExample
+import com.pspdfkit.catalog.examples.kotlin.CustomToolbarsPdfFragmentExample
+import com.pspdfkit.catalog.examples.kotlin.CustomToolbarsPdfFragmentViewExample
 import com.pspdfkit.catalog.examples.kotlin.DefaultExample
 import com.pspdfkit.catalog.examples.kotlin.DigitalSignatureExample
 import com.pspdfkit.catalog.examples.kotlin.DocumentComparisonExample
@@ -67,6 +69,7 @@ import com.pspdfkit.catalog.examples.kotlin.DocumentJsonExample
 import com.pspdfkit.catalog.examples.kotlin.DocumentPagerExample
 import com.pspdfkit.catalog.examples.kotlin.DocumentProcessingExample
 import com.pspdfkit.catalog.examples.kotlin.DocumentScrollExample
+import com.pspdfkit.catalog.examples.kotlin.DocumentTabsComposeExample
 import com.pspdfkit.catalog.examples.kotlin.DocumentTabsExample
 import com.pspdfkit.catalog.examples.kotlin.DocumentViewInDialogExample
 import com.pspdfkit.catalog.examples.kotlin.DynamicMultimediaAnnotationExample
@@ -93,6 +96,9 @@ import com.pspdfkit.catalog.examples.kotlin.JetpackComposeImageExample
 import com.pspdfkit.catalog.examples.kotlin.KioskExample
 import com.pspdfkit.catalog.examples.kotlin.LongTermValidationAfterSigningExample
 import com.pspdfkit.catalog.examples.kotlin.LongTermValidationExample
+import com.pspdfkit.catalog.examples.kotlin.MainToolbarCustomizationExample
+import com.pspdfkit.catalog.examples.kotlin.MainToolbarFabMenuExample
+import com.pspdfkit.catalog.examples.kotlin.MainToolbarFloatingExample
 import com.pspdfkit.catalog.examples.kotlin.ManualSigningExample
 import com.pspdfkit.catalog.examples.kotlin.MeasurementToolsExample
 import com.pspdfkit.catalog.examples.kotlin.MemoryPressureExample
@@ -107,7 +113,7 @@ import com.pspdfkit.catalog.examples.kotlin.PdfUiFragmentExample
 import com.pspdfkit.catalog.examples.kotlin.PersistentAnnotationSidebarExample
 import com.pspdfkit.catalog.examples.kotlin.PersistentTabsExample
 import com.pspdfkit.catalog.examples.kotlin.PlaygroundExample
-import com.pspdfkit.catalog.examples.kotlin.PopupToolbarCustomisationExample
+import com.pspdfkit.catalog.examples.kotlin.PopupToolbarCustomItemsExample
 import com.pspdfkit.catalog.examples.kotlin.ProgressProviderExample
 import com.pspdfkit.catalog.examples.kotlin.ReaderViewExample
 import com.pspdfkit.catalog.examples.kotlin.RemoteUrlExample
@@ -123,6 +129,7 @@ import com.pspdfkit.catalog.examples.kotlin.UserInterfaceViewModesExample
 import com.pspdfkit.catalog.examples.kotlin.WatermarkExample
 import com.pspdfkit.catalog.examples.kotlin.XfdfExample
 import com.pspdfkit.catalog.examples.kotlin.ZoomExample
+import com.pspdfkit.catalog.examples.kotlin.composeviewer.ComposePdfViewerExample
 import com.pspdfkit.catalog.examples.kotlin.instant.InstantExample
 
 fun getSectionsWithExamples(context: Context) = listOf(
@@ -171,6 +178,7 @@ fun getSectionsWithExamples(context: Context) = listOf(
         R.drawable.ic_multi_document,
         DocumentTabsExample(context),
         PersistentTabsExample(context),
+        DocumentTabsComposeExample(context),
         DocumentPagerExample(context),
         DocumentSwitcherExample(context),
         SplitDocumentExample(context),
@@ -198,6 +206,7 @@ fun getSectionsWithExamples(context: Context) = listOf(
         CustomAnnotationNoteHinterProviderExample(context),
         DynamicMultimediaAnnotationExample(context),
         MeasurementToolsExample(context),
+        DisabledAnnotationPropertyExample(context),
     ),
     // "How do I serialize/deserialize annotations?"
     SdkExample.Section(
@@ -233,22 +242,30 @@ fun getSectionsWithExamples(context: Context) = listOf(
         CustomSignatureParseExample(context),
     ),
     // "How do I customize toolbars, menus, and popup actions?"
+    // Ordered by the surface being customized — main toolbar, then annotation toolbar, then popup
+    // toolbar, then the examples that host all of the toolbars themselves. A new example goes at
+    // the end of its surface's run; a new surface goes before the hosting examples.
     SdkExample.Section(
         context.getString(R.string.example_section_toolbars_menus),
         R.drawable.ic_toolbar_customization,
-        CustomActionsExample(context),
-        CustomMainToolbarExample(context),
-        PopupToolbarCustomisationExample(context),
-        CustomToolbarIconGroupingExample(context),
-        CustomAnnotationCreationToolbarExample(context),
-        DisabledAnnotationPropertyExample(context),
+        MainToolbarCustomizationExample(context),
+        MainToolbarFloatingExample(context),
+        MainToolbarFabMenuExample(context),
+        AnnotationToolbarUserEditableExample(context),
+        AnnotationToolbarCustomItemsExample(context),
+        AnnotationToolbarGroupingExample(context),
+        PopupToolbarCustomItemsExample(context),
+        CustomToolbarsPdfActivityExample(context),
+        CustomToolbarsPdfFragmentExample(context),
+        CustomToolbarsPdfFragmentViewExample(context),
+        CustomToolbarsDocumentViewExample(context),
     ),
     // "How do I integrate surrounding UI, overlays, and accessibility features?"
     SdkExample.Section(
         context.getString(R.string.example_section_layout_overlays_accessibility),
         R.drawable.ic_layout_customization,
+        CustomSdkUiExample(context),
         CustomLayoutExample(context),
-        ToolbarsInFragmentExample(context),
         FormEditingInFragmentExample(context),
         VerticalScrollbarExample(context),
         PersistentAnnotationSidebarExample(context),
@@ -277,7 +294,6 @@ fun getSectionsWithExamples(context: Context) = listOf(
     SdkExample.Section(
         context.getString(R.string.example_section_search),
         R.drawable.ic_topbar_search,
-        CustomInlineSearchExample(context),
         CustomSearchUiExample(context),
         CustomSearchUiComposeExample(context),
         IndexedFullTextSearchExample(context),
@@ -311,12 +327,13 @@ fun getSectionsWithExamples(context: Context) = listOf(
         R.drawable.ic_collaborate,
         InstantExample(context),
     ),
-    // Compose integration basics. For a full Compose app, see the simple-compose example.
+    // Compose integration basics. For a full Compose app, see ComposePdfViewerExample.
     SdkExample.Section(
         context.getString(R.string.example_section_jc_examples),
         R.drawable.ic_jetpack_compose,
-        ComposeExampleApp(context),
+        ComposePdfViewerExample(context),
         JetpackComposeExample(context),
+        CustomPdfSourceExample(context),
         DocumentViewInDialogExample(context),
         JetpackComposeImageExample(context),
         NavHostExample(context),

@@ -135,7 +135,8 @@ public class CustomAnnotationInspectorExample extends SdkExample {
                         private @NonNull ColorPickerInspectorDetailView getColorPickerInspectorDetailView(
                                 List<Annotation> annotations) {
                             final var detailView = new ColorPickerInspectorDetailView(
-                                    getContext(), EDITING_PICKER_COLORS, EDITING_PICKER_COLORS.get(0), false);
+                                    getContext(), EDITING_PICKER_COLORS, EDITING_PICKER_COLORS.get(0));
+                            detailView.setRestrictToAvailableColors(true);
                             detailView.setShowSelectionIndicator(false);
 
                             detailView.setOnColorPickedListener((view, color) -> {
@@ -285,8 +286,9 @@ public class CustomAnnotationInspectorExample extends SdkExample {
                 List<PropertyInspectorView> inspectorViews = new ArrayList<>();
 
                 // Create color picker.
-                ColorPickerInspectorDetailView colorPicker = new ColorPickerInspectorDetailView(
-                        getContext(), CREATION_PICKER_COLORS, controller.getColor(), false);
+                ColorPickerInspectorDetailView colorPicker =
+                        new ColorPickerInspectorDetailView(getContext(), CREATION_PICKER_COLORS, controller.getColor());
+                colorPicker.setRestrictToAvailableColors(true);
 
                 colorPicker.setOnColorPickedListener((view, color) -> {
                     annotationPreferences.setColor(annotationTool, annotationToolVariant, color);

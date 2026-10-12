@@ -9,12 +9,13 @@ package com.pspdfkit.catalog.examples.kotlin
 
 import android.content.Context
 import android.net.Uri
-import android.view.Menu
-import android.view.MenuItem
 import androidx.annotation.UiThread
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.tasks.ExtractAssetTask
+import com.pspdfkit.compose.toolbar.state.ToolbarItem
+import com.pspdfkit.compose.toolbar.state.ToolbarItem.ItemEdge
+import com.pspdfkit.compose.toolbar.state.ToolbarItem.OverflowBehavior
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.document.PdfDocument
 import com.pspdfkit.forms.CheckBoxFormElement
@@ -60,6 +61,36 @@ class FormFillingActivity : PdfActivity() {
     override fun onDocumentLoaded(document: PdfDocument) {
         super.onDocumentLoaded(document)
         fillAllFormFields()
+        setToolbarItemsProvider { defaultItems ->
+            defaultItems + ToolbarItem.Button(
+                id = RESET_FORM_MENU_ITEM_ID,
+                actionId = "reset_form",
+                contentDescription = "Reset form",
+                position = ItemEdge.End,
+                overflowBehavior = OverflowBehavior.Never,
+            ) + ToolbarItem.Button(
+                id = FILL_BY_FIELD_NAME,
+                actionId = "fill_by_field",
+                contentDescription = "Fill by field name",
+                position = ItemEdge.End,
+                overflowBehavior = OverflowBehavior.Never,
+            )
+        }
+        setOnToolbarItemClickListener { itemId ->
+            when (itemId) {
+                RESET_FORM_MENU_ITEM_ID -> {
+                    resetForm()
+                    true
+                }
+
+                FILL_BY_FIELD_NAME -> {
+                    fillByName()
+                    true
+                }
+
+                else -> false
+            }
+        }
     }
 
     /**
@@ -87,9 +118,7 @@ class FormFillingActivity : PdfActivity() {
                             (formElement as RadioButtonFormElement).toggleSelection()
                         }
 
-                        else -> {
-                            Unit
-                        }
+                        else -> {}
                     }
                 }
             }.addToDisposables()
@@ -165,29 +194,6 @@ class FormFillingActivity : PdfActivity() {
                         formFillMap[textElement.name]?.let { textElement.setText(it) }
                     }
             }.addToDisposables()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        super.onCreateOptionsMenu(menu)
-        menu.add(0, RESET_FORM_MENU_ITEM_ID, 0, "Reset form")
-        menu.add(0, FILL_BY_FIELD_NAME, 0, "Fill by field name")
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        RESET_FORM_MENU_ITEM_ID -> {
-            resetForm()
-            true
-        }
-
-        FILL_BY_FIELD_NAME -> {
-            fillByName()
-            true
-        }
-
-        else -> {
-            super.onOptionsItemSelected(item)
-        }
     }
 
     override fun onDestroy() {

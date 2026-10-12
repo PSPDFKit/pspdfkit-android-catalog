@@ -9,12 +9,14 @@ package com.pspdfkit.catalog.examples.kotlin
 
 import android.content.Context
 import android.net.Uri
-import android.view.Menu
-import android.view.MenuItem
+import android.os.Bundle
 import android.widget.Toast
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.tasks.ExtractAssetTask
+import com.pspdfkit.compose.toolbar.state.ToolbarItem
+import com.pspdfkit.compose.toolbar.state.ToolbarItem.ItemEdge
+import com.pspdfkit.compose.toolbar.state.ToolbarItem.OverflowBehavior
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.forms.SignatureFormElement
 import com.pspdfkit.signatures.SignerOptions
@@ -89,17 +91,27 @@ class AddLtvAfterSigningActivity : PdfActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        super.onCreateOptionsMenu(menu)
-        menu.add(0, ADD_LTV_ID, 0, "Add LTV")
-        return true
-    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setToolbarItemsProvider { defaultItems ->
+            defaultItems + ToolbarItem.Button(
+                id = ADD_LTV_ID,
+                actionId = "add_ltv",
+                contentDescription = "Add LTV",
+                position = ItemEdge.End,
+                overflowBehavior = OverflowBehavior.Never,
+            )
+        }
+        setOnToolbarItemClickListener { itemId ->
+            when (itemId) {
+                ADD_LTV_ID -> {
+                    addLtv()
+                    true
+                }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = if (item.itemId == ADD_LTV_ID) {
-        addLtv()
-        true
-    } else {
-        super.onOptionsItemSelected(item)
+                else -> false
+            }
+        }
     }
 
     private fun getTrustedCertificates(): List<X509Certificate> = listOf(

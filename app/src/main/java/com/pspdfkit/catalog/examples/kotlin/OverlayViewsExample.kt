@@ -18,6 +18,8 @@ import android.os.Bundle
 import android.util.TypedValue
 import android.view.MotionEvent
 import android.view.View
+import android.view.ViewGroup
+import android.webkit.RenderProcessGoneDetail
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.TextView
@@ -193,7 +195,19 @@ class MyViewProvider(context: Context, private val pdfFragment: PdfFragment, sav
         secondPageView = WebView(context)
         secondPageView.settings.javaScriptEnabled = true
         // Set a WebViewClient so navigation stays within the WebView instead of opening the system browser.
-        secondPageView.webViewClient = WebViewClient()
+        // The check reports every Kotlin `WebViewClient()` construction, including object literals
+        // like this one that do implement the callback. Java anonymous subclasses are not affected.
+        @Suppress("MissingOnRenderProcessGone")
+        secondPageView.webViewClient =
+            object : WebViewClient() {
+                override fun onRenderProcessGone(view: WebView, detail: RenderProcessGoneDetail): Boolean {
+                    // Without this the framework kills the whole app when the renderer goes away.
+                    // The dead WebView can never be reused, so detach and destroy it.
+                    (view.parent as? ViewGroup)?.removeView(view)
+                    view.destroy()
+                    return true
+                }
+            }
         // Load the Nutrient homepage.
         secondPageView.loadUrl("https://nutrient.io/")
         // We fill the entire page, the Webview will consume all scroll events so scrolling the page will only work in the margins.

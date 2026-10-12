@@ -12,6 +12,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.view.ViewGroup
+import android.webkit.RenderProcessGoneDetail
 import android.webkit.WebResourceRequest
 import android.webkit.WebView
 import android.webkit.WebViewClient
@@ -58,6 +59,9 @@ class WebViewActivity : AppCompatActivity() {
             // display a webview with a test page from our assets folder
             Webview(
                 "file:///android_asset/url-dataprovider-example/testpage.html",
+                // The check reports every Kotlin `WebViewClient()` construction, including object literals like
+                // this one that do implement the callback. Java anonymous subclasses are not affected.
+                @Suppress("MissingOnRenderProcessGone")
                 object : WebViewClient() {
                     override fun shouldOverrideUrlLoading(view: WebView?, request: WebResourceRequest?): Boolean {
                         request?.url?.let { uri ->
@@ -102,6 +106,14 @@ class WebViewActivity : AppCompatActivity() {
                             }
                         }
                         return super.shouldOverrideUrlLoading(view, request)
+                    }
+
+                    override fun onRenderProcessGone(view: WebView, detail: RenderProcessGoneDetail): Boolean {
+                        // Without this the framework kills the whole app when the renderer goes away.
+                        // The dead WebView can never be reused, so detach and destroy it.
+                        (view.parent as? ViewGroup)?.removeView(view)
+                        view.destroy()
+                        return true
                     }
                 },
             )

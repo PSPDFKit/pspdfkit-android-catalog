@@ -8,13 +8,15 @@ package com.pspdfkit.catalog.examples.kotlin
 
 import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.SdkExample.Companion.TAG
 import com.pspdfkit.catalog.ui.DocumentPickerActivity
+import com.pspdfkit.compose.toolbar.state.ToolbarItem
+import com.pspdfkit.compose.toolbar.state.ToolbarItem.ItemEdge
+import com.pspdfkit.compose.toolbar.state.ToolbarItem.OverflowBehavior
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.document.PdfDocument
 import com.pspdfkit.ui.PdfActivity
@@ -44,19 +46,27 @@ class PlaygroundExamplePickerActivity : DocumentPickerActivity() {
  * loaded, see [onDocumentLoaded].
  */
 class PlaygroundActivity : PdfActivity() {
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        super.onCreateOptionsMenu(menu)
-        menu.add(0, CUSTOM_MENU_ITEM_ID, 0, "Custom Menu Item")
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        CUSTOM_MENU_ITEM_ID -> {
-            menuItemClicked()
-            true
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setToolbarItemsProvider { defaultItems ->
+            defaultItems + ToolbarItem.Button(
+                id = CUSTOM_MENU_ITEM_ID,
+                actionId = "custom_menu_item",
+                contentDescription = "Custom Menu Item",
+                position = ItemEdge.End,
+                overflowBehavior = OverflowBehavior.Never,
+            )
         }
+        setOnToolbarItemClickListener { itemId ->
+            when (itemId) {
+                CUSTOM_MENU_ITEM_ID -> {
+                    menuItemClicked()
+                    true
+                }
 
-        else -> super.onOptionsItemSelected(item)
+                else -> false
+            }
+        }
     }
 
     override fun onDocumentLoaded(document: PdfDocument) {

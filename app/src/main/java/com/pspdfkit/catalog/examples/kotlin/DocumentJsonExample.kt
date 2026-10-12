@@ -10,9 +10,8 @@ package com.pspdfkit.catalog.examples.kotlin
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -20,6 +19,9 @@ import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.SdkExample.Companion.TAG
 import com.pspdfkit.catalog.tasks.ExtractAssetTask
+import com.pspdfkit.compose.toolbar.state.ToolbarItem
+import com.pspdfkit.compose.toolbar.state.ToolbarItem.ItemEdge
+import com.pspdfkit.compose.toolbar.state.ToolbarItem.OverflowBehavior
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.configuration.sharing.ShareFeatures
 import com.pspdfkit.document.formatters.DocumentJsonFormatter
@@ -30,6 +32,9 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.EnumSet
+
+const val EXPORT_JSON = 98
+const val IMPORT_JSON = 99
 
 /**
  * This example shows how annotation changes can be exported to the Instant Document JSON format,
@@ -78,26 +83,42 @@ class DocumentJsonExample(context: Context) :
  */
 @Suppress("DEPRECATION")
 class DocumentJsonExampleActivity : PdfActivity() {
+
     /** Adds import/export actions to the toolbar.  */
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        super.onCreateOptionsMenu(menu)
-        menuInflater.inflate(R.menu.document_json_example, menu)
-        return true
-    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        R.id.import_json -> {
-            pickFileForJsonImport()
-            true
+        setToolbarItemsProvider { defaultItems ->
+            defaultItems +
+                ToolbarItem.Button(
+                    id = EXPORT_JSON,
+                    actionId = "export_json",
+                    contentDescription = "Export Document JSON",
+                    position = ItemEdge.End,
+                    overflowBehavior = OverflowBehavior.Never,
+                ) +
+                ToolbarItem.Button(
+                    id = IMPORT_JSON,
+                    actionId = "import_json",
+                    contentDescription = "Import Document JSON",
+                    position = ItemEdge.End,
+                    overflowBehavior = OverflowBehavior.Never,
+                )
         }
+        setOnToolbarItemClickListener { id ->
+            when (id) {
+                IMPORT_JSON -> {
+                    pickFileForJsonImport()
+                    true
+                }
 
-        R.id.export_json -> {
-            pickFileForJsonExport()
-            true
-        }
+                EXPORT_JSON -> {
+                    pickFileForJsonExport()
+                    true
+                }
 
-        else -> {
-            super.onOptionsItemSelected(item)
+                else -> false
+            }
         }
     }
 

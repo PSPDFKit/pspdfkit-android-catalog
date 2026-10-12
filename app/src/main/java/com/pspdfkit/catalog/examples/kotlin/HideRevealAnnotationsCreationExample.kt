@@ -17,8 +17,7 @@ import android.graphics.Paint
 import android.graphics.PixelFormat
 import android.graphics.RectF
 import android.net.Uri
-import android.view.Menu
-import android.view.MenuItem
+import android.os.Bundle
 import android.view.MotionEvent
 import androidx.annotation.IntRange
 import androidx.annotation.UiThread
@@ -29,6 +28,10 @@ import com.pspdfkit.annotations.SquareAnnotation
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.tasks.ExtractAssetTask.extract
+import com.pspdfkit.compose.toolbar.state.ToolbarIcon
+import com.pspdfkit.compose.toolbar.state.ToolbarItem
+import com.pspdfkit.compose.toolbar.state.ToolbarItem.ItemEdge
+import com.pspdfkit.compose.toolbar.state.ToolbarItem.OverflowBehavior
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.configuration.activity.ThumbnailBarMode
 import com.pspdfkit.document.PdfDocument
@@ -106,68 +109,86 @@ class HideRevealAnnotationsCreationActivity : PdfActivity() {
     /**
      * Create the two buttons for handling hide and reveal areas.
      */
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        super.onCreateOptionsMenu(menu)
-        // Loading the document is an asynchronous process. Depending on the lifecycle state of the activity,
-        // the document might not be loaded when this method is called, in which case we don't populate the menu.
-        if (document == null) {
-            return false
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        setToolbarItemsProvider { _ ->
+            // Loading the document is an asynchronous process. Until it is loaded we don't add any
+            // custom items. Recompute on every invalidation so the buttons reflect the current state.
+            if (document == null) {
+                return@setToolbarItemsProvider emptyList()
+            }
+
+            var items = listOf<ToolbarItem>()
+            // Set hide button state.
+            items += if (hideArea == null) {
+                // Annotation is not present.
+                ToolbarItem.Button(
+                    id = HIDE_ITEM_ID,
+                    actionId = "hide_area",
+                    contentDescription = "Hide Area",
+                    position = ItemEdge.End,
+                    overflowBehavior = OverflowBehavior.AlwaysAsText,
+                )
+            } else {
+                // Annotation is present.
+                ToolbarItem.Button(
+                    id = RESET_HIDE_ITEM_ID,
+                    actionId = "reset_hide_area",
+                    contentDescription = "Reset Hide Area",
+                    position = ItemEdge.End,
+                    overflowBehavior = OverflowBehavior.AlwaysAsText,
+                )
+            }
+
+            // Set reveal button state.
+            items += if (revealArea == null) {
+                // Annotation is not present.
+                ToolbarItem.Button(
+                    id = REVEAL_ITEM_ID,
+                    actionId = "reveal_area",
+                    contentDescription = "Reveal Area",
+                    position = ItemEdge.End,
+                    overflowBehavior = OverflowBehavior.AlwaysAsText,
+                )
+            } else {
+                // Annotation is present.
+                ToolbarItem.Button(
+                    id = RESET_REVEAL_ITEM_ID,
+                    actionId = "reset_reveal_area",
+                    contentDescription = "Reset Reveal Area",
+                    position = ItemEdge.End,
+                    overflowBehavior = OverflowBehavior.AlwaysAsText,
+                )
+            }
+            items
         }
 
-        menu.clear()
-        // Set hide button state.
-        if (hideArea == null) {
-            // Annotation is not present.
-            val addHideAreaItem = menu.add(0, HIDE_ITEM_ID, 0, "Hide Area")
-            showWithText(addHideAreaItem)
-        } else {
-            // Annotation is present.
-            val resetHideAreaItem = menu.add(0, RESET_HIDE_ITEM_ID, 0, "Reset Hide Area")
-            showWithText(resetHideAreaItem)
-        }
+        // Set the corresponding action for every button in the toolbar.
+        setOnToolbarItemClickListener { itemId ->
+            when (itemId) {
+                HIDE_ITEM_ID -> {
+                    hideArea()
+                    true
+                }
 
-        // Set reveal button state.
-        if (revealArea == null) {
-            // Annotation is not present.
-            val addRevealAreaItem = menu.add(0, REVEAL_ITEM_ID, 1, "Reveal Area")
-            showWithText(addRevealAreaItem)
-        } else {
-            // Annotation is present.
-            val resetRevealAreaItem = menu.add(0, RESET_REVEAL_ITEM_ID, 1, "Reset Reveal Area")
-            showWithText(resetRevealAreaItem)
-        }
-        return true
-    }
+                RESET_HIDE_ITEM_ID -> {
+                    resetHideArea()
+                    true
+                }
 
-    /** Helper to show buttons with text. */
-    private fun showWithText(menuItem: MenuItem) {
-        menuItem.setShowAsAction(MenuItem.SHOW_AS_ACTION_IF_ROOM or MenuItem.SHOW_AS_ACTION_WITH_TEXT)
-    }
+                REVEAL_ITEM_ID -> {
+                    revealArea()
+                    true
+                }
 
-    /** Set the corresponding action for every button in the toolbar. */
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        HIDE_ITEM_ID -> {
-            hideArea()
-            true
-        }
+                RESET_REVEAL_ITEM_ID -> {
+                    resetRevealArea()
+                    true
+                }
 
-        RESET_HIDE_ITEM_ID -> {
-            resetHideArea()
-            true
-        }
-
-        REVEAL_ITEM_ID -> {
-            revealArea()
-            true
-        }
-
-        RESET_REVEAL_ITEM_ID -> {
-            resetRevealArea()
-            true
-        }
-
-        else -> {
-            super.onOptionsItemSelected(item)
+                else -> false
+            }
         }
     }
 
@@ -205,7 +226,7 @@ class HideRevealAnnotationsCreationActivity : PdfActivity() {
                 revealArea = getCustomAnnotationIfPresent(document, REVEAL_AREA_KEY)
                 addRevealAreaDrawableProvider(revealArea)
             }
-            invalidateOptionsMenu()
+            invalidateToolbarItems()
         }
     }
 
@@ -232,7 +253,7 @@ class HideRevealAnnotationsCreationActivity : PdfActivity() {
                     put(HIDE_AREA_KEY, true)
                 }
             addAnnotationToDocument(this)
-            invalidateOptionsMenu()
+            invalidateToolbarItems()
         }
     }
 
@@ -241,7 +262,7 @@ class HideRevealAnnotationsCreationActivity : PdfActivity() {
         val hideArea = hideArea ?: return
         runBlocking { document.annotationProvider.removeAnnotationFromPage(hideArea) }
         this.hideArea = null
-        invalidateOptionsMenu()
+        invalidateToolbarItems()
     }
 
     @SuppressLint("Range")
@@ -257,7 +278,7 @@ class HideRevealAnnotationsCreationActivity : PdfActivity() {
                 }
             addAnnotationToDocument(this)
             addRevealAreaDrawableProvider(this)
-            invalidateOptionsMenu()
+            invalidateToolbarItems()
         }
     }
 
@@ -272,7 +293,7 @@ class HideRevealAnnotationsCreationActivity : PdfActivity() {
         }
         runBlocking { document.annotationProvider.removeAnnotationFromPage(revealArea) }
         this.revealArea = null
-        invalidateOptionsMenu()
+        invalidateToolbarItems()
     }
 
     /**

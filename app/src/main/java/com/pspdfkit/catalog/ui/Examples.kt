@@ -13,6 +13,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement.SpaceBetween
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.defaultMinSize
 import androidx.compose.foundation.layout.fillMaxHeight
@@ -58,7 +59,7 @@ import com.pspdfkit.catalog.utils.firstCharacterUpperCase
 @Composable
 @ExperimentalComposeUiApi
 @ExperimentalFoundationApi
-fun Examples(state: State, dispatcher: Dispatcher) {
+fun Examples(state: State, dispatcher: Dispatcher, contentPadding: PaddingValues = PaddingValues()) {
     val context = LocalContext.current
 
     var filteredExamplesInSections by remember { mutableStateOf(listOf<SdkExample.Section>()) }
@@ -85,6 +86,7 @@ fun Examples(state: State, dispatcher: Dispatcher) {
         searchQuery = state.searchState.searchQueryOrBlank(),
         itemsInSections = filteredExamplesInSections,
         expandedSectionsState = state.expandedExampleSectionTitles,
+        contentPadding = contentPadding,
         sectionKey = { it.name },
         topHeaderLayout = {
             Box(

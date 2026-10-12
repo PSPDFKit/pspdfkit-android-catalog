@@ -11,8 +11,7 @@ import android.graphics.Color
 import android.graphics.PointF
 import android.graphics.RectF
 import android.net.Uri
-import android.view.Menu
-import android.view.MenuItem
+import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.ColorInt
@@ -32,6 +31,9 @@ import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.tasks.ExtractAssetTask
 import com.pspdfkit.catalog.tasks.ExtractAssetTask.OnDocumentExtractedListener
+import com.pspdfkit.compose.toolbar.state.ToolbarItem
+import com.pspdfkit.compose.toolbar.state.ToolbarItem.ItemEdge
+import com.pspdfkit.compose.toolbar.state.ToolbarItem.OverflowBehavior
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.document.PdfDocument
 import com.pspdfkit.preferences.PSPDFKitPreferences
@@ -74,18 +76,26 @@ class AnnotationWithAlphaCreationExample(context: Context) :
 class AnnotationWithAlphaCreationActivity : PdfActivity() {
     private val viewModel: AnnotationCreationViewModel by viewModels()
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        super.onCreateOptionsMenu(menu)
-        menu.add(0, ADD_STAMP_ITEM_ID, 0, "Add Stamp")
-        return true
-    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setToolbarItemsProvider { defaultItems ->
+            defaultItems + ToolbarItem.Button(
+                id = ADD_STAMP_ITEM_ID,
+                actionId = "add_stamp",
+                contentDescription = "Add Stamp",
+                position = ItemEdge.End,
+                overflowBehavior = OverflowBehavior.Never,
+            )
+        }
+        setOnToolbarItemClickListener { itemId ->
+            when (itemId) {
+                ADD_STAMP_ITEM_ID -> {
+                    createStamp()
+                    true
+                }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == ADD_STAMP_ITEM_ID) {
-            createStamp()
-            return true
-        } else {
-            return super.onOptionsItemSelected(item)
+                else -> false
+            }
         }
     }
 

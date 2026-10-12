@@ -11,8 +11,6 @@ import android.content.Context
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.pspdfkit.annotations.Annotation
 import com.pspdfkit.annotations.AnnotationFlags
@@ -20,6 +18,9 @@ import com.pspdfkit.annotations.AnnotationType
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.tasks.ExtractAssetTask
+import com.pspdfkit.compose.toolbar.state.ToolbarItem
+import com.pspdfkit.compose.toolbar.state.ToolbarItem.ItemEdge
+import com.pspdfkit.compose.toolbar.state.ToolbarItem.OverflowBehavior
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.listeners.OnPreparePopupToolbarListener
 import com.pspdfkit.ui.PdfActivity
@@ -75,20 +76,26 @@ class AnnotationFlagsActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         pdfFragment?.setOnPreparePopupToolbarListener(this)
-    }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        super.onCreateOptionsMenu(menu)
-        menu.add(0, R.id.reset_all_flags, 0, "Reset All Flags")
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.reset_all_flags) {
-            setFlagsOnAllAnnotations(EnumSet.of(AnnotationFlags.PRINT, AnnotationFlags.NOZOOM))
-            return true
+        setToolbarItemsProvider { defaultItems ->
+            defaultItems + ToolbarItem.Button(
+                id = R.id.reset_all_flags,
+                actionId = "reset_all_flags",
+                contentDescription = "Reset All Flags",
+                position = ItemEdge.End,
+                overflowBehavior = OverflowBehavior.Never,
+            )
         }
-        return super.onOptionsItemSelected(item)
+        setOnToolbarItemClickListener { itemId ->
+            when (itemId) {
+                R.id.reset_all_flags -> {
+                    setFlagsOnAllAnnotations(EnumSet.of(AnnotationFlags.PRINT, AnnotationFlags.NOZOOM))
+                    true
+                }
+
+                else -> false
+            }
+        }
     }
 
     override fun onPrepareAnnotationPopupToolbar(toolbar: AnnotationPopupToolbar) {

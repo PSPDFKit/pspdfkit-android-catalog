@@ -165,11 +165,11 @@ class CustomSearchUiComposeViewModel : ViewModel() {
 
         viewModelScope.launch(Dispatchers.Default) {
             textSearch?.performSearch(searchQuery)?.let { results ->
-                if (results.isNotEmpty()) {
-                    highlighter?.addSearchResults(results)
-                } else {
-                    highlighter?.clearSearchResults()
-                }
+                // Replace instead of adding: addSearchResults() keeps whatever is already
+                // highlighted, so adding on every keystroke stacks the hits of every intermediate
+                // query ("we", "wel", "welc", ...) on top of each other. setSearchResults() also
+                // clears the highlights when the new query has no hits.
+                highlighter?.setSearchResults(results)
             }
         }
     }

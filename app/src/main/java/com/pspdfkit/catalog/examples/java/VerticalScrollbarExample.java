@@ -106,6 +106,16 @@ public class VerticalScrollbarExample extends SdkExample {
 
         @UiThread
         @Override
+        public void onConfigurationUpdated(@NonNull PdfActivityConfiguration configuration) {
+            super.onConfigurationUpdated(configuration);
+            // The scroll direction can change without a restart, from the settings sheet, so the
+            // scrollbar has to be told again.
+            verticalScrollBar.setScrollDirection(
+                    configuration.getConfiguration().getScrollDirection());
+        }
+
+        @UiThread
+        @Override
         public void onDocumentLoaded(@NonNull PdfDocument document) {
             // Prepare the scrollbar widget: You need to set the controlled document as well as the
             // configured scroll direction.

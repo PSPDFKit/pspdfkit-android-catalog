@@ -59,7 +59,7 @@ class AnnotationOverlayVisibilityActivity : PdfActivity() {
 
         toggleOverlayFab.setOnClickListener {
             overlayEnabled = !overlayEnabled
-            requirePdfFragment().setAnnotationOverlayEnabled(overlayEnabled)
+            requirePdfFragment().isAnnotationOverlayEnabled = overlayEnabled
             updateFabIcon()
         }
     }

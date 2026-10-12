@@ -10,12 +10,14 @@ package com.pspdfkit.catalog.examples.kotlin
 import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
-import android.view.Menu
-import android.view.MenuItem
+import android.os.Bundle
 import com.pspdfkit.annotations.actions.JavaScriptAction
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.tasks.ExtractAssetTask.extract
+import com.pspdfkit.compose.toolbar.state.ToolbarItem
+import com.pspdfkit.compose.toolbar.state.ToolbarItem.ItemEdge
+import com.pspdfkit.compose.toolbar.state.ToolbarItem.OverflowBehavior
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
@@ -50,38 +52,64 @@ class JavaScriptActionsExample(context: Context) :
  * @see JavaScriptActionsExample
  */
 class JavaScriptActionsActivity : PdfActivity() {
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        super.onCreateOptionsMenu(menu)
-        menu.add(0, SHOW_ALERT, 0, "Show Alert")
-        menu.add(0, GO_TO_NEXT_PAGE, 0, "Go To Next Page")
-        menu.add(0, SHOW_FORM_FIELDS, 0, "Show Form Fields")
-        menu.add(0, MAIL_TO, 0, "Mail to")
-        return true
-    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-        SHOW_ALERT -> {
-            executeShowAlertAction()
-            true
+        setToolbarItemsProvider { defaultItems ->
+            defaultItems +
+                ToolbarItem.Button(
+                    id = SHOW_ALERT,
+                    actionId = "show_alert",
+                    contentDescription = "Show Alert",
+                    position = ItemEdge.End,
+                    overflowBehavior = OverflowBehavior.Never,
+                ) +
+                ToolbarItem.Button(
+                    id = GO_TO_NEXT_PAGE,
+                    actionId = "go_to_next_page",
+                    contentDescription = "Go To Next Page",
+                    position = ItemEdge.End,
+                    overflowBehavior = OverflowBehavior.Never,
+                ) +
+                ToolbarItem.Button(
+                    id = SHOW_FORM_FIELDS,
+                    actionId = "show_form_fields",
+                    contentDescription = "Show Form Fields",
+                    position = ItemEdge.End,
+                    overflowBehavior = OverflowBehavior.Never,
+                ) +
+                ToolbarItem.Button(
+                    id = MAIL_TO,
+                    actionId = "mail_to",
+                    contentDescription = "Mail to",
+                    position = ItemEdge.End,
+                    overflowBehavior = OverflowBehavior.Never,
+                )
         }
+        setOnToolbarItemClickListener { itemId ->
+            when (itemId) {
+                SHOW_ALERT -> {
+                    executeShowAlertAction()
+                    true
+                }
 
-        GO_TO_NEXT_PAGE -> {
-            executeGoToNextPageAction()
-            true
-        }
+                GO_TO_NEXT_PAGE -> {
+                    executeGoToNextPageAction()
+                    true
+                }
 
-        SHOW_FORM_FIELDS -> {
-            executeShowFormFieldsAction()
-            true
-        }
+                SHOW_FORM_FIELDS -> {
+                    executeShowFormFieldsAction()
+                    true
+                }
 
-        MAIL_TO -> {
-            executeMailDocumentAction()
-            true
-        }
+                MAIL_TO -> {
+                    executeMailDocumentAction()
+                    true
+                }
 
-        else -> {
-            super.onOptionsItemSelected(item)
+                else -> false
+            }
         }
     }
 

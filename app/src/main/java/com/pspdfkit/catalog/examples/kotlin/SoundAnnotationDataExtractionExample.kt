@@ -11,8 +11,7 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.RectF
 import android.net.Uri
-import android.view.Menu
-import android.view.MenuItem
+import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.UiThread
@@ -23,6 +22,9 @@ import com.pspdfkit.annotations.sound.WavWriter
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.tasks.ExtractAssetTask
+import com.pspdfkit.compose.toolbar.state.ToolbarItem
+import com.pspdfkit.compose.toolbar.state.ToolbarItem.ItemEdge
+import com.pspdfkit.compose.toolbar.state.ToolbarItem.OverflowBehavior
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.document.PdfDocument
 import com.pspdfkit.preferences.PSPDFKitPreferences
@@ -76,24 +78,34 @@ class SoundAnnotationDataExtractionExample(context: Context) :
 class SoundAnnotationDataExtractionActivity : PdfActivity() {
     private val viewModel: AnnotationCreationViewModel by viewModels()
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setToolbarItemsProvider { defaultItems ->
+            defaultItems + ToolbarItem.Button(
+                id = MENU_ID,
+                actionId = "extract_sound_wav",
+                contentDescription = "Extract sound .wav",
+                position = ItemEdge.End,
+                overflowBehavior = OverflowBehavior.Never,
+            )
+        }
+        setOnToolbarItemClickListener { itemId ->
+            when (itemId) {
+                MENU_ID -> {
+                    menuItemClicked()
+                    true
+                }
+
+                else -> false
+            }
+        }
+    }
+
     @UiThread
     override fun onDocumentLoaded(document: PdfDocument) {
         viewModel.createObjects {
             createSoundAnnotation()
         }
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        super.onCreateOptionsMenu(menu)
-        menu.add(0, MENU_ID, 0, "Extract sound .wav")
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean = if (item.itemId == MENU_ID) {
-        menuItemClicked()
-        true
-    } else {
-        super.onOptionsItemSelected(item)
     }
 
     private fun menuItemClicked() {

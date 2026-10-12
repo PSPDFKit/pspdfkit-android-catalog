@@ -11,10 +11,7 @@ package com.pspdfkit.catalog.examples.kotlin
 import android.content.Context
 import android.net.Uri
 import android.os.Bundle
-import android.view.Menu
 import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.DrawableCompat
 import androidx.core.graphics.drawable.toBitmap
 import androidx.lifecycle.lifecycleScope
 import com.pspdfkit.annotations.Annotation
@@ -25,17 +22,19 @@ import com.pspdfkit.annotations.configuration.StampAnnotationConfiguration
 import com.pspdfkit.annotations.stamps.StampPickerItem
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.tasks.ExtractAssetTask
+import com.pspdfkit.compose.toolbar.state.ToolbarIcon
+import com.pspdfkit.compose.toolbar.state.ToolbarItem
+import com.pspdfkit.compose.toolbar.state.ToolbarItemState
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.document.PdfDocument
+import com.pspdfkit.jetpack.compose.toolbar.nutrientToolbarCoordinator
+import com.pspdfkit.jetpack.compose.toolbar.setMenuItemGroupingRule
 import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
 import com.pspdfkit.ui.annotations.OnAnnotatingModeChangeListener
 import com.pspdfkit.ui.annotations.OnAnnotationSelectedListener
 import com.pspdfkit.ui.special_mode.controller.AnnotatingController
 import com.pspdfkit.ui.special_mode.controller.AnnotationSelectionController
-import com.pspdfkit.ui.toolbar.AnnotationToolbar
-import com.pspdfkit.ui.toolbar.ContextualToolbar
-import com.pspdfkit.ui.toolbar.ToolbarCoordinatorLayout
 import com.pspdfkit.ui.toolbar.grouping.presets.MenuItem
 import com.pspdfkit.ui.toolbar.grouping.presets.PresetMenuItemGroupingRule
 import kotlinx.coroutines.launch
@@ -80,7 +79,6 @@ class ConstructionExample(context: Context) :
 
 class ConstructionExampleActivity :
     PdfActivity(),
-    ToolbarCoordinatorLayout.OnContextualToolbarLifecycleListener,
     OnAnnotationSelectedListener,
     OnAnnotatingModeChangeListener {
     var annotationsHidden = false
@@ -93,10 +91,60 @@ class ConstructionExampleActivity :
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // First we set the listener for the toolbar lifecycle changes so we
-        // can observe when the toolbar is being prepared, shown or dismissed
-        // inside the activity's UI.
-        setOnContextualToolbarLifecycleListener(this)
+        // Register the grouping rule that tells the annotation creation toolbar how to group its
+        // menu items. This uses the deprecated MenuItemGroupingRule bridge so existing
+        // PresetMenuItemGroupingRule subclasses keep working; new code should implement
+        // ContextualToolbarGroupingProvider and register it with
+        // nutrientToolbarCoordinator().setContextualToolbarGroupingProvider(...) instead.
+        nutrientToolbarCoordinator().setMenuItemGroupingRule(
+            this,
+            CustomAnnotationCreationToolbarGroupingRule(this),
+        )
+
+        // Customize the main toolbar declaratively via the Compose-toolbar API. This replaces the
+        // legacy onGenerateMenuItemIds / onCreateOptionsMenu / onPrepareOptionsMenu /
+        // onOptionsItemSelected overrides. We prepend our custom show/hide items, remove the
+        // thumbnail-grid default, and toggle each item's visibility based on the hidden state.
+        setToolbarItemsProvider { defaultItems ->
+            val hideItem =
+                ToolbarItem.Button(
+                    actionId = "custom_action_hide",
+                    id = R.id.custom_action_hide,
+                    contentDescription = "Hide",
+                    icon = ToolbarIcon.Resource(R.drawable.ic_hide),
+                    state = ToolbarItemState(isVisible = !annotationsHidden),
+                    overflowBehavior = ToolbarItem.OverflowBehavior.IfRoom,
+                )
+            val showItem =
+                ToolbarItem.Button(
+                    actionId = "custom_action_show",
+                    id = R.id.custom_action_show,
+                    contentDescription = "Show",
+                    icon = ToolbarIcon.Resource(R.drawable.ic_show),
+                    state = ToolbarItemState(isVisible = annotationsHidden),
+                    overflowBehavior = ToolbarItem.OverflowBehavior.IfRoom,
+                )
+
+            // Prepend our two custom items and drop the thumbnail-grid default item.
+            listOf(hideItem, showItem) + defaultItems.filterNot { it.id == MENU_OPTION_THUMBNAIL_GRID }
+        }
+
+        // Handle clicks on our custom show/hide toolbar items.
+        setOnToolbarItemClickListener { id ->
+            when (id) {
+                R.id.custom_action_hide,
+                R.id.custom_action_show,
+                -> {
+                    // Show/hide annotations accordingly and refresh the toolbar.
+                    annotationsHidden = !annotationsHidden
+                    setAnnotationVisibility(annotationsHidden)
+                    invalidateToolbarItems()
+                    true
+                }
+
+                else -> false
+            }
+        }
     }
 
     override fun onDocumentLoaded(document: PdfDocument) {
@@ -111,7 +159,7 @@ class ConstructionExampleActivity :
 
             if (hasHiddenAnnotations != annotationsHidden) {
                 annotationsHidden = hasHiddenAnnotations
-                invalidateOptionsMenu()
+                invalidateToolbarItems()
             }
         }
 
@@ -158,92 +206,6 @@ class ConstructionExampleActivity :
         fragment.addOnAnnotatingModeChangeListener(this)
     }
 
-    override fun onGenerateMenuItemIds(menuItems: MutableList<Int>): MutableList<Int> {
-        // Generate our custom menu item ids.
-        menuItems.add(0, R.id.custom_action_hide)
-        menuItems.add(1, R.id.custom_action_show)
-        menuItems.removeAt(menuItems.indexOf(MENU_OPTION_THUMBNAIL_GRID))
-        return menuItems
-    }
-
-    // add show/hide annotation items to options menu
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        super.onCreateOptionsMenu(menu)
-
-        // Let's say we want to tint icons same as the default ones. We can read the color
-        // from the theme, or specify the same color we have in theme. Reading from theme is a bit
-        // more complex but a better way to do it, so here's how to:
-        val a =
-            theme
-                .obtainStyledAttributes(
-                    null,
-                    com.pspdfkit.R.styleable.pspdf__ActionBarIcons,
-                    com.pspdfkit.R.attr.pspdf__actionBarIconsStyle,
-                    com.pspdfkit.R.style.PSPDFKit_ActionBarIcons,
-                )
-        val mainToolbarIconsColor =
-            a.getColor(
-                com.pspdfkit.R.styleable.pspdf__ActionBarIcons_pspdf__iconsColor,
-                ContextCompat.getColor(this, com.pspdfkit.R.color.pspdf__onPrimary),
-            )
-        a.recycle()
-
-        // setup our custom menu items for showing and hiding annotations
-        setupCustomMenuItem(
-            menu.findItem(R.id.custom_action_hide),
-            "Hide",
-            R.drawable.ic_hide,
-            mainToolbarIconsColor,
-        )
-        setupCustomMenuItem(
-            menu.findItem(R.id.custom_action_show),
-            "Show",
-            R.drawable.ic_show,
-            mainToolbarIconsColor,
-        )
-
-        return true
-    }
-
-    private fun setupCustomMenuItem(item: android.view.MenuItem?, title: String, iconRes: Int, mainToolbarIconsColor: Int) {
-        if (item == null) return
-        item.title = title
-        item.setIcon(iconRes)
-        item.icon?.let { DrawableCompat.setTint(it, mainToolbarIconsColor) }
-        item.setShowAsAction(android.view.MenuItem.SHOW_AS_ACTION_IF_ROOM)
-    }
-
-    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
-        val result = super.onPrepareOptionsMenu(menu)
-
-        // we only want to show either of our custom menu items, depending on the visible/hidden state of our annotations
-        menu.findItem(R.id.custom_action_hide)?.let {
-            it.isVisible = !annotationsHidden
-        }
-        menu.findItem(R.id.custom_action_show)?.let {
-            it.isVisible = annotationsHidden
-        }
-        return result
-    }
-
-    override fun onOptionsItemSelected(item: android.view.MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.custom_action_hide,
-            R.id.custom_action_show,
-            -> {
-                // show/hide annotations accordingly and update the option menu
-                annotationsHidden = !annotationsHidden
-                setAnnotationVisibility(annotationsHidden)
-                invalidateOptionsMenu()
-                return true
-            }
-
-            else -> {
-                return super.onOptionsItemSelected(item)
-            }
-        }
-    }
-
     // add or remove the HIDDEN flag to the annotations to achieve the hide/show effect
     private fun setAnnotationVisibility(shouldHide: Boolean) {
         val doc = document ?: return
@@ -256,21 +218,6 @@ class ConstructionExampleActivity :
             pdfFragment?.executeAction(HideAction(annotations, null, shouldHide))
         }
     }
-
-    //region OnContextualToolbarLifecycleListener
-    override fun onPrepareContextualToolbar(toolbar: ContextualToolbar<*>) {
-        if (toolbar is AnnotationToolbar) {
-            // Register grouping rule to tell toolbar how to group menu items.
-            toolbar.setMenuItemGroupingRule(
-                CustomAnnotationCreationToolbarGroupingRule(this),
-            )
-        }
-    }
-
-    override fun onDisplayContextualToolbar(toolbar: ContextualToolbar<*>) {}
-
-    override fun onRemoveContextualToolbar(toolbar: ContextualToolbar<*>) {}
-    //endregion
 
     private var newPinAnnotationCreated = false
 

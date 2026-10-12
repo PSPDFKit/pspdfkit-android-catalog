@@ -46,4 +46,5 @@ object PreferenceKeys {
     val LeakCanaryEnabled = booleanPreferencesKey("leak_canary_enabled")
     val FreezeDetectorEnabled = booleanPreferencesKey("freeze_detector_enabled")
     val MemoryTraceLoggingEnabled = booleanPreferencesKey("memory_trace_logging_enabled")
+    val VerboseLoggingEnabled = booleanPreferencesKey("verbose_logging_enabled")
 }

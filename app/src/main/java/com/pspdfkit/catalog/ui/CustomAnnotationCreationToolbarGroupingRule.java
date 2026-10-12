@@ -11,13 +11,14 @@ import android.content.Context;
 import androidx.annotation.IntRange;
 import androidx.annotation.NonNull;
 import com.pspdfkit.catalog.R;
-import com.pspdfkit.ui.toolbar.ContextualToolbar;
 import com.pspdfkit.ui.toolbar.ContextualToolbarMenuItem;
 import com.pspdfkit.ui.toolbar.grouping.presets.MenuItem;
 import com.pspdfkit.ui.toolbar.grouping.presets.PresetMenuItemGroupingRule;
 import java.util.ArrayList;
 import java.util.List;
 
+@SuppressWarnings(
+        "deprecation") // Uses the deprecated grouping-rule API; migrates to ContextualToolbarGroupingProvider.
 public class CustomAnnotationCreationToolbarGroupingRule extends PresetMenuItemGroupingRule {
 
     /** Annotation toolbar grouping with 4 elements. */
@@ -73,10 +74,9 @@ public class CustomAnnotationCreationToolbarGroupingRule extends PresetMenuItemG
 
     @NonNull
     @Override
-    public List<MenuItem> getGroupPreset(
-            @IntRange(from = ContextualToolbar.MIN_TOOLBAR_CAPACITY) int capacity, int itemsCount) {
+    public List<MenuItem> getGroupPreset(@IntRange(from = MIN_TOOLBAR_CAPACITY) int capacity, int itemsCount) {
         // Capacity shouldn't be less than 4. If that is the case, return empty list.
-        if (capacity < ContextualToolbar.MIN_TOOLBAR_CAPACITY) return new ArrayList<>(capacity);
+        if (capacity < MIN_TOOLBAR_CAPACITY) return new ArrayList<>(capacity);
 
         final List<MenuItem> presetGrouping;
         if (capacity <= 7) {

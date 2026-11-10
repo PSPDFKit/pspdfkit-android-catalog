@@ -17,6 +17,7 @@ import androidx.core.graphics.createBitmap
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentOnAttachListener
+import androidx.lifecycle.lifecycleScope
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.tasks.ExtractAssetTask.extract
@@ -36,8 +37,7 @@ import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
 import com.pspdfkit.ui.PdfFragment
 import com.pspdfkit.ui.signatures.ElectronicSignatureFragment
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
@@ -59,6 +59,8 @@ class CombineElectronicSignaturesWithDigitalSigningExample(context: Context) :
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // The form field for signing is on page with index 16.
         configuration.page(16)
+        // The signed file replaces the open document, so autosaving the old one on reload would write over it.
+        configuration.autosaveEnabled(false)
 
         // Extract the document from the assets.
         extract(WELCOME_DOC, title, context) { documentFile ->
@@ -174,44 +176,40 @@ class CombineElectronicSignaturesWithDigitalSigningActivity :
 
     /**
      * This is an example that shows how to use the created signature annotation as the digital signature stamp appearance.
-     * Note we're only ignoring the return of getFormFieldWithFullyQualifiedNameAsync for the sake of the example.
      */
-    @SuppressLint("CheckResult")
     private fun digitallySignWithSignatureAnnotation(signature: Signature) {
         val document = document ?: return
         val signatureFormFieldName = this.signatureFormFieldName ?: return
 
-        // Retrieve the previously clicked signature form element. We do this asynchronously to not block the UI thread.
-        document.formProvider
-            .getFormFieldWithFullyQualifiedNameAsync(signatureFormFieldName)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe { formField ->
-                val clickedSignatureFormElement = formField.formElement as SignatureFormElement
+        lifecycleScope.launch {
+            // Retrieve the previously clicked signature form element.
+            val formField =
+                document.formProvider.getFormFieldWithFullyQualifiedName(signatureFormFieldName) ?: return@launch
+            val clickedSignatureFormElement = formField.formElement as SignatureFormElement
 
-                // We want to place the ink annotation on top of the signature field. We retrieve the widget annotation to access its position.
-                val formFieldAnnotation = clickedSignatureFormElement.annotation
+            // We want to place the ink annotation on top of the signature field. We retrieve the widget annotation to access its position.
+            val formFieldAnnotation = clickedSignatureFormElement.annotation
 
-                // The signature object provides convenient conversion to ink or stamp annotation.
-                val signatureAnnotation = signature.toAnnotation(document, formFieldAnnotation.pageIndex, formFieldAnnotation.boundingBox)
+            // The signature object provides convenient conversion to ink or stamp annotation.
+            val signatureAnnotation = signature.toAnnotation(document, formFieldAnnotation.pageIndex, formFieldAnnotation.boundingBox)
 
-                // Add the annotation to the document. This step is required so we can render the signature
-                // in order to pass the render to the `SignatureAppearance` when digitally signing in the
-                // next step. We remove it once we have the render.
-                // Here, we use the synchronous `AnnotationProvider` method as the next steps need to wait for this to complete.
-                runBlocking { document.annotationProvider.addAnnotationToPage(signatureAnnotation) }
+            // Add the annotation to the document. This step is required so we can render the signature
+            // in order to pass the render to the `SignatureAppearance` when digitally signing in the
+            // next step. We remove it once we have the render.
+            document.annotationProvider.addAnnotationToPage(signatureAnnotation)
 
-                val w = kotlin.math.abs(signatureAnnotation.boundingBox.width().toInt())
-                val h = kotlin.math.abs(signatureAnnotation.boundingBox.height().toInt())
-                val signatureBitmap = createBitmap(w, h, Bitmap.Config.ARGB_8888)
-                signatureAnnotation.renderToBitmap(signatureBitmap)
+            val w = kotlin.math.abs(signatureAnnotation.boundingBox.width().toInt())
+            val h = kotlin.math.abs(signatureAnnotation.boundingBox.height().toInt())
+            val signatureBitmap = createBitmap(w, h, Bitmap.Config.ARGB_8888)
+            signatureAnnotation.renderToBitmap(signatureBitmap)
 
-                // Now we've made the bitmap, we can remove the annotation from the document, as it will appear on the digital
-                // signature when we digitally sign the document.
-                runBlocking { document.annotationProvider.removeAnnotationFromPage(signatureAnnotation) }
+            // Now we've made the bitmap, we can remove the annotation from the document, as it will appear on the digital
+            // signature when we digitally sign the document.
+            document.annotationProvider.removeAnnotationFromPage(signatureAnnotation)
 
-                // Now sign the document using the certificate added in the example class in `addCertificateAndSigner`.
-                signDocumentWithSignatureBitmap(clickedSignatureFormElement, signatureBitmap)
-            }
+            // Now sign the document using the certificate added in the example class in `addCertificateAndSigner`.
+            signDocumentWithSignatureBitmap(clickedSignatureFormElement, signatureBitmap)
+        }
     }
 
     /**

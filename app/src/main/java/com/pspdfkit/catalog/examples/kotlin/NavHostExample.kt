@@ -52,6 +52,7 @@ import com.pspdfkit.jetpack.compose.interactors.DefaultListeners
 import com.pspdfkit.jetpack.compose.interactors.getDefaultDocumentManager
 import com.pspdfkit.jetpack.compose.interactors.rememberDocumentState
 import com.pspdfkit.jetpack.compose.views.DocumentView
+import kotlinx.coroutines.runBlocking
 
 private const val URL_PARAM = "url_param"
 
@@ -127,14 +128,15 @@ fun ScreenOne(path: String, navigate: () -> Unit) {
                 documentListener =
                 DefaultListeners.documentListeners(
                     onDocumentLoaded = { i ->
-                        i.formProvider
-                            .addFormElementToPage<TextFormConfiguration>(
+                        runBlocking {
+                            i.formProvider.addFormElementToPage<TextFormConfiguration>(
                                 "text-field-1",
                                 TextFormConfiguration
                                     .Builder(0, RectF(30f, 750f, 200f, 720f))
                                     .setText("Hello new Text")
                                     .build(),
                             )
+                        }
                         Toast.makeText(context, "Document loaded!", Toast.LENGTH_SHORT).show()
                     },
                 ),
@@ -177,14 +179,15 @@ fun ScreenTwo(path: String, navigate: () -> Unit) {
                 documentListener =
                 DefaultListeners.documentListeners(
                     onDocumentLoaded = { i ->
-                        i.formProvider
-                            .addFormElementToPage<TextFormConfiguration>(
+                        runBlocking {
+                            i.formProvider.addFormElementToPage<TextFormConfiguration>(
                                 "text-field-editable",
                                 TextFormConfiguration
                                     .Builder(0, RectF(30f, 750f, 200f, 720f))
                                     .setText("Hello new Text")
                                     .build(),
                             )
+                        }
                         Toast.makeText(context, "Document loaded!", Toast.LENGTH_SHORT).show()
                     },
                 ),

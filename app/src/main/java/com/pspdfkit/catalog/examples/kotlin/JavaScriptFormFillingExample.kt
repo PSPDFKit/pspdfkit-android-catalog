@@ -82,9 +82,9 @@ class JavaScriptFormFillingActivity : PdfActivity() {
 
     /** Shows how to fill form fields via JavaScript. */
     private fun fillForms() {
-        executeJavaScript("var f = doc.getField('Sex'); f.checkThisBox(0, true);")
-        executeJavaScript("var f = doc.getField('Name_Last'); f.value = 'John';")
-        executeJavaScript("var f = doc.getField('Name_First'); f.value = 'Appleseed';")
+        executeJavaScript("var f = doc.getField('Department'); f.checkThisBox(3, true);")
+        executeJavaScript("var f = doc.getField('Last Name'); f.value = 'Appleseed';")
+        executeJavaScript("var f = doc.getField('First Name'); f.value = 'John';")
     }
 
     /** Resets all form fields in the document to their default values. */

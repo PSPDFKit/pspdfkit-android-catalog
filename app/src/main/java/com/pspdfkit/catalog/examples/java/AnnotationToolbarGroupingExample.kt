@@ -22,6 +22,7 @@ import com.pspdfkit.compose.toolbar.state.ContextualToolbarKind
 import com.pspdfkit.compose.toolbar.state.ToolbarAction
 import com.pspdfkit.compose.toolbar.state.ToolbarIcon
 import com.pspdfkit.compose.toolbar.state.ToolbarItem
+import com.pspdfkit.compose.toolbar.state.ToolbarPosition
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.jetpack.compose.toolbar.nutrientToolbarCoordinator
 import com.pspdfkit.jetpack.compose.toolbar.setMenuItemGroupingRule
@@ -110,6 +111,12 @@ class AnnotationToolbarGroupingExample(context: Context) :
                 // The Compose counterpart of the legacy ContextualToolbar.setDraggable(false):
                 // hides the drag handle and pins the toolbar to its current position.
                 coordinator.setContextualToolbarDraggable(false)
+
+                // The bar opens at the dock the user last dragged it to in any example. Since it
+                // can't be dragged here, pin it to the top, where the horizontal grouping this
+                // example shows applies. A non-draggable bar's position isn't saved, so this
+                // doesn't change where other screens open the bar.
+                coordinator.setContextualToolbarPosition(ToolbarPosition.Top)
 
                 // Note: the legacy setUseBackButtonForCloseWhenHorizontal behavior is built in —
                 // a top-docked bar leads with a back arrow, a side-docked one shows the circled

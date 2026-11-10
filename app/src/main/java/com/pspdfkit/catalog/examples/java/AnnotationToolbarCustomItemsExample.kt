@@ -168,7 +168,9 @@ class AnnotationToolbarCustomItemsExample(context: Context) :
                 actionId = "catalog.line_blue",
                 id = R.id.line_blue,
                 contentDescription = "Line: Blue",
-                icon = ToolbarIcon.Resource(com.pspdfkit.R.drawable.pspdf__ic_line),
+                // The shared line drawable with a fixed tint in place of the theme tint, so the
+                // item shows its variant color without a dedicated drawable.
+                icon = ToolbarIcon.Resource(com.pspdfkit.R.drawable.pspdf__ic_line, tint = ComposeColor.Blue),
                 position = ToolbarItem.ItemEdge.Start,
             ),
             ToolbarItem.Toggle(
@@ -184,7 +186,7 @@ class AnnotationToolbarCustomItemsExample(context: Context) :
                 actionId = "catalog.line_yellow",
                 id = R.id.line_yellow,
                 contentDescription = "Line: Yellow",
-                icon = ToolbarIcon.Resource(com.pspdfkit.R.drawable.pspdf__ic_line),
+                icon = ToolbarIcon.Resource(com.pspdfkit.R.drawable.pspdf__ic_line, tint = ComposeColor.Yellow),
                 position = ToolbarItem.ItemEdge.Start,
             ),
         )

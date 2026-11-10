@@ -43,6 +43,7 @@ import io.reactivex.rxjava3.core.FlowableEmitter
 import io.reactivex.rxjava3.core.FlowableOnSubscribe
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.rx3.rxSingle
 import java.io.File
 import java.io.IOException
 import java.util.ArrayDeque
@@ -104,8 +105,9 @@ class KioskActivity : AppCompatActivity() {
                 // The second observe on is necessary so opening the documents runs on a different thread as listing the assets.
                 .observeOn(Schedulers.io())
                 .flatMap { asset ->
-                    PdfDocumentLoader
-                        .openDocumentAsync(this@KioskActivity, DocumentSource(AssetDataProvider(asset)))
+                    // Cited as a worked rxSingle example by documentation/rxjava-to-coroutines-migration-guide.md;
+                    // keep the bridge if this example is tidied up, or update the guide.
+                    rxSingle { PdfDocumentLoader.openDocumentAsync(this@KioskActivity, DocumentSource(AssetDataProvider(asset))) }
                         .toFlowable()
                         .doOnError { throwable ->
                             // This example catches any error that happens while opening the document (e.g. if a password would be needed).
@@ -231,13 +233,14 @@ class KioskActivity : AppCompatActivity() {
 
                 // Render page to bitmap.
                 holder.previewRenderDisposable =
-                    document
-                        .renderPageToBitmapAsync(
+                    rxSingle {
+                        document.renderPageToBitmapAsync(
                             parent.context,
                             0,
                             size.width.toInt(),
                             size.height.toInt(),
-                        ).observeOn(AndroidSchedulers.mainThread())
+                        )
+                    }.observeOn(AndroidSchedulers.mainThread())
                         .subscribe { bitmap ->
                             holder.itemPreviewImageView.setImageBitmap(bitmap)
                             previewImageCache.put(document.uid, bitmap)

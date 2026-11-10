@@ -41,7 +41,6 @@ import com.pspdfkit.catalog.R
 import com.pspdfkit.compose.theme.MainToolbarColors
 import com.pspdfkit.compose.theme.NutrientTheme
 import com.pspdfkit.compose.theme.ToolbarPopupColors
-import com.pspdfkit.compose.theme.UiTheme
 import com.pspdfkit.compose.toolbar.composables.NutrientMainToolbar
 import com.pspdfkit.compose.toolbar.state.ToolbarIcon
 import com.pspdfkit.compose.toolbar.state.ToolbarItem
@@ -109,12 +108,7 @@ internal fun ViewerScreen(path: String, isDark: Boolean, onBack: () -> Unit) {
     // the SDK once the DocumentView attaches, so it is safe to set them up front.
     LaunchedEffect(documentState) {
         documentState.setToolbarItemsProvider { defaults ->
-            // The SDK bakes the XML theme's icon tint into every default item, and a per-item tint
-            // wins over the color scheme at render time — so without this the icons would keep the
-            // XML light-blue while the toolbar behind them follows the Compose theme below. Clearing
-            // the tint makes the renderer fall back to MainToolbarColors.iconColor, so the icons
-            // track the theme (including the dark and dynamic-color variants).
-            defaults.map { it.withThemedIconTint() } + ToolbarItem.Button(
+            defaults + ToolbarItem.Button(
                 actionId = "composeviewer.reload",
                 id = R.id.custom_action1,
                 contentDescription = "Reload document",
@@ -196,7 +190,7 @@ internal fun ViewerScreen(path: String, isDark: Boolean, onBack: () -> Unit) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Outlined.ArrowBack,
                                 contentDescription = "Back",
-                                tint = UiTheme.colors.mainToolbar.iconColor,
+                                tint = NutrientTheme.colorScheme.mainToolbar.iconColor,
                             )
                         }
                     },
@@ -218,26 +212,6 @@ internal fun ViewerScreen(path: String, isDark: Boolean, onBack: () -> Unit) {
     // grid) first, then leave the viewer.
     BackHandler(true) {
         if (documentState.isDefaultViewerActive()) onBack() else documentState.exitCurrentState()
-    }
-}
-
-/**
- * Drops a default item's baked-in icon tint so the icon follows the ambient [NutrientTheme] color
- * scheme instead. `ToolbarIcon`'s `tint = null` means "use the toolbar's default icon tint".
- */
-private fun ToolbarItem.withThemedIconTint(): ToolbarItem {
-    val untinted = when (val current = icon) {
-        is ToolbarIcon.Resource -> current.copy(tint = null)
-
-        is ToolbarIcon.Vector -> current.copy(tint = null)
-
-        // Composed icons are handed the resolved tint already, and None has nothing to tint.
-        else -> return this
-    }
-    return when (this) {
-        is ToolbarItem.Button -> copy(icon = untinted)
-        is ToolbarItem.Toggle -> copy(icon = untinted)
-        is ToolbarItem.Submenu -> copy(icon = untinted, children = children.map { it.withThemedIconTint() }.toPersistentList())
     }
 }
 

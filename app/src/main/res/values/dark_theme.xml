@@ -218,8 +218,6 @@
 
     <style name="PSPDFCatalog.TextSelection.Dark" parent="PSPDFKit.TextSelection">
         <item name="pspdf__highlightColor">@color/secondaryContainerDark</item>
-        <item name="pspdf__leftHandleColor">@color/secondaryContainerDark</item>
-        <item name="pspdf__rightHandleColor">@color/secondaryContainerDark</item>
     </style>
 
     <style name="PSPDFCatalog.PropertyInspector.Dark" parent="PSPDFKit.PropertyInspector.Dark"/>

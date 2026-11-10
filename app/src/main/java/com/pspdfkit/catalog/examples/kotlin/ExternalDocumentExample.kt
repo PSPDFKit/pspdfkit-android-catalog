@@ -106,7 +106,7 @@ class ExternalExampleActivity : FragmentActivity() {
                         }
 
                     // Once the download is complete we launch the PdfActivity from the downloaded file.
-                    downloadFragment.job.setProgressListener(
+                    downloadFragment.job?.setProgressListener(
                         object : DownloadJob.ProgressListenerAdapter() {
                             override fun onComplete(output: File) {
                                 startActivity(createActivityIntent(Uri.fromFile(output), configuration, isImageFile))

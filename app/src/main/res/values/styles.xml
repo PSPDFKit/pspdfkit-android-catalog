@@ -60,6 +60,14 @@
         <item name="pspdf__breadCrumbsViewStyle">@style/PSPDFCatalog.BreadCrumbsView</item>
     </style>
 
+    <!--
+    The theme the examples pass as PdfActivityConfiguration.Builder.theme(): the light catalog theme by day and,
+    through values-night, the dark one at night, so every example follows the device's dark mode when the
+    catalog's Theme mode setting is Default. Its own style, rather than a night variant of PSPDFCatalog.Theme,
+    so the styles named PSPDFCatalog.Theme.* keep their light base.
+    -->
+    <style name="PSPDFCatalog.Theme.DayNight" parent="PSPDFCatalog.Theme" />
+
     <style name="PSPDFCatalog.TextSelection" parent="PSPDFKit.TextSelection">
         <item name="pspdf__highlightColor">@color/secondaryDark</item>
         <item name="pspdf__leftHandleColor">?colorSecondary</item>

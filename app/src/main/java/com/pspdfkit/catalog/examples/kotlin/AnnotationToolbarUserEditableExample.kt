@@ -24,6 +24,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.background
 import androidx.compose.foundation.gestures.detectDragGesturesAfterLongPress
@@ -52,6 +53,8 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.relocation.BringIntoViewRequester
+import androidx.compose.foundation.relocation.bringIntoViewRequester
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -67,6 +70,7 @@ import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.key
 import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateMapOf
@@ -104,6 +108,7 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.toSize
 import androidx.core.content.edit
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
@@ -112,13 +117,10 @@ import com.pspdfkit.catalog.ui.theming.CatalogTheme
 import com.pspdfkit.catalog.ui.theming.applyConfigurationTheme
 import com.pspdfkit.catalog.ui.theming.enableConfigurationEdgeToEdge
 import com.pspdfkit.catalog.ui.theming.hasDarkMainToolbar
-import com.pspdfkit.catalog.ui.theming.isNightTheme
 import com.pspdfkit.compose.theme.MainToolbarColors
 import com.pspdfkit.compose.theme.NutrientTheme
 import com.pspdfkit.compose.theme.ToolbarPopupColors
 import com.pspdfkit.compose.theme.UiColorScheme
-import com.pspdfkit.compose.theme.UiTheme
-import com.pspdfkit.compose.theme.getUiColors
 import com.pspdfkit.compose.toolbar.composables.NutrientToolbarItemButton
 import com.pspdfkit.compose.toolbar.state.ContextualToolbarKind
 import com.pspdfkit.compose.toolbar.state.ContextualToolbarState
@@ -181,8 +183,10 @@ class AnnotationToolbarUserEditableActivity : AppCompatActivity() {
         // *activity's* XML theme — which a plain AppCompatActivity never gets from the
         // configuration. Apply the configured catalog theme before any content inflates, so the
         // main toolbar matches the rest of the catalog.
-        applyConfigurationTheme(baseConfiguration)
-        enableConfigurationEdgeToEdge(baseConfiguration, statusBarIsDark = hasDarkMainToolbar())
+        // The theme applied here is what the SDK main toolbar and this host's own chrome both follow; with the
+        // DayNight catalog theme that is the device's mode when the Theme mode setting is Default.
+        val dark = applyConfigurationTheme(baseConfiguration)
+        enableConfigurationEdgeToEdge(baseConfiguration, statusBarIsDark = hasDarkMainToolbar(), navigationBarIsDark = dark)
         super.onCreate(savedInstanceState)
 
         val uri = intent.getSupportParcelableExtra(EXTRA_URI, Uri::class.java)!!
@@ -193,7 +197,7 @@ class AnnotationToolbarUserEditableActivity : AppCompatActivity() {
             .build()
 
         setContent {
-            CatalogTheme(darkTheme = baseConfiguration.isNightTheme) {
+            CatalogTheme(darkTheme = dark) {
                 AnnotationToolbarUserEditableDocument(uri, configuration)
             }
         }
@@ -445,15 +449,29 @@ private fun FloatingAnnotationBar(
     onBarBounds: (Rect) -> Unit,
     onSlotBounds: (String, Rect) -> Unit,
 ) {
-    val colors = UiTheme.colors.mainToolbar
+    val colors = NutrientTheme.colorScheme.mainToolbar
     val toolScrollState = rememberScrollState()
+    // One requester per tool slot, so the active tool can be scrolled into view.
+    val slotRequesters = remember { mutableMapOf<String, BringIntoViewRequester>() }
+    val selectedActionId = orderedTools.firstOrNull { it.state.isSelected }?.actionId
+    // Entering annotation mode with a tool already active (or picking one from the sheet) must
+    // not leave it hidden past the bar edge: bring the active tool into view whenever it changes.
+    LaunchedEffect(selectedActionId) {
+        val actionId = selectedActionId ?: return@LaunchedEffect
+        // maxValue is Int.MAX_VALUE until the first measure pass reports the real overflow.
+        snapshotFlow { toolScrollState.maxValue }.first { it != Int.MAX_VALUE }
+        slotRequesters[actionId]?.bringIntoView()
+    }
     // One-time peek when a scrollable bar appears: scroll a few tools in and settle back, so
-    // the user SEES the row move before ever touching it.
-    ScrollPeekEffect(toolScrollState)
+    // the user SEES the row move before ever touching it. Skipped when a tool is active on show:
+    // the peek settles back at the start, which would scroll the active tool out of view again.
+    ScrollPeekEffect(toolScrollState, enabled = selectedActionId == null)
     Surface(
         shape = RoundedCornerShape(28.dp),
         color = colors.backgroundColor,
         shadowElevation = 8.dp,
+        // Outlines the bar while a dragged tool hovers it, so it's clear a release drops there.
+        border = if (hoverIndex != null) BorderStroke(2.dp, colors.textColor) else null,
         modifier = Modifier.onGloballyPositioned { onBarBounds(it.boundsInRoot()) },
     ) {
         Row(
@@ -477,12 +495,26 @@ private fun FloatingAnnotationBar(
             ) {
                 orderedTools.forEachIndexed { index, tool ->
                     if (hoverIndex == index) DropIndicator()
-                    NutrientToolbarItemButton(
-                        item = tool,
-                        onAction = dispatch,
-                        invertedSelection = true,
-                        modifier = Modifier.onGloballyPositioned { onSlotBounds(tool.actionId, it.boundsInRoot()) },
-                    )
+                    key(tool.actionId) {
+                        val requester = remember { BringIntoViewRequester() }
+                        DisposableEffect(requester) {
+                            slotRequesters[tool.actionId] = requester
+                            onDispose { slotRequesters.remove(tool.actionId) }
+                        }
+                        NutrientToolbarItemButton(
+                            item = tool,
+                            onAction = dispatch,
+                            invertedSelection = true,
+                            modifier = Modifier
+                                .bringIntoViewRequester(requester)
+                                // Unclipped bounds: boundsInRoot() clips to the scrolling row and
+                                // reports scrolled-out slots as empty at the origin, which would
+                                // count them as lying before the finger.
+                                .onGloballyPositioned {
+                                    onSlotBounds(tool.actionId, Rect(it.positionInRoot(), it.size.toSize()))
+                                },
+                        )
+                    }
                 }
                 if (hoverIndex == orderedTools.size) DropIndicator()
             }
@@ -505,12 +537,15 @@ private fun FloatingAnnotationBar(
 /**
  * Plays the one-time scroll peek on [state]: once the row is measured and turns out to
  * overflow, it glides a couple of tool widths toward the end and settles back — the motion
- * itself demonstrates that the row scrolls.
+ * itself demonstrates that the row scrolls. Only [enabled] as of the bar's first composition
+ * counts: the peek is a one-time intro, not something to replay when the selection changes.
  */
 @Composable
-private fun ScrollPeekEffect(state: ScrollState) {
+private fun ScrollPeekEffect(state: ScrollState, enabled: Boolean) {
     val peekPx = with(LocalDensity.current) { 72.dp.roundToPx() }
+    val enabledOnShow = remember(state) { enabled }
     LaunchedEffect(state) {
+        if (!enabledOnShow) return@LaunchedEffect
         // maxValue is Int.MAX_VALUE until the first measure pass reports the real overflow.
         val max = snapshotFlow { state.maxValue }.first { it != Int.MAX_VALUE }
         if (max > 0) {
@@ -837,25 +872,32 @@ private fun ToolGridCell(
     }
 }
 
-/** The dragged tool's ghost following the finger. */
+/**
+ * The dragged tool's ghost following the finger. It floats [DRAG_GHOST_LIFT] above the finger,
+ * so neither covers the bar's insertion indicator, which tracks the finger itself.
+ */
 @Composable
 private fun DragGhost(drag: ToolDrag) {
-    val halfSizePx = with(LocalDensity.current) { (DRAG_GHOST_SIZE / 2).toPx() }
+    val density = LocalDensity.current
+    val halfSizePx = with(density) { (DRAG_GHOST_SIZE / 2).toPx() }
+    val liftPx = with(density) { DRAG_GHOST_LIFT.toPx() }
     Surface(
         shape = CircleShape,
-        color = MaterialTheme.colorScheme.primary,
+        // Contrasts with the bar (primary), so the ghost stays visible while over it.
+        color = MaterialTheme.colorScheme.secondaryContainer,
+        contentColor = MaterialTheme.colorScheme.onSecondaryContainer,
         shadowElevation = 8.dp,
         modifier = Modifier
             .absoluteOffset {
                 IntOffset(
                     (drag.position.x - halfSizePx).roundToInt(),
-                    (drag.position.y - halfSizePx).roundToInt(),
+                    (drag.position.y - liftPx - halfSizePx).roundToInt(),
                 )
             }
             .size(DRAG_GHOST_SIZE),
     ) {
         Box(contentAlignment = Alignment.Center) {
-            ToolIcon(icon = drag.item.icon, tint = Color.White)
+            ToolIcon(icon = drag.item.icon, tint = MaterialTheme.colorScheme.onSecondaryContainer)
         }
     }
 }
@@ -930,7 +972,7 @@ private fun saveToolOrder(prefs: SharedPreferences, order: List<String>) {
 @Composable
 private fun annotationBarColors(): UiColorScheme {
     val background = MaterialTheme.colorScheme.primary
-    return getUiColors().copy(
+    return UiColorScheme.fromXmlTheme().copy(
         mainToolbar = MainToolbarColors(
             backgroundColor = background,
             textColor = Color.White,
@@ -960,6 +1002,9 @@ private val SHEET_EXPAND_DRAG_THRESHOLD = 56.dp
 
 /** Diameter of the circular ghost following the finger during a drag. */
 private val DRAG_GHOST_SIZE = 56.dp
+
+/** How far the drag ghost floats above the finger. */
+private val DRAG_GHOST_LIFT = 64.dp
 
 /** actionId of the custom main-toolbar item opening the tools sheet. */
 private const val TOOLS_SHEET_ACTION_ID = "catalog.annotation_tools_sheet"

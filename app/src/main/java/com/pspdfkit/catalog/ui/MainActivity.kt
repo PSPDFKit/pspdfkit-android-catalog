@@ -208,7 +208,7 @@ class MainActivity : AppCompatActivity() {
 
         // Once the download is complete we launch the PdfActivity from the downloaded file.
         downloadFragment.job
-            .setProgressListener(
+            ?.setProgressListener(
                 object : DownloadJob.ProgressListenerAdapter() {
                     override fun onComplete(output: File) {
                         openDocumentAndFinishActivity(Uri.fromFile(output))
@@ -222,7 +222,7 @@ class MainActivity : AppCompatActivity() {
         val job = DownloadJob.startDownload(request)
         DownloadProgressFragment().apply {
             show(supportFragmentManager, DOWNLOAD_PROGRESS_FRAGMENT)
-            setJob(job)
+            this.job = job
         }
     } catch (ex: Exception) {
         null

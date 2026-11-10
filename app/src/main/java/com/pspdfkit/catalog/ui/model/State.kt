@@ -102,7 +102,7 @@ fun State.getPdfActivityConfigurationBuilder(context: Context): PdfActivityConfi
             .scrollMode(scrollMode)
             .fitMode(fitPageToWidth)
             .layoutMode(PageLayoutMode.valueOf(pageLayout))
-            .theme(R.style.PSPDFCatalog_Theme)
+            .theme(R.style.PSPDFCatalog_Theme_DayNight)
             .themeDark(R.style.PSPDFCatalog_Theme_Dark)
             .themeMode(ThemeMode.valueOf(themeMode))
             .firstPageAlwaysSingle(displayFirstPageAsSingle)

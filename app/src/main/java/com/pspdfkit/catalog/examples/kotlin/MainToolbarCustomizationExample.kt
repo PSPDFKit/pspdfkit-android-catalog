@@ -339,25 +339,7 @@ private fun customizeToolbarItems(defaultItems: List<ToolbarItem>, pillWidthDp: 
         ),
         overflowBehavior = ToolbarItem.OverflowBehavior.AlwaysShow,
     )
-    // The SDK bakes the XML theme's action-bar icon tint into every default item, and at render
-    // time a baked tint wins over the Compose scheme. Strip it so every icon follows
-    // MainToolbarColors.iconColor from floatingToolbarColors() — otherwise the pill recolors with
-    // the Material scheme (e.g. on a dark-mode switch) while the default icons keep the XML tint.
-    return defaultItems.map { it.withUntintedIcon() }.toMutableList().apply { add(1, resizeAction) }
-}
-
-/** Returns a copy of the item whose icon has no baked tint, deferring to the Compose scheme. */
-private fun ToolbarItem.withUntintedIcon(): ToolbarItem {
-    val untintedIcon = when (val icon = icon) {
-        is ToolbarIcon.Resource -> icon.copy(tint = null)
-        is ToolbarIcon.Vector -> icon.copy(tint = null)
-        else -> icon
-    }
-    return when (this) {
-        is ToolbarItem.Button -> copy(icon = untintedIcon)
-        is ToolbarItem.Toggle -> copy(icon = untintedIcon)
-        is ToolbarItem.Submenu -> copy(icon = untintedIcon)
-    }
+    return defaultItems.toMutableList().apply { add(1, resizeAction) }
 }
 
 /**

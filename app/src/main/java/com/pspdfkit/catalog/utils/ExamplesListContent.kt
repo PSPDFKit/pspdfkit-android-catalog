@@ -86,6 +86,7 @@ import com.pspdfkit.catalog.examples.kotlin.GenerateReportExample
 import com.pspdfkit.catalog.examples.kotlin.HideRevealAnnotationsCreationExample
 import com.pspdfkit.catalog.examples.kotlin.ImageDocumentExample
 import com.pspdfkit.catalog.examples.kotlin.IndexedFullTextSearchExample
+import com.pspdfkit.catalog.examples.kotlin.InitialPagesExample
 import com.pspdfkit.catalog.examples.kotlin.InlineMediaExample
 import com.pspdfkit.catalog.examples.kotlin.InstantJsonAttachmentExample
 import com.pspdfkit.catalog.examples.kotlin.JavaScriptActionsExample
@@ -118,7 +119,9 @@ import com.pspdfkit.catalog.examples.kotlin.ProgressProviderExample
 import com.pspdfkit.catalog.examples.kotlin.ReaderViewExample
 import com.pspdfkit.catalog.examples.kotlin.RemoteUrlExample
 import com.pspdfkit.catalog.examples.kotlin.RuntimeConfigurationExample
+import com.pspdfkit.catalog.examples.kotlin.RxJavaInteropExample
 import com.pspdfkit.catalog.examples.kotlin.ScientificPaperExample
+import com.pspdfkit.catalog.examples.kotlin.SignatureCreationInterceptorExample
 import com.pspdfkit.catalog.examples.kotlin.SignatureStorageDatabaseExample
 import com.pspdfkit.catalog.examples.kotlin.SimpleFragmentExample
 import com.pspdfkit.catalog.examples.kotlin.SoundAnnotationDataExtractionExample
@@ -141,6 +144,7 @@ fun getSectionsWithExamples(context: Context) = listOf(
         PlaygroundExample(context),
         SimpleFragmentExample(context),
         PdfUiFragmentExample(context),
+        RxJavaInteropExample(context),
     ),
     // "How do I load a PDF from different sources?"
     SdkExample.Section(
@@ -237,6 +241,8 @@ fun getSectionsWithExamples(context: Context) = listOf(
         LongTermValidationExample(context),
         LongTermValidationAfterSigningExample(context),
         CombineElectronicSignaturesWithDigitalSigningExample(context),
+        SignatureCreationInterceptorExample(context),
+        InitialPagesExample(context),
         CustomElectronicSignatureExample(context),
         SignatureStorageDatabaseExample(context),
         CustomSignatureParseExample(context),

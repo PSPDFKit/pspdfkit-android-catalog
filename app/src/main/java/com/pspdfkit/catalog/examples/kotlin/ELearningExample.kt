@@ -169,7 +169,7 @@ class ELearningActivity : PdfActivity() {
 
                     // Take any bookmarks that were stored upon switching, and add them to the loaded document.
                     bookmarksToTransfer.forEach { bookmark ->
-                        document.bookmarkProvider.addBookmarkAsync(bookmark).blockingAwait()
+                        document.bookmarkProvider.addBookmarkAsync(bookmark)
                     }
                     // Once all bookmarks are transferred, we can clear the list.
                     bookmarksToTransfer.clear()

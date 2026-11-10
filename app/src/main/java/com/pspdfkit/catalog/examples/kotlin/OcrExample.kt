@@ -28,10 +28,14 @@ import com.pspdfkit.document.processor.PdfProcessorTask
 import com.pspdfkit.document.processor.ocr.OcrLanguage
 import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.schedulers.Schedulers
-import io.reactivex.rxjava3.subscribers.DisposableSubscriber
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
 import java.io.File
 import kotlin.math.ceil
 
@@ -73,7 +77,7 @@ class OcrExample(context: Context) : SdkExample(context, R.string.ocrExampleTitl
  * to extract the text from scanned documents using the [com.pspdfkit.document.processor.PdfProcessor].
  */
 class OcrProcessingActivity : PdfActivity() {
-    private val disposables = CompositeDisposable()
+    private val processingScope = CoroutineScope(Dispatchers.Main.immediate + SupervisorJob())
     private val performOCR = 100
 
     /**
@@ -91,16 +95,32 @@ class OcrProcessingActivity : PdfActivity() {
                 .fromDocument(document)
                 .performOcrOnPages(pageIndexesToProcess, OcrLanguage.ENGLISH)
 
-        val handler = ProcessorProgressHandler("Performing OCR on the document.", outputFile)
-
-        PdfProcessor
-            .processDocumentAsync(task, outputFile)
-            // Drop update events to avoid back pressure on slow devices.
-            .onBackpressureDrop()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnCancel { handler.onCancel() }
-            .subscribe(handler)
+        val progressDialog =
+            ProgressDialog.show(this, "Processing document", "Performing OCR on the document.", false, true)
+        val job =
+            processingScope.launch {
+                try {
+                    PdfProcessor
+                        .processDocumentAsync(task, outputFile)
+                        .flowOn(Dispatchers.IO)
+                        .collect { processorProgress ->
+                            progressDialog.progress =
+                                ceil((processorProgress.pagesProcessed / processorProgress.totalPages).toDouble()).toInt()
+                        }
+                    showProcessedDocument(outputFile)
+                    progressDialog.dismiss()
+                } catch (cancellation: CancellationException) {
+                    progressDialog.dismiss()
+                    throw cancellation
+                } catch (e: Throwable) {
+                    AlertDialog
+                        .Builder(this@OcrProcessingActivity)
+                        .setMessage("Error while processing file: " + e.localizedMessage)
+                        .show()
+                    progressDialog.dismiss()
+                }
+            }
+        progressDialog.setOnCancelListener { job.cancel() }
     }
 
     /**
@@ -133,8 +153,8 @@ class OcrProcessingActivity : PdfActivity() {
 
     override fun onStop() {
         super.onStop()
-        // Dispose all active disposables when activity goes to background.
-        disposables.clear()
+        // Cancel any active processing when the activity goes to the background.
+        processingScope.coroutineContext.cancelChildren()
     }
 
     private fun showProcessedDocument(processedDocumentFile: File) {
@@ -144,46 +164,5 @@ class OcrProcessingActivity : PdfActivity() {
                 .configuration(configuration)
                 .build()
         startActivity(intent)
-    }
-
-    /**
-     * Helper class for showing a progress dialog and opening the processed document.
-     */
-    @Suppress("DEPRECATION")
-    private inner class ProcessorProgressHandler(progressMessage: String, private val outputFile: File) :
-        DisposableSubscriber<PdfProcessor.ProcessorProgress>() {
-        private val progressDialog: ProgressDialog =
-            ProgressDialog.show(
-                this@OcrProcessingActivity,
-                "Processing document",
-                progressMessage,
-                false,
-                true,
-            ) { cancel() }
-
-        init {
-            disposables.add(this)
-        }
-
-        fun onCancel() {
-            progressDialog.dismiss()
-        }
-
-        override fun onNext(processorProgress: PdfProcessor.ProcessorProgress) {
-            progressDialog.progress = ceil((processorProgress.pagesProcessed / processorProgress.totalPages).toDouble()).toInt()
-        }
-
-        override fun onError(e: Throwable) {
-            AlertDialog
-                .Builder(this@OcrProcessingActivity)
-                .setMessage("Error while processing file: " + e.localizedMessage)
-                .show()
-            progressDialog.dismiss()
-        }
-
-        override fun onComplete() {
-            showProcessedDocument(outputFile)
-            progressDialog.dismiss()
-        }
     }
 }

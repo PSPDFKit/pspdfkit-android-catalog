@@ -16,6 +16,7 @@ import android.graphics.RectF
 import android.net.Uri
 import android.util.Log
 import androidx.annotation.UiThread
+import androidx.lifecycle.lifecycleScope
 import com.pspdfkit.annotations.actions.AnnotationTriggerEvent
 import com.pspdfkit.annotations.actions.JavaScriptAction
 import com.pspdfkit.catalog.R
@@ -30,8 +31,14 @@ import com.pspdfkit.forms.PushButtonFormConfiguration
 import com.pspdfkit.forms.TextFormConfiguration
 import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.IOException
 import kotlin.collections.component1
@@ -41,7 +48,9 @@ import kotlin.collections.forEach
 /** This example showcases forms JavaScript functionality. */
 class FormsJavaScriptExample(context: Context) :
     SdkExample(context, R.string.javaScriptFormsExampleTitle, R.string.javaScriptFormsExampleDescription) {
-    @SuppressLint("SetJavaScriptEnabled", "CheckResult")
+    private val processingScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
+
+    @SuppressLint("SetJavaScriptEnabled")
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         configuration
             // JavaScript is enabled by default. It can be disabled in configuration.
@@ -65,26 +74,28 @@ class FormsJavaScriptExample(context: Context) :
                 throw IllegalStateException("Couldn't create FormsJavaScriptExample.pdf file.", exception)
             }
 
-        PdfProcessor
-            .processDocumentAsync(task, outputFile)
-            .ignoreElements()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    val intent =
-                        PdfActivityIntentBuilder
-                            .fromUri(context, Uri.fromFile(outputFile))
-                            .configuration(configuration.build())
-                            .activityClass(FormsJavaScriptActivity::class.java)
-                            .build()
+        processingScope.launch {
+            try {
+                PdfProcessor.processDocumentAsync(task, outputFile).flowOn(Dispatchers.IO).collect()
+                val intent =
+                    PdfActivityIntentBuilder
+                        .fromUri(context, Uri.fromFile(outputFile))
+                        .configuration(configuration.build())
+                        .activityClass(FormsJavaScriptActivity::class.java)
+                        .build()
 
-                    context.startActivity(intent)
-                },
-                { throwable ->
-                    Log.e(TAG, "Error while trying to create PDF document.", throwable)
-                },
-            )
+                context.startActivity(intent)
+            } catch (cancellation: CancellationException) {
+                throw cancellation
+            } catch (throwable: Throwable) {
+                Log.e(TAG, "Error while trying to create PDF document.", throwable)
+            }
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        processingScope.coroutineContext.cancelChildren()
     }
 
     companion object {
@@ -108,22 +119,22 @@ class FormsJavaScriptExample(context: Context) :
  * JavaScript for Acrobat API Reference.
  */
 class FormsJavaScriptActivity : PdfActivity() {
-    @SuppressLint("CheckResult")
     @UiThread
     override fun onDocumentLoaded(document: PdfDocument) {
         super.onDocumentLoaded(document)
 
-        document.formProvider.formElementsAsync.subscribe { formElements, _ ->
-            if (!formElements.isNullOrEmpty()) return@subscribe
-            createSimpleCalculationExample()
-            createManualCalculationExample()
-            createFormattingExample()
-            createPushButtonWithImageImportAction()
-            createCheckboxWithHideAction()
+        lifecycleScope.launch {
+            if (document.formProvider.getFormElements().isEmpty()) {
+                createSimpleCalculationExample()
+                createManualCalculationExample()
+                createFormattingExample()
+                createPushButtonWithImageImportAction()
+                createCheckboxWithHideAction()
+            }
         }
     }
 
-    private fun addTextField(
+    private suspend fun addTextField(
         name: String,
         pageIndex: Int,
         rect: RectF,
@@ -145,7 +156,7 @@ class FormsJavaScriptActivity : PdfActivity() {
         )
     }
 
-    private fun createSimpleCalculationExample() {
+    private suspend fun createSimpleCalculationExample() {
         addTextField(
             "sum-operand1",
             0,
@@ -182,7 +193,7 @@ class FormsJavaScriptActivity : PdfActivity() {
         )
     }
 
-    private fun createManualCalculationExample() {
+    private suspend fun createManualCalculationExample() {
         addTextField("concat-operand1", 1, RectF(30f, 750f, 200f, 720f), "First")
         addTextField("concat-operand2", 1, RectF(30f, 690f, 200f, 660f), "Second")
         addTextField(
@@ -203,7 +214,7 @@ class FormsJavaScriptActivity : PdfActivity() {
         )
     }
 
-    private fun createFormattingExample() {
+    private suspend fun createFormattingExample() {
         addTextField(
             "Number format",
             2,
@@ -249,7 +260,7 @@ class FormsJavaScriptActivity : PdfActivity() {
         )
     }
 
-    private fun createPushButtonWithImageImportAction() {
+    private suspend fun createPushButtonWithImageImportAction() {
         document?.formProvider?.addFormElementToPage(
             "pushbuttonfield",
             PushButtonFormConfiguration
@@ -262,7 +273,7 @@ class FormsJavaScriptActivity : PdfActivity() {
         )
     }
 
-    private fun createCheckboxWithHideAction() {
+    private suspend fun createCheckboxWithHideAction() {
         document?.formProvider?.addFormElementToPage(
             "checkboxfield",
             CheckBoxFormConfiguration

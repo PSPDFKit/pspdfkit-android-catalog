@@ -83,13 +83,11 @@ import com.pspdfkit.catalog.ui.theming.CatalogTheme
 import com.pspdfkit.catalog.ui.theming.applyConfigurationTheme
 import com.pspdfkit.catalog.ui.theming.enableConfigurationEdgeToEdge
 import com.pspdfkit.catalog.ui.theming.hasDarkMainToolbar
-import com.pspdfkit.catalog.ui.theming.isNightTheme
+import com.pspdfkit.catalog.ui.theming.isConfigurationThemeDark
 import com.pspdfkit.compose.theme.MainToolbarColors
 import com.pspdfkit.compose.theme.NutrientTheme
 import com.pspdfkit.compose.theme.ToolbarPopupColors
 import com.pspdfkit.compose.theme.UiColorScheme
-import com.pspdfkit.compose.theme.UiTheme
-import com.pspdfkit.compose.theme.getUiColors
 import com.pspdfkit.compose.toolbar.adapter.ToolbarCoordinator
 import com.pspdfkit.compose.toolbar.adapter.ToolbarSubscription
 import com.pspdfkit.compose.toolbar.composables.LocalToolbarContentInset
@@ -413,7 +411,7 @@ private fun BoxScope.HostedAnnotationBar(coordinator: ToolbarCoordinator, visibl
             .flatMap { item -> if (item is ToolbarItem.Submenu) item.children else listOf(item) }
             .filter { it.state.isVisible }
         NutrientTheme(colorScheme = hostedToolbarColors()) {
-            val barColor = UiTheme.colors.mainToolbar.backgroundColor
+            val barColor = NutrientTheme.colorScheme.mainToolbar.backgroundColor
             val toolScrollState = rememberScrollState()
             // One-time peek when a scrollable bar appears: scroll a few tools in and settle
             // back, so the user SEES the row move before ever touching it. A user gesture
@@ -439,7 +437,7 @@ private fun BoxScope.HostedAnnotationBar(coordinator: ToolbarCoordinator, visibl
                             .horizontalScrollEdgeFade(
                                 toolScrollState,
                                 color = barColor,
-                                chevronColor = UiTheme.colors.mainToolbar.textColor,
+                                chevronColor = NutrientTheme.colorScheme.mainToolbar.textColor,
                             )
                             .horizontalScroll(toolScrollState),
                     ) {
@@ -550,7 +548,7 @@ private fun Modifier.horizontalScrollEdgeFade(state: ScrollState, color: Color, 
 @Composable
 private fun hostedToolbarColors(): UiColorScheme {
     val background = MaterialTheme.colorScheme.primary
-    return getUiColors().copy(
+    return UiColorScheme.fromXmlTheme().copy(
         mainToolbar = MainToolbarColors(
             backgroundColor = background,
             textColor = Color.White,
@@ -579,13 +577,16 @@ class CustomChromePdfActivity : PdfActivity() {
         //
         // Before super.onCreate, like every other host here: PdfActivity.getConfiguration() falls
         // back to the intent extra until its implementation exists, so it already answers here.
-        enableConfigurationEdgeToEdge(configuration)
+        // The SDK applies the configured theme to this activity, so the overlay and the system bars follow
+        // what that theme resolves to here, which a DayNight theme makes the device's mode.
+        val dark = isConfigurationThemeDark(configuration)
+        enableConfigurationEdgeToEdge(configuration, statusBarIsDark = dark, navigationBarIsDark = dark)
         super.onCreate(savedInstanceState)
         // The same coordinator instance PdfUiImpl populates for this activity.
         val coordinator = nutrientToolbarCoordinator()
         val overlay = ComposeView(this).apply {
             setContent {
-                CatalogTheme(darkTheme = configuration.isNightTheme) {
+                CatalogTheme(darkTheme = dark) {
                     Box(Modifier.fillMaxSize()) {
                         HostedMainToolbar(coordinator)
                         HostedContextualBar(coordinator)
@@ -667,9 +668,8 @@ class ScaffoldHostedFragmentActivity :
         // A bare-fragment host gets no PdfActivity theme handling — apply the configured theme
         // ourselves, so the SDK toolbars, the inspector, and the fragment pick up the catalog
         // styling instead of the application theme.
-        isNightTheme = activityConfiguration.isNightTheme
-        applyConfigurationTheme(activityConfiguration)
-        enableConfigurationEdgeToEdge(activityConfiguration, statusBarIsDark = hasDarkMainToolbar())
+        isNightTheme = applyConfigurationTheme(activityConfiguration)
+        enableConfigurationEdgeToEdge(activityConfiguration, statusBarIsDark = hasDarkMainToolbar(), navigationBarIsDark = isNightTheme)
         super.onCreate(savedInstanceState)
         val uri = intent.getSupportParcelableExtra(EXTRA_URI, Uri::class.java)!!
         val viewInterop = intent.getBooleanExtra(EXTRA_VIEW_INTEROP, false)
@@ -885,8 +885,8 @@ class CustomToolbarsDocumentViewActivity : AppCompatActivity() {
         // Both SDK toolbars are off here, but the fragment behind the DocumentView still renders
         // SDK UI that reads the *activity's* XML theme — the annotation inspector, the popup
         // toolbars, the page chrome. Apply the configured catalog theme before anything inflates.
-        applyConfigurationTheme(baseConfiguration)
-        enableConfigurationEdgeToEdge(baseConfiguration)
+        val dark = applyConfigurationTheme(baseConfiguration)
+        enableConfigurationEdgeToEdge(baseConfiguration, statusBarIsDark = dark, navigationBarIsDark = dark)
         super.onCreate(savedInstanceState)
         val uri = intent.getSupportParcelableExtra(EXTRA_URI, Uri::class.java)!!
 
@@ -900,7 +900,7 @@ class CustomToolbarsDocumentViewActivity : AppCompatActivity() {
             .build()
 
         setContent {
-            CatalogTheme(darkTheme = baseConfiguration.isNightTheme) {
+            CatalogTheme(darkTheme = dark) {
                 val documentState = rememberDocumentState(uri, configuration)
                 Box(Modifier.fillMaxSize()) {
                     DocumentView(

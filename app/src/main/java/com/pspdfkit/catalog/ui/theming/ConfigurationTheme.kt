@@ -9,8 +9,12 @@ package com.pspdfkit.catalog.ui.theming
 
 import android.app.Activity
 import android.content.Context
+import android.content.res.Configuration
 import android.content.res.Resources
 import android.graphics.Color
+import android.os.Build
+import android.util.TypedValue
+import android.view.ContextThemeWrapper
 import androidx.activity.ComponentActivity
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
@@ -18,6 +22,8 @@ import androidx.core.content.res.use
 import androidx.core.graphics.ColorUtils
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.configuration.theming.ThemeMode
+import android.R as AndroidR
+import androidx.appcompat.R as AppCompatR
 
 /**
  * Applies the XML theme a [PdfActivityConfiguration] carries — the catalog theme, for a
@@ -39,16 +45,46 @@ import com.pspdfkit.configuration.theming.ThemeMode
  *
  * Call it before `super.onCreate`, so the theme is in place before any content inflates.
  */
-fun Activity.applyConfigurationTheme(configuration: PdfActivityConfiguration?) {
-    setTheme(
-        if (configuration.isNightTheme) {
-            configuration?.darkTheme?.takeIf { it != PdfActivityConfiguration.NO_THEME }
-                ?: com.pspdfkit.R.style.PSPDFKit_Theme_Dark
-        } else {
-            configuration?.theme?.takeIf { it != PdfActivityConfiguration.NO_THEME }
-                ?: com.pspdfkit.R.style.PSPDFKit_Theme_Default
-        },
-    )
+fun Activity.applyConfigurationTheme(configuration: PdfActivityConfiguration?): Boolean {
+    setTheme(configuration.themeRes)
+    return isConfigurationThemeDark(configuration)
+}
+
+/** The theme resource [applyConfigurationTheme] applies: `darkTheme` for [ThemeMode.NIGHT], `theme` otherwise. */
+private val PdfActivityConfiguration?.themeRes: Int
+    get() = if (isNightTheme) {
+        this?.darkTheme?.takeIf { it != PdfActivityConfiguration.NO_THEME } ?: com.pspdfkit.R.style.PSPDFKit_Theme_Dark
+    } else {
+        this?.theme?.takeIf { it != PdfActivityConfiguration.NO_THEME } ?: com.pspdfkit.R.style.PSPDFKit_Theme_Default
+    }
+
+/**
+ * Whether the theme [applyConfigurationTheme] applies for [configuration] is dark in this context: `true` for
+ * [ThemeMode.NIGHT], and otherwise whatever the configured theme declares with `isLightTheme` under the current
+ * resources, so a DayNight theme such as `PSPDFCatalog.Theme.DayNight` answers dark on a dark device. A theme
+ * that declares no lightness follows the device's night mode, as the SDK's own scheme choice does.
+ *
+ * For a host that applies the configured theme to its activity, so that its own Compose chrome
+ * (`CatalogTheme(darkTheme = …)`) and system bar icons agree with the SDK chrome that theme draws. A host that
+ * keeps the application theme and themes itself from the configuration alone uses [isNightTheme] instead.
+ */
+fun Context.isConfigurationThemeDark(configuration: PdfActivityConfiguration?): Boolean {
+    if (configuration.isNightTheme) return true
+    // The same lookup the SDK makes to pick the half of a `setColorScheme(light, dark)` pair: AppCompat's
+    // `isLightTheme`, then the framework's from API 29, and the device's night mode when the theme declares
+    // neither, so a framework theme on a dark device gets dark host chrome to match the SDK's dark scheme.
+    val theme = ContextThemeWrapper(this, configuration.themeRes).theme
+    val value = TypedValue()
+    if (theme.resolveAttribute(AppCompatR.attr.isLightTheme, value, true) && value.type == TypedValue.TYPE_INT_BOOLEAN) {
+        return value.data == 0
+    }
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q &&
+        theme.resolveAttribute(AndroidR.attr.isLightTheme, value, true) &&
+        value.type == TypedValue.TYPE_INT_BOOLEAN
+    ) {
+        return value.data == 0
+    }
+    return resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
 }
 
 /**

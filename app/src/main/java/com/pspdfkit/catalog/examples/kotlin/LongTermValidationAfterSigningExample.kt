@@ -29,6 +29,8 @@ import com.pspdfkit.utils.PdfLog
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.disposables.Disposable
 import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.rx3.rxCompletable
 import java.security.cert.X509Certificate
 
 /**
@@ -66,7 +68,7 @@ class AddLtvAfterSigningActivity : PdfActivity() {
         try {
             val document = document ?: throw IllegalStateException("Document not found.")
             val signatureForm =
-                document.formProvider.getFormElementWithName("Signature") as? SignatureFormElement
+                runBlocking { document.formProvider.getFormElementWithName("Signature") } as? SignatureFormElement
                     ?: throw IllegalStateException("Signature form element not found.")
             val trustedCertificates = getTrustedCertificates()
             TrustedKeyStore.clearTrustedCertificates()
@@ -75,8 +77,9 @@ class AddLtvAfterSigningActivity : PdfActivity() {
             addLtvDisposable?.dispose()
             // We can choose not to pass certificates here and the ones in the document's signature will be fetched instead.
             addLtvDisposable =
-                document
-                    .addLongTermValidation(signatureForm, listOf())
+                // Cited as a worked rxCompletable example by documentation/rxjava-to-coroutines-migration-guide.md;
+                // keep the bridge if this example is tidied up, or update the guide.
+                rxCompletable { document.addLongTermValidation(signatureForm, listOf()) }
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(

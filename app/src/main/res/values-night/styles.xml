@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~   Copyright © 2026 PSPDFKit GmbH. All rights reserved.
+  ~
+  ~   THIS SOURCE CODE AND ANY ACCOMPANYING DOCUMENTATION ARE PROTECTED BY INTERNATIONAL COPYRIGHT LAW
+  ~   AND MAY NOT BE RESOLD OR REDISTRIBUTED. USAGE IS BOUND TO THE PSPDFKIT LICENSE AGREEMENT.
+  ~   UNAUTHORIZED REPRODUCTION OR DISTRIBUTION IS SUBJECT TO CIVIL AND CRIMINAL PENALTIES.
+  ~   This notice may not be removed from this file.
+  -->
+<resources>
+    <!--
+    The examples' theme in the device's night mode: the dark catalog theme, so every example follows the
+    system's light/dark setting the way an app with a DayNight theme does. The examples pass this theme as
+    PdfActivityConfiguration.Builder.theme() and PSPDFCatalog.Theme.Dark as themeDark(); with the catalog's
+    Theme mode setting on Default the SDK applies this one, which resolves dark at night, and the SDK's views
+    and Compose screens switch with the device. Theme mode Night still forces the dark theme whatever the
+    device says. Only this style has a night variant: PSPDFCatalog.Theme and the styles that inherit it by
+    name (PSPDFCatalog.Theme.Light, .MediaView, .Transparent, the component styles) stay as they are.
+    -->
+    <style name="PSPDFCatalog.Theme.DayNight" parent="PSPDFCatalog.Theme.Dark" />
+</resources>

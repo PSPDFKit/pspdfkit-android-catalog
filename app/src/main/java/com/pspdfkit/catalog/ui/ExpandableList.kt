@@ -14,7 +14,6 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collection.MutableVector
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
@@ -91,10 +90,13 @@ fun <Item, Section : List<Item>, Key> ExpandableList(
         }
     }
 
-    // To know which headers are currently active and stickied, we remember a vector where each index holds the current number of
-    // children for each section. This is needed because all of the indexes update when a header expands and adds its children to the list.
-    // Using a Vector as it's not guaranteed that the list of sections will be properly initialized by the first time this is Composed.
-    val openSectionsWithChildrenAmount = remember { MutableVector<Int>() }
+    // To know which headers are currently active and stickied, we need the number of children shown by each section.
+    // This is needed because all of the indexes update when a header expands and adds its children to the list.
+    // Derived from the inputs rather than written by each header, since LazyColumn only composes headers that come into view.
+    val openSectionsWithChildrenAmount =
+        itemsInSections.map { section ->
+            if (searchQuery.isNotBlank() || expandedSectionsState.contains(sectionKey(section))) section.size else 0
+        }
 
     LazyColumn(
         state = lazyListState,
@@ -111,30 +113,18 @@ fun <Item, Section : List<Item>, Key> ExpandableList(
 
             if (areSectionHeadersSticky) {
                 stickyHeader {
-                    // As it might not have been initialized at first, we ensure enough capacity here.
-                    // So whenever the headers are recomposed, we update their open/closed status.
-                    openSectionsWithChildrenAmount.ensureCapacity(itemsInSections.size)
-
-                    if (sectionIsOpen) {
-                        openSectionsWithChildrenAmount[sectionIndex] = section.size
-                    } else {
-                        openSectionsWithChildrenAmount[sectionIndex] = 0
-                    }
-
-                    var currentHeaderIndex by remember { mutableIntStateOf(0) }
+                    var firstVisibleItemIndex by remember { mutableIntStateOf(0) }
 
                     LaunchedEffect(lazyListState) {
                         snapshotFlow { lazyListState.layoutInfo }
                             .collect { layoutInfo ->
                                 if (layoutInfo.visibleItemsInfo.isNotEmpty()) {
-                                    currentHeaderIndex = layoutInfo.visibleItemsInfo[0].index - 1
+                                    firstVisibleItemIndex = layoutInfo.visibleItemsInfo[0].index - 1
                                 }
                             }
                     }
 
-                    for (i in 0 until sectionIndex) {
-                        currentHeaderIndex -= openSectionsWithChildrenAmount[i]
-                    }
+                    val currentHeaderIndex = firstVisibleItemIndex - openSectionsWithChildrenAmount.take(sectionIndex).sum()
 
                     sectionHeaderLayout?.invoke(
                         sectionIndex,

@@ -69,6 +69,7 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.ObservableSource;
+import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.functions.Supplier;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -77,6 +78,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import kotlin.coroutines.EmptyCoroutineContext;
+import kotlinx.coroutines.rx3.RxConvertKt;
 
 /**
  * This example builds a fully custom inline search UI on top of {@link TextSearch}. To do so
@@ -284,8 +287,12 @@ public class CustomSearchUiExample extends SdkExample {
                             currentSearch.dispose();
                         }
 
-                        currentSearch = textSearch
-                                .performSearchAsync(newText, searchOptions)
+                        // Cited as a worked asFlowable-from-Java example by
+                        // documentation/rxjava-to-coroutines-migration-guide.md; keep the bridge if this example is
+                        // tidied up, or update the guide.
+                        currentSearch = RxConvertKt.asFlowable(
+                                        textSearch.performSearchAsync(newText, searchOptions),
+                                        EmptyCoroutineContext.INSTANCE)
                                 .onErrorResumeNext(throwable -> Flowable.empty())
                                 .toList()
                                 .observeOn(AndroidSchedulers.mainThread())
@@ -592,8 +599,9 @@ public class CustomSearchUiExample extends SdkExample {
                 // Calculate the size of the rendered preview image.
                 final int width = previewImageWidth;
                 final int height = calculateBitmapHeight(width, displayedResult.pageIndex);
-                holder.previewRenderSubscription = document.renderPageToBitmapAsync(
-                                parent.getContext(), displayedResult.pageIndex, width, height)
+                holder.previewRenderSubscription = Single.fromCallable(() -> document.renderPageToBitmap(
+                                parent.getContext(), displayedResult.pageIndex, width, height))
+                        .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(holder.pagePreviewImageView::setImageBitmap);
 

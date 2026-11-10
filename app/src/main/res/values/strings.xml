@@ -8,6 +8,8 @@
 <resources xmlns:tools="http://schemas.android.com/tools" tools:ignore="MissingTranslation">
 
     <string name="app_name">Catalog</string>
+    <!-- The launcher name of the installed app. The app bar and settings keep app_name, shown after company_name. -->
+    <string name="launcher_name">Nutrient</string>
     <string name="company_name">Nutrient</string>
 
     <!-- Samples. -->
@@ -152,6 +154,8 @@
     <string name="customApplicationPolicyExampleDescription">Restrict text copy/paste using a custom ApplicationPolicy.</string>
     <string name="kioskExampleTitle">Kiosk Grid</string>
     <string name="kioskExampleDescription">Browse documents from the assets folder in a grid with thumbnail previews.</string>
+    <string name="rxJavaInteropExampleTitle">RxJava interop</string>
+    <string name="rxJavaInteropExampleDescription">Keep existing RxJava call sites working against the suspend and Flow APIs, using rxSingle, rxCompletable and asFlowable.</string>
     <string name="customShareDialogExampleTitle">Custom Sharing Dialog</string>
     <string name="customShareDialogExampleDescription">Build a fully custom document sharing dialog.</string>
     <string name="customAnnotationNoteHinterProviderExampleTitle">Custom Note Hinter</string>
@@ -448,6 +452,27 @@
     <!-- Indexed Full text search example -->
     <string name="indexedFtsExampleTitle">Search Indexing</string>
     <string name="indexedFtsExampleDescription">Index PDF assets and search them with PdfLibrary and LibraryFileSystemDataSource.</string>
+
+    <string name="initialPagesExampleTitle">Initial pages</string>
+    <string name="initialPagesExampleDescription">Captures the user\'s initials once and places them on every page of a contract.</string>
+    <string name="initialPagesAction">Initial pages</string>
+    <string name="initialPagesWhichPages">Initial which pages?</string>
+    <string name="initialPagesAllPages">All pages (%1$d)</string>
+    <string name="initialPagesAllButLast">All but the last page (%1$d)</string>
+    <plurals name="initialPagesDone">
+        <item quantity="one">Initialled %1$d page</item>
+        <item quantity="other">Initialled %1$d pages</item>
+    </plurals>
+
+    <string name="signatureCreationInterceptorExampleTitle">Signature creation interceptor</string>
+    <string name="signatureCreationInterceptorExampleDescription">Asks for stroke thickness, opacity and placement around the built-in signature dialog.</string>
+    <string name="signatureCreationInterceptorAppearanceTitle">Signature appearance</string>
+    <string name="signatureCreationInterceptorThickness">Thickness: %1$d pt</string>
+    <string name="signatureCreationInterceptorOpacity">Opacity: %1$d%%</string>
+    <string name="signatureCreationInterceptorPlacementTitle">Place signature</string>
+    <string name="signatureCreationInterceptorPlaceProposed">Where it was requested</string>
+    <string name="signatureCreationInterceptorPlaceBottomRight">Bottom-right of the page</string>
+    <string name="signatureCreationInterceptorPlaceTopLeft">Top-left of the page</string>
 
     <string name="customSdkUiExampleTitle">Custom Settings, Info and Outline UI</string>
     <string name="customSdkUiExampleDescription">Replaces the settings, document info and outline screens with your own UI, reading and writing the SDK data through public API only.</string>

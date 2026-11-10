@@ -23,9 +23,12 @@ import androidx.lifecycle.LifecycleOwner
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.tasks.ExtractAssetTask.extract
+import com.pspdfkit.compose.toolbar.state.ToolbarIcon
+import com.pspdfkit.compose.toolbar.state.ToolbarItem
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.document.PdfDocument
 import com.pspdfkit.listeners.DocumentListener
+import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfUiFragment
 import com.pspdfkit.ui.PdfUiFragmentBuilder
 import com.pspdfkit.utils.getSupportParcelableExtra
@@ -37,7 +40,6 @@ class PdfUiFragmentExample(context: Context) :
     SdkExample(context, R.string.pdfUiFragmentExampleTitle, R.string.pdfUiFragmentExampleDescription) {
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         extract(WELCOME_DOC, title, context) { documentFile ->
-            configuration.forceSignatureButtonPositionInMainToolbar(true)
             val intent = Intent(context, PdfUiFragmentExampleActivity::class.java)
             intent.putExtra(PdfUiFragmentExampleActivity.EXTRA_URI, Uri.fromFile(documentFile))
             intent.putExtra(PdfUiFragmentExampleActivity.EXTRA_CONFIGURATION, configuration.build())
@@ -96,6 +98,17 @@ class PdfUiFragmentExampleActivity :
             pdfUiFragment = supportFragmentManager.findFragmentByTag("pdfUiFragment") as PdfUiFragment
         }
         observer = PdfUiFragmentLifecycleObserver(pdfUiFragment, this)
+
+        // Show the signature tool in the main toolbar as well, where it is one tap away.
+        pdfUiFragment.setToolbarItemsProvider { defaultItems ->
+            defaultItems +
+                ToolbarItem.Button(
+                    id = PdfActivity.MENU_OPTION_SIGNATURE,
+                    actionId = resources.getResourceEntryName(PdfActivity.MENU_OPTION_SIGNATURE),
+                    contentDescription = getString(com.pspdfkit.R.string.pspdf__signature),
+                    icon = ToolbarIcon.Resource(com.pspdfkit.R.drawable.pspdf__ic_signature),
+                )
+        }
 
         // Handle back button presses using OnBackPressedDispatcher
         onBackPressedDispatcher.addCallback(

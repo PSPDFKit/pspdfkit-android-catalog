@@ -15,6 +15,7 @@ import android.graphics.RectF
 import android.net.Uri
 import android.util.Log
 import androidx.activity.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.pspdfkit.annotations.actions.UriAction
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
@@ -34,9 +35,14 @@ import com.pspdfkit.forms.SignatureFormConfiguration
 import com.pspdfkit.forms.TextFormConfiguration
 import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.disposables.Disposable
-import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.IOException
 import java.io.InputStream
@@ -46,7 +52,7 @@ import java.io.InputStream
  */
 class FormCreationExample(context: Context) :
     SdkExample(context, R.string.formCreationExampleTitle, R.string.formCreationExampleDescription) {
-    private var documentProcessingDisposable: Disposable? = null
+    private val processingScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // Turn off saving, so we have the clean original document every time the example is launched.
@@ -66,32 +72,28 @@ class FormCreationExample(context: Context) :
             throw IllegalStateException("Couldn't create Blank.pdf file.", exception)
         }
 
-        documentProcessingDisposable =
-            PdfProcessor
-                .processDocumentAsync(task, outputFile)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    {
-                        val intent =
-                            PdfActivityIntentBuilder
-                                .fromUri(context, Uri.fromFile(outputFile))
-                                .configuration(configuration.build())
-                                .activityClass(FormCreationActivity::class)
-                                .build()
+        processingScope.launch {
+            try {
+                PdfProcessor.processDocumentAsync(task, outputFile).flowOn(Dispatchers.IO).collect()
+                val intent =
+                    PdfActivityIntentBuilder
+                        .fromUri(context, Uri.fromFile(outputFile))
+                        .configuration(configuration.build())
+                        .activityClass(FormCreationActivity::class)
+                        .build()
 
-                        context.startActivity(intent)
-                    },
-                    { throwable ->
-                        Log.e(TAG, "Error while trying to create PDF document.", throwable)
-                    },
-                )
+                context.startActivity(intent)
+            } catch (cancellation: CancellationException) {
+                throw cancellation
+            } catch (throwable: Throwable) {
+                Log.e(TAG, "Error while trying to create PDF document.", throwable)
+            }
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        documentProcessingDisposable?.dispose()
-        documentProcessingDisposable = null
+        processingScope.coroutineContext.cancelChildren()
     }
 
     @Throws(IOException::class)
@@ -112,25 +114,24 @@ class FormCreationExample(context: Context) :
 
 class FormCreationActivity : PdfActivity() {
     private val viewModel: AnnotationCreationViewModel by viewModels()
-    private var getFormElementsDisposable: Disposable? = null
 
     override fun onDocumentLoaded(document: PdfDocument) {
         super.onDocumentLoaded(document)
 
         viewModel.createObjects {
-            // Retrieve existing form elements and create form fields only when there are no forms.
-            getFormElementsDisposable =
-                document.formProvider.formElementsAsync.subscribe { formElements ->
-                    if (formElements.isNotEmpty()) return@subscribe
+            lifecycleScope.launch {
+                // Retrieve existing form elements and create form fields only when there are no forms.
+                if (document.formProvider.getFormElements().isEmpty()) {
                     createForms()
                 }
+            }
         }
     }
 
     /**
      * Creates several forms and attach them to the document.
      */
-    private fun createForms() {
+    private suspend fun createForms() {
         createTextFormField()
         createCheckBoxFormField()
         createRadioButtonFormField()
@@ -143,7 +144,7 @@ class FormCreationActivity : PdfActivity() {
     /**
      * Creates and attaches to the document a text form field.
      */
-    private fun createTextFormField() {
+    private suspend fun createTextFormField() {
         val rectF = RectF(30f, 750f, 200f, 720f)
         val textFormConfiguration =
             TextFormConfiguration
@@ -156,7 +157,7 @@ class FormCreationActivity : PdfActivity() {
     /**
      * Creates and attaches to the document a checkbox form field with two checkbox form elements.
      */
-    private fun createCheckBoxFormField() {
+    private suspend fun createCheckBoxFormField() {
         val rectFCheckBoxFormConfiguration1 = RectF(30f, 650f, 60f, 620f)
         val checkBoxFormConfiguration1 =
             CheckBoxFormConfiguration
@@ -178,7 +179,7 @@ class FormCreationActivity : PdfActivity() {
     /**
      * Creates and attaches to the document a radio button form field with two radio button form elements.
      */
-    private fun createRadioButtonFormField() {
+    private suspend fun createRadioButtonFormField() {
         val rectFRadioButtonFormConfiguration1 = RectF(30f, 500f, 60f, 470f)
         val radioButtonFormConfiguration1 =
             RadioButtonFormConfiguration
@@ -200,7 +201,7 @@ class FormCreationActivity : PdfActivity() {
     /**
      * Creates and attaches to the document a push button form field.
      */
-    private fun createPushButtonFormField() {
+    private suspend fun createPushButtonFormField() {
         val rectFPushButtonFormConfiguration = RectF(30f, 350f, 120f, 260f)
 
         val bitmapFromAsset = getBitmapFromAsset(assets, "images/android.png") ?: return
@@ -220,7 +221,7 @@ class FormCreationActivity : PdfActivity() {
     /**
      * Creates and attaches to the document a signature form field.
      */
-    private fun createSignatureFormField() {
+    private suspend fun createSignatureFormField() {
         val rectFSignatureFormConfiguration = RectF(30f, 190f, 200f, 160f)
 
         val signatureFormConfiguration =
@@ -234,7 +235,7 @@ class FormCreationActivity : PdfActivity() {
     /**
      * Creates and attaches to the document a combo box form field.
      */
-    private fun createComboBoxFormField() {
+    private suspend fun createComboBoxFormField() {
         val rectFComboBoxFormConfiguration = RectF(350f, 650f, 520f, 620f)
         val comboBoxFormConfiguration =
             ComboBoxFormConfiguration
@@ -253,7 +254,7 @@ class FormCreationActivity : PdfActivity() {
     /**
      * Creates and attaches to the document a list box form field.
      */
-    private fun createListBoxFormField() {
+    private suspend fun createListBoxFormField() {
         val rectFListBoxFormConfiguration = RectF(350f, 500f, 520f, 420f)
         val listBoxFormConfiguration =
             ListBoxFormConfiguration
@@ -290,10 +291,5 @@ class FormCreationActivity : PdfActivity() {
             }
         }
         return bitmap
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        getFormElementsDisposable?.dispose()
     }
 }

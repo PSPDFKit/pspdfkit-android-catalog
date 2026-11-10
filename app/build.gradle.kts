@@ -25,8 +25,8 @@ android {
         minSdk = 26
         targetSdk = compileSdk
 
-        versionName = "12.0.0"
-        versionCode = 150266
+        versionName = "12.1.0"
+        versionCode = 1
 
         vectorDrawables {
             useSupportLibrary = true
@@ -68,16 +68,16 @@ dependencies {
 
     // The Nutrient SDK is integrated from Maven Central (configured in the `repositories` block
     // of the settings file).
-    implementation("io.nutrient:nutrient-android-sdk:12.0.0")
+    implementation("io.nutrient:nutrient-android-sdk:12.1.0")
 
     // OCR library + English language pack. OCR is not yet on Maven Central, so it is loaded from
     // the Nutrient Maven repository during the transition period. Its POM lists the legacy
     // `io.nutrient:nutrient` artifact as a dependency; we exclude it so the SDK resolves from
     // Maven Central (`nutrient-android-sdk`) instead, avoiding duplicate classes on the classpath.
-    implementation("io.nutrient:nutrient-ocr:12.0.0") {
+    implementation("io.nutrient:nutrient-ocr:12.1.0") {
         exclude(group = "io.nutrient", module = "nutrient")
     }
-    implementation("io.nutrient:nutrient-ocr-english:12.0.0") {
+    implementation("io.nutrient:nutrient-ocr-english:12.1.0") {
         exclude(group = "io.nutrient", module = "nutrient")
     }
 
@@ -110,7 +110,12 @@ dependencies {
     // Barcode Scanner
     implementation("com.google.android.gms:play-services-code-scanner:16.1.0")
 
-    // Kotlin utils.
+    // RxJava for the examples that still use it. The SDK doesn't depend on RxJava, so every
+    // build of this app (monorepo, GitHub and packaged) declares it here. tools/validation/dependency_version_match_check.sh
+    // checks these versions against android/gradle/libs.versions.toml.
+    implementation("io.reactivex.rxjava3:rxjava:3.1.12")
+    implementation("io.reactivex.rxjava3:rxandroid:3.0.2")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-rx3:1.11.0")
     implementation("io.reactivex.rxjava3:rxkotlin:3.0.1")
 
     // Junit

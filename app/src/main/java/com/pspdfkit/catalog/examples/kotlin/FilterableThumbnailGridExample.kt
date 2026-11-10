@@ -16,8 +16,8 @@ import android.widget.Toast
 import androidx.core.view.ViewCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import com.pspdfkit.annotations.AnnotationType
-import com.pspdfkit.bookmarks.Bookmark
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.ui.FilterPickerView
@@ -33,13 +33,11 @@ import com.pspdfkit.ui.DocumentDescriptor
 import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
 import com.pspdfkit.ui.PdfThumbnailGrid
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.core.SingleObserver
-import io.reactivex.rxjava3.disposables.Disposable
-import io.reactivex.rxjava3.schedulers.Schedulers
-import io.reactivex.rxjava3.subscribers.DefaultSubscriber
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.IOException
@@ -241,55 +239,31 @@ class FilterableThumbnailGridActivity :
             Filter.BOOKMARKED -> {
                 // Get pages that contain bookmarks and filter them out in the document.
                 val originalDocument = viewModel.pdfDocument ?: return
-                // Get the provider for fetching the bookmarks.
-                originalDocument
-                    .bookmarkProvider
-                    // Get all bookmarks.
-                    .bookmarksAsync
-                    // Split the list and emit elements separately.
-                    .flatMapIterable { bookmarks: List<Bookmark> -> bookmarks }
-                    // Filter out bookmarks without page index and map to page index.
-                    .filter { bookmark: Bookmark -> bookmark.pageIndex != null }
-                    // Map bookmarks to the page index they have (that's the only thing we need
-                    // for filtering).
-                    .map { bookmark: Bookmark -> bookmark.pageIndex as Int }
-                    // Avoid duplicates.
-                    .distinct()
-                    // Convert to list.
-                    .toList()
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(
-                        object : SingleObserver<List<Int>> {
-                            override fun onSubscribe(d: Disposable) {
-                                // Do something once the filtering process starts. Not
-                                // implemented in this example.
-                            }
+                lifecycleScope.launch {
+                    // Get all bookmarks, then reduce them to the distinct page indices they mark.
+                    val integers =
+                        originalDocument.bookmarkProvider
+                            .getBookmarksAsync()
+                            .mapNotNull { bookmark -> bookmark.pageIndex }
+                            .distinct()
 
-                            override fun onSuccess(integers: List<Int>) {
-                                if (integers.isEmpty()) {
-                                    // If there are no bookmarked pages, we don't have any document to switch to.
-                                    Toast
-                                        .makeText(
-                                            this@FilterableThumbnailGridActivity,
-                                            "There are no bookmarked pages in the document.",
-                                            Toast.LENGTH_SHORT,
-                                        ).show()
-                                    return
-                                }
+                    if (integers.isEmpty()) {
+                        // If there are no bookmarked pages, we don't have any document to switch to.
+                        Toast
+                            .makeText(
+                                this@FilterableThumbnailGridActivity,
+                                "There are no bookmarked pages in the document.",
+                                Toast.LENGTH_SHORT,
+                            ).show()
+                        return@launch
+                    }
 
-                                // Refresh selection.
-                                filterPickerView?.setSelectedFilter(Filter.BOOKMARKED)
+                    // Refresh selection.
+                    filterPickerView?.setSelectedFilter(Filter.BOOKMARKED)
 
-                                // Filter the original document to contain just the
-                                // bookmarked pages, and load it.
-                                loadFilteredDocument(originalDocument, integers.toHashSet(), "bookmarked")
-                            }
-
-                            override fun onError(e: Throwable) {
-                                // Handle filtering error here.
-                            }
-                        },
-                    )
+                    // Filter the original document to contain just the bookmarked pages, and load it.
+                    loadFilteredDocument(originalDocument, integers.toHashSet(), "bookmarked")
+                }
             }
         }
     }
@@ -313,35 +287,27 @@ class FilterableThumbnailGridActivity :
     private fun loadFilteredDocument(originalDocument: PdfDocument, pages: Set<Int>, fileSuffix: String) {
         val pdfProcessorTask = PdfProcessorTask.fromDocument(originalDocument).keepPages(pages)
         val newDocumentFile = File(filesDir, "${originalDocument.title}-$fileSuffix")
-        PdfProcessor
-            .processDocumentAsync(pdfProcessorTask, newDocumentFile)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                object : DefaultSubscriber<PdfProcessor.ProcessorProgress>() {
-                    override fun onNext(processorProgress: PdfProcessor.ProcessorProgress) {
-                        // Consume processing progress here. Could be used to show the
-                        // filtering progress in some UI.
-                    }
-
-                    override fun onError(t: Throwable) {
-                        // Handle processing error here. Not handled in this particular
-                        // example.
-                    }
-
-                    override fun onComplete() {
-                        try {
-                            val documentSource = DocumentSource(Uri.fromFile(newDocumentFile.canonicalFile))
-                            val documentDescriptor = DocumentDescriptor.fromDocumentSource(documentSource)
-                            val coordinator = documentCoordinator
-                            coordinator.addOnDocumentVisibleListener { pspdfKitViews.thumbnailGridView?.show() }
-                            coordinator.setDocument(documentDescriptor)
-                        } catch (e: IOException) {
-                            e.printStackTrace()
-                        }
-                    }
-                },
-            )
+        lifecycleScope.launch {
+            try {
+                PdfProcessor.processDocumentAsync(pdfProcessorTask, newDocumentFile).flowOn(Dispatchers.IO).collect {
+                    // Consume processing progress here. Could be used to show the filtering progress in some UI.
+                }
+                // Processing complete: show the filtered document.
+                try {
+                    val documentSource = DocumentSource(Uri.fromFile(newDocumentFile.canonicalFile))
+                    val documentDescriptor = DocumentDescriptor.fromDocumentSource(documentSource)
+                    val coordinator = documentCoordinator
+                    coordinator.addOnDocumentVisibleListener { pspdfKitViews.thumbnailGridView?.show() }
+                    coordinator.setDocument(documentDescriptor)
+                } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+            } catch (cancellation: CancellationException) {
+                throw cancellation
+            } catch (t: Throwable) {
+                // Handle processing error here. Not handled in this particular example.
+            }
+        }
     }
 
     companion object {

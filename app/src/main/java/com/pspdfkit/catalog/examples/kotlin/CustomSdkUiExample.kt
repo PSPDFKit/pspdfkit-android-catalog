@@ -291,8 +291,7 @@ class CustomSdkUiActivity : PdfActivity() {
         val document = document ?: return
         lifecycleScope.launch {
             outlineRows = try {
-                val elements = withContext(Dispatchers.IO) { document.outlineAsync.blockingGet() }
-                elements.flatten(depth = 0)
+                document.getOutlineAsync().flatten(depth = 0)
             } catch (e: Exception) {
                 Toast.makeText(this@CustomSdkUiActivity, "Could not read the outline: ${e.message}", Toast.LENGTH_SHORT)
                     .show()

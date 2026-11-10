@@ -7,7 +7,6 @@
 
 package com.pspdfkit.catalog.examples.kotlin
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.graphics.PointF
@@ -19,6 +18,7 @@ import androidx.annotation.ColorInt
 import androidx.annotation.IntRange
 import androidx.annotation.UiThread
 import androidx.core.net.toUri
+import androidx.lifecycle.lifecycleScope
 import com.pspdfkit.annotations.Annotation
 import com.pspdfkit.annotations.AnnotationType
 import com.pspdfkit.annotations.BorderEffect
@@ -44,6 +44,7 @@ import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
 import com.pspdfkit.ui.special_mode.controller.AnnotationTool
 import com.pspdfkit.utils.EdgeInsets
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.io.IOException
 
@@ -312,20 +313,20 @@ class AnnotationCreationActivity : PdfActivity() {
         addAnnotationToDocument(stampAnnotation)
     }
 
-    @SuppressLint("CheckResult")
     private fun createSoundAnnotation(pageIndex: Int) {
-        try {
-            // Extract first audio track from sample video in assets.
-            // Audio extractor supports decoding audio tracks from all media formats that are supported by Android's `MediaExtractor`.
-            val audioExtractor = AudioExtractor(this, "file:///android_asset/media/videos/small.mp4".toUri())
-            audioExtractor.selectAudioTrack(0)
-            audioExtractor.extractAudioTrackAsync().subscribe { embeddedAudioSource ->
+        lifecycleScope.launch {
+            try {
+                // Extract first audio track from sample video in assets.
+                // Audio extractor supports decoding audio tracks from all media formats that are supported by Android's `MediaExtractor`.
+                val audioExtractor = AudioExtractor(this@AnnotationCreationActivity, "file:///android_asset/media/videos/small.mp4".toUri())
+                audioExtractor.selectAudioTrack(0)
+                val embeddedAudioSource = audioExtractor.extractAudioTrackAsync()
                 // Create new sound annotation from the extracted audio track.
                 val soundAnnotation = SoundAnnotation(pageIndex, RectF(580f, 700f, 600f, 685f), embeddedAudioSource)
                 addAnnotationToDocument(soundAnnotation)
+            } catch (e: IOException) {
+                // Handle possible IOException, thrown when the Uri does not point to correct file/asset.
             }
-        } catch (e: IOException) {
-            // Handle possible IOException, thrown when the Uri does not point to correct file/asset.
         }
     }
 
@@ -333,7 +334,7 @@ class AnnotationCreationActivity : PdfActivity() {
      * Add the annotation to the document, and update the annotation in the UI.
      */
     private fun addAnnotationToDocument(annotation: Annotation) {
-        document?.getAnnotationProvider()?.let { provider ->
+        document?.annotationProvider?.let { provider ->
             runBlocking { provider.addAnnotationToPage(annotation) }
         }
     }

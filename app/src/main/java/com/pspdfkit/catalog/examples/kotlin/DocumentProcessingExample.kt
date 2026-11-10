@@ -33,14 +33,17 @@ import com.pspdfkit.document.processor.PageImage
 import com.pspdfkit.document.processor.PagePattern
 import com.pspdfkit.document.processor.PagePosition
 import com.pspdfkit.document.processor.PdfProcessor
-import com.pspdfkit.document.processor.PdfProcessor.ProcessorProgress
 import com.pspdfkit.document.processor.PdfProcessorTask
 import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.disposables.CompositeDisposable
-import io.reactivex.rxjava3.schedulers.Schedulers
-import io.reactivex.rxjava3.subscribers.DisposableSubscriber
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.IOException
 import java.util.HashSet
@@ -85,7 +88,7 @@ class DocumentProcessingExample(context: Context) :
  * on a document.
  */
 class DocumentProcessingExampleActivity : PdfActivity() {
-    private val disposables = CompositeDisposable()
+    private val processingScope = CoroutineScope(Dispatchers.Main.immediate + SupervisorJob())
 
     /**
      * Creates menu items that will trigger document processing.
@@ -177,13 +180,7 @@ class DocumentProcessingExampleActivity : PdfActivity() {
                 .removePages(HashSet(listOf(0, 4, 7, 8, 9, 10, 11, 12, 13)))
 
         // Start document processing, but without annotation flattening.
-        PdfProcessor
-            .processDocumentAsync(task, outputFile)
-            // Drop update events to avoid back pressure on slow devices.
-            .onBackpressureDrop()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(ProcessorProgressHandler("Extracting pages.", outputFile))
+        processDocument(task, outputFile, "Extracting pages.")
     }
 
     private fun createFlattenedDocument() {
@@ -197,13 +194,7 @@ class DocumentProcessingExampleActivity : PdfActivity() {
                 .fromDocument(document)
                 .changeAllAnnotations(PdfProcessorTask.AnnotationProcessingMode.FLATTEN)
 
-        PdfProcessor
-            .processDocumentAsync(task, outputFile)
-            // Drop update events to avoid back pressure on slow devices.
-            .onBackpressureDrop()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(ProcessorProgressHandler("Flattening annotations.", outputFile))
+        processDocument(task, outputFile, "Flattening annotations.")
     }
 
     private fun createDocumentWithoutLinkAnnotations() {
@@ -218,13 +209,7 @@ class DocumentProcessingExampleActivity : PdfActivity() {
                 .fromDocument(document)
                 .changeAnnotationsOfType(AnnotationType.LINK, PdfProcessorTask.AnnotationProcessingMode.DELETE)
 
-        PdfProcessor
-            .processDocumentAsync(task, outputFile)
-            // Drop update events to avoid back pressure on slow devices.
-            .onBackpressureDrop()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(ProcessorProgressHandler("Removing link annotations.", outputFile))
+        processDocument(task, outputFile, "Removing link annotations.")
     }
 
     private fun createDocumentWithRotatedPages() {
@@ -243,13 +228,7 @@ class DocumentProcessingExampleActivity : PdfActivity() {
         }
 
         // Start document processing.
-        PdfProcessor
-            .processDocumentAsync(task, outputFile)
-            // Drop update events to avoid back pressure on slow devices.
-            .onBackpressureDrop()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(ProcessorProgressHandler("Rotating pages.", outputFile))
+        processDocument(task, outputFile, "Rotating pages.")
     }
 
     private fun createDocumentWithNewPages() {
@@ -292,19 +271,13 @@ class DocumentProcessingExampleActivity : PdfActivity() {
         )
 
         // Start document processing.
-        PdfProcessor
-            .processDocumentAsync(task, outputFile)
-            // Drop update events to avoid back pressure on slow devices.
-            .onBackpressureDrop()
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(ProcessorProgressHandler("Creating new pages.", outputFile))
+        processDocument(task, outputFile, "Creating new pages.")
     }
 
     override fun onStop() {
         super.onStop()
-        // Dispose all active disposables when activity goes to background.
-        disposables.clear()
+        // Cancel any active processing when the activity goes to the background.
+        processingScope.coroutineContext.cancelChildren()
     }
 
     private fun showProcessedDocument(processedDocumentFile: File) {
@@ -318,40 +291,38 @@ class DocumentProcessingExampleActivity : PdfActivity() {
     }
 
     /**
-     * Helper class for showing a progress dialog and opening the processed document.
+     * Runs the processing [task], showing a progress dialog and opening the processed document once
+     * complete. Cancelling the dialog cancels the processing.
      */
     @Suppress("DEPRECATION")
-    private inner class ProcessorProgressHandler(progressMessage: String, private val outputFile: File) :
-        DisposableSubscriber<ProcessorProgress>() {
-        private val progressDialog: ProgressDialog =
-            ProgressDialog.show(
-                this@DocumentProcessingExampleActivity,
-                "Processing document",
-                progressMessage,
-                false,
-                true,
-            ) { cancel() }
-
-        init {
-            disposables.add(this)
-        }
-
-        override fun onNext(processorProgress: ProcessorProgress) {
-            progressDialog.progress = ceil((processorProgress.pagesProcessed / processorProgress.totalPages).toDouble()).toInt()
-        }
-
-        override fun onError(e: Throwable) {
-            AlertDialog
-                .Builder(this@DocumentProcessingExampleActivity)
-                .setMessage("Error while processing file: " + e.localizedMessage)
-                .show()
-            progressDialog.dismiss()
-        }
-
-        override fun onComplete() {
-            showProcessedDocument(outputFile)
-            progressDialog.dismiss()
-        }
+    private fun processDocument(task: PdfProcessorTask, outputFile: File, progressMessage: String) {
+        val progressDialog = ProgressDialog.show(this, "Processing document", progressMessage, false, true)
+        val job =
+            processingScope.launch {
+                try {
+                    PdfProcessor
+                        // processing happens on Dispatchers.IO
+                        .processDocumentAsync(task, outputFile)
+                        .flowOn(Dispatchers.IO)
+                        // collection on main (processingScope)
+                        .collect { processorProgress ->
+                            progressDialog.progress =
+                                ceil((processorProgress.pagesProcessed / processorProgress.totalPages).toDouble()).toInt()
+                        }
+                    showProcessedDocument(outputFile)
+                    progressDialog.dismiss()
+                } catch (cancellation: CancellationException) {
+                    progressDialog.dismiss()
+                    throw cancellation
+                } catch (e: Throwable) {
+                    AlertDialog
+                        .Builder(this@DocumentProcessingExampleActivity)
+                        .setMessage("Error while processing file: " + e.localizedMessage)
+                        .show()
+                    progressDialog.dismiss()
+                }
+            }
+        progressDialog.setOnCancelListener { job.cancel() }
     }
 
     companion object {

@@ -70,7 +70,6 @@ import com.pspdfkit.compose.theme.MainToolbarColors
 import com.pspdfkit.compose.theme.NutrientTheme
 import com.pspdfkit.compose.theme.ToolbarPopupColors
 import com.pspdfkit.compose.theme.UiColorScheme
-import com.pspdfkit.compose.theme.getUiColors
 import com.pspdfkit.compose.toolbar.composables.NutrientMainToolbar
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration
 import com.pspdfkit.configuration.activity.TabBarHidingMode
@@ -241,7 +240,7 @@ private fun TabbedDocuments(uri: Uri, configuration: PdfActivityConfiguration) {
 @Composable
 private fun pillToolbarColors(): UiColorScheme {
     val background = MaterialTheme.colorScheme.primary
-    return getUiColors().copy(
+    return UiColorScheme.fromXmlTheme().copy(
         mainToolbar = MainToolbarColors(
             backgroundColor = background,
             textColor = Color.White,

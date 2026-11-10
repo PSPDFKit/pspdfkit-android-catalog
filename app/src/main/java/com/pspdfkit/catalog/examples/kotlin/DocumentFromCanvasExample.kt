@@ -21,9 +21,14 @@ import com.pspdfkit.document.processor.NewPage
 import com.pspdfkit.document.processor.PdfProcessor
 import com.pspdfkit.document.processor.PdfProcessorTask
 import com.pspdfkit.ui.PdfActivityIntentBuilder
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.disposables.Disposable
-import io.reactivex.rxjava3.schedulers.Schedulers
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.launch
 import java.io.File
 import java.io.IOException
 
@@ -32,7 +37,7 @@ import java.io.IOException
  */
 class DocumentFromCanvasExample(context: Context) :
     SdkExample(context, R.string.documentFromCanvasExampleTitle, R.string.documentFromCanvasExampleDescription) {
-    private var documentProcessingDisposable: Disposable? = null
+    private val processingScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
 
     override fun launchExample(context: Context, configuration: PdfActivityConfiguration.Builder) {
         // Turn off saving, so we have the clean original document every time the example is launched.
@@ -63,32 +68,27 @@ class DocumentFromCanvasExample(context: Context) :
                 throw IllegalStateException("Couldn't create Canvas.pdf file.", exception)
             }
 
-        documentProcessingDisposable =
-            PdfProcessor
-                .processDocumentAsync(task, outputFile)
-                // Ignore PdfProcessor progress.
-                .ignoreElements()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                    {
-                        val intent =
-                            PdfActivityIntentBuilder
-                                .fromUri(context, Uri.fromFile(outputFile))
-                                .configuration(configuration.build())
-                                .build()
-                        context.startActivity(intent)
-                    },
-                    { throwable ->
-                        Log.e(TAG, "Error while trying to create PDF document.", throwable)
-                    },
-                )
+        processingScope.launch {
+            try {
+                // Ignore PdfProcessor progress; just wait for completion.
+                PdfProcessor.processDocumentAsync(task, outputFile).flowOn(Dispatchers.IO).collect()
+                val intent =
+                    PdfActivityIntentBuilder
+                        .fromUri(context, Uri.fromFile(outputFile))
+                        .configuration(configuration.build())
+                        .build()
+                context.startActivity(intent)
+            } catch (cancellation: CancellationException) {
+                throw cancellation
+            } catch (throwable: Throwable) {
+                Log.e(TAG, "Error while trying to create PDF document.", throwable)
+            }
+        }
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        documentProcessingDisposable?.dispose()
-        documentProcessingDisposable = null
+        processingScope.coroutineContext.cancelChildren()
     }
 
     companion object {

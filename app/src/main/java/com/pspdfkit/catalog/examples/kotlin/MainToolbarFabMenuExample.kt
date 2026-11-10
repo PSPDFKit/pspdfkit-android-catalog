@@ -239,12 +239,13 @@ private fun ExpressiveFabMenu(coordinator: ToolbarCoordinator, modifier: Modifie
         }
 
         // The FAB (and its menu) live in the safe area inset by the edge margin, pinned to one of
-        // the two bottom corners, plus the drag offset while a drag is in flight.
+        // the two bottom corners, plus the drag offset while a drag is in flight. The bottom edge
+        // is lifted clear of the SDK's floating thumbnail bar, so the FAB never covers it.
         BoxWithConstraints(
             modifier = Modifier
                 .fillMaxSize()
                 .safeDrawingPadding()
-                .padding(FabEdgeMargin),
+                .padding(start = FabEdgeMargin, top = FabEdgeMargin, end = FabEdgeMargin, bottom = THUMBNAIL_BAR_CLEARANCE),
         ) {
             val density = LocalDensity.current
             val fabPx = with(density) { FabSize.toPx() }

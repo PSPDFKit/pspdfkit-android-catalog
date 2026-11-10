@@ -23,6 +23,7 @@ import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.pspdfkit.bookmarks.Bookmark
 import com.pspdfkit.catalog.R
@@ -35,8 +36,8 @@ import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
 import com.pspdfkit.ui.drawable.PdfDrawable
 import com.pspdfkit.ui.drawable.PdfDrawableProvider
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
-import io.reactivex.rxjava3.disposables.Disposable
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 private val initialThumbnailBarMode = ThumbnailBarMode.THUMBNAIL_BAR_MODE_SCROLLABLE
@@ -95,7 +96,7 @@ class BookmarkHighlightingActivity : PdfActivity() {
         }
 
     /** Used to stop the bookmark loading process when closing the activity. */
-    private var bookmarkLoadingDisposable: Disposable? = null
+    private var bookmarkLoadingJob: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -150,15 +151,10 @@ class BookmarkHighlightingActivity : PdfActivity() {
     override fun onDocumentLoaded(document: PdfDocument) {
         super.onDocumentLoaded(document)
         // When the document is initially loaded we prepare the first set of bookmarks to be displayed.
-        bookmarkLoadingDisposable =
-            document
-                .bookmarkProvider
-                .bookmarksAsync
-                .firstOrError()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { bookmarks ->
-                    updateBookmarkDrawables(bookmarks)
-                }
+        bookmarkLoadingJob =
+            lifecycleScope.launch {
+                updateBookmarkDrawables(document.bookmarkProvider.getBookmarksAsync())
+            }
 
         // Afterwards we subscribe to be updated whenever the list of bookmarks change.
         document.bookmarkProvider.addBookmarkListener {
@@ -192,7 +188,7 @@ class BookmarkHighlightingActivity : PdfActivity() {
     override fun onDestroy() {
         super.onDestroy()
         // Make sure to dispose of this before closing the activity.
-        bookmarkLoadingDisposable?.dispose()
+        bookmarkLoadingJob?.cancel()
     }
 
     private fun applyThumbnailBarMode() {

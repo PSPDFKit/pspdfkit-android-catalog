@@ -7,7 +7,6 @@
 
 package com.pspdfkit.catalog.examples.kotlin
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.RectF
 import android.net.Uri
@@ -16,6 +15,7 @@ import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.UiThread
 import androidx.core.net.toUri
+import androidx.lifecycle.lifecycleScope
 import com.pspdfkit.annotations.SoundAnnotation
 import com.pspdfkit.annotations.sound.AudioExtractor
 import com.pspdfkit.annotations.sound.WavWriter
@@ -31,6 +31,7 @@ import com.pspdfkit.preferences.PSPDFKitPreferences
 import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
 import com.pspdfkit.ui.special_mode.controller.AnnotationTool
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.io.File
 import java.io.FileOutputStream
@@ -112,26 +113,32 @@ class SoundAnnotationDataExtractionActivity : PdfActivity() {
         extractSoundData()
     }
 
-    @SuppressLint("CheckResult")
     private fun createSoundAnnotation() {
-        try {
-            // Extract first audio track from sample in assets.
-            // Audio extractor supports decoding audio tracks from all media formats that are supported by Android's `MediaExtractor`.
-            val audioExtractor = AudioExtractor(this, "file:///android_asset/media/audioLoop.wav".toUri())
-            audioExtractor.selectAudioTrack(0)
-            audioExtractor.extractAudioTrackAsync().subscribe { embeddedAudioSource ->
+        lifecycleScope.launch {
+            try {
+                // Extract first audio track from sample in assets.
+                // Audio extractor supports decoding audio tracks from all media formats that are supported by Android's `MediaExtractor`.
+                val audioExtractor =
+                    AudioExtractor(this@SoundAnnotationDataExtractionActivity, "file:///android_asset/media/audioLoop.wav".toUri())
+                audioExtractor.selectAudioTrack(0)
+                val embeddedAudioSource = audioExtractor.extractAudioTrackAsync()
                 // Create new sound annotation from the extracted audio track.
                 val soundAnnotation = SoundAnnotation(0, RectF(580f, 700f, 600f, 685f), embeddedAudioSource)
                 requirePdfFragment().addAnnotationToPage(soundAnnotation, false)
+            } catch (e: IOException) {
+                // Handle possible IOException, thrown when the Uri does not point to correct file/asset.
             }
-        } catch (e: IOException) {
-            // Handle possible IOException, thrown when the Uri does not point to correct file/asset.
         }
     }
 
     private fun extractSoundData() {
         val annotations = runBlocking { document?.annotationProvider?.getAnnotations(0) } ?: return
-        val soundAnnotation = annotations[0] as SoundAnnotation
+        // The page has other annotations too, such as links, so look for the sound annotation.
+        val soundAnnotation = annotations.filterIsInstance<SoundAnnotation>().firstOrNull()
+        if (soundAnnotation == null) {
+            Toast.makeText(this, "There's no sound annotation on the first page.", Toast.LENGTH_SHORT).show()
+            return
+        }
 
         val outputFile = File.createTempFile("tmp_", "sound.wav")
         WavWriter.forAnnotation(soundAnnotation).writeToStream(FileOutputStream(outputFile))

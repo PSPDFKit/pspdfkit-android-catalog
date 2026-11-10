@@ -21,7 +21,6 @@ import com.pspdfkit.document.OutlineElement
 import com.pspdfkit.document.PdfDocument
 import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
-import io.reactivex.rxjava3.core.Single
 
 /**
  * This example shows how to display a custom outline in [com.pspdfkit.ui.PdfOutlineView].
@@ -52,7 +51,7 @@ class OutlineProviderActivity : PdfActivity() {
         super.onDocumentLoaded(document)
 
         // Set outline provider that returns our custom outline elements on Activity's outline view.
-        pspdfKitViews.outlineView?.setDocumentOutlineProvider { Single.just(getCustomOutline(document)) }
+        pspdfKitViews.outlineView?.setDocumentOutlineProvider { getCustomOutline(document) }
     }
 
     private fun getCustomOutline(document: PdfDocument): List<OutlineElement> {

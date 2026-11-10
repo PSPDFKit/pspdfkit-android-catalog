@@ -301,7 +301,7 @@ class PersistentTabsActivity : PdfActivity() {
                         }
 
                     // Once the download is complete we show the downloaded document in a new tab.
-                    downloadFragment.job.setProgressListener(
+                    downloadFragment.job?.setProgressListener(
                         object : DownloadJob.ProgressListenerAdapter() {
                             override fun onComplete(output: File) {
                                 showDocumentInNewTab(Uri.fromFile(output), isImageFile)

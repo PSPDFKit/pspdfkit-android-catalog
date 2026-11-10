@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.IntentCompat;
 import com.pspdfkit.catalog.R;
 import com.pspdfkit.catalog.SdkExample;
+import com.pspdfkit.catalog.ui.theming.ConfigurationThemeKt;
 import com.pspdfkit.configuration.PdfConfiguration;
 import com.pspdfkit.configuration.activity.PdfActivityConfiguration;
 import com.pspdfkit.forms.ComboBoxFormElement;
@@ -45,9 +46,7 @@ public class FormEditingInFragmentExample extends SdkExample {
         extract("Form-fields.pdf", getTitle(), context, documentFile -> {
             final Intent intent = new Intent(context, FormEditingInFragmentActivity.class);
             intent.putExtra(FormEditingInFragmentActivity.EXTRA_URI, Uri.fromFile(documentFile));
-            intent.putExtra(
-                    FormEditingInFragmentActivity.EXTRA_CONFIGURATION,
-                    configuration.build().getConfiguration());
+            intent.putExtra(FormEditingInFragmentActivity.EXTRA_CONFIGURATION, configuration.build());
             context.startActivity(intent);
         });
     }
@@ -68,7 +67,7 @@ public class FormEditingInFragmentExample extends SdkExample {
             implements FormManager.OnFormElementEditingModeChangeListener {
 
         public static final String EXTRA_URI = "FormEditingInFragmentActivity.DocumentUri";
-        public static final String EXTRA_CONFIGURATION = "FormEditingInFragmentActivity.PdfConfiguration";
+        public static final String EXTRA_CONFIGURATION = "FormEditingInFragmentActivity.PdfActivityConfiguration";
 
         /** Fragment that displays the PDF document. */
         private PdfFragment fragment;
@@ -92,6 +91,13 @@ public class FormEditingInFragmentExample extends SdkExample {
 
         @Override
         protected void onCreate(@Nullable Bundle savedInstanceState) {
+            // A plain activity hosting a PdfFragment doesn't get PdfActivity's theming, so it applies
+            // the configured light or dark theme itself, and the system bar icons to match it. The
+            // form editing bar takes its colors from this theme.
+            final PdfActivityConfiguration activityConfiguration =
+                    IntentCompat.getParcelableExtra(getIntent(), EXTRA_CONFIGURATION, PdfActivityConfiguration.class);
+            final boolean night = ConfigurationThemeKt.applyConfigurationTheme(this, activityConfiguration);
+            ConfigurationThemeKt.enableConfigurationEdgeToEdge(this, activityConfiguration, night, night);
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_form_editing_fragment);
             setSupportActionBar(null);
@@ -112,11 +118,9 @@ public class FormEditingInFragmentExample extends SdkExample {
             }
 
             // PdfFragment configuration is provided with the launching intent.
-            PdfConfiguration configuration =
-                    IntentCompat.getParcelableExtra(getIntent(), EXTRA_CONFIGURATION, PdfConfiguration.class);
-            if (configuration == null) {
-                configuration = new PdfConfiguration.Builder().build();
-            }
+            final PdfConfiguration configuration = activityConfiguration != null
+                    ? activityConfiguration.getConfiguration()
+                    : new PdfConfiguration.Builder().build();
 
             // Initialize PdfFragment now
             initPdfFragment(uri, configuration);

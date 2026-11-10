@@ -22,9 +22,12 @@ import com.pspdfkit.document.providers.InputStreamDataProvider
 import com.pspdfkit.document.providers.ProgressDataProvider
 import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
-import io.reactivex.rxjava3.core.BackpressureStrategy
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.subjects.PublishSubject
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.emitAll
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.transformWhile
+import kotlinx.coroutines.flow.update
 import java.io.File
 import java.io.FileInputStream
 import java.io.InputStream
@@ -69,11 +72,29 @@ private class RemoteDataProvider(
     /** Used to wait until the download is done.  */
     private val downloadLatch = CountDownLatch(1)
 
-    /** Used to notify the PdfFragment of download progress updates.  */
-    private val progressSubject = PublishSubject.create<Double>()
+    /**
+     * The latest download progress plus an optional terminal signal. Keeping the value and the
+     * terminal signal in a single stream guarantees that completion (or an error) is delivered to
+     * collectors only after the final progress value.
+     */
+    private class ProgressState(val progress: Double? = null, val completed: Boolean = false, val error: Throwable? = null)
 
-    override fun observeProgress(): Flowable<Double> { // We can just return our PublishSubject.
-        return progressSubject.toFlowable(BackpressureStrategy.LATEST)
+    /** Used to notify the PdfFragment of download progress updates.  */
+    private val progressState = MutableStateFlow(ProgressState())
+
+    override fun observeProgress(): Flow<Double> = flow {
+        var lastEmitted: Double? = null
+        emitAll(
+            progressState.transformWhile { state ->
+                val progress = state.progress
+                if (progress != null && progress != lastEmitted) {
+                    emit(progress)
+                    lastEmitted = progress
+                }
+                state.error?.let { throw it }
+                !state.completed
+            },
+        )
     }
 
     @Throws(Exception::class)
@@ -130,16 +151,16 @@ private class RemoteDataProvider(
                 object : DownloadJob.ProgressListener {
                     override fun onProgress(progress: Progress) {
                         // Notify our listeners about the download progress.
-                        progressSubject.onNext(progress.bytesReceived.toDouble() / progress.totalBytes.toDouble())
+                        progressState.value = ProgressState(progress.bytesReceived.toDouble() / progress.totalBytes.toDouble())
                     }
 
                     override fun onComplete(output: File) {
-                        progressSubject.onComplete()
+                        progressState.update { ProgressState(progress = it.progress, completed = true) }
                         downloadLatch.countDown()
                     }
 
                     override fun onError(exception: Throwable) {
-                        progressSubject.onError(exception)
+                        progressState.update { ProgressState(progress = it.progress, error = exception) }
                         downloadLatch.countDown()
                     }
                 },
@@ -147,7 +168,7 @@ private class RemoteDataProvider(
         }
 
         this.downloadJob = downloadJob
-        return downloadJob as DownloadJob
+        return downloadJob
     }
 
     override fun describeContents(): Int = 0

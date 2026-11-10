@@ -6,10 +6,10 @@
  */
 package com.pspdfkit.catalog.examples.kotlin
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.Color
 import android.net.Uri
+import androidx.lifecycle.lifecycleScope
 import com.pspdfkit.catalog.R
 import com.pspdfkit.catalog.SdkExample
 import com.pspdfkit.catalog.SdkExample.Companion.TAG
@@ -27,7 +27,8 @@ import com.pspdfkit.ui.DocumentDescriptor
 import com.pspdfkit.ui.PdfActivity
 import com.pspdfkit.ui.PdfActivityIntentBuilder
 import com.pspdfkit.utils.PdfLog
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
+import kotlinx.coroutines.CancellationException
+import kotlinx.coroutines.launch
 
 /**
  * An example that shows how to use the onDocumentScrolled() callback to detect when the page has reached its end.
@@ -116,7 +117,6 @@ class DocumentScrollActivity : PdfActivity() {
         )
     }
 
-    @SuppressLint("CheckResult")
     private fun addNewPageToDocument(document: PdfDocument) {
         val editor = PdfDocumentEditorFactory.createForDocument(document)
         val newPage =
@@ -125,22 +125,20 @@ class DocumentScrollActivity : PdfActivity() {
                 .backgroundColor(Color.rgb(241, 236, 121))
                 .build()
 
-        // Add a new page at the end of the document
-        editor.addPage(document.pageCount, newPage).blockingSubscribe()
+        lifecycleScope.launch {
+            try {
+                // Add a new page at the end of the document, then save it and set it.
+                editor.addPage(document.pageCount, newPage)
+                editor.saveDocument(this@DocumentScrollActivity, null)
 
-        // Save the document and set it
-        editor
-            .saveDocument(this, null)
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                {
-                    val documentDescriptor = DocumentDescriptor.fromDocumentSource(document.documentSource)
-                    documentCoordinator.setDocument(documentDescriptor)
-                },
-                { e ->
-                    PdfLog.e(TAG, e, "Document couldn't be saved.")
-                },
-            )
+                val documentDescriptor = DocumentDescriptor.fromDocumentSource(document.documentSource)
+                documentCoordinator.setDocument(documentDescriptor)
+            } catch (e: CancellationException) {
+                throw e
+            } catch (e: Throwable) {
+                PdfLog.e(TAG, e, "Document couldn't be saved.")
+            }
+        }
     }
 
     companion object {

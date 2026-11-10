@@ -7,6 +7,7 @@
 
 package com.pspdfkit.catalog.examples.kotlin
 
+import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -30,6 +31,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.FileNotFoundException
+import java.io.OutputStream
 import java.util.EnumSet
 
 /** Shows how to import and export annotations in XFDF format. */
@@ -145,7 +147,7 @@ class XfdfExampleActivity : PdfActivity() {
      */
     private fun exportToXfdf(uri: Uri) {
         try {
-            val outputStream = contentResolver.openOutputStream(uri) ?: return
+            val outputStream = contentResolver.openOutputStreamForOverwrite(uri) ?: return
 
             CoroutineScope(Dispatchers.Main).launch {
                 try {
@@ -221,4 +223,15 @@ class XfdfExampleActivity : PdfActivity() {
         private const val PICK_EXPORT_FILE_RESULT = 1
         private const val PICK_IMPORT_FILE_RESULT = 2
     }
+}
+
+/**
+ * Opens [uri] for replacing its content. "wt" truncates, so a shorter export doesn't keep the end of an existing file.
+ * Some storage providers reject "wt", so this falls back to "w", which may leave the old file's end in place on those.
+ */
+private fun ContentResolver.openOutputStreamForOverwrite(uri: Uri): OutputStream? = try {
+    openOutputStream(uri, "wt")
+} catch (e: Exception) {
+    if (e !is IllegalArgumentException && e !is UnsupportedOperationException && e !is FileNotFoundException) throw e
+    openOutputStream(uri, "w")
 }

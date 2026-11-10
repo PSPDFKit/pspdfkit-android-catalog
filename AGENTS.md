@@ -16,7 +16,7 @@ Compose-based demo app (fragment SDK flavour + OCR), mirrored publicly to github
 
 ## Constraints
 
-- Every example must keep the `(Context, @StringRes title, @StringRes description)` constructor: docs generation scrapes the resource IDs, and CI's smoke run (`android/ci/scripts/examples_run.sh`) launches each example reflectively via a single-`Context` constructor.
+- Every example must keep the `(Context, @StringRes title, @StringRes description)` constructor: docs generation scrapes the resource IDs.
 - **No internal API usage**: `tools/validation/internal_check.sh` hard-fails on any mention of the SDK's internal packages — the `internal` subpackage of `com.pspdfkit` or `io.nutrient` — anywhere under `examples/`. It is a plain `grep -r`, so comments and Markdown count too; that is why this line does not spell the package names out.
 - Keep the modified-BSD sample header on new files ("This notice may not be removed…").
 - `keep:internal`/`keep:github`/`keep:packaged` marker blocks control what ships in the public copies — they exist in `settings.gradle.kts` too, not just `app/build.gradle.kts`.
@@ -26,7 +26,13 @@ Compose-based demo app (fragment SDK flavour + OCR), mirrored publicly to github
 - `app/internal.gradle` — license-key flavours (`full` = real key, `demo` = placeholder) and LeakCanary.
 - `app/src/debug/` — debug-only diagnostics (heap-dumping exception handler).
 - `app/pspdfcatalog_keystore.jks` — throwaway release keystore so internal release builds are signable; public copies sign release with the debug config instead.
+- `app/src/androidTest/` — the example tests below.
 
 ## Tests
 
-Only a small JVM test (`app/src/test/`, fuzzy-match logic) — no androidTest. The real check is CI's launch-every-example smoke run.
+- `app/src/test/` — a small JVM test of the fuzzy-match logic.
+- `app/src/androidTest/` — two device tests that take their cases from `getSectionsWithExamples()`, so a new example is covered without touching them:
+  - `CatalogExamplesSmokeTest` opens every example and checks that it opens and loads its document.
+  - `CatalogExamplesInteractionTest` presses every button an example adds on its first screen, meaning the clickable elements `DefaultExample` doesn't have, and every item it adds to the main toolbar's overflow menu. It fails on a crash or a blocked main thread. Give new buttons a content description or text, or the test can't tell them apart from the SDK's.
+
+Run them with `../../tools/testUtils/run_catalog_examples_smoke_test.sh` (`--test-class CatalogExamplesInteractionTest` for the second). PRs run the smoke test on every example and the interaction test on the examples they change (`../../tools/testUtils/catalog_examples_changed_since.sh`); nightly runs only the interaction test, on every example against the release SDK, since opening each example covers the smoke test's checks.

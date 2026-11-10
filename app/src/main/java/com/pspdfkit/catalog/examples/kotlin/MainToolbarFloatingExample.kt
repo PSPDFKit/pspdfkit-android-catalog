@@ -23,9 +23,12 @@ import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.add
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.safeDrawing
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
@@ -138,13 +141,13 @@ private fun expressiveColorScheme(): ColorScheme {
 }
 
 /**
- * Vertical room the toggle leaves above the bottom window edge so it clears the SDK's floating
- * thumbnail bar: the bar's own height (`pspdf__thumbnail_height`, 28dp, inside
+ * Vertical room floating chrome leaves above the bottom window edge (inside the system bars) so
+ * it clears the SDK's floating thumbnail bar: the bar's own height (`pspdf__thumbnail_height`, 28dp, inside
  * `pspdf__thumbnail_bar_content_padding` of 6dp top and bottom), plus the 36dp
  * `pspdf__floating_thumbnail_bar_margin_bottom` it keeps from the window edge, plus an 8dp gap so
  * the two pieces of chrome don't touch.
  */
-private val THUMBNAIL_BAR_CLEARANCE = 28.dp + (6.dp * 2) + 36.dp + 8.dp
+internal val THUMBNAIL_BAR_CLEARANCE = 28.dp + (6.dp * 2) + 36.dp + 8.dp
 
 @Composable
 private fun FloatingToolbarDocument(uri: Uri, configuration: PdfActivityConfiguration) {
@@ -176,6 +179,9 @@ private fun FloatingToolbarDocument(uri: Uri, configuration: PdfActivityConfigur
                         vibrant = true,
                         draggable = true,
                         collapsible = collapsible,
+                        // Docked at the bottom edge, the pill rests above the floating thumbnail
+                        // bar instead of on top of it.
+                        windowInsets = WindowInsets.safeDrawing.add(WindowInsets(bottom = THUMBNAIL_BAR_CLEARANCE)),
                     )
                 }
 

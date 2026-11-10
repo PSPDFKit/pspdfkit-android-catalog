@@ -35,7 +35,7 @@
     <application
         android:name=".CatalogApplication"
         android:allowBackup="true"
-        android:label="@string/app_name"
+        android:label="@string/launcher_name"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true"
         android:supportsRtl="true"
@@ -140,6 +140,16 @@
                 <data android:mimeType="image/*" />
             </intent-filter>
         </activity>
+
+        <activity
+            android:name=".examples.kotlin.InitialPagesActivity"
+            android:label="@string/initialPagesExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
+
+        <activity
+            android:name=".examples.kotlin.SignatureCreationInterceptorActivity"
+            android:label="@string/signatureCreationInterceptorExampleTitle"
+            android:windowSoftInputMode="adjustNothing" />
 
         <activity
             android:name=".examples.kotlin.PlaygroundActivity"
@@ -437,6 +447,11 @@
         <activity
             android:name=".examples.kotlin.KioskActivity"
             android:label="@string/kioskExampleTitle"
+            android:theme="@style/Theme.AppCompat" />
+
+        <activity
+            android:name=".examples.kotlin.RxJavaInteropActivity"
+            android:label="@string/rxJavaInteropExampleTitle"
             android:theme="@style/Theme.AppCompat" />
 
         <activity
